@@ -4,15 +4,11 @@ FROM node:18
 # working directory 지정
 WORKDIR /app
 
-COPY package* yarn.lock .pnp* ./
-COPY .yarnrc.yml ./
-COPY .yarn ./.yarn
+COPY package* yarn.lock .pnp*     ./
+COPY .yarnrc.yml                  ./
+COPY .yarn                        ./.yarn
 
 RUN yarn install --frozen-lockfile
 
-COPY . .
-
-EXPOSE 3000
-
 # 앱 실행
-CMD ["yarn", "dev"]
+CMD ["yarn", "dev", "--host", "0.0.0.0", "--port", "3000"]
