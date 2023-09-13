@@ -7,6 +7,10 @@ import svgr from "vite-plugin-svgr";
 export default defineConfig({
   plugins: [react(), tsconfigPaths(), svgr()],
   assetsInclude: ["**/*.glb", "**/*.gltf", "**/*.obj"],
+  preview: {
+    port: 3000,
+    host: true,
+  },
   server: {
     port: 3000,
     host: true,
