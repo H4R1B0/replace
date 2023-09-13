@@ -9,7 +9,7 @@ COPY .yarnrc.yml                  ./
 COPY .yarn                        ./.yarn
 
 RUN yarn cache clean \
-    && yarn install --frozen-lockfile --immutable
+    && yarn install --frozen-lockfile
 
 # 앱 실행
-CMD ["yarn", "preview"]
+CMD ["yarn", "dev", "--host", "0.0.0.0", "--port", "3000"]
