@@ -1,5 +1,7 @@
-FROM node:18-alpine as BUILD_IMAGE
+# 노드 이미지를 최신 버전으로 가져옴
+FROM node:18
 
+# working directory 지정
 WORKDIR /app
 
 COPY package* yarn.lock .pnp*     ./
@@ -7,25 +9,7 @@ COPY .yarnrc.yml                  ./
 COPY .yarn                        ./.yarn
 
 RUN yarn cache clean \
-    && yarn install --frozen-lockfile
+    && yarn install --frozen-lockfile --immutable
 
-COPY . .
-
-yarn build
-
-FROM node:18-alpine as PRODUCTION_IMAGE
-
-WORKDIR /app
-
-COPY --from=BUILD_IMAGE /app/dist/ /app/dist/
-
-EXPOSE 3000
-
-COPY package.json .
-COPY vite.config.ts .
-
-RUN yarn install typescript
-
-EXPOSE 3000
-
+# 앱 실행
 CMD ["yarn", "preview"]
