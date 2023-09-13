@@ -9,7 +9,7 @@ COPY .yarnrc.yml                  ./
 COPY .yarn                        ./.yarn
 
 RUN yarn cache clean \
-    && yarn install --frozen-lockfile
+    && yarn install --frozen-lockfile --immutable
 
 # 앱 실행
 CMD ["yarn", "dev", "--host", "0.0.0.0", "--port", "3000", "--vite-config", "index.html"]
