@@ -8,7 +8,8 @@ COPY package* yarn.lock .pnp*     ./
 COPY .yarnrc.yml                  ./
 COPY .yarn                        ./.yarn
 
-RUN yarn install --frozen-lockfile --immutable
+RUN yarn cache clean \
+    && yarn install --frozen-lockfile
 
 # 앱 실행
-CMD ["yarn", "dev", "--host", "0.0.0.0", "--port", "3000", "--entry", "index.html"]
+CMD ["yarn", "dev", "--host", "0.0.0.0", "--port", "3000", "--vite-config", "index.html"]
