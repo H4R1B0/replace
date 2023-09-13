@@ -6,7 +6,8 @@ COPY package* yarn.lock .pnp*     ./
 COPY .yarnrc.yml                  ./
 COPY .yarn                        ./.yarn
 
-RUN yarn install --frozen-lockfile
+RUN yarn cache clean \
+    && yarn install --frozen-lockfile
 
 COPY . .
 
