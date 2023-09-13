@@ -4,7 +4,7 @@ FROM node:18
 # working directory 지정
 WORKDIR /app
 
-COPY COPY package* yarn.lock .pnp* ./
+COPY package* yarn.lock .pnp* ./
 COPY .yarnrc.yml ./
 COPY .yarn ./.yarn
 
