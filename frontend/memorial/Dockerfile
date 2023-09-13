@@ -11,4 +11,4 @@ COPY .yarn                        ./.yarn
 RUN yarn install --frozen-lockfile
 
 # 앱 실행
-CMD ["yarn", "dev", "--host", "0.0.0.0", "--port", "3000"]
+CMD ["yarn", "dev", "--port", "3000"]
