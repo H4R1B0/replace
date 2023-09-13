@@ -4,7 +4,9 @@ FROM node:18
 # working directory 지정
 WORKDIR /app
 
-COPY package.json yarn.lock .
+COPY COPY package* yarn.lock .pnp* ./
+COPY .yarnrc.yml ./
+COPY .yarn ./.yarn
 
 RUN yarn install --frozen-lockfile
 
