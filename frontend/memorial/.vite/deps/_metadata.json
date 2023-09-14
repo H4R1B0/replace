@@ -1,0 +1,44 @@
+{
+  "hash": "6bdea7ac",
+  "browserHash": "e2c95bce",
+  "optimized": {
+    "react": {
+      "src": "../../.yarn/cache/react-npm-18.2.0-1eae08fee2-88e38092da.zip/node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "1d881489",
+      "needsInterop": true
+    },
+    "react/jsx-dev-runtime": {
+      "src": "../../.yarn/cache/react-npm-18.2.0-1eae08fee2-88e38092da.zip/node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "809a431d",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../.yarn/__virtual__/react-dom-virtual-9993582892/0/cache/react-dom-npm-18.2.0-dd675bca1c-7d323310be.zip/node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "0c46a698",
+      "needsInterop": true
+    },
+    "react-icons/lia": {
+      "src": "../../.yarn/__virtual__/react-icons-virtual-e92bb649a2/0/cache/react-icons-npm-4.11.0-08184d1639-7b8b80bbe2.zip/node_modules/react-icons/lia/index.esm.js",
+      "file": "react-icons_lia.js",
+      "fileHash": "ae0ca6d0",
+      "needsInterop": false
+    },
+    "react-icons/pi": {
+      "src": "../../.yarn/__virtual__/react-icons-virtual-e92bb649a2/0/cache/react-icons-npm-4.11.0-08184d1639-7b8b80bbe2.zip/node_modules/react-icons/pi/index.esm.js",
+      "file": "react-icons_pi.js",
+      "fileHash": "3f6bd7a5",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-ZZUAOFUN": {
+      "file": "chunk-ZZUAOFUN.js"
+    },
+    "chunk-U2375J5A": {
+      "file": "chunk-U2375J5A.js"
+    }
+  }
+}

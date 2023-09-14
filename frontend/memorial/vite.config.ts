@@ -1,38 +1,27 @@
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
 import tsconfigPaths from "vite-tsconfig-paths";
+import react from "@vitejs/plugin-react";
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
-  assetsInclude: ["**/*.glb", "**/*.gltf", "**/*.obj"],
   server: {
     port: 3000,
-    host: true,
-    open: "/",
+    host: "0.0.0.0",
   },
   build: {
-    outDir: "build",
     rollupOptions: {
-      output: {
-        assetFileNames: (asset) => {
-          const isCssFile = /\.css$/.test(asset.name);
-
-          if (isCssFile) {
-            return "static/css/[name].[hash].[ext]";
-          }
-          return "static/media/[name].[hash].[ext]";
-        },
-        chunkFileNames: "static/js/[name].[hash].chunk.js",
-        entryFileNames: "static/js/[name].[hash].js",
-      },
+      input: "src/main.tsx", // 이 부분을 프로젝트의 진입점 파일로 설정
     },
     commonjsOptions: {
       include: [".yarn/**"],
     },
   },
-  cacheDir: ".yarn",
+  cacheDir: "./.vite",
   define: {
     global: "globalThis",
+  },
+  //
+  optimizeDeps: {
+    include: ["*.tsx"], // 모든 .js 파일을 포함하도록 설정
   },
 });
