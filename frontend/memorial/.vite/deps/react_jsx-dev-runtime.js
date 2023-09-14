@@ -1,7 +1,7 @@
 import {
   __commonJS,
   require_react
-} from "./chunk-U2375J5A.js";
+} from "./chunk-GX2KGIQW.js";
 
 // .yarn/cache/react-npm-18.2.0-1eae08fee2-88e38092da.zip/node_modules/react/cjs/react-jsx-dev-runtime.development.js
 var require_react_jsx_dev_runtime_development = __commonJS({
