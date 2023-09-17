@@ -1,9 +1,18 @@
-import "./App.css";
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { PiBellDuotone, PiGearDuotone } from "react-icons/pi";
 import { LiaSearchSolid } from "react-icons/lia";
-import RoomPage from "@pages/RoomPage";
-import Footer from "@components/ui/Footer";
+
+import PATH from "@constants/path";
+import NotFoundPage from "@pages/NotFoundPage";
+
+const MainPage = lazy(() => import("@pages/MainPage"));
+const RoomPage = lazy(() => import("@pages/RoomPage"));
+const TributePage = lazy(() => import("@pages/TributePage"));
+const LibraryPage = lazy(() => import("@pages/LibraryPage"));
+const PayphonePage = lazy(() => import("@pages/PayphonePage"));
+const HousePage = lazy(() => import("@pages/HousePage"));
+const SearchResultPage = lazy(() => import("@pages/SearchResultPage"));
 
 function App() {
   function handleResize() {
@@ -32,10 +41,21 @@ function App() {
         <button title="Settings">
           <PiGearDuotone />
         </button>
-
-        <Footer />
       </nav>
-      <RoomPage />
+      <Router>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
+            <Route path={PATH.MAIN} element={<MainPage />} />
+            <Route path={PATH.ROOM} element={<RoomPage />} />
+            <Route path={PATH.TRIBUTE} element={<TributePage />} />
+            <Route path={PATH.LIBRARY} element={<LibraryPage />} />
+            <Route path={PATH.PAYPHONE} element={<PayphonePage />} />
+            <Route path={PATH.HOUSE} element={<HousePage />} />
+            <Route path={PATH.SEARCH_RESULT} element={<SearchResultPage />} />
+            <Route path={PATH.NOT_FOUND} element={<NotFoundPage />} />
+          </Routes>
+        </Suspense>
+      </Router>
     </div>
   );
 }
