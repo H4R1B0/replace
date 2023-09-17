@@ -1,5 +1,5 @@
 .viewport {
-  /* border: 10px solid red; */
+  border: 10px solid red;
   display: flex;
   flex-direction: column;
   width: 100%;
