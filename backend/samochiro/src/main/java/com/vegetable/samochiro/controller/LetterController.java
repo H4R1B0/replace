@@ -37,8 +37,8 @@ public class LetterController {
 	}
 	//편지 등록 - 서재 1번
 
-	@GetMapping("/{roomUuid}")
-	public ResponseEntity<Response> getLetterList(@PathVariable String roomUuid) {
+	@PostMapping("/list")
+	public ResponseEntity<Response> getLetterList(@RequestBody String roomUuid) {
 		try {
 			List<LetterListResponse> letterList = letterService.findLetterList(roomUuid);
 			return ResponseEntity.ok(new Response(letterList));

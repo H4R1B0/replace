@@ -21,6 +21,7 @@ import lombok.Setter;
 @Setter
 @Table(name = "letter")
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class Letter {
 
