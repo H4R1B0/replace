@@ -1,7 +1,7 @@
 package com.vegetable.samochiro.repository;
 
-import com.vegetable.samochiro.dto.Token;
+import com.vegetable.samochiro.oauth2.token.JwtToken;
 import org.springframework.data.repository.CrudRepository;
 
-public interface RefreshTokenRepository extends CrudRepository<Token, String> {
+public interface RefreshTokenRepository extends CrudRepository<JwtToken, String> {
 }
