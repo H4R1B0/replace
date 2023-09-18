@@ -56,7 +56,7 @@ public class User {
     private List<Room> rooms = new ArrayList<>();
 
     public User update(String email) {
-        this.nickname = email;
+        this.email = email;
         return this;
     }
 
