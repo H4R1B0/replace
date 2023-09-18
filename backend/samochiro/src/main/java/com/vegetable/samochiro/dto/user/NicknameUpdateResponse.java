@@ -1,6 +1,6 @@
 package com.vegetable.samochiro.dto.user;
 
-import com.vegetable.samochiro.dto.Token;
+import com.vegetable.samochiro.oauth2.token.JwtToken;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class NicknameUpdateResponse {
 
-	private Token token;
+	private String token;
 	private String message;
 
 }

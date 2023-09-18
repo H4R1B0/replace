@@ -1,9 +1,7 @@
 package com.vegetable.samochiro.service;
 
-import com.vegetable.samochiro.config.TokenProvider;
 import com.vegetable.samochiro.domain.Room;
 import com.vegetable.samochiro.domain.User;
-import com.vegetable.samochiro.dto.Token;
 import com.vegetable.samochiro.dto.user.HouseSearchResponse;
 import com.vegetable.samochiro.dto.user.HouseSearchRoomResponse;
 import com.vegetable.samochiro.dto.user.NicknameSearchResponse;
@@ -11,6 +9,8 @@ import com.vegetable.samochiro.dto.user.UserInfoRequest;
 import com.vegetable.samochiro.dto.user.UserInputRequest;
 import com.vegetable.samochiro.dto.user.NicknameUpdateRequest;
 import com.vegetable.samochiro.dto.user.UsernameAuthenticationToken;
+import com.vegetable.samochiro.oauth2.token.JwtToken;
+import com.vegetable.samochiro.oauth2.token.JwtTokenProvider;
 import com.vegetable.samochiro.repository.RefreshTokenRepository;
 import com.vegetable.samochiro.repository.UserRepository;
 import io.jsonwebtoken.Claims;
@@ -31,25 +31,11 @@ public class UserService {
 
 	private final UserRepository userRepository;
 	private final AuthenticationManagerBuilder authenticationManagerBuilder;
-	private final TokenProvider tokenProvider;
+	private final JwtTokenProvider tokenProvider;
 	private final RefreshTokenRepository refreshTokenRepository;
 
 	@Transactional
-	public void saveUser(UserInputRequest inputRequest) {
-		User user = User.builder()
-			.nickname(inputRequest.getNickname())
-			.userId(inputRequest.getUserId())
-			.email(inputRequest.getEmail())
-			.build();
-
-		user.setSocialType("kakao");
-		user.setChange(false);
-		userRepository.save(user);
-	}
-	//회원 가입 (상상 api)
-
-	@Transactional
-	public Token updateNickname(NicknameUpdateRequest updateRequest) {
+	public String updateNickname(NicknameUpdateRequest updateRequest) {
 		Optional<User> findUser = userRepository.findById(updateRequest.getUserId());
 		findUser.get().setNickname(updateRequest.getNickname());
 		findUser.get().setChange(true);
@@ -65,10 +51,11 @@ public class UserService {
 		claims.put("nickname", updateRequest.getNickname());
 		//jwt 토큰에 id, 닉네임 넣기
 
-		Token token = tokenProvider.generateToken(authentication);
+//		JwtToken token = tokenProvider.generateToken(authentication);
+		String token = tokenProvider.generateToken(authentication);
 		//jwt 토큰 생성
 
-		refreshTokenRepository.save(token);
+//		refreshTokenRepository.save(token);
 		//jwt 토큰 redis에 저장
 
 		return token;
@@ -90,7 +77,7 @@ public class UserService {
 		Optional<User> findUser = userRepository.findByNickname(nickname);
 
 		if(findUser.isPresent()) {
-			NicknameSearchResponse response = new NicknameSearchResponse(findUser.get().getUserId(), findUser.get().getNickname());
+			NicknameSearchResponse response = new NicknameSearchResponse(findUser.get().getId(), findUser.get().getNickname());
 			return response;
 		}
 		else {
@@ -109,7 +96,7 @@ public class UserService {
 
 		for(Room r : rooms) {
 			HouseSearchRoomResponse roomResponse = new HouseSearchRoomResponse();
-			roomResponse.setRoomUuid(r.getRoomUuid());
+			roomResponse.setRoomUuid(r.getUuid());
 			roomResponse.setTargetName(r.getTargetName());
 			roomResponse.setSequence(r.getSequence());
 			roomDtoList.add(roomResponse);
