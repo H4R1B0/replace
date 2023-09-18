@@ -25,7 +25,6 @@ import lombok.Setter;
 @Setter
 @Table(name = "user")
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 public class User {
     @Id
