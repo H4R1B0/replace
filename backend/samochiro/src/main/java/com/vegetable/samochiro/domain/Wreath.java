@@ -65,8 +65,9 @@ public class Wreath {
 	@OneToOne(mappedBy = "wreath", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private WreathCount wreathCount;
 
-	@OneToMany(mappedBy = "wreath")
-	private List<WreathUser> wreathUserList = new ArrayList<>();
+    @OneToMany(mappedBy = "wreath")
+    @Builder.Default
+    private List<WreathUser> wreathUserList = new ArrayList<>();
 
 	public void addWreathCount(WreathCount wreathCount) {
 		this.wreathCount = wreathCount;
