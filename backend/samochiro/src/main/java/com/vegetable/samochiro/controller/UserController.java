@@ -1,10 +1,10 @@
 package com.vegetable.samochiro.controller;
 
-import com.vegetable.samochiro.dto.Token;
 import com.vegetable.samochiro.dto.user.HouseSearchResponse;
 import com.vegetable.samochiro.dto.user.NicknameSearchResponse;
 import com.vegetable.samochiro.dto.user.NicknameUpdateRequest;
 import com.vegetable.samochiro.dto.user.NicknameUpdateResponse;
+import com.vegetable.samochiro.oauth2.token.JwtToken;
 import com.vegetable.samochiro.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,7 +27,7 @@ public class UserController {
 	@PutMapping
 	public ResponseEntity<NicknameUpdateResponse> setNewNickname(@RequestBody NicknameUpdateRequest updateRequest) {
 		try {
-			Token token = userService.updateNickname(updateRequest);
+			String token = userService.updateNickname(updateRequest);
 			String message = "닉네임 설정이 완료되었습니다.";
 
 			return ResponseEntity.ok(new NicknameUpdateResponse(token, message));
