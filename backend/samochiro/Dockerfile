@@ -1,10 +1,7 @@
 FROM openjdk:17
 
-WORKDIR /app
+ARG JAR_FILE=build/libs/*.jar
 
-COPY ./application.yml .
-COPY ./application-oauth.yml .
+COPY ${JAR_FILE} samochiro-0.0.1-SNAPSHOT.jar
 
-COPY ./samochiro-0.0.1-SNAPSHOT.jar .
-
-ENTRYPOINT ["java","-jar","-Dserver.port=5000","-Dspring.profiles.active=oauth","samochiro-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java","-jar","-Dserver.port=5000","samochiro-0.0.1-SNAPSHOT.jar"]
