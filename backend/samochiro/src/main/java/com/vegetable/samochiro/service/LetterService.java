@@ -5,6 +5,7 @@ import com.vegetable.samochiro.dto.letter.LetterDetailResponse;
 import com.vegetable.samochiro.dto.letter.LetterListResponse;
 import com.vegetable.samochiro.dto.letter.LetterSaveRequest;
 import com.vegetable.samochiro.repository.LetterRepository;
+import com.vegetable.samochiro.repository.RoomRepository;
 import com.vegetable.samochiro.repository.UserRepository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class LetterService {
 
 	private final LetterRepository letterRepository;
 	private final UserRepository userRepository;
+	private final RoomRepository roomRepository;
 
 
 	@Transactional
@@ -30,7 +32,7 @@ public class LetterService {
 			.content(saveRequest.getContent())
 			.writeTime(LocalDateTime.now())
 			.user(userRepository.findById(saveRequest.getUserId()).get())
-//			.room(roomRepository.findById(saveRequest.getRoomUuid()).get()
+			.room(roomRepository.findById(saveRequest.getRoomUuid()).get())
 			.build();
 
 		letterRepository.save(letter);
@@ -65,6 +67,7 @@ public class LetterService {
 	}
 	//편지 상세 조회 - 서재 3번
 
+	@Transactional
 	public void deleteLetter(Long letterId) {
 		letterRepository.deleteById(letterId);
 	}
