@@ -25,7 +25,9 @@
       "@pages/*": ["pages/*"],
       "@hooks/*": ["hooks/*"],
       "@utils/*": ["utils/*"],
-      "@assets/*": ["assets/*"]
+      "@assets/*": ["assets/*"],
+      "@mocks/*": ["mocks/*"],
+      "@constants/*": ["constants/*"]
     }
   },
   "include": ["src"],
