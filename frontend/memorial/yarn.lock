@@ -3203,6 +3203,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-three/postprocessing@npm:^2.15.1":
+  version: 2.15.1
+  resolution: "@react-three/postprocessing@npm:2.15.1"
+  dependencies:
+    maath: ^0.6.0
+    n8ao: ^1.6.6
+    postprocessing: ^6.32.1
+    three-stdlib: ^2.23.4
+  peerDependencies:
+    "@react-three/fiber": ">=8.0"
+    react: ">=18.0"
+    three: ">= 0.138.0"
+  checksum: 5f6a226445e94902e1238cd54120307f32ba3f2f3160817cf54a0471c63329c537c24e28a0c8f348f0737a18d3409a3a0971e7e26dabf747963d15ac116b7af7
+  languageName: node
+  linkType: hard
+
 "@reduxjs/toolkit@npm:^1.9.5":
   version: 1.9.5
   resolution: "@reduxjs/toolkit@npm:1.9.5"
@@ -5091,6 +5107,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@use-gesture/core@npm:10.3.0":
+  version: 10.3.0
+  resolution: "@use-gesture/core@npm:10.3.0"
+  checksum: cd6782b0cf61ae2306ecee4bd3c30942251427c142e3fd3584778d86e1a93b27e087033246700b54c4ad7063aa78747dc793f0dbb7434925c306215fb18dee82
+  languageName: node
+  linkType: hard
+
 "@use-gesture/react@npm:^10.2.24":
   version: 10.2.27
   resolution: "@use-gesture/react@npm:10.2.27"
@@ -5099,6 +5122,17 @@ __metadata:
   peerDependencies:
     react: ">= 16.8.0"
   checksum: 745c835483138eb033953dee285ddece04f236ac82a6897dcf03dd38daeb5335f91e664436ff55e3b449dccb1eadd809fcd7e7d1440c6f82c4e87663bfaadd5f
+  languageName: node
+  linkType: hard
+
+"@use-gesture/react@npm:^10.3.0":
+  version: 10.3.0
+  resolution: "@use-gesture/react@npm:10.3.0"
+  dependencies:
+    "@use-gesture/core": 10.3.0
+  peerDependencies:
+    react: ">= 16.8.0"
+  checksum: d43a2296e536ea8e4885ca082b7c554eabb0e19bb7f89b5db96e0511712c849db879de64c2746c94e3c9a5032e8918c90ace67fc023c754034d75b2ea3b727c4
   languageName: node
   linkType: hard
 
@@ -9419,6 +9453,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"n8ao@npm:^1.6.6":
+  version: 1.6.8
+  resolution: "n8ao@npm:1.6.8"
+  peerDependencies:
+    postprocessing: ">=6.30.0"
+    three: ">=0.137"
+  checksum: b1d42d8b5f662e8c40c9a754172e0bd8870f4f6d7ad673cc82ef068d797422a3190e8648c32cad7896242bc6f54ecdbad830b13b98a8fc0427e3cbbbecf17b22
+  languageName: node
+  linkType: hard
+
 "nanoid@npm:^3.3.6":
   version: 3.3.6
   resolution: "nanoid@npm:3.3.6"
@@ -9985,6 +10029,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postprocessing@npm:^6.32.1":
+  version: 6.33.0
+  resolution: "postprocessing@npm:6.33.0"
+  peerDependencies:
+    three: ">= 0.138.0 < 0.156.0"
+  checksum: a82cf04d96791f3275b0d696cc7454e7e50ef28e2c3a6fd02478bb4461eb1846f33e78eda6bbf7433666b224b20506045c4369cccad93f91fd6f1c64251f555a
+  languageName: node
+  linkType: hard
+
 "potpack@npm:^1.0.1":
   version: 1.0.2
   resolution: "potpack@npm:1.0.2"
@@ -10477,6 +10530,7 @@ __metadata:
   dependencies:
     "@react-three/drei": ^9.83.9
     "@react-three/fiber": ^8.14.1
+    "@react-three/postprocessing": ^2.15.1
     "@reduxjs/toolkit": ^1.9.5
     "@storybook/addon-essentials": 7.4.1
     "@storybook/addon-interactions": 7.4.1
@@ -10494,6 +10548,7 @@ __metadata:
     "@types/three": ^0.156.0
     "@typescript-eslint/eslint-plugin": ^5.59.8
     "@typescript-eslint/parser": ^5.59.8
+    "@use-gesture/react": ^10.3.0
     "@vitejs/plugin-react": ^4.0.0
     eslint: ^8.42.0
     eslint-plugin-react-hooks: ^4.6.0
@@ -11586,7 +11641,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"three-stdlib@npm:^2.25.1":
+"three-stdlib@npm:^2.23.4, three-stdlib@npm:^2.25.1":
   version: 2.26.0
   resolution: "three-stdlib@npm:2.26.0"
   dependencies:

@@ -1,12 +1,12 @@
 import Room from "@components/3d/Room";
 import { Canvas } from "@react-three/fiber";
-import {
-  OrbitControls,
-  Stage,
-  Edges,
-  PresentationControls,
-} from "@react-three/drei";
+import { Stage, PresentationControls } from "@react-three/drei";
 import styles from "./RoomPage.module.css";
+import {
+  Selection,
+  EffectComposer,
+  Outline,
+} from "@react-three/postprocessing";
 
 export default function RoomPage() {
   return (
@@ -18,7 +18,7 @@ export default function RoomPage() {
         style={{ touchAction: "none" }}
       >
         <color attach="background" args={["#e0b7ff"]} />
-        <Stage environment="city" intensity={0.5} adjustCamera>
+        <Stage environment="city" intensity={0.5} adjustCamera shadows={false}>
           <PresentationControls
             snap
             global
@@ -28,7 +28,19 @@ export default function RoomPage() {
             azimuth={[-Math.PI / 4, Math.PI / 4]}
           >
             {/* <ambientLight /> */}
-            <Room onTrashcanClick={() => console.log("nini")} />
+            <Selection>
+              <EffectComposer multisampling={8} autoClear={false}>
+                {/*TODO: visibleEgdeColor type 수정하기  */}
+                <Outline
+                  blur
+                  visibleEdgeColor="white"
+                  edgeStrength={100}
+                  width={1000}
+                />
+              </EffectComposer>
+              {/*TODO: onTrashcanClick에 전달하는 함수 상단에 정의하기 */}
+              <Room onTrashcanClick={() => console.log("nini")} />
+            </Selection>
           </PresentationControls>
         </Stage>
       </Canvas>

@@ -5,9 +5,11 @@ Files: room.glb [21.14MB] > room-transformed.glb [2.86MB] (86%)
 */
 
 import * as THREE from "three";
+import { useState } from "react";
 import { useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import roomPath from "./room.glb?url";
+import { Select } from "@react-three/postprocessing";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -111,27 +113,33 @@ type RoomProps = {
 
 export default function Room({ onTrashcanClick, ...other }: RoomProps) {
   const { nodes, materials } = useGLTF(roomPath) as GLTFResult;
+  const [hover, setHover] = useState(false);
   return (
     <group {...other} dispose={null}>
-      <group
-        position={[0.387, 0.385, 2.985]}
-        rotation={[Math.PI / 2, 0, 0]}
-        scale={1.47}
-      >
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.trashCan_1.geometry}
-          material={materials["OBJECTmain.004"]}
-          onClick={onTrashcanClick}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.trashCan_2.geometry}
-          material={materials.TRASHBODY}
-        />
-      </group>
+      <Select enabled={hover}>
+        {/*TODO: onPointOver,Out에 전달되는 함수 새로 정의해주기, handle, on 차이 구분해서 적기  */}
+        <group
+          position={[0.387, 0.385, 2.985]}
+          rotation={[Math.PI / 2, 0, 0]}
+          scale={1.47}
+          onPointerOver={() => setHover(true)}
+          onPointerOut={() => setHover(false)}
+        >
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.trashCan_1.geometry}
+            material={materials["OBJECTmain.004"]}
+            onClick={onTrashcanClick}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.trashCan_2.geometry}
+            material={materials.TRASHBODY}
+          />
+        </group>
+      </Select>
       <group
         position={[0.419, 0.863, 1.881]}
         rotation={[Math.PI, -1.332, Math.PI]}
