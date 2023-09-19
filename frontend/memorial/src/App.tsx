@@ -4,6 +4,7 @@ import { PiBellDuotone, PiGearDuotone } from "react-icons/pi";
 import { LiaSearchSolid } from "react-icons/lia";
 import RoomPage from "@pages/RoomPage";
 import Footer from "@components/ui/Footer";
+import PayphonePage from "@pages/PayphonePage";
 
 function App() {
   function handleResize() {
@@ -36,6 +37,7 @@ function App() {
         <Footer />
       </nav>
       <RoomPage />
+      <PayphonePage />
     </div>
   );
 }
