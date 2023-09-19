@@ -75,13 +75,16 @@ export default function Library({
         rotation={[0, Math.PI / 2, 0]}
         scale={[0.411, 0.559, 0.411]}
       />
-      <group position={[-1.658, 0.841, -1.295]} scale={1.258}>
+      <group
+        position={[-1.658, 0.841, -1.295]}
+        scale={1.258}
+        onClick={onBookShelfClick}
+      >
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.bookShelf_1.geometry}
           material={materials["Material.001"]}
-          onClick={onBookShelfClick}
         />
         <mesh
           castShadow
