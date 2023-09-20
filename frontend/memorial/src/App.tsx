@@ -15,7 +15,9 @@ const PayphonePage = lazy(() => import("@pages/PayphonePage"));
 const HousePage = lazy(() => import("@pages/HousePage"));
 const SearchResultPage = lazy(() => import("@pages/SearchResultPage"));
 
-function App() {
+const queryClient = new QueryClient();
+
+export default function App() {
   function handleResize() {
     const vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty("--vh", `${vh}px`);
@@ -61,5 +63,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
