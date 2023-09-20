@@ -78,9 +78,9 @@ button:focus-visible {
   padding: 0;
 }
 
-body {
+/* body {
   all: unset;
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */

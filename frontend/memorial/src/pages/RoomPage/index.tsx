@@ -17,7 +17,7 @@ export default function RoomPage() {
         camera={{ fov: 50, position: [0, 0, 8] }}
         style={{ touchAction: "none" }}
       >
-        <color attach="background" args={["#e0b7ff"]} />
+        {/* <color attach="background" args={["#e0b7ff"]} /> */}
         <Stage environment="city" intensity={0.5} adjustCamera shadows={false}>
           <PresentationControls
             snap
