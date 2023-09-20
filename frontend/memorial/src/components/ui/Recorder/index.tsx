@@ -39,36 +39,40 @@ export default function Recorder() {
 
   return (
     <div className={styles.wrapper}>
-      <AudioReactRecorder
-        state={recordState}
-        type={"audio/wav"}
-        onStop={handleAudioData}
-        backgroundColor="rgb(255,255,255)"
-        canvasWidth={200}
-        canvasHeight={80}
-      />
-      <button className={styles.recordbtn} onClick={startRecording}>
-        <HiMicrophone />
-      </button>
-      {recordState === RecordState.START && (
-        <button className={styles.recordbtn} onClick={pauseRecording}>
-          <HiPauseCircle />
+      <div className={styles.audioRecorder}>
+        <button className={styles.recordbtn} onClick={startRecording}>
+          <HiMicrophone />
         </button>
-      )}
-      {recordState === RecordState.PAUSE && (
-        <button className={styles.recordbtn} onClick={resumeRecording}>
-          <HiPlayCircle />
+        {recordState === RecordState.START && (
+          <button className={styles.recordbtn} onClick={pauseRecording}>
+            <HiPauseCircle />
+          </button>
+        )}
+        {recordState === RecordState.PAUSE && (
+          <button className={styles.recordbtn} onClick={resumeRecording}>
+            <HiPlayCircle />
+          </button>
+        )}
+        <button className={styles.recordbtn} onClick={stopRecording}>
+          <HiStopCircle />
         </button>
-      )}
-      <button className={styles.recordbtn} onClick={stopRecording}>
-        <HiStopCircle />
-      </button>
-      {audioData && (
+        {audioData && (
+          <div>
+            <audio controls src={audioData.url} />
+          </div>
+        )}
         <div>
-          <audio controls src={audioData.url} />
+          <AudioReactRecorder
+            state={recordState}
+            type={"audio/wav"}
+            onStop={handleAudioData}
+            backgroundColor="rgb(255,255,255)"
+            canvasWidth={200}
+            canvasHeight={80}
+          />
+          {recordingMessage}
         </div>
-      )}
-      <div>{recordingMessage}</div>
+      </div>
       <button onClick={() => console.log("녹음 axios랑 연결하기")}>
         업로드하기
       </button>
