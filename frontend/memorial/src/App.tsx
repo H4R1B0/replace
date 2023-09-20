@@ -46,6 +46,7 @@ function App() {
       <Router>
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
+            <Route path={PATH.ROOT} element={<MainPage />} />
             <Route path={PATH.MAIN} element={<MainPage />} />
             <Route path={PATH.ROOM} element={<RoomPage />} />
             <Route path={PATH.TRIBUTE} element={<TributePage />} />
