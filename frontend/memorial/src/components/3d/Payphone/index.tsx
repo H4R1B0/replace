@@ -18,7 +18,6 @@ type GLTFResult = GLTF & {
   };
   materials: {
     PaletteMaterial001: THREE.MeshStandardMaterial;
-    PaletteMaterial001: THREE.MeshStandardMaterial;
     PaletteMaterial002: THREE.MeshStandardMaterial;
   };
 };
