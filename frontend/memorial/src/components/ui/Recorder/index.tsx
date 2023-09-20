@@ -39,6 +39,17 @@ export default function Recorder() {
 
   return (
     <div className={styles.wrapper}>
+      <div>
+        <AudioReactRecorder
+          state={recordState}
+          type={"audio/wav"}
+          onStop={handleAudioData}
+          backgroundColor="rgb(255,255,255)"
+          canvasWidth={200}
+          canvasHeight={80}
+        />
+        {recordingMessage}
+      </div>
       <div className={styles.audioRecorder}>
         <button className={styles.recordbtn} onClick={startRecording}>
           <HiMicrophone />
@@ -61,17 +72,6 @@ export default function Recorder() {
             <audio controls src={audioData.url} />
           </div>
         )}
-        <div>
-          <AudioReactRecorder
-            state={recordState}
-            type={"audio/wav"}
-            onStop={handleAudioData}
-            backgroundColor="rgb(255,255,255)"
-            canvasWidth={200}
-            canvasHeight={80}
-          />
-          {recordingMessage}
-        </div>
       </div>
       <button onClick={() => console.log("녹음 axios랑 연결하기")}>
         업로드하기
