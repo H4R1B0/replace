@@ -1,5 +1,7 @@
 import Payphone from "@components/3d/Payphone";
-
+import Modal from "@components/ui/Modal";
+import Recorder from "@components/ui/Recorder";
+import { useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Stage, PresentationControls } from "@react-three/drei";
 import styles from "./PayphonePage.module.css";
@@ -10,6 +12,16 @@ import {
 } from "@react-three/postprocessing";
 
 export default function PayphonePage() {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
   return (
     <div className={styles.wrapper}>
       <Canvas
@@ -37,14 +49,22 @@ export default function PayphonePage() {
                   width={1000}
                 />
               </EffectComposer>
-              <Payphone
-                onPayphoneClick={() => console.log("여기가 공중전화?")}
-              />
-              {/* <Payphone onPayphoneClick={openModal} /> */}
+              <Payphone onPayphoneClick={openModal} />
             </Selection>
           </PresentationControls>
         </Stage>
       </Canvas>
+      {/* 모달 부분 구현 -> 로그인 구현 이후에 녹음/리스트 기능 분리하기  */}
+      <div>
+        <Modal
+          modalOpen={modalOpen}
+          onClose={closeModal}
+          title="이 순간을 음성으로 남기시겠습니까?"
+          buttonLabel="닫기"
+        >
+          <Recorder />
+        </Modal>
+      </div>
     </div>
   );
 }
