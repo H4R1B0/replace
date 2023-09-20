@@ -22,7 +22,7 @@ const letters: Letter[] = [
 ];
 
 export const handlers: RequestHandler[] = [
-  rest.get("https://pokeapi.co/api/v2/letter/list", async (req, res, ctx) => {
+  rest.get("https://pokeapi.co/api/v2/letter/list", (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
