@@ -15,7 +15,7 @@ if (import.meta.env.DEV) {
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={true} />
+      <ReactQueryDevtools initialIsOpen={false} />
       <App />
     </QueryClientProvider>
   </React.StrictMode>

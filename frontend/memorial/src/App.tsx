@@ -15,8 +15,6 @@ const PayphonePage = lazy(() => import("@pages/PayphonePage"));
 const HousePage = lazy(() => import("@pages/HousePage"));
 const SearchResultPage = lazy(() => import("@pages/SearchResultPage"));
 
-const queryClient = new QueryClient();
-
 export default function App() {
   function handleResize() {
     const vh = window.innerHeight * 0.01;
