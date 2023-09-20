@@ -30,10 +30,9 @@ export default function RoomPage() {
             {/* <ambientLight /> */}
             <Selection>
               <EffectComposer multisampling={8} autoClear={false}>
-                {/*TODO: visibleEgdeColor type 수정하기  */}
                 <Outline
                   blur
-                  visibleEdgeColor="white"
+                  visibleEdgeColor={0xffffff}
                   edgeStrength={100}
                   width={1000}
                 />

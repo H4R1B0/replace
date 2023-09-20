@@ -1,11 +1,6 @@
 import Payphone from "@components/3d/Payphone";
 import { Canvas } from "@react-three/fiber";
-import {
-  OrbitControls,
-  Stage,
-  Edges,
-  PresentationControls,
-} from "@react-three/drei";
+import { OrbitControls, Stage, PresentationControls } from "@react-three/drei";
 import styles from "./PayphonePage.module.css";
 
 export default function PayphonePage() {
