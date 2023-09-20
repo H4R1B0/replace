@@ -1,6 +1,6 @@
-// async function initMocks() {
-//   const { worker } = await import("./browser");
-//   worker.start();
-// }
+async function initMocks() {
+  const { worker } = await import("./browser");
+  worker.start();
+}
 
-// export default initMocks;
+export default initMocks;
