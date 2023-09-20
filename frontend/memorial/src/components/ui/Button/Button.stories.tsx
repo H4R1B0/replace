@@ -1,7 +1,7 @@
-import Button from "../components/ui/Button";
+import Button from ".";
 
 export default {
-  title: "UI/BubbleList",
+  title: "UI",
   component: Button,
 };
 
