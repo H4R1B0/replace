@@ -1,23 +1,51 @@
 import Library from "@components/3d/Library";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Stage } from "@react-three/drei";
+import { Stage, PresentationControls } from "@react-three/drei";
 import styles from "./LibraryPage.module.css";
 import Modal from "@components/ui/Modal";
 import { useState } from "react";
+import {
+  Selection,
+  EffectComposer,
+  Outline,
+} from "@react-three/postprocessing";
 
 export default function LibraryPage() {
   const [letterModalOpen, setLetterModalOpen] = useState(false);
   const [bookModalOpen, setBookModalOpen] = useState(false);
   return (
     <div className={styles.wrapper}>
-      <Canvas>
-        <OrbitControls />
+      <Canvas
+        flat
+        dpr={[1, 2]}
+        camera={{ fov: 50, position: [0, 0, 8] }}
+        style={{ touchAction: "none" }}
+      >
+        <color attach="background" args={["#e0b7ff"]} />
         <Stage environment="city" intensity={0.5} adjustCamera>
-          {/* <ambientLight /> */}
-          <Library
-            onLetterClick={() => setLetterModalOpen(true)}
-            onBookShelfClick={() => setBookModalOpen(true)}
-          />
+          <PresentationControls
+            snap
+            global
+            zoom={1.5}
+            rotation={[0, -Math.PI / 4, 0]}
+            polar={[0, Math.PI / 4]}
+            azimuth={[-Math.PI / 4, Math.PI / 4]}
+          >
+            <Selection>
+              <EffectComposer multisampling={8} autoClear={false}>
+                <Outline
+                  blur
+                  visibleEdgeColor={0xffffff}
+                  edgeStrength={100}
+                  width={1000}
+                />
+              </EffectComposer>
+              <Library
+                onLetterClick={() => setLetterModalOpen(true)}
+                onBookShelfClick={() => setBookModalOpen(true)}
+              />
+            </Selection>
+          </PresentationControls>
         </Stage>
       </Canvas>
       <Modal
