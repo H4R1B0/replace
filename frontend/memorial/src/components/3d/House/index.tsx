@@ -47,10 +47,10 @@ type GLTFResult = GLTF & {
   };
 };
 type HouseProps = {
-  onHouseClick?: () => void;
+  onWindowClick?: (sequence: number) => void;
 } & JSX.IntrinsicElements["group"];
 
-export default function House({ onHouseClick, ...other }: HouseProps) {
+export default function House({ onWindowClick, ...other }: HouseProps) {
   const { nodes, materials } = useGLTF(housePath) as GLTFResult;
   return (
     <group {...other} dispose={null}>
@@ -142,7 +142,11 @@ export default function House({ onHouseClick, ...other }: HouseProps) {
           material={materials.PaletteMaterial001}
         />
       </group>
-      <group position={[1.872, 0.307, 6.328]} rotation={[Math.PI / 2, 0, 0]}>
+      <group
+        position={[1.872, 0.307, 6.328]}
+        rotation={[Math.PI / 2, 0, 0]}
+        onClick={() => onWindowClick?.(3)}
+      >
         <mesh
           geometry={nodes.rightWindow_1.geometry}
           material={materials.PaletteMaterial001}
@@ -156,7 +160,11 @@ export default function House({ onHouseClick, ...other }: HouseProps) {
           material={materials.PaletteMaterial001}
         />
       </group>
-      <group position={[1.872, 0.307, 6.328]} rotation={[Math.PI / 2, 0, 0]}>
+      <group
+        position={[1.872, 0.307, 6.328]}
+        rotation={[Math.PI / 2, 0, 0]}
+        onClick={() => onWindowClick?.(2)}
+      >
         <mesh
           geometry={nodes.mainWindow_1.geometry}
           material={materials.PaletteMaterial001}
@@ -170,7 +178,11 @@ export default function House({ onHouseClick, ...other }: HouseProps) {
           material={materials.PaletteMaterial001}
         />
       </group>
-      <group position={[1.872, 0.307, 6.328]} rotation={[Math.PI / 2, 0, 0]}>
+      <group
+        position={[1.872, 0.307, 6.328]}
+        rotation={[Math.PI / 2, 0, 0]}
+        onClick={() => onWindowClick?.(1)}
+      >
         <mesh
           geometry={nodes.leftWindow_1.geometry}
           material={materials.PaletteMaterial001}
