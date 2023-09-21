@@ -114,6 +114,7 @@ type RoomProps = {
 export default function Room({ onTrashcanClick, ...other }: RoomProps) {
   const { nodes, materials } = useGLTF(roomPath) as GLTFResult;
   const [hover, setHover] = useState(false);
+
   return (
     <group {...other} dispose={null}>
       <Select enabled={hover}>

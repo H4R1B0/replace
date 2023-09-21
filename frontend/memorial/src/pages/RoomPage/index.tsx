@@ -7,8 +7,23 @@ import {
   EffectComposer,
   Outline,
 } from "@react-three/postprocessing";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
+import { deleteSingleRoom } from "@apis/room";
 
 export default function RoomPage() {
+  const queryClient = useQueryClient();
+
+  const deleteRoomMutation = useMutation({
+    mutationFn: deleteSingleRoom,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["trashcan"] });
+    },
+  });
+
+  const handleDelete = () => {
+    deleteRoomMutation.mutate();
+  };
+
   return (
     <div className={styles.wrapper}>
       <Canvas
@@ -17,7 +32,6 @@ export default function RoomPage() {
         camera={{ fov: 50, position: [0, 0, 8] }}
         style={{ touchAction: "none" }}
       >
-        {/* <color attach="background" args={["#e0b7ff"]} /> */}
         <Stage environment="city" intensity={0.5} adjustCamera shadows={false}>
           <PresentationControls
             snap
@@ -38,7 +52,7 @@ export default function RoomPage() {
                 />
               </EffectComposer>
               {/*TODO: onTrashcanClick에 전달하는 함수 상단에 정의하기 */}
-              <Room onTrashcanClick={() => console.log("nini")} />
+              <Room onTrashcanClick={() => handleDelete()} />
             </Selection>
           </PresentationControls>
         </Stage>

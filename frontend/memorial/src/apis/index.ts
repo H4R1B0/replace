@@ -52,3 +52,9 @@ export const api = {
       body: JSON.stringify(payload),
     }),
 };
+
+export const Header = () => ({
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem("login-token")}`,
+  },
+});

@@ -30,7 +30,8 @@
       "@utils/*": ["utils/*"],
       "@assets/*": ["assets/*"],
       "@mocks/*": ["mocks/*"],
-      "@constants/*": ["constants/*"]
+      "@constants/*": ["constants/*"],
+      "@apis/*": ["apis/*"]
     }
   },
   "include": ["src"],

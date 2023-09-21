@@ -15,7 +15,7 @@ const PayphonePage = lazy(() => import("@pages/PayphonePage"));
 const HousePage = lazy(() => import("@pages/HousePage"));
 const SearchResultPage = lazy(() => import("@pages/SearchResultPage"));
 
-function App() {
+export default function App() {
   function handleResize() {
     const vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty("--vh", `${vh}px`);
@@ -46,6 +46,7 @@ function App() {
       <Router>
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
+            <Route path={PATH.ROOT} element={<MainPage />} />
             <Route path={PATH.MAIN} element={<MainPage />} />
             <Route path={PATH.ROOM} element={<RoomPage />} />
             <Route path={PATH.TRIBUTE} element={<TributePage />} />
@@ -60,5 +61,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
