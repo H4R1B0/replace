@@ -26,6 +26,7 @@
     "@use-gesture/react": "^10.3.0",
     "audio-react-recorder": "^1.0.5",
     "axios": "^1.5.0",
+    "msw-storybook-addon": "^1.8.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
