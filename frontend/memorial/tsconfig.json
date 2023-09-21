@@ -31,7 +31,8 @@
       "@assets/*": ["assets/*"],
       "@mocks/*": ["mocks/*"],
       "@constants/*": ["constants/*"],
-      "@apis/*": ["apis/*"]
+      "@apis/*": ["apis/*"],
+      "@types/*": ["types/*"]
     }
   },
   "include": ["src"],
