@@ -12,13 +12,13 @@ import {
   useQueryClient,
   useMutation,
 } from "@tanstack/react-query";
-import { deleteRoom } from "@apis/room";
+import { deleteSingleRoom } from "@apis/room";
 
 export default function RoomPage() {
   const queryClient = useQueryClient();
 
   const deleteRoomMutation = useMutation({
-    mutationFn: deleteRoom,
+    mutationFn: deleteSingleRoom,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["trashcan"] });
     },
