@@ -7,11 +7,7 @@ import {
   EffectComposer,
   Outline,
 } from "@react-three/postprocessing";
-import {
-  QueryClient,
-  useQueryClient,
-  useMutation,
-} from "@tanstack/react-query";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { deleteSingleRoom } from "@apis/room";
 
 export default function RoomPage() {
