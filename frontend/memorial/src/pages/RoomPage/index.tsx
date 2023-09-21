@@ -45,7 +45,7 @@ export default function RoomPage() {
             polar={[0, Math.PI / 4]}
             azimuth={[-Math.PI / 4, Math.PI / 4]}
           >
-            {/* <ambientLight /> */}
+            {/* <pointLight position={[90, 10, 10]} /> */}
             <Selection>
               <EffectComposer multisampling={8} autoClear={false}>
                 <Outline

@@ -51,6 +51,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@typescript-eslint/parser", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:5.59.8"],\
             ["@use-gesture/react", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:10.3.0"],\
             ["@vitejs/plugin-react", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:4.0.0"],\
+            ["audio-react-recorder", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:1.0.5"],\
             ["axios", "npm:1.5.0"],\
             ["eslint", "npm:8.42.0"],\
             ["eslint-plugin-react-hooks", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:4.6.0"],\
@@ -8107,6 +8108,29 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["audio-react-recorder", [\
+        ["npm:1.0.5", {\
+          "packageLocation": "./.yarn/cache/audio-react-recorder-npm-1.0.5-32f796226e-aeee30530c.zip/node_modules/audio-react-recorder/",\
+          "packageDependencies": [\
+            ["audio-react-recorder", "npm:1.0.5"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:1.0.5", {\
+          "packageLocation": "./.yarn/__virtual__/audio-react-recorder-virtual-88235a9755/0/cache/audio-react-recorder-npm-1.0.5-32f796226e-aeee30530c.zip/node_modules/audio-react-recorder/",\
+          "packageDependencies": [\
+            ["audio-react-recorder", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:1.0.5"],\
+            ["@types/react", "npm:18.2.8"],\
+            ["prop-types", "npm:15.8.1"],\
+            ["react", "npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["available-typed-arrays", [\
         ["npm:1.0.5", {\
           "packageLocation": "./.yarn/cache/available-typed-arrays-npm-1.0.5-88f321e4d3-20eb47b3ce.zip/node_modules/available-typed-arrays/",\
@@ -14068,6 +14092,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@typescript-eslint/parser", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:5.59.8"],\
             ["@use-gesture/react", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:10.3.0"],\
             ["@vitejs/plugin-react", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:4.0.0"],\
+            ["audio-react-recorder", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:1.0.5"],\
             ["axios", "npm:1.5.0"],\
             ["eslint", "npm:8.42.0"],\
             ["eslint-plugin-react-hooks", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:4.6.0"],\

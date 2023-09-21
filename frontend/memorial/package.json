@@ -24,6 +24,7 @@
     "@types/react-modal": "^3.16.0",
     "@types/three": "^0.156.0",
     "@use-gesture/react": "^10.3.0",
+    "audio-react-recorder": "^1.0.5",
     "axios": "^1.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
