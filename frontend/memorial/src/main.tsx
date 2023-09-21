@@ -2,14 +2,21 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
-import initMocks from "./mocks/index.ts";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-if (import.meta.env.VITE_APP_ENV === "development") {
-  await initMocks();
+const queryClient = new QueryClient();
+
+if (import.meta.env.DEV) {
+  const { worker } = await import("./mocks/browser.ts");
+  worker.start();
 }
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <App />
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
+      <App />
+    </QueryClientProvider>
   </React.StrictMode>
 );
