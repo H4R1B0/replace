@@ -1,4 +1,4 @@
-import { api, Header } from "./index";
+import { api } from "./index";
 
 // TODO : roomUuid 를 어떻게 전달받아야 하는지 알 것
 // 내 집 조회 => 방 리스트 조회
