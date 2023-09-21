@@ -4,12 +4,12 @@ import com.vegetable.samochiro.domain.Room;
 import com.vegetable.samochiro.domain.User;
 import com.vegetable.samochiro.dto.user.HouseSearchResponse;
 import com.vegetable.samochiro.dto.user.HouseSearchRoomResponse;
+import com.vegetable.samochiro.dto.user.IsChangeNicknameResponse;
 import com.vegetable.samochiro.dto.user.NicknameSearchResponse;
+import com.vegetable.samochiro.dto.user.SecessionResponse;
 import com.vegetable.samochiro.dto.user.UserInfoRequest;
-import com.vegetable.samochiro.dto.user.UserInputRequest;
 import com.vegetable.samochiro.dto.user.NicknameUpdateRequest;
 import com.vegetable.samochiro.dto.user.UsernameAuthenticationToken;
-import com.vegetable.samochiro.oauth2.token.JwtToken;
 import com.vegetable.samochiro.oauth2.token.JwtTokenProvider;
 import com.vegetable.samochiro.repository.RefreshTokenRepository;
 import com.vegetable.samochiro.repository.UserRepository;
@@ -106,5 +106,21 @@ public class UserService {
 		return response;
 	}
 	//집 조회 - 집 1번
+
+	@Transactional
+	public SecessionResponse secession(String userId) {
+		userRepository.deleteById(userId);
+		return SecessionResponse.builder().message("회원 탈퇴에 성공하였습니다.").build();
+	}
+	//회원 탈퇴 - 유저 8
+
+    public IsChangeNicknameResponse isChangeNickname(String userId) {
+        boolean isChangeNickname = userRepository.findById(userId).get().isChange();
+        if (!isChangeNickname) {
+            return IsChangeNicknameResponse.builder().isChange(false).message("닉네임 변경이 가능합니다.").build();
+        }
+        return IsChangeNicknameResponse.builder().isChange(true).message("닉네임 변경이 불가합니다.").build();
+    }
+    //닉네임 변경 여부 조회 - 유저 9
 
 }
