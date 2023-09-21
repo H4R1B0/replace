@@ -1,15 +1,19 @@
 package com.vegetable.samochiro.controller;
 
 import com.vegetable.samochiro.dto.user.HouseSearchResponse;
+import com.vegetable.samochiro.dto.user.IsChangeNicknameRequest;
+import com.vegetable.samochiro.dto.user.IsChangeNicknameResponse;
 import com.vegetable.samochiro.dto.user.NicknameSearchResponse;
 import com.vegetable.samochiro.dto.user.NicknameUpdateRequest;
 import com.vegetable.samochiro.dto.user.NicknameUpdateResponse;
-import com.vegetable.samochiro.oauth2.token.JwtToken;
+import com.vegetable.samochiro.dto.user.SecessionResponse;
 import com.vegetable.samochiro.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -88,6 +92,18 @@ public class UserController {
 	}
 	//집 조회 - 집 1번
 
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<SecessionResponse> secession(@PathVariable String userId) {
+        SecessionResponse response = userService.secession(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+	//회원 탈퇴 - 유저 8번
 
+	@PostMapping("/isChange")
+	public ResponseEntity<IsChangeNicknameResponse> isChangeNickname(@RequestBody IsChangeNicknameRequest request) {
+		IsChangeNicknameResponse response = userService.isChangeNickname(request.getUserId());
+		return ResponseEntity.status(HttpStatus.OK).body(response);
+	}
+	//닉네임 변경 여부 조회 - 유저 9
 
 }
