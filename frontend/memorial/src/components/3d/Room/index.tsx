@@ -113,18 +113,21 @@ type RoomProps = {
 
 export default function Room({ onTrashcanClick, ...other }: RoomProps) {
   const { nodes, materials } = useGLTF(roomPath) as GLTFResult;
-  const [hover, setHover] = useState(false);
+  const [isTrashcanHovered, setIsTrashcanHovered] = useState(false);
 
+  const handleTrashcanHover = () => {
+    setIsTrashcanHovered(!isTrashcanHovered);
+  };
   return (
     <group {...other} dispose={null}>
-      <Select enabled={hover}>
+      <Select enabled={isTrashcanHovered}>
         {/*TODO: onPointOver,Out에 전달되는 함수 새로 정의해주기, handle, on 차이 구분해서 적기  */}
         <group
           position={[0.387, 0.385, 2.985]}
           rotation={[Math.PI / 2, 0, 0]}
           scale={1.47}
-          onPointerOver={() => setHover(true)}
-          onPointerOut={() => setHover(false)}
+          onPointerOver={handleTrashcanHover}
+          onPointerOut={handleTrashcanHover}
         >
           <mesh
             castShadow
