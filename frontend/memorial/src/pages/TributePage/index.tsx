@@ -5,7 +5,7 @@ export default function TributePage() {
   const navigate = useNavigate();
   return (
     <div>
-      <h1> 헌화 페이지임</h1>
+      <h1> 헌화 페이지</h1>
       <img
         src="https://i.imgur.com/UZrA2j5.png"
         style={{ height: "400px" }}
