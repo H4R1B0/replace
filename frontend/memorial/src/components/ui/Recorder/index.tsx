@@ -1,10 +1,11 @@
 import { useState } from "react";
 import AudioReactRecorder, { RecordState } from "audio-react-recorder";
+
+import styles from "./Recorder.module.css";
 import { HiMicrophone } from "react-icons/hi2";
 import { HiStopCircle } from "react-icons/hi2";
 import { HiPauseCircle } from "react-icons/hi2";
 import { HiPlayCircle } from "react-icons/hi2";
-import styles from "./Recorder.module.css";
 
 export default function Recorder() {
   const [recordState, setRecordState] = useState(RecordState.STOP);
@@ -35,6 +36,28 @@ export default function Recorder() {
 
   const handleAudioData = (data: any) => {
     setAudioData(data);
+  };
+
+  // DB에 post로 저장하기
+  const postAudio = () => {
+    const formData = new FormData();
+    formData.append("audio", audioData.blob);
+    fetch("http://localhost:8080/api/voicemail", {
+      method: "POST",
+      header: {
+        "Content-Type": "multipart/form-data",
+      },
+
+      body: formData,
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`${res.status} 에러 발생`);
+        }
+        return res.json();
+      })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -73,9 +96,6 @@ export default function Recorder() {
           </div>
         )}
       </div>
-      <button onClick={() => console.log("녹음 axios랑 연결하기")}>
-        업로드하기
-      </button>
     </div>
   );
 }
