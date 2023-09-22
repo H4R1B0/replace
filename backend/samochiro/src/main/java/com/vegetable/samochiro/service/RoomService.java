@@ -22,7 +22,6 @@ public class RoomService {
         String targetName = request.getTargetName();
         Optional<Room> findRoom = roomRepository.findByRoomSequenceUserId(roomSequence, userId);
         findRoom.get().setTargetName(targetName);
-        findRoom.get().setTargetGender(request.getTargetGender());
     }
     //기억의 방 대상 등록 - 방 1
 }
