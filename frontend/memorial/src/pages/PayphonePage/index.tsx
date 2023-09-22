@@ -2,6 +2,7 @@ import Payphone from "@components/3d/Payphone";
 import Modal from "@components/ui/Modal";
 import Recorder from "@components/ui/Recorder";
 import Button from "@components/ui/Button";
+import AudioPlayer from "@components/ui/AudioPlayer";
 import { useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Stage, PresentationControls } from "@react-three/drei";
@@ -11,18 +12,25 @@ import {
   EffectComposer,
   Outline,
 } from "@react-three/postprocessing";
-
-import { useQueryClient, useMutation } from "@tanstack/react-query";
-import { registVoicemail } from "@apis/payphone";
-import { deleteSingleVoicemail } from "@apis/payphone";
-import { fetchVoicemailList } from "@apis/payphone";
+import { useEffect } from "react";
 
 export default function PayphonePage() {
   // 모달 열고 닫기 위한 State
-  const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   // 리스트 불러오기 위한 State
-  const [voicemailList, setVoicemailList] = useState([]);
+  interface Voicemail {
+    voicemailId: number;
+    sendDate: string;
+    voicemailUrl: string;
+    fromUser: string;
+    toUser: string;
+  }
+  const [voicemailList, setVoicemailList] = useState<Voicemail[]>([]);
+
+  // 상세모달
+  const [selectedVoicemail, setSelectedVoicemail] = useState<boolean>(false);
+  const [detailVoicemail, setDetailVoicemail] = useState<Voicemail | null>();
 
   const openModal = () => {
     setModalOpen(true);
@@ -32,52 +40,74 @@ export default function PayphonePage() {
     setModalOpen(false);
   };
 
-  // react-query
-  const queryClient = useQueryClient();
-  // 등록하기
-  const registVoicemailMutation = useMutation({
-    mutationFn: registVoicemail,
-    onSuccess: () => {
-      queryClient.invalidateQueries(["voicemail"]);
-      alret("등록되었습니다.");
-    },
-    onError: (error) => {
-      // 에러 처리 작업 추가
-      console.error("등록 에러:", error);
-      alret("등록에 실패했습니다.");
-    },
-  });
+  // 리스트 가져오기
+  useEffect(() => {
+    getVoicemailList();
+  }, []);
 
-  const handleRegist = () => {
-    registVoicemailMutation.mutate();
+  const BASE_URL = import.meta.env.VITE_APP_API_URL;
+
+  const getVoicemailList = async () => {
+    fetch(`${BASE_URL}/api/voicemail`)
+      .then((response) => {
+        // 에러 코드에 따른 상태 관리를 위해 추가
+        if (!response.ok) {
+          throw new Error(`${response.status} 에러 발생`);
+        }
+        console.log("res", response);
+        return response.json();
+      })
+      .then((data) => {
+        console.log("data", data.Response.voicemailList);
+        setVoicemailList(data.Response.voicemailList);
+      })
+      .catch((error) => console.log(error));
   };
+
+  const getVoicemailDetail = async (voicemailId: number) => {
+    fetch(`${BASE_URL}/api/voicemail/${voicemailId}`)
+      .then((response) => {
+        // 에러 코드에 따른 상태 관리를 위해 추가
+        if (!response.ok) {
+          throw new Error(`${response.status} 에러 발생`);
+        }
+        console.log("res", response);
+        return response.json();
+      })
+      .then((data) => {
+        console.log("data", data.Response);
+        setDetailVoicemail(data.Response);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  function detailModal(voicemailId: number) {
+    console.log(`클릭된 voicemail의 voicemailId: ${voicemailId}`);
+    getVoicemailDetail(voicemailId);
+    setSelectedVoicemail(true);
+  }
 
   // 삭제하기
-  const deleteVoiceMailMutation = useMutation({
-    mutationFn: deleteSingleVoicemail,
-    onSuccess: () => {
-      queryClient.invalidateQueries(["voicemail"]);
-      alret("삭제되었습니다.");
-    },
-    onError: (error) => {
-      // 에러 처리 작업 추가
-      console.error("삭제 에러:", error);
-      alret("삭제에 실패했습니다.");
-    },
-  });
-
-  const handleDelete = () => {
-    deleteVoiceMailMutation.mutate();
-  };
-
-  // 리스트 가져오기
-  const handleGet = async () => {
-    try {
-      const response = await fetchVoicemailList(); // API로부터 Voicemail 리스트를 불러옴
-      setVoicemailList(response.data.voicemailList);
-    } catch (error) {
-      console.error("리스트 호출 에러:", error);
-    }
+  const deleteVoicemail = async (voicemailId: number) => {
+    fetch(`${BASE_URL}/api/voicemail/${voicemailId}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Error: ${response.statusText}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setVoicemailList((prevVoicemailList) => [
+          ...prevVoicemailList,
+          data.Response,
+        ]);
+        alert("삭제 완료");
+      })
+      .catch((error) => {
+        console.error("에러났음~", error);
+      });
   };
 
   return (
@@ -132,11 +162,43 @@ export default function PayphonePage() {
           title="다른 사람이 남긴 기록을 확인해보세요"
           buttonLabel="닫기"
         >
-          <Button onClick={handleGet}>불러오기</Button>
-          {voicemailList.map((voicemail) => (
-            <p key={voicemail.voicemailId}>{voicemail.fromNickname}</p>
-          ))}
+          {/* <Button onClick={handleGet}>불러오기</Button> */}
+          {voicemailList &&
+            voicemailList.map((voicemail: Voicemail) => (
+              <p
+                onClick={() => detailModal(voicemail.voicemailId)}
+                key={voicemail.voicemailId}
+              >
+                {voicemail.fromUser}
+              </p>
+            ))}
         </Modal>
+
+        {/* 상세모달 */}
+        {selectedVoicemail && (
+          <Modal
+            // modalOpen={selectedVoicemail}
+            // onClose={() => setSelectedVoicemail(false)}
+            modalOpen={modalOpen}
+            onClose={closeModal}
+            title="다른 사용자가 남긴 목소리를 들어보세요"
+            buttonLabel="닫기"
+          >
+            {detailVoicemail && (
+              <AudioPlayer url={detailVoicemail.voicemailUrl} />
+            )}
+            <Button onClick={() => setSelectedVoicemail(false)}>
+              뒤로가기
+            </Button>
+            {detailVoicemail && (
+              <Button
+                onClick={() => deleteVoicemail(detailVoicemail.voicemailId)}
+              >
+                음성 삭제하기
+              </Button>
+            )}
+          </Modal>
+        )}
       </div>
     </div>
   );
