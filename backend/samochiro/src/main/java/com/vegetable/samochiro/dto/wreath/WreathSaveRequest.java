@@ -15,6 +15,5 @@ public class WreathSaveRequest {
 	private String description;
 	private String startDate; //String으로 들어오면 서비스에서 처리 필요
 	private String endDate;
-	private String userId;
 
 }

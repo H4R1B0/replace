@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 public class WreathUpdateRequest {
 
 	private Long wreathId;
-	private String userId;
 	private String wreathItem;
 
 }

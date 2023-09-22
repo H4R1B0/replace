@@ -6,10 +6,12 @@ import com.vegetable.samochiro.dto.wreath.WreathListResponse;
 import com.vegetable.samochiro.dto.wreath.WreathSaveRequest;
 import com.vegetable.samochiro.dto.wreath.WreathUpdateRequest;
 import com.vegetable.samochiro.service.WreathService;
+import com.vegetable.samochiro.util.HeaderUtils;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,11 +30,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class WreathController {
 
 	private final WreathService wreathService;
+	private final HeaderUtils headerUtils;
 
 	@PostMapping
-	public ResponseEntity<String> saveNewWreath(@RequestBody WreathSaveRequest saveRequest) {
+	public ResponseEntity<String> saveNewWreath(@RequestBody WreathSaveRequest saveRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
 		try {
-			wreathService.saveWreath(saveRequest);
+			String userId = headerUtils.getUserId(authorizationHeader);
+			wreathService.saveWreath(saveRequest, userId);
 			return ResponseEntity.ok("헌화 카드가 등록되었습니다.");
 		}
 		catch(Exception e) {
@@ -82,9 +87,10 @@ public class WreathController {
 	//헌화 제목 검색 - 헌화 4번
 
 	@PutMapping
-	public ResponseEntity<String> updateWreathCount(@RequestBody WreathUpdateRequest updateRequest) {
+	public ResponseEntity<String> updateWreathCount(@RequestBody WreathUpdateRequest updateRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
 		try {
-			boolean isNotCompleted = wreathService.updateWreath(updateRequest);
+			String userId = headerUtils.getUserId(authorizationHeader);
+			boolean isNotCompleted = wreathService.updateWreath(updateRequest, userId);
 			if(!isNotCompleted) {
 				return ResponseEntity.ok().body("이미 완료한 헌화입니다.");
 			}
@@ -100,9 +106,10 @@ public class WreathController {
 	//헌화하기 - 헌화 5번
 
 	@PostMapping("/declaration")
-	public ResponseEntity<String> saveDeclaration(@RequestBody DeclarationSaveRequest saveRequest) {
+	public ResponseEntity<String> saveDeclaration(@RequestBody DeclarationSaveRequest saveRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
 		try {
-			wreathService.saveDeclaration(saveRequest);
+			String userId = headerUtils.getUserId(authorizationHeader);
+			wreathService.saveDeclaration(saveRequest, userId);
 			return ResponseEntity.ok("신고 완료되었습니다.");
 		}
 		catch (Exception e) {
