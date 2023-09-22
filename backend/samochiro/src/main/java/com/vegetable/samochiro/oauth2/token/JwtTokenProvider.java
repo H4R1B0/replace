@@ -1,5 +1,6 @@
 package com.vegetable.samochiro.oauth2.token;
 
+import com.vegetable.samochiro.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -16,6 +17,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -28,25 +30,74 @@ import java.util.stream.Collectors;
 @Component
 public class JwtTokenProvider {
 
-    private final Key key;
+    private final String AUTHENTICATION_PREFIX;
 
-    public JwtTokenProvider(@Value("${spring.jwt.secret}") String secretKey) {
+    private final long ACCESS_TOKEN_EXPIRATION_TIME;
+
+    private final Key key;
+    private final UserRepository userRepository;
+
+    public JwtTokenProvider(
+            @Value("${spring.jwt.secret}") String secretKey,
+            @Value("${spring.jwt.prefix}") String authenticationPrefix,
+            @Value("${spring.jwt.token.access-expiration-time}") long accessExpirationTime,
+            UserRepository userRepository
+    ) {
         byte[] secretByteKey = DatatypeConverter.parseBase64Binary(secretKey);
         this.key = Keys.hmacShaKeyFor(secretByteKey);
+        this.AUTHENTICATION_PREFIX = authenticationPrefix;
+        this.ACCESS_TOKEN_EXPIRATION_TIME = accessExpirationTime;
+        this.userRepository = userRepository;
     }
 
-    public String generateToken(Authentication authentication) {
+    public JwtToken generateToken(Authentication authentication) {
         String authorities = authentication.getAuthorities().stream()
-            .map(GrantedAuthority::getAuthority)
-            .collect(Collectors.joining(","));
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
 
-        //Access Token 생성
-        return Jwts.builder()
-            .setSubject(authentication.getName())
-            .claim("auth", authorities)
-            .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
-            .signWith(key, SignatureAlgorithm.HS256)
-            .compact();
+        DefaultOAuth2User defaultOAuth2User = (DefaultOAuth2User) authentication.getPrincipal();
+        String userId = defaultOAuth2User.getName();
+        String nickname = userRepository.findNicknameByUserId(userId).get();
+
+        //accessToken 생성
+        String accessToken = Jwts.builder()
+                .setSubject(nickname)
+                .claim("auth", authorities)
+                .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRATION_TIME))
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+
+        //JwtToken 생성
+        return JwtToken.builder()
+                .grantType(AUTHENTICATION_PREFIX)
+                .accessToken(accessToken)
+                .userId(userId)
+                .build();
+    }
+
+    public JwtToken generateNewToken(Authentication authentication) {
+        String authorities = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
+
+        User userDetails = (User) authentication.getPrincipal();
+        String userId = userDetails.getUsername();
+        String nickname = userRepository.findNicknameByUserId(userId).get();
+
+        //accessToken 생성
+        String accessToken = Jwts.builder()
+                .setSubject(nickname)
+                .claim("auth", authorities)
+                .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRATION_TIME))
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+
+        //JwtToken 생성
+        return JwtToken.builder()
+                .grantType(AUTHENTICATION_PREFIX)
+                .accessToken(accessToken)
+                .userId("userId")
+                .build();
     }
 
     public Authentication getAuthentication(String accessToken) {
@@ -58,9 +109,9 @@ public class JwtTokenProvider {
         }
 
         Collection<? extends GrantedAuthority> authorities =
-            Arrays.stream(claims.get("auth").toString().split(","))
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
+                Arrays.stream(claims.get("auth").toString().split(","))
+                        .map(SimpleGrantedAuthority::new)
+                        .collect(Collectors.toList());
 
         UserDetails principal = new User(claims.getSubject(), "", authorities);
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);

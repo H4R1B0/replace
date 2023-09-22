@@ -1,13 +1,10 @@
 package com.vegetable.samochiro.dto.room;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
-@Getter
-@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class RegisterTargetNameRequest {
-    private String roomUuid;
     private String targetName;
 }

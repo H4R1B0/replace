@@ -26,13 +26,13 @@ public class LetterService {
 
 
 	@Transactional
-	public void saveLetter(LetterSaveRequest saveRequest) {
+	public void saveLetter(LetterSaveRequest saveRequest, String userId) {
 		Letter letter = Letter.builder()
 			.title(saveRequest.getTitle())
 			.content(saveRequest.getContent())
 			.writeTime(LocalDateTime.now())
-			.user(userRepository.findById(saveRequest.getUserId()).get())
-			.room(roomRepository.findById(saveRequest.getRoomUuid()).get())
+			.user(userRepository.findById(userId).get())
+			.room(roomRepository.findByRoomSequenceUserId(saveRequest.getSequence(), userId).get())
 			.build();
 
 		letterRepository.save(letter);

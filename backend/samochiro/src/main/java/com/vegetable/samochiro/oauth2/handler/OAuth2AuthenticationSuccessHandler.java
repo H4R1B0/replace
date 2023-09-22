@@ -1,7 +1,9 @@
 package com.vegetable.samochiro.oauth2.handler;
 
 import com.vegetable.samochiro.oauth2.repository.HttpCookieOAuth2AuthorizationRequestRepository;
+import com.vegetable.samochiro.oauth2.token.JwtToken;
 import com.vegetable.samochiro.oauth2.token.JwtTokenProvider;
+import com.vegetable.samochiro.repository.JwtTokenRepository;
 import com.vegetable.samochiro.util.CookieUtils;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,11 +22,13 @@ import static com.vegetable.samochiro.oauth2.repository.HttpCookieOAuth2Authoriz
 public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private final JwtTokenProvider tokenProvider;
+    private final JwtTokenRepository jwtTokenRepository;
 
     private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
 
-    public OAuth2AuthenticationSuccessHandler(JwtTokenProvider tokenProvider, HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository) {
+    public OAuth2AuthenticationSuccessHandler(JwtTokenProvider tokenProvider, JwtTokenRepository jwtTokenRepository, HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository) {
         this.tokenProvider = tokenProvider;
+        this.jwtTokenRepository = jwtTokenRepository;
         this.httpCookieOAuth2AuthorizationRequestRepository = httpCookieOAuth2AuthorizationRequestRepository;
     }
 
@@ -42,10 +46,11 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
 
-        String token = tokenProvider.generateToken(authentication);
+        JwtToken jwtToken = tokenProvider.generateToken(authentication);
+        jwtTokenRepository.save(jwtToken);
 
         return UriComponentsBuilder.fromUriString(targetUrl)
-            .queryParam("token", token)
+            .queryParam("token", jwtToken.getAccessToken())
             .build().toUriString();
     }
 

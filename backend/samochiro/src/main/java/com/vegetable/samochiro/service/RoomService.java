@@ -18,10 +18,9 @@ public class RoomService {
     private final RoomRepository roomRepository;
 
     @Transactional
-    public void registerTargetName(RegisterTargetNameRequest request) {
-        String roomUuid = request.getRoomUuid();
+    public void registerTargetName(int roomSequence, String userId, RegisterTargetNameRequest request) {
         String targetName = request.getTargetName();
-        Optional<Room> findRoom = roomRepository.findById(roomUuid);
+        Optional<Room> findRoom = roomRepository.findByRoomSequenceUserId(roomSequence, userId);
         findRoom.get().setTargetName(targetName);
     }
     //기억의 방 대상 등록 - 방 1

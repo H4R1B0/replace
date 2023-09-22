@@ -7,8 +7,11 @@ import com.vegetable.samochiro.dto.user.NicknameSearchResponse;
 import com.vegetable.samochiro.dto.user.NicknameUpdateRequest;
 import com.vegetable.samochiro.dto.user.NicknameUpdateResponse;
 import com.vegetable.samochiro.dto.user.SecessionResponse;
+import com.vegetable.samochiro.oauth2.token.JwtTokenService;
 import com.vegetable.samochiro.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,21 +20,30 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
 public class UserController {
 
 	private final UserService userService;
+	private final JwtTokenService jwtTokenService;
 
 	@PutMapping
-	public ResponseEntity<NicknameUpdateResponse> setNewNickname(@RequestBody NicknameUpdateRequest updateRequest) {
+	public ResponseEntity<NicknameUpdateResponse> setNewNickname(@RequestBody NicknameUpdateRequest updateRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
 		try {
-			String token = userService.updateNickname(updateRequest);
+			String accessToken = authorizationHeader.substring(7);
+			String userId = jwtTokenService.findUserId(accessToken);
+
+			String token = userService.updateNickname(updateRequest, userId);
+			jwtTokenService.deleteJwtToken(accessToken);
+			jwtTokenService.saveJwtToken(token, userId);
+
 			String message = "닉네임 설정이 완료되었습니다.";
 
 			return ResponseEntity.ok(new NicknameUpdateResponse(token, message));
@@ -79,9 +91,12 @@ public class UserController {
 	}
 	//닉네임 검색 - 유저 7번
 
-	@PostMapping
-	public ResponseEntity<HouseSearchResponse> searchHouseByUserId(@RequestBody String userId) {
+	@GetMapping("/home")
+	public ResponseEntity<HouseSearchResponse> searchHouseByUserId(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
 		try {
+			String accessToken = authorizationHeader.substring(7);
+			String userId = jwtTokenService.findUserId(accessToken);
+
 			HouseSearchResponse house = userService.findHouseByUserId(userId);
 			return ResponseEntity.ok(house);
 		}
@@ -99,9 +114,12 @@ public class UserController {
     }
 	//회원 탈퇴 - 유저 8번
 
-	@PostMapping("/isChange")
-	public ResponseEntity<IsChangeNicknameResponse> isChangeNickname(@RequestBody IsChangeNicknameRequest request) {
-		IsChangeNicknameResponse response = userService.isChangeNickname(request.getUserId());
+	@GetMapping("/isChange")
+	public ResponseEntity<IsChangeNicknameResponse> isChangeNickname(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+		String accessToken = authorizationHeader.substring(7);
+		String userId = jwtTokenService.findUserId(accessToken);
+
+		IsChangeNicknameResponse response = userService.isChangeNickname(userId);
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 	//닉네임 변경 여부 조회 - 유저 9

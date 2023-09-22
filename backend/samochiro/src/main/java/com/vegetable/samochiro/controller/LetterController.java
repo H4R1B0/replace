@@ -5,17 +5,14 @@ import com.vegetable.samochiro.dto.letter.LetterListResponse;
 import com.vegetable.samochiro.dto.letter.LetterSaveRequest;
 import com.vegetable.samochiro.service.LetterService;
 import java.util.List;
+
+import com.vegetable.samochiro.util.HeaderUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,11 +20,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class LetterController {
 
 	private final LetterService letterService;
+	private final HeaderUtils headerUtils;
 
 	@PostMapping
-	public ResponseEntity<String> saveNewLetter(@RequestBody LetterSaveRequest saveRequest) {
+	public ResponseEntity<String> saveNewLetter(@RequestBody LetterSaveRequest saveRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
 		try {
-			letterService.saveLetter(saveRequest);
+			String userId = headerUtils.getUserId(authorizationHeader);
+			letterService.saveLetter(saveRequest, userId);
 			return ResponseEntity.ok().body("편지가 등록되었습니다.");
 		}
 		catch (Exception e) {
