@@ -130,14 +130,6 @@ export default function LibraryPage() {
       });
   };
 
-  // const openModal = () => setBookModalOpen(true);
-  // const closeModal = () => {
-  //   setBookModalOpen(false);
-  //   setSelectedLetter(null); // 선택된 편지 초기화
-  // };
-  // console.log("책들", books);
-  // console.log("편지", letter);
-
   return (
     <div className={styles.wrapper}>
       <Canvas
@@ -180,13 +172,15 @@ export default function LibraryPage() {
         title="편지를 작성해보세요."
         buttonLabel="서재로 돌아가기"
       >
-        <p>제목</p>
-        <input type="text" name="title" onChange={onChangeLetter} />
-        <p>내용</p>
-        <input type="text" name="content" onChange={onChangeLetter} />
-        <Button variant="regular" onClick={letterSubmit}>
-          편지 작성하기
-        </Button>
+        <div>
+          <p>제목</p>
+          <input type="text" name="title" onChange={onChangeLetter} />
+          <p>내용</p>
+          <input type="text" name="content" onChange={onChangeLetter} />
+          <Button variant="regular" onClick={letterSubmit}>
+            편지 작성하기
+          </Button>
+        </div>
       </Modal>
 
       <Modal

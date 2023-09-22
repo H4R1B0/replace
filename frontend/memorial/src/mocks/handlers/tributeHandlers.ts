@@ -4,8 +4,8 @@ type Wreath = {
   wreathId: number;
   title: string;
   subTitle: string;
-  startDate: string;
-  endDate: string;
+  startDate: Date;
+  endDate: Date;
   flower: number;
   candle: number;
   ribbon: number;
@@ -15,28 +15,63 @@ type WreathData = {
   data: Wreath[];
 };
 
+function parseDate(dateString: string): Date {
+  const [year, month, day] = dateString.split("-").map(Number);
+  return new Date(year, month - 1, day);
+}
+
 const BASE_URL = import.meta.env.VITE_APP_API_URL;
 
 const wreathData: WreathData = {
   data: [
     {
-      wreathId: 4,
+      wreathId: 1,
       title: "김싸피를 추모합니다",
       subTitle: "온 마음 다해 애도의 뜻을 전합니다",
-      startDate: "2023-09-05",
-      endDate: "2023-09-15",
-      flower: 3,
+      startDate: parseDate("2021-09-02"),
+      endDate: parseDate("2023-09-15"),
+      flower: 1,
+      candle: 2,
+      ribbon: 4,
+    },
+    {
+      wreathId: 2,
+      title: "이싸피를 추모합니다",
+      subTitle: "온 마음 다해 애도의 뜻을 전합니다",
+      startDate: parseDate("2023-09-01"),
+      endDate: parseDate("2023-09-15"),
+      flower: 4,
       candle: 4,
-      ribbon: 5,
+      ribbon: 0,
     },
     {
       wreathId: 3,
-      title: "이싸피를 추모합니다",
+      title: "황싸피를 추모합니다",
       subTitle: "온 마음 다해 애도의 뜻을 전합니다",
-      startDate: "2023-09-03",
-      endDate: "2023-09-10",
+      startDate: parseDate("2020-01-05"),
+      endDate: parseDate("2023-09-15"),
+      flower: 2,
+      candle: 10,
+      ribbon: 4,
+    },
+    {
+      wreathId: 4,
+      title: "호싸피를 추모합니다",
+      subTitle: "온 마음 다해 애도의 뜻을 전합니다",
+      startDate: parseDate("2023-03-23"),
+      endDate: parseDate("2023-09-15"),
+      flower: 5,
+      candle: 6,
+      ribbon: 1,
+    },
+    {
+      wreathId: 5,
+      title: "루싸피를 추모합니다",
+      subTitle: "온 마음 다해 애도의 뜻을 전합니다",
+      startDate: parseDate("2013-09-05"),
+      endDate: parseDate("2023-09-15"),
       flower: 3,
-      candle: 4,
+      candle: 9,
       ribbon: 5,
     },
   ],

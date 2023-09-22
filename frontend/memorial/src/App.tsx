@@ -6,6 +6,7 @@ import { LiaSearchSolid } from "react-icons/lia";
 import PATH from "@constants/path";
 import NotFoundPage from "@pages/NotFoundPage";
 import "./App.css";
+// import "@assets/fonts/font.css";
 
 const MainPage = lazy(() => import("@pages/MainPage"));
 const RoomPage = lazy(() => import("@pages/RoomPage"));

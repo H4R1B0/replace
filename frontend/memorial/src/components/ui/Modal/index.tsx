@@ -1,4 +1,5 @@
 import ReactModal from "react-modal";
+import Button from "../Button";
 
 interface ModalProps {
   modalOpen: boolean;
@@ -17,6 +18,35 @@ export default function Modal({
   buttonLabel,
   children,
 }: ModalProps) {
+  const customModalStyles: ReactModal.Styles = {
+    overlay: {
+      backgroundColor: " rgba(0, 0, 0, 0.4)",
+      width: "100%",
+      height: "100vh",
+      zIndex: "10",
+      position: "fixed",
+      top: "0",
+      left: "0",
+    },
+    content: {
+      maxWidth: "500px",
+      width: "80%",
+      height: "auto",
+      zIndex: "150",
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      borderRadius: "10px",
+      boxShadow: "2px 2px 2px rgba(0, 0, 0, 0.25)",
+      backgroundColor: "white",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      overflow: "auto",
+    },
+  };
+
   return (
     <ReactModal
       isOpen={modalOpen}
@@ -24,12 +54,15 @@ export default function Modal({
       ariaHideApp={false}
       contentLabel="Pop up Message"
       shouldCloseOnOverlayClick={false}
+      style={customModalStyles} // customStyles를 여기에 적용
     >
       <div>
         <h2>{title}</h2>
         {subtitle && <p>{subtitle}</p>}
         {children}
-        <button onClick={onClose}>{buttonLabel}</button>
+        <Button variant="regular" onClick={onClose}>
+          {buttonLabel}
+        </Button>
       </div>
     </ReactModal>
   );
