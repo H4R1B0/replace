@@ -12,7 +12,7 @@ export const roomHandlers = [
       })
     );
   }),
-  rest.get(`${BASE_URL}/user`, async (_, res, ctx) => {
+  rest.get(`${BASE_URL}/user/home`, async (_, res, ctx) => {
     return res(ctx.status(200), ctx.json(rooms));
   }),
 ];
