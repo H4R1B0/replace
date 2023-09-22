@@ -11,7 +11,7 @@ public class HeaderUtils {
         this.jwtTokenService = jwtTokenService;
     }
 
-    public String getUserId(String authorizationHeader){
+    public String getUserId(String authorizationHeader) {
         String accessToken = authorizationHeader.substring(7);
         return jwtTokenService.findUserId(accessToken);
     }
