@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class HouseSearchRoomResponse {
 
-	private String roomUuid;
 	private String targetName;
 	private int sequence;
 

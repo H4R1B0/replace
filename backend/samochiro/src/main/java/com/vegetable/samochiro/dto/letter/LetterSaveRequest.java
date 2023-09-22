@@ -12,7 +12,6 @@ public class LetterSaveRequest {
 	private String title;
 	private String content;
 	private String writeTime;
-	private String roomUuid;
-	private String userId;
+	private int sequence;
 
 }

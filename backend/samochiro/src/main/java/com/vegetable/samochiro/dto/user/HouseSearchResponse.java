@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class HouseSearchResponse {
 
-	private String nickname;
 	private List<HouseSearchRoomResponse> rooms;
 
 }

@@ -7,20 +7,18 @@ import com.vegetable.samochiro.dto.user.HouseSearchRoomResponse;
 import com.vegetable.samochiro.dto.user.IsChangeNicknameResponse;
 import com.vegetable.samochiro.dto.user.NicknameSearchResponse;
 import com.vegetable.samochiro.dto.user.SecessionResponse;
-import com.vegetable.samochiro.dto.user.UserInfoRequest;
 import com.vegetable.samochiro.dto.user.NicknameUpdateRequest;
-import com.vegetable.samochiro.dto.user.UsernameAuthenticationToken;
+import com.vegetable.samochiro.oauth2.token.JwtToken;
 import com.vegetable.samochiro.oauth2.token.JwtTokenProvider;
-import com.vegetable.samochiro.repository.RefreshTokenRepository;
 import com.vegetable.samochiro.repository.UserRepository;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,35 +28,25 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
 	private final UserRepository userRepository;
-	private final AuthenticationManagerBuilder authenticationManagerBuilder;
 	private final JwtTokenProvider tokenProvider;
-	private final RefreshTokenRepository refreshTokenRepository;
 
 	@Transactional
-	public String updateNickname(NicknameUpdateRequest updateRequest) {
-		Optional<User> findUser = userRepository.findById(updateRequest.getUserId());
+	public String updateNickname(NicknameUpdateRequest updateRequest, String userId) {
+		Optional<User> findUser = userRepository.findById(userId);
 		findUser.get().setNickname(updateRequest.getNickname());
 		findUser.get().setChange(true);
 		userRepository.save(findUser.get());
 		//update
 
-		UserInfoRequest request = new UserInfoRequest(updateRequest.getUserId());
-		UsernameAuthenticationToken authenticationToken = request.toAuthentication();
-		Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
+        org.springframework.security.core.userdetails.User userDetails = new org.springframework.security.core.userdetails.User(userId, "", Collections.singleton(authority));
 
-		Claims claims = Jwts.claims();
-		claims.put("userId", updateRequest.getUserId());
-		claims.put("nickname", updateRequest.getNickname());
-		//jwt 토큰에 id, 닉네임 넣기
+        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
 
-//		JwtToken token = tokenProvider.generateToken(authentication);
-		String token = tokenProvider.generateToken(authentication);
+        JwtToken jwtToken = tokenProvider.generateNewToken(authentication);
 		//jwt 토큰 생성
 
-//		refreshTokenRepository.save(token);
-		//jwt 토큰 redis에 저장
-
-		return token;
+		return jwtToken.getAccessToken();
 	}
 	//닉네임 설정 - 유저 5번
 
@@ -77,7 +65,7 @@ public class UserService {
 		Optional<User> findUser = userRepository.findByNickname(nickname);
 
 		if(findUser.isPresent()) {
-			NicknameSearchResponse response = new NicknameSearchResponse(findUser.get().getId(), findUser.get().getNickname());
+			NicknameSearchResponse response = new NicknameSearchResponse(findUser.get().getNickname());
 			return response;
 		}
 		else {
@@ -96,13 +84,12 @@ public class UserService {
 
 		for(Room r : rooms) {
 			HouseSearchRoomResponse roomResponse = new HouseSearchRoomResponse();
-			roomResponse.setRoomUuid(r.getUuid());
 			roomResponse.setTargetName(r.getTargetName());
 			roomResponse.setSequence(r.getSequence());
 			roomDtoList.add(roomResponse);
 		}
 
-		HouseSearchResponse response = new HouseSearchResponse(findUser.get().getNickname(), roomDtoList);
+		HouseSearchResponse response = new HouseSearchResponse(roomDtoList);
 		return response;
 	}
 	//집 조회 - 집 1번

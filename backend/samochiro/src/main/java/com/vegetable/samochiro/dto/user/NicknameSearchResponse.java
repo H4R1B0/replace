@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class NicknameSearchResponse {
 
-	private String userId;
 	private String nickname;
 
 }
