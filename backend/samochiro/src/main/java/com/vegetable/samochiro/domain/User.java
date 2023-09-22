@@ -11,6 +11,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -57,6 +58,10 @@ public class User {
     @OneToMany(mappedBy = "user")
     @Builder.Default
     private List<Room> rooms = new ArrayList<>();
+
+    @OneToMany(mappedBy = "toUser", fetch = FetchType.LAZY)
+    @Builder.Default
+    private List<Voicemail> receivedVoicemails = new ArrayList<>();
 
     public User update(String email) {
         this.email = email;

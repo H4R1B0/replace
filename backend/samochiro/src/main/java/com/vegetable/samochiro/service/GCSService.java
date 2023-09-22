@@ -17,23 +17,21 @@ import java.io.IOException;
 public class GCSService {
     @Value("${spring.cloud.gcp.storage.bucket-name}")
     private String bucketName;
+    @Value("${spring.cloud.gcp.credentials.project-id}")
+    private String projectId;
     private Storage storage;
 
     public GCSService() {
         try{
             String rootPath = System.getProperty("user.dir");
             StorageOptions storageOptions = StorageOptions.newBuilder()
-                    .setProjectId("avid-lock-397313")
+                    .setProjectId(projectId)
                     .setCredentials(GoogleCredentials.fromStream(new FileInputStream(rootPath + "/src/main/resources/avid-lock-397313-6129fb95bb28.json"))).build();
             this.storage = storageOptions.getService();
         }
         catch (IOException e){
             e.printStackTrace();
         }
-    }
-
-    private void init(){
-
     }
 
     public String uploadFile(String fileName, MultipartFile file) {
@@ -51,5 +49,10 @@ public class GCSService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void deleteFile(String voicemailName) {
+        //버킷 명, 삭제 파일 이름, 프로젝트 ID
+        storage.delete(bucketName, voicemailName, Storage.BlobSourceOption.decryptionKey(projectId));
     }
 }
