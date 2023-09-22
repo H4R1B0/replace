@@ -1,11 +1,17 @@
 interface AudioProps {
-  url: string;
+  url: string | null;
 }
 
 export default function AudioPlayer({ url }: AudioProps) {
+  if (!url) {
+    return null;
+  }
+
   return (
     <div>
-      <audio controls src={url} />
+      <audio controls>
+        <source src={url} />
+      </audio>
     </div>
   );
 }
