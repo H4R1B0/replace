@@ -10,6 +10,7 @@ import { useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import roomPath from "./room.glb?url";
 import { Select } from "@react-three/postprocessing";
+import { useToggle } from "react-use";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -113,18 +114,20 @@ type RoomProps = {
 
 export default function Room({ onTrashcanClick, ...other }: RoomProps) {
   const { nodes, materials } = useGLTF(roomPath) as GLTFResult;
-  const [hover, setHover] = useState(false);
+  const [isTrashcanHovered, toggleTrashcanHovered] = useToggle(false);
+  const [isRadioHovered, toggleRadioHovered] = useToggle(false);
+  const [isFrameHovered, toggleFrameHovered] = useToggle(false);
+  const [isPhoneHovered, togglePhoneHovered] = useToggle(false);
 
   return (
     <group {...other} dispose={null}>
-      <Select enabled={hover}>
-        {/*TODO: onPointOver,Out에 전달되는 함수 새로 정의해주기, handle, on 차이 구분해서 적기  */}
+      <Select enabled={isTrashcanHovered}>
         <group
           position={[0.387, 0.385, 2.985]}
           rotation={[Math.PI / 2, 0, 0]}
           scale={1.47}
-          onPointerOver={() => setHover(true)}
-          onPointerOut={() => setHover(false)}
+          onPointerOver={toggleTrashcanHovered}
+          onPointerOut={toggleTrashcanHovered}
         >
           <mesh
             castShadow
@@ -141,17 +144,22 @@ export default function Room({ onTrashcanClick, ...other }: RoomProps) {
           />
         </group>
       </Select>
+
       <group
         position={[0.419, 0.863, 1.881]}
         rotation={[Math.PI, -1.332, Math.PI]}
         scale={[0.269, 0.129, 0.087]}
       >
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.radio_1.geometry}
-          material={materials.OBJECTmain}
-        />
+        <Select enabled={isRadioHovered}>
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.radio_1.geometry}
+            material={materials.OBJECTmain}
+            onPointerOver={toggleRadioHovered}
+            onPointerOut={toggleRadioHovered}
+          />
+        </Select>
         <mesh
           castShadow
           receiveShadow
@@ -159,6 +167,7 @@ export default function Room({ onTrashcanClick, ...other }: RoomProps) {
           material={materials.PaletteMaterial001}
         />
       </group>
+
       <group position={[0.142, 2.995, 1.198]} scale={[0.411, 0.559, 0.411]}>
         <mesh
           castShadow
@@ -335,45 +344,53 @@ export default function Room({ onTrashcanClick, ...other }: RoomProps) {
           material={materials["White.004"]}
         />
       </group>
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.telephone.geometry}
-        material={materials["OBJECTmain.003"]}
-        position={[3.061, 0.706, 0.351]}
-        rotation={[Math.PI, -1.309, Math.PI]}
-        scale={0.14}
-      />
-      <group
-        position={[1.698, 1.577, 0.238]}
-        rotation={[Math.PI, 0, Math.PI]}
-        scale={[0.448, 0.537, 0.432]}
-      >
+      <Select enabled={isPhoneHovered}>
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.frames_1.geometry}
-          material={materials.framewhite}
+          geometry={nodes.telephone.geometry}
+          material={materials["OBJECTmain.003"]}
+          position={[3.061, 0.706, 0.351]}
+          rotation={[Math.PI, -1.309, Math.PI]}
+          scale={0.14}
+          onPointerOver={togglePhoneHovered}
+          onPointerOut={togglePhoneHovered}
         />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.frames_2.geometry}
-          material={materials["FRAMEORANGE.002"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.frames_3.geometry}
-          material={materials["FRAMEORANGE.003"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.frames_4.geometry}
-          material={materials["FRAMEORANGE.005"]}
-        />
-      </group>
+      </Select>
+      <Select enabled={isFrameHovered}>
+        <group
+          position={[1.698, 1.577, 0.238]}
+          rotation={[Math.PI, 0, Math.PI]}
+          scale={[0.448, 0.537, 0.432]}
+          onPointerOver={toggleFrameHovered}
+          onPointerOut={toggleFrameHovered}
+        >
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.frames_1.geometry}
+            material={materials.framewhite}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.frames_2.geometry}
+            material={materials["FRAMEORANGE.002"]}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.frames_3.geometry}
+            material={materials["FRAMEORANGE.003"]}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.frames_4.geometry}
+            material={materials["FRAMEORANGE.005"]}
+          />
+        </group>
+      </Select>
       <group position={[0.915, 1.586, 0.298]} scale={0.411}>
         <mesh
           castShadow
