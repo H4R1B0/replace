@@ -36,13 +36,13 @@ public class LetterController {
 	}
 	//편지 등록 - 서재 1번
 
-	@PostMapping("/list")
-	public ResponseEntity<Response> getLetterList(@RequestBody String roomUuid) {
+	@GetMapping("/{sequence}")
+	public ResponseEntity<Response> getLetterList(@PathVariable int sequence, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
 		try {
-			List<LetterListResponse> letterList = letterService.findLetterList(roomUuid);
+			String userId = headerUtils.getUserId(authorizationHeader);
+			List<LetterListResponse> letterList = letterService.findLetterList(userId, sequence);
 			return ResponseEntity.ok(new Response(letterList));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.badRequest().body(new Response("잘못된 요청입니다."));
 		}

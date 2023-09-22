@@ -39,6 +39,11 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+
+	//GCS
+	implementation 'org.springframework.cloud:spring-cloud-gcp-starters:1.2.8.RELEASE'
+	implementation 'org.springframework.cloud:spring-cloud-gcp-storage:1.2.8.RELEASE'
+
 }
 
 tasks.named('test') {
