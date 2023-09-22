@@ -10,5 +10,6 @@ import lombok.RequiredArgsConstructor;
 public class NicknameUpdateRequest {
 
 	private String nickname;
+	private String gender;
 
 }

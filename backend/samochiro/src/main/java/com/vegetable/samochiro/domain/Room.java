@@ -30,6 +30,9 @@ public class Room {
 	@Column(nullable = false)
 	private int sequence;
 
+	@Column(name = "target_gender" , length = 1)
+	private String targetGender;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
