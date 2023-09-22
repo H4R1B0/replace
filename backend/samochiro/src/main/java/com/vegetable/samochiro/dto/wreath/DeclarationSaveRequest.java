@@ -12,6 +12,5 @@ public class DeclarationSaveRequest {
 	private int declarationType;
 	private String declarationContent;
 	private Long wreathId;
-	private String userId;
 
 }

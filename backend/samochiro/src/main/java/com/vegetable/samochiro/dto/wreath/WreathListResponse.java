@@ -20,5 +20,6 @@ public class WreathListResponse {
 	private int flower;
 	private int candle;
 	private int ribbon;
+	private int allCount;
 
 }
