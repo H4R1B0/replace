@@ -51,6 +51,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private SocialType socialType;
 
+    @Column(length = 1)
+    private String gender;
+
     @OneToMany(mappedBy = "user")
     @Builder.Default
     private List<Room> rooms = new ArrayList<>();

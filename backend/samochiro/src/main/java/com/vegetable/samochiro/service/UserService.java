@@ -34,6 +34,7 @@ public class UserService {
 	public String updateNickname(NicknameUpdateRequest updateRequest, String userId) {
 		Optional<User> findUser = userRepository.findById(userId);
 		findUser.get().setNickname(updateRequest.getNickname());
+		findUser.get().setGender(updateRequest.getGender());
 		findUser.get().setChange(true);
 		userRepository.save(findUser.get());
 		//update

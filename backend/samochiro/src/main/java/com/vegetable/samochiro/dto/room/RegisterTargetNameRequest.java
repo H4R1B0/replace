@@ -7,4 +7,5 @@ import lombok.*;
 @RequiredArgsConstructor
 public class RegisterTargetNameRequest {
     private String targetName;
+    private String targetGender;
 }
