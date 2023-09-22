@@ -5,7 +5,6 @@ Files: room.glb [21.14MB] > room-transformed.glb [2.86MB] (86%)
 */
 
 import * as THREE from "three";
-import { useState } from "react";
 import { useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import roomPath from "./room.glb?url";
