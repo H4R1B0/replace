@@ -1,7 +1,7 @@
 import PayphonePage from ".";
 
 export default {
-  title: "Page",
+  title: "Page/PayphonePage",
   component: PayphonePage,
 };
 
