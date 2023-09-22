@@ -39,7 +39,8 @@ public class LetterService {
 	}
 	//편지 등록 - 서재 1번
 
-	public List<LetterListResponse> findLetterList(String roomUuid) {
+	public List<LetterListResponse> findLetterList(String userId, int sequence) {
+		String roomUuid = roomRepository.findByRoomSequenceUserId(sequence, userId).get().getUuid();
 		List<Letter> letterList = letterRepository.selectListByRoomUuid(roomUuid).get();
 		List<LetterListResponse> letterListResponseList = new ArrayList<>();
 
