@@ -5,6 +5,7 @@ import com.vegetable.samochiro.dto.wreath.WreathDetailResponse;
 import com.vegetable.samochiro.dto.wreath.WreathListResponse;
 import com.vegetable.samochiro.dto.wreath.WreathSaveRequest;
 import com.vegetable.samochiro.dto.wreath.WreathUpdateRequest;
+import com.vegetable.samochiro.exception.NegativeWordException;
 import com.vegetable.samochiro.service.WreathService;
 import com.vegetable.samochiro.util.HeaderUtils;
 import java.util.List;
@@ -36,8 +37,13 @@ public class WreathController {
 	public ResponseEntity<String> saveNewWreath(@RequestBody WreathSaveRequest saveRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
 		try {
 			String userId = headerUtils.getUserId(authorizationHeader);
-			wreathService.saveWreath(saveRequest, userId);
-			return ResponseEntity.ok("헌화 카드가 등록되었습니다.");
+			if(wreathService.saveWreath(saveRequest, userId)) {
+				return ResponseEntity.ok("헌화 카드가 등록되었습니다.");
+			}
+			else {
+				//throw new NegativeWordException("부정적인 내용이 포함되어 있습니다."); //exception handler 만들어서 나중에 처리할 것
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("부정적인 내용이 포함되어 있습니다.");
+			}
 		}
 		catch(Exception e) {
 			e.printStackTrace();
