@@ -11,10 +11,6 @@ type RegisterRoomRequest = {
 export const fetchRoomList = async () => {
   return await api.get<RoomList>("/user/home");
 };
-// 기억의 방(집) 삭제
-export const deleteSingleRoom = async () => {
-  return await api.delete("/room");
-};
 
 // 기억의 방(집) 대상 등록
 export const registerRoomTarget = async ({
@@ -23,4 +19,8 @@ export const registerRoomTarget = async ({
 }: RegisterRoomRequest) => {
   return await api.put(`/room/${sequence}`, {}, { targetName });
 };
-// 기억의 방(집) 상세 조회
+
+// 기억의 방(집) 삭제
+export const deleteSingleRoom = async (sequence: number) => {
+  return await api.delete(`/room/${sequence}`);
+};

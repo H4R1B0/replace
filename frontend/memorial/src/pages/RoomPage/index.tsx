@@ -9,10 +9,11 @@ import {
 } from "@react-three/postprocessing";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { deleteSingleRoom } from "@apis/room";
-// import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export default function RoomPage() {
-  // const roomSequence = useParams();
+  const { sequence } = useParams();
+
   const queryClient = useQueryClient();
 
   const deleteRoomMutation = useMutation({
@@ -22,8 +23,11 @@ export default function RoomPage() {
     },
   });
 
+  if (typeof sequence === "undefined") return;
+  const roomSequence = parseInt(sequence);
+
   const handleDelete = () => {
-    deleteRoomMutation.mutate();
+    deleteRoomMutation.mutate(roomSequence);
   };
 
   return (
