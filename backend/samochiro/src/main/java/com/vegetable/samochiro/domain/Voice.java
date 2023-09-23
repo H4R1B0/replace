@@ -32,9 +32,6 @@ public class Voice {
     @Column(name = "voice_url", nullable = false)
     private String url;
 
-    @Column(name = "radio_uuid", nullable = false)
-    private String radioUuid;
-
     @Column(name = "voice_name", nullable = false)
     private String name;
 

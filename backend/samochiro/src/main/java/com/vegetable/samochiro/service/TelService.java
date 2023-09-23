@@ -19,22 +19,18 @@ import java.time.LocalDateTime;
 public class TelService {
 
     private final RoomRepository roomRepository;
-    private final RoomObjectRepository roomObjectRepository;
     private final GCSService gcsService;
     private final VoiceRepository voiceRepository;
     private final String AUDIO_KEYWORD = "au";
 
     @Transactional
     public void registerAudioFile(String userId, int sequence, MultipartFile audioFile) {
-        Room room = roomRepository.findByRoomSequenceUserId(sequence, userId).get();
-        String roomUuid = room.getUuid();
-        String radioUuid = roomObjectRepository.findById(roomUuid).get().getRadioUuid();
+        Room room = roomRepository.findBySequenceAndUserId(sequence, userId).get();
         String currentTime = LocalDateTime.now().toString();
         String fileName = currentTime + AUDIO_KEYWORD + audioFile.getOriginalFilename();
         String audioUrl = gcsService.uploadFile(fileName, audioFile);
         Voice voice = Voice.builder()
                 .url(audioUrl)
-                .radioUuid(radioUuid)
                 .name(fileName)
                 .registDate(LocalDateTime.now())
                 .room(room)
