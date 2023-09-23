@@ -1,14 +1,21 @@
 import { useState } from "react";
 import AudioReactRecorder, { RecordState } from "audio-react-recorder";
+
+import styles from "./Recorder.module.css";
 import { HiMicrophone } from "react-icons/hi2";
 import { HiStopCircle } from "react-icons/hi2";
 import { HiPauseCircle } from "react-icons/hi2";
 import { HiPlayCircle } from "react-icons/hi2";
-import styles from "./Recorder.module.css";
+import AudioPlayer from "../AudioPlayer";
 
-export default function Recorder() {
+interface RecorderProps {
+  onAudioDataReceived: (data: Blob | null) => void;
+}
+
+export default function Recorder({ onAudioDataReceived }: RecorderProps) {
   const [recordState, setRecordState] = useState(RecordState.STOP);
-  const [audioData, setAudioData] = useState<any>(null);
+  // const [audioData, setAudioData] = useState<Blob | null>(null);
+  const [audioData, setAudioData] = useState<any | null>(null);
   const [recordingMessage, setRecordingMessage] = useState(""); // 녹음 상태 메시지
 
   // 녹음 시작
@@ -33,8 +40,9 @@ export default function Recorder() {
     setRecordingMessage("녹음 중...");
   };
 
-  const handleAudioData = (data: any) => {
+  const handleAudioData = (data: Blob) => {
     setAudioData(data);
+    onAudioDataReceived(data); // Blob 데이터를 전달합니다.
   };
 
   return (
@@ -69,13 +77,10 @@ export default function Recorder() {
         </button>
         {audioData && (
           <div>
-            <audio controls src={audioData.url} />
+            <AudioPlayer url={audioData.url} />
           </div>
         )}
       </div>
-      <button onClick={() => console.log("녹음 axios랑 연결하기")}>
-        업로드하기
-      </button>
     </div>
   );
 }
