@@ -117,20 +117,25 @@ public class JwtTokenProvider {
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 
-    public boolean validateToken(String token) {
+    public boolean validateToken(String token) throws Exception {
+        String message = "";
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
             log.info("Invalid JWT Token", e);
+            message = "Invalid JWT Token";
         } catch (ExpiredJwtException e) {
             log.info("Expired JWT Token", e);
+            message = "Expired JWT Token";
         } catch (UnsupportedJwtException e) {
             log.info("Unsupported JWT Token", e);
+            message = "Unsupported JWT Token";
         } catch (IllegalArgumentException e) {
             log.info("JWT claims string is empty.", e);
+            message = "JWT claims string is empty.";
         }
-        return false;
+        throw new Exception(message);
     }
 
     private Claims parseClaims(String accessToken) {

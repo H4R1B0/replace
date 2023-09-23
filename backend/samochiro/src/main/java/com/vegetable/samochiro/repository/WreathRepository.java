@@ -16,5 +16,8 @@ public interface WreathRepository extends JpaRepository<Wreath, Long> {
 	Optional<List<Wreath>> selectByTitle(@Param("title") String title);
 	//헌화 검색
 
-
+	@Query("select w from Wreath w where w.user.id = :userId")
+	Optional<List<Wreath>> selectByUserId(@Param("userId") String userId);
+	//내가 작성한 헌화 리스트 조회
+	
 }
