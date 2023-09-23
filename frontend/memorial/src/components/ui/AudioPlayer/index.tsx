@@ -3,7 +3,7 @@ interface AudioProps {
 }
 
 export default function AudioPlayer({ url }: AudioProps) {
-  if (!url) {
+  if (url === null) {
     return null;
   }
 

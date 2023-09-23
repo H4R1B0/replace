@@ -6,10 +6,16 @@ import { HiMicrophone } from "react-icons/hi2";
 import { HiStopCircle } from "react-icons/hi2";
 import { HiPauseCircle } from "react-icons/hi2";
 import { HiPlayCircle } from "react-icons/hi2";
+import AudioPlayer from "../AudioPlayer";
 
-export default function Recorder() {
+interface RecorderProps {
+  onAudioDataReceived: (data: Blob | null) => void;
+}
+
+export default function Recorder({ onAudioDataReceived }: RecorderProps) {
   const [recordState, setRecordState] = useState(RecordState.STOP);
-  const [audioData, setAudioData] = useState<any>(null);
+  // const [audioData, setAudioData] = useState<Blob | null>(null);
+  const [audioData, setAudioData] = useState<any | null>(null);
   const [recordingMessage, setRecordingMessage] = useState(""); // 녹음 상태 메시지
 
   // 녹음 시작
@@ -34,30 +40,9 @@ export default function Recorder() {
     setRecordingMessage("녹음 중...");
   };
 
-  const handleAudioData = (data: any) => {
+  const handleAudioData = (data: Blob) => {
     setAudioData(data);
-  };
-
-  // DB에 post로 저장하기
-  const postAudio = () => {
-    const formData = new FormData();
-    formData.append("audio", audioData.blob);
-    fetch("http://localhost:8080/api/voicemail", {
-      method: "POST",
-      header: {
-        "Content-Type": "multipart/form-data",
-      },
-
-      body: formData,
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`${res.status} 에러 발생`);
-        }
-        return res.json();
-      })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+    onAudioDataReceived(data); // Blob 데이터를 전달합니다.
   };
 
   return (
@@ -92,7 +77,7 @@ export default function Recorder() {
         </button>
         {audioData && (
           <div>
-            <audio controls src={audioData.url} />
+            <AudioPlayer url={audioData.url} />
           </div>
         )}
       </div>
