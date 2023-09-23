@@ -31,7 +31,7 @@ public class PhotoService {
 		String currentTime = LocalDateTime.now().toString();
 		String fileName = currentTime + "ph" + image.getOriginalFilename();
 		String url = gcssService.uploadFile(fileName, image);
-		Room findRoom = roomRepository.findByRoomSequenceUserId(sequence, userId).get();
+		Room findRoom = roomRepository.findBySequenceAndUserId(sequence, userId).get();
 
 		Photo photo = Photo.builder()
 			.url(url)
@@ -45,7 +45,7 @@ public class PhotoService {
 	//사진 등록 - 액자 1번
 
 	public List<PhotoListResponse> findPhotoList(String userId, int sequence) {
-		String roomUuid = roomRepository.findByRoomSequenceUserId(sequence, userId).get().getUuid();
+		String roomUuid = roomRepository.findBySequenceAndUserId(sequence, userId).get().getUuid();
 		List<Photo> photoList = photoRepository.findAllByRoomId(roomUuid);
 
 		List<PhotoListResponse> responseList = new ArrayList<>();
