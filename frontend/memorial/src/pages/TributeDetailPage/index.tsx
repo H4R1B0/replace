@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Modal from "@components/ui/Modal";
 
 type WreathDetail = {
   wreathId: number;
@@ -15,6 +16,8 @@ type WreathDetail = {
 
 export default function TributeDetailPage() {
   const BASE_URL = import.meta.env.VITE_APP_API_URL;
+
+  const [tributeModalOpen, setTributeModalOpen] = useState(false);
 
   let { wreathid } = useParams();
   const navigate = useNavigate();
@@ -41,8 +44,19 @@ export default function TributeDetailPage() {
       <p>{wreathDetail?.flower}</p>
       <p>{wreathDetail?.candle}</p>
       <p>{wreathDetail?.ribbon}</p>
-
       <button onClick={() => navigate("/tribute/list")}>뒤로가기</button>
+      <button onClick={() => setTributeModalOpen(true)}>헌화 시작하기</button>
+      <Modal
+        modalOpen={tributeModalOpen}
+        onClose={() => setTributeModalOpen(false)}
+        title="헌화를 남겨보세요."
+        buttonLabel="확인"
+      >
+        <div>
+          <input type="radio" name="flower" id="flower" />
+          <label htmlFor="flower">Flower</label>
+        </div>
+      </Modal>
     </div>
   );
 }

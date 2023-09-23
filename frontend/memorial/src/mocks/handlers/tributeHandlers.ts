@@ -15,6 +15,7 @@ type WreathData = {
   data: Wreath[];
 };
 
+//날짜 형식 바꾸기
 function parseDate(dateString: string): Date {
   const [year, month, day] = dateString.split("-").map(Number);
   return new Date(year, month - 1, day);
@@ -107,19 +108,18 @@ export const tributeHandlers: RequestHandler[] = [
   }),
 
   // post는 api 변동 가능성 있으므로 후에 작성!
-  //   rest.post(`${BASE_URL}/wreath`, async (req, res, ctx) => {
-  //     const wreath = await req.json();
+  rest.post(`${BASE_URL}/wreath`, async (req, res, ctx) => {
+    const wreath = await req.json();
 
-  //     wreath.letterId = wreathData.data.length + 1;
+    wreath.letterId = wreathData.data.length + 1;
+    wreathData.data.push(wreath);
 
-  //     wreathData.data.push(wreath);
-
-  //     return res(
-  //       ctx.status(201),
-  //       ctx.json({
-  //         wreathId: wreathData.data.length + 1,
-  //         wreath,
-  //       })
-  //     );
-  //   }),
+    return res(
+      ctx.status(201),
+      ctx.json({
+        wreathId: wreathData.data.length + 1,
+        wreath,
+      })
+    );
+  }),
 ];
