@@ -253,6 +253,28 @@ public class WreathService {
 	}
 	//신고 등록 - 헌화 6번
 
+	public List<WreathListResponse> findWreathListByUserId(String userId) {
+		List<Wreath> wreathList = wreathRepository.selectByUserId(userId).get();
+		List<WreathListResponse> responseList = new ArrayList<>();
+
+		for(Wreath w: wreathList) {
+			WreathListResponse wreathResponse = WreathListResponse.builder()
+				.wreathId(w.getWreathId())
+				.title(w.getTitle())
+				.subTitle(w.getSubTitle())
+				.startDate(w.getStartDate())
+				.endDate(w.getEndDate())
+				.flower(w.getWreathCount().getFlower())
+				.candle(w.getWreathCount().getCandle())
+				.ribbon(w.getWreathCount().getRibbon())
+				.allCount(w.getWreathCount().getFlower()+w.getWreathCount().getCandle()+w.getWreathCount().getRibbon())
+				.build();
+			responseList.add(wreathResponse);
+		}
+		return responseList;
+	}
+	//내가 작성한 헌화 조회 - 헌화 7번
+
 	public int[] computeFailureFunction(String badWord) {
 		int m = badWord.length();
 		int[] failure = new int[m];
