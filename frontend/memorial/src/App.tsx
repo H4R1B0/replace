@@ -6,10 +6,14 @@ import { LiaSearchSolid } from "react-icons/lia";
 import PATH from "@constants/path";
 import NotFoundPage from "@pages/NotFoundPage";
 import "./App.css";
+// import "@assets/fonts/font.css";
 
 const MainPage = lazy(() => import("@pages/MainPage"));
 const RoomPage = lazy(() => import("@pages/RoomPage"));
 const TributePage = lazy(() => import("@pages/TributePage"));
+const TributeListPage = lazy(() => import("@pages/TributeListPage"));
+const TributeDetailPage = lazy(() => import("@pages/TributeDetailPage"));
+const CreateTributePage = lazy(() => import("@pages/CreateTributePage"));
 const LibraryPage = lazy(() => import("@pages/LibraryPage"));
 const PayphonePage = lazy(() => import("@pages/PayphonePage"));
 const HousePage = lazy(() => import("@pages/HousePage"));
@@ -50,6 +54,9 @@ export default function App() {
             <Route path={PATH.MAIN} element={<MainPage />} />
             <Route path={PATH.ROOM} element={<RoomPage />} />
             <Route path={PATH.TRIBUTE} element={<TributePage />} />
+            <Route path={PATH.CREATETRIBUTE} element={<CreateTributePage />} />
+            <Route path={PATH.TRIBUTELIST} element={<TributeListPage />} />
+            <Route path={PATH.TRIBUTEDETAIL} element={<TributeDetailPage />} />
             <Route path={PATH.LIBRARY} element={<LibraryPage />} />
             <Route path={PATH.PAYPHONE} element={<PayphonePage />} />
             <Route path={PATH.HOUSE} element={<HousePage />} />

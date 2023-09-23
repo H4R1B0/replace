@@ -53,9 +53,11 @@ export default function LibraryPage() {
     });
   };
 
+  const BASE_URL = import.meta.env.VITE_APP_API_URL;
+
   // api 불러오기.다른 곳으로 이동시킬 것
   useEffect(() => {
-    fetch("https://pokeapi.co/api/v2/letter/list")
+    fetch(`${BASE_URL}/letter/list`)
       .then((res) => {
         // 에러 코드에 따른 상태 관리를 위해 추가
         if (!res.ok) {
@@ -68,11 +70,11 @@ export default function LibraryPage() {
         setBooks(data.response);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [letter, selectedBook]);
 
   useEffect(() => {
     if (selectedBook) {
-      fetch(`https://pokeapi.co/api/v2/letter/detail/${selectedBook?.letterId}`)
+      fetch(`${BASE_URL}/letter/detail/${selectedBook?.letterId}`)
         .then((res) => res.json())
         .then((data) => {
           setSelectedBook(data.response);
@@ -81,24 +83,38 @@ export default function LibraryPage() {
     }
   }, []);
 
+  const deleteLetter = () => {
+    fetch(`${BASE_URL}/letter/${selectedBook?.letterId}`, {
+      method: "DELETE",
+    }).then((res) => console.log(res));
+    alert("삭제되었습니다.");
+    setSelectedBook(null);
+  };
+
   const letterSubmit = () => {
-    fetch("letters", {
+    fetch(`${BASE_URL}/letter`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(letter),
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Error: ${response.statusText}`);
+      .then((res) => {
+        console.log(res);
+        if (!res.ok) {
+          throw new Error(`Error: ${res.statusText}`);
         }
-        return response.json();
+        return res.json();
       })
       .then((data) => {
-        setBooks((prevBooks) => [...prevBooks, data.response]);
+        setBooks((prevBooks) => {
+          const updatedBooks = [...prevBooks, data.response];
+          console.log("Updated books:", updatedBooks);
+          return updatedBooks;
+        });
 
         setLetterModalOpen(false);
+
         alert("작성 완료");
 
         setLetter({
@@ -114,12 +130,6 @@ export default function LibraryPage() {
       });
   };
 
-  // const openModal = () => setBookModalOpen(true);
-  // const closeModal = () => {
-  //   setBookModalOpen(false);
-  //   setSelectedLetter(null); // 선택된 편지 초기화
-  // };
-
   return (
     <div className={styles.wrapper}>
       <Canvas
@@ -130,7 +140,7 @@ export default function LibraryPage() {
       >
         <Stage environment="city" intensity={0.5} adjustCamera shadows={false}>
           <PresentationControls
-            snap
+            snap // 삭제 시 확대한 채로 멈춤
             global
             zoom={1.5}
             rotation={[0, -Math.PI / 4, 0]}
@@ -162,13 +172,15 @@ export default function LibraryPage() {
         title="편지를 작성해보세요."
         buttonLabel="서재로 돌아가기"
       >
-        <p>제목</p>
-        <input type="text" name="title" onChange={onChangeLetter} />
-        <p>내용</p>
-        <input type="text" name="content" onChange={onChangeLetter} />
-        <Button variant="regular" onClick={letterSubmit}>
-          편지 작성하기
-        </Button>
+        <div>
+          <p>제목</p>
+          <input type="text" name="title" onChange={onChangeLetter} />
+          <p>내용</p>
+          <input type="text" name="content" onChange={onChangeLetter} />
+          <Button variant="regular" onClick={letterSubmit}>
+            편지 작성하기
+          </Button>
+        </div>
       </Modal>
 
       <Modal
@@ -183,11 +195,18 @@ export default function LibraryPage() {
               <p>작성된 편지가 없어요.</p>
             ) : (
               <ul>
-                {books.map((book) => (
-                  <li key={book.letterId} onClick={() => setSelectedBook(book)}>
-                    {book.title}
-                  </li>
-                ))}
+                {books.map((book) => {
+                  if (!book) return null;
+
+                  return (
+                    <li
+                      key={book.letterId}
+                      onClick={() => setSelectedBook(book)}
+                    >
+                      {book.title}
+                    </li>
+                  );
+                })}
               </ul>
             )}
           </div>
@@ -196,6 +215,9 @@ export default function LibraryPage() {
             <h2>{selectedBook?.title}</h2>
             <p>작성한 날짜 : {selectedBook?.writeTime}</p>
             <p>내용 : {selectedBook?.content}</p>
+            <Button variant="regular" onClick={deleteLetter}>
+              삭제하기
+            </Button>
             <Button variant="regular" onClick={() => setSelectedBook(null)}>
               돌아가기
             </Button>

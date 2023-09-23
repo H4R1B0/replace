@@ -1,4 +1,4 @@
-* {
+button {
   appearance: none;
 }
 
@@ -15,12 +15,14 @@
 
 /* TODO: adjust styles according to design requirements */
 .regular {
-  width: 9rem;
+  min-width: 50%;
+  width: auto;
   height: 2.7rem;
   line-height: 2.7rem;
   text-align: center;
-  font-family: pretendard;
-  font-size: 1.5rem;
+  font-family: "SUITE-Bold";
+  font-size: 1rem;
+  padding: 0 10%;
 }
 
 .regular:hover {
