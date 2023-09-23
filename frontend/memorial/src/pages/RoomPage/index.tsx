@@ -9,8 +9,10 @@ import {
 } from "@react-three/postprocessing";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { deleteSingleRoom } from "@apis/room";
+// import { useParams } from "react-router-dom";
 
 export default function RoomPage() {
+  // const roomSequence = useParams();
   const queryClient = useQueryClient();
 
   const deleteRoomMutation = useMutation({
