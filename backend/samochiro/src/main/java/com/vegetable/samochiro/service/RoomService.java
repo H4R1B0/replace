@@ -20,7 +20,7 @@ public class RoomService {
     @Transactional
     public void registerTargetName(int roomSequence, String userId, RegisterTargetNameRequest request) {
         String targetName = request.getTargetName();
-        Optional<Room> findRoom = roomRepository.findByRoomSequenceUserId(roomSequence, userId);
+        Optional<Room> findRoom = roomRepository.findBySequenceAndUserId(roomSequence, userId);
         findRoom.get().setTargetName(targetName);
         findRoom.get().setTargetGender(request.getTargetGender());
     }
