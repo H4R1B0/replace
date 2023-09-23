@@ -98,7 +98,7 @@ public class WreathController {
 			String userId = headerUtils.getUserId(authorizationHeader);
 			boolean isNotCompleted = wreathService.updateWreath(updateRequest, userId);
 			if(!isNotCompleted) {
-				return ResponseEntity.ok().body("이미 완료한 헌화입니다.");
+				return ResponseEntity.badRequest().body("이미 완료한 헌화입니다.");
 			}
 			else {
 				return ResponseEntity.ok().body("헌화가 완료되었습니다.");
@@ -124,6 +124,20 @@ public class WreathController {
 		}
 	}
 	//신고 등록 - 헌화 6번
+
+	@GetMapping("/me")
+	public ResponseEntity<Response> getMyWreathList(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+		try {
+			String userId = headerUtils.getUserId(authorizationHeader);
+			List<WreathListResponse> myWreathList = wreathService.findWreathListByUserId(userId);
+			return ResponseEntity.ok(new Response(myWreathList));
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.badRequest().body(new Response("잘못된 요청입니다."));
+		}
+	}
+	//내가 작성한 헌화 리스트 조회 - 헌화 7번
 
 	@Data
 	@AllArgsConstructor
