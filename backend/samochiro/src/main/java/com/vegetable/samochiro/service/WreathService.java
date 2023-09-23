@@ -42,28 +42,38 @@ public class WreathService {
 	private final CrawlingUtils crawlingUtils;
 
 	@Transactional
-	public void saveWreath(WreathSaveRequest saveRequest, String userId) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		LocalDate startDate = LocalDate.parse(saveRequest.getStartDate(), formatter);
-		LocalDate endDate = LocalDate.parse(saveRequest.getEndDate(), formatter);
+	public boolean saveWreath(WreathSaveRequest saveRequest, String userId) {
 
-		saveRequest.getDescription();
+		//헌화 내용 확인
+		boolean isNegative = false;
+		List<String> badWordList = crawlingUtils.getBadWordList();
+		for(String w: badWordList) {
+			String content = saveRequest.getDescription();
+			if(kmpSearch(content, w)) { //부정적인 내용이 있으면
+				isNegative = true;
+				return false;
+			}
+		}
 
+		if(!isNegative) { //부정적인 내용이 없으면
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			LocalDate startDate = LocalDate.parse(saveRequest.getStartDate(), formatter);
+			LocalDate endDate = LocalDate.parse(saveRequest.getEndDate(), formatter);
+			WreathCount wreathCount = new WreathCount();
 
+			Wreath wreath = Wreath.builder()
+				.title(saveRequest.getTitle())
+				.subTitle(saveRequest.getSubTitle())
+				.description(saveRequest.getDescription())
+				.startDate(startDate)
+				.endDate(endDate)
+				.user(userRepository.findById(userId).get())
+				.build();
 
-		WreathCount wreathCount = new WreathCount();
-
-		Wreath wreath = Wreath.builder()
-			.title(saveRequest.getTitle())
-			.subTitle(saveRequest.getSubTitle())
-			.description(saveRequest.getDescription())
-			.startDate(startDate)
-			.endDate(endDate)
-			.user(userRepository.findById(userId).get())
-			.build();
-
-		wreath.addWreathCount(wreathCount);
-		wreathRepository.save(wreath);
+			wreath.addWreathCount(wreathCount);
+			wreathRepository.save(wreath);
+		}
+		return true;
 	}
 	//헌화 등록 - 헌화 1번
 
@@ -285,13 +295,5 @@ public class WreathService {
 		return false; // Pattern not found
 	}
 	//kmp 알고리즘
-
-
-	public void checkDeclaration(String userId, String wreathId) {
-		List<String> badWordList = crawlingUtils.getBadWordList();
-
-
-	}
-	//헌화 내용 판별
 
 }
