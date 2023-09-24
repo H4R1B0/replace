@@ -2,9 +2,9 @@ import ReactModal from "react-modal";
 import Button from "../Button";
 
 export type ModalProps = {
-  modalOpen: boolean;
+  modalOpen?: boolean;
   // TODO : onClose보다 onRequestClose가 더 좋은 이름이라고 생각함
-  onClose: () => void;
+  onClose?: () => void;
   title?: string; // 모달 제목
   subtitle?: string; // 모달 부제목(필수 X)
   buttonLabel?: string; // 모달 버튼
@@ -12,7 +12,7 @@ export type ModalProps = {
 };
 
 export default function Modal({
-  modalOpen,
+  modalOpen = true,
   onClose,
   title,
   subtitle,
