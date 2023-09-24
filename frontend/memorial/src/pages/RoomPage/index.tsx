@@ -8,7 +8,7 @@ import {
   Outline,
 } from "@react-three/postprocessing";
 
-import { Outlet, useParams, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 export default function RoomPage() {
   const navigate = useNavigate();
