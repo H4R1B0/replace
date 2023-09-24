@@ -1,6 +1,16 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { Outlet, useParams, useNavigate } from "react-router-dom";
 import Modal from "@components/ui/Modal";
+import Tribute from "@components/3d/Tribute";
+import { Canvas } from "@react-three/fiber";
+import { Stage, PresentationControls } from "@react-three/drei";
+import {
+  Selection,
+  EffectComposer,
+  Outline,
+} from "@react-three/postprocessing";
+import styles from "./TributeDetailPage.module.css";
+import Button from "@components/ui/Button";
 
 type WreathDetail = {
   wreathId: number;
@@ -137,20 +147,50 @@ export default function TributeDetailPage() {
   console.log(myTribute);
 
   return (
-    <div>
-      <p>제목: {wreathDetail?.title}</p>
-      <p>부제목: {wreathDetail?.subTitle}</p>
-      {/* <p>설명: {wreathDetail?.description}</p> */}
-      <p>
-        추모 기간 : {wreathDetail?.startDate} ~ {wreathDetail?.endDate}
-      </p>
-      <p>{wreathDetail?.flower}</p>
-      <p>{wreathDetail?.candle}</p>
-      <p>{wreathDetail?.ribbon}</p>
-      <button onClick={() => navigate("/tribute/list")}>뒤로가기</button>
-      <button onClick={() => setTributeModalOpen(true)}>헌화 시작하기</button>
-      <button onClick={() => setReportModalOpen(true)}>신고하기</button>
+    <div className={styles.wrapper}>
+      <div className={styles.buttonwrapper}>
+        <p onClick={() => navigate("/tribute/list")}>뒤로가기</p>
+        <p onClick={() => setReportModalOpen(true)}>신고하기</p>
+      </div>
+      <div className={styles.titlewrapper}>
+        <p className={styles.title}>{wreathDetail?.title}</p>
+        <p>{wreathDetail?.subTitle}</p>
+      </div>
+      <Canvas
+        className={styles.canvas}
+        flat
+        dpr={[1, 2]}
+        camera={{ fov: 1, position: [100, 30, -90] }}
+        style={{ touchAction: "none" }}
+      >
+        <Stage environment="city" intensity={0.5} adjustCamera shadows={false}>
+          <PresentationControls
+            snap
+            global
+            rotation={[0, -Math.PI / 4, 0]}
+            polar={[0, Math.PI / 4]}
+            azimuth={[-Math.PI / 4, Math.PI / 4]}
+          >
+            {/* <pointLight position={[90, 10, 10]} /> */}
+            <Selection>
+              <EffectComposer multisampling={8} autoClear={false}>
+                <Outline
+                  blur
+                  visibleEdgeColor={0xffffff}
+                  edgeStrength={100}
+                  width={1000}
+                />
+              </EffectComposer>
 
+              <Tribute />
+            </Selection>
+          </PresentationControls>
+        </Stage>
+      </Canvas>
+      <Outlet />
+      <div className={styles.button}>
+        <Button onClick={() => setTributeModalOpen(true)}>헌화 시작하기</Button>
+      </div>
       <Modal
         modalOpen={reportModalOpen}
         onClose={() => setReportModalOpen(false)}
@@ -173,6 +213,7 @@ export default function TributeDetailPage() {
             type="text"
           />
         </div>
+
         <button onClick={submitReport}>신고하기</button>
       </Modal>
       <Modal

@@ -19,6 +19,13 @@
   width: 20rem;
   min-width: 100%;
 }
+.short {
+  width: 45% !important;
+}
+
+.shortHeight {
+  height: 2.2rem !important;
+}
 
 .selectBox2:before {
   content: "▾";
@@ -32,7 +39,7 @@
   z-index: -1;
 }
 
-.selectBox2:after {
+/* .selectBox2:after {
   content: "";
   display: block;
   width: 0.2rem;
@@ -41,7 +48,7 @@
   top: 0;
   right: 35px;
   background: rgb(255, 255, 255);
-}
+} */
 
 .selectBox2 .label {
   display: flex;

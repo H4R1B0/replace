@@ -23,6 +23,10 @@
   min-width: 100%;
   width: 20rem;
 }
+.short {
+  min-width: 85%;
+  width: 10rem;
+}
 
 .regular::placeholder {
   text-indent: 0.5rem;

@@ -5,6 +5,7 @@ interface InputProps {
   placeholder?: string;
   variant?: string;
   name?: string;
+  value?: string;
 }
 
 export default function Input({
@@ -12,11 +13,15 @@ export default function Input({
   placeholder = "",
   variant = "regular",
   name = "",
+  value,
 }: InputProps) {
   let variantClass;
   switch (variant) {
     case "regular":
       variantClass = styles.regular;
+      break;
+    case "short":
+      variantClass = styles.short;
       break;
   }
   return (
@@ -25,6 +30,7 @@ export default function Input({
       className={`${styles.base} ${variantClass}`}
       onChange={onChange}
       name={name}
+      value={value}
     />
   );
 }

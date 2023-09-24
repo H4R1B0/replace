@@ -25,6 +25,19 @@ button {
   padding: 0 10%;
 }
 
+.tributeList {
+  min-width: 45%;
+  width: auto;
+  height: 2.3rem;
+
+  text-align: center;
+  font-family: "SUITE-Regular";
+  font-size: 0.8rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: rgb(185, 182, 182);
+}
+
 .regular:hover {
   background-color: #f4ff9f;
   cursor: pointer;

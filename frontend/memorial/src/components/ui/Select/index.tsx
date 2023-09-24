@@ -21,9 +21,14 @@ export default function Select({
   variant = "",
 }: SelectProps) {
   let variantClass;
+  let heightVariantClass;
   switch (variant) {
     case "long":
       variantClass = styles.long;
+      break;
+    case "short":
+      variantClass = styles.short;
+      heightVariantClass = styles.shortHeight;
       break;
   }
 
@@ -57,7 +62,11 @@ export default function Select({
 
   return (
     <div className={variantClass} onClick={(e) => e.stopPropagation()}>
-      <div className={`${styles.selectBox2} ${active ? styles.active : ""} `}>
+      <div
+        className={`${styles.selectBox2} ${
+          active ? styles.active : ""
+        } ${heightVariantClass} `}
+      >
         <button className={styles.label} onClick={handleLabelClick}>
           {selectedText}
         </button>

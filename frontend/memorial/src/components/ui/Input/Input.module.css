@@ -22,6 +22,11 @@
   width: 20rem;
 }
 
+.short {
+  min-width: 85%;
+  width: 10rem;
+}
+
 .regular::placeholder {
   text-indent: 0.5rem;
   font-family: "SUITE-Regular";

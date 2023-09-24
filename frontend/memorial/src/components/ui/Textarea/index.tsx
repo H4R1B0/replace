@@ -18,6 +18,9 @@ export default function Textarea({
     case "regular":
       variantClass = styles.regular;
       break;
+    case "short":
+      variantClass = styles.short;
+      break;
   }
   return (
     <textarea

@@ -29,6 +29,21 @@ type myTribute = {
 
 const BASE_URL = import.meta.env.VITE_APP_API_URL;
 
+const myWreathData: WreathData = {
+  data: [
+    {
+      wreathId: 1,
+      title: "김싸피를 추모합니다",
+      subTitle: "온 마음 다해 애도의 뜻을 전합니다",
+      startDate: "2021-09-02",
+      endDate: "2023-09-15",
+      flower: 1,
+      candle: 2,
+      ribbon: 4,
+      allCount: 7,
+    },
+  ],
+};
 const wreathData: WreathData = {
   data: [
     {
@@ -103,7 +118,7 @@ export const tributeHandlers: RequestHandler[] = [
     return res(
       ctx.status(200),
       ctx.json({
-        response: wreathData.data[0],
+        response: myWreathData,
       })
     );
   }),
