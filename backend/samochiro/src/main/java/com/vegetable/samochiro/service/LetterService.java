@@ -32,7 +32,7 @@ public class LetterService {
 			.content(saveRequest.getContent())
 			.writeTime(LocalDateTime.now())
 			.user(userRepository.findById(userId).get())
-			.room(roomRepository.findByRoomSequenceUserId(saveRequest.getSequence(), userId).get())
+			.room(roomRepository.findBySequenceAndUserId(saveRequest.getSequence(), userId).get())
 			.build();
 
 		letterRepository.save(letter);
@@ -40,7 +40,7 @@ public class LetterService {
 	//편지 등록 - 서재 1번
 
 	public List<LetterListResponse> findLetterList(String userId, int sequence) {
-		String roomUuid = roomRepository.findByRoomSequenceUserId(sequence, userId).get().getUuid();
+		String roomUuid = roomRepository.findBySequenceAndUserId(sequence, userId).get().getUuid();
 		List<Letter> letterList = letterRepository.selectListByRoomUuid(roomUuid).get();
 		List<LetterListResponse> letterListResponseList = new ArrayList<>();
 

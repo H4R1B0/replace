@@ -1,10 +1,8 @@
 package com.vegetable.samochiro.oauth2.service;
 
 import com.vegetable.samochiro.domain.Room;
-import com.vegetable.samochiro.domain.RoomObject;
 import com.vegetable.samochiro.domain.User;
 import com.vegetable.samochiro.oauth2.dto.OAuthAttributes;
-import com.vegetable.samochiro.repository.RoomObjectRepository;
 import com.vegetable.samochiro.repository.RoomRepository;
 import com.vegetable.samochiro.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +25,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     private final UserRepository userRepository;
     private final RoomRepository roomRepository;
-    private final RoomObjectRepository roomObjectRepository;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -73,25 +70,11 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     private Room generateRoom(int num, User user) {
         String roomUuid = UUID.randomUUID().toString();
-        RoomObject roomObject = generateRoomObject(roomUuid);
-        roomObjectRepository.save(roomObject);
         return Room.builder()
             .uuid(roomUuid)
             .sequence(num)
             .targetName(null)
             .user(user)
-            .build();
-    }
-
-    private RoomObject generateRoomObject(String roomUuid) {
-        String aiVoiceUuid = UUID.randomUUID().toString();
-        String frameUuid = UUID.randomUUID().toString();
-        String radioUuid = UUID.randomUUID().toString();
-        return RoomObject.builder()
-            .roomUuid(roomUuid)
-            .aiVoiceUuid(aiVoiceUuid)
-            .frameUuid(frameUuid)
-            .radioUuid(radioUuid)
             .build();
     }
 }
