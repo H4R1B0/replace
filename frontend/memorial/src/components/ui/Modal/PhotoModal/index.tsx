@@ -2,6 +2,7 @@ import Modal from "..";
 import type { ModalProps } from "..";
 import { useQuery } from "@tanstack/react-query";
 import { fetchPhotoList } from "@apis/photo";
+import styles from "./PhotoModal.module.css";
 
 type PhotoModalProps = {
   roomSequence: number;
@@ -29,7 +30,7 @@ export default function PhotoModal({
   return (
     <Modal {...other} buttonLabel="close">
       <p>Photo modal</p>
-      {photos}
+      <div className={styles.photoGrid}>{photos}</div>
     </Modal>
   );
 }

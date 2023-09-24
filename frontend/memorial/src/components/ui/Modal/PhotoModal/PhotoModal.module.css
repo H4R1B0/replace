@@ -1,0 +1,11 @@
+.photoGrid {
+  width: 100%;
+  display: grid;
+  grid-gap: 0.5em;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.photoGrid img {
+  width: 100%;
+  aspect-ratio: 1;
+}
