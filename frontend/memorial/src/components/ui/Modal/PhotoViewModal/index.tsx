@@ -26,7 +26,8 @@ export default function PhotoViewModal({ ...other }: PhotoViewModalProps) {
     <Modal {...other} buttonLabel="close">
       <p>Photo view</p>
       <img src={photo.photoUrl} />
-      <Button onClick={() => navigate(-1)}>뒤로가기</Button>
+      <Button onClick={() => navigate(-1)}>Back</Button>
+      <Button>Delete</Button>
     </Modal>
   );
 }

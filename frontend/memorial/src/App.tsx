@@ -27,6 +27,9 @@ const PhotoUploadModal = lazy(
 const PhotoGridModal = lazy(
   () => import("@components/ui/Modal/PhotoGridModal")
 );
+const DeleteRoomConfirmModal = lazy(
+  () => import("@components/ui/Modal/DeleteRoomConfirmModal")
+);
 
 export default function App() {
   function handleResize() {
@@ -68,6 +71,7 @@ export default function App() {
                 element={<PhotoViewModal />}
               />
               <Route path="photos/upload" element={<PhotoUploadModal />} />
+              <Route path="delete" element={<DeleteRoomConfirmModal />} />
             </Route>
             <Route path={PATH.TRIBUTE} element={<TributePage />} />
             <Route path={PATH.CREATETRIBUTE} element={<CreateTributePage />} />
