@@ -1,0 +1,34 @@
+.base {
+  width: 10rem;
+  height: 5rem;
+  border-radius: 0.5rem;
+  padding: 2px;
+  outline: none;
+  border: solid rgb(2, 2, 2) 0.1rem;
+  text-indent: 0.5rem;
+  resize: none;
+}
+
+.base::placeholder {
+  text-indent: 0.5rem;
+  font-family: "SUITE-Regular";
+  padding-top: 2%;
+}
+
+.base:focus {
+  border: solid rgb(255, 199, 199) 0.15rem;
+}
+
+.regular {
+  min-width: 100%;
+  width: 20rem;
+}
+
+.regular::placeholder {
+  text-indent: 0.5rem;
+  font-family: "SUITE-Regular";
+}
+
+.regular:focus {
+  border: solid rgb(255, 199, 199) 0.15rem;
+}

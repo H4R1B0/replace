@@ -15,7 +15,7 @@ button {
 
 /* TODO: adjust styles according to design requirements */
 .regular {
-  min-width: 50%;
+  min-width: 20%;
   width: auto;
   height: 2.7rem;
   line-height: 2.7rem;

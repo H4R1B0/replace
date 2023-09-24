@@ -1,6 +1,12 @@
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Select from "@components/ui/Select/index";
+import Input from "@components/ui/Input";
 import PATH from "@constants/path";
+import Button from "@components/ui/Button";
+import formatDateToYYYYMMDD from "@mocks/handlers/tributeHandlers";
+import styles from "./CreateTributePage.module.css";
+import Textarea from "@components/ui/Textarea";
 
 type Tribute = {
   title: string;
@@ -20,35 +26,48 @@ export default function CreateTributePage() {
   });
 
   const BASE_URL = import.meta.env.VITE_APP_API_URL;
-
   const navigate = useNavigate();
-  const days = [];
+
+  const dayOptions = [];
   for (let i = 1; i <= 30; i++) {
-    days.push(
-      <option key={i} value={i}>
-        {i}
-      </option>
-    );
+    dayOptions.push({ value: i, innertext: `${i}`, id: i });
   }
 
-  const onChangeTribute = (e: any) => {
+  const subTitleOptions = [
+    { value: "추모합니다", innertext: "추모합니다.", id: 1 },
+    { value: "애도합니다", innertext: "애도합니다.", id: 2 },
+  ];
+
+  const onChangeTribute = (name: string, value: any) => {
     const currentDate = new Date();
-    const selectedDayElement = document.getElementById(
-      "day"
-    ) as HTMLSelectElement;
-    let daysToAdd = parseInt(selectedDayElement?.value || "0", 10);
+
+    let daysToAdd =
+      name === "day"
+        ? parseInt(value, 10)
+        : tribute.endDate
+        ? parseInt(tribute.endDate, 10)
+        : 0;
+
+    if (name !== "day" && isNaN(daysToAdd)) {
+      daysToAdd = 0;
+    }
 
     const endDate = new Date(currentDate);
     endDate.setDate(endDate.getDate() + daysToAdd);
 
-    setTribute({
-      ...tribute,
-      [e.target.name]: e.target.value,
-      startDate: currentDate.toISOString(),
-      endDate: endDate.toISOString(),
-    });
+    if (name === "day") {
+      setTribute({
+        ...tribute,
+        startDate: formatDateToYYYYMMDD(currentDate),
+        endDate: formatDateToYYYYMMDD(endDate),
+      });
+    } else {
+      setTribute({
+        ...tribute,
+        [name]: value,
+      });
+    }
   };
-
   const tributeSubmit = () => {
     fetch(`${BASE_URL}/wreath`, {
       method: "POST",
@@ -82,29 +101,59 @@ export default function CreateTributePage() {
   };
 
   console.log(tribute);
+
   return (
-    <div>
-      <h3>소중한 사람을 위한 헌화 공간</h3>
-
-      <p>추모 제목</p>
-      <input name="title" type="text" onChange={onChangeTribute} />
-
-      <p>추모 기간</p>
-      <select id="day" onChange={onChangeTribute}>
-        {days}
-      </select>
-
-      <p>추모 문구</p>
-      <select onChange={onChangeTribute} name="subTitle" id="subTitle">
-        <option value="추모합니다">추모합니다</option>
-        <option value="애도합니다">애도합니다</option>
-      </select>
-
-      <p>추모 인물에 대한 설명을 작성해주세요. </p>
-      <input name="description" type="text" onChange={onChangeTribute} />
-
-      <button onClick={tributeSubmit}>작성 하기</button>
-      <button onClick={() => navigate(`${PATH.TRIBUTELIST}`)}>목록 보기</button>
+    <div className={styles.wrapper}>
+      <div className={styles.container}>
+        <h2 className={styles.titleMargin}>소중한 사람을 위한 헌화 공간</h2>
+        <div className={styles.inputWrapper}>
+          <h4 className={styles.subtitleMargin}>추모 제목</h4>
+          <Input
+            name="title"
+            onChange={(e) => onChangeTribute(e.target.name, e.target.value)}
+            placeholder="추모 제목을 입력하세요."
+          />
+        </div>
+        <div className={styles.inputWrapper}>
+          <h4 className={styles.subtitleMargin}>추모 문구</h4>
+          <Select
+            name="subTitle"
+            onChange={onChangeTribute}
+            children={subTitleOptions}
+            variant="long"
+          />
+        </div>
+        <div className={styles.inputWrapper}>
+          <h4 className={styles.subtitleMargin}>추모 기간</h4>
+          <Select
+            name="day"
+            onChange={onChangeTribute}
+            children={dayOptions}
+            variant="long"
+          />
+        </div>
+        <div className={styles.inputWrapper}>
+          <h4 className={styles.subtitleMargin}>
+            추모 인물에 대한 설명을 작성해주세요.{" "}
+          </h4>
+          <Textarea
+            name="description"
+            onChange={(e) => onChangeTribute(e.target.name, e.target.value)}
+            placeholder="추모 인물에 대한 설명을 입력하세요."
+          />
+        </div>
+        <div className={styles.buttonWrapper}>
+          <Button variant="regular" onClick={tributeSubmit}>
+            헌화 시작하기
+          </Button>
+          <Button
+            variant="regular"
+            onClick={() => navigate(`${PATH.TRIBUTELIST}`)}
+          >
+            헌화 목록 보기
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }
