@@ -1,10 +1,12 @@
 package com.vegetable.samochiro.service;
 
+import com.vegetable.samochiro.domain.Alarm;
 import com.vegetable.samochiro.domain.Voicemail;
 import com.vegetable.samochiro.dto.voicemail.RegisterVoicemailRequest;
 import com.vegetable.samochiro.dto.voicemail.VoicemailItem;
 import com.vegetable.samochiro.dto.voicemail.VoicemailItemsResponse;
 import com.vegetable.samochiro.dto.voicemail.VoicemailResponse;
+import com.vegetable.samochiro.repository.AlarmRepository;
 import com.vegetable.samochiro.repository.UserRepository;
 import com.vegetable.samochiro.repository.VoicemailRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ public class VoicemailService {
     private final GCSService gcsService;
     private final UserRepository userRepository;
     private final VoicemailRepository voicemailRepository;
+    private final AlarmRepository alarmRepository;
 
     @Transactional
     public void registerVoicemail(RegisterVoicemailRequest request, String fromUserId, MultipartFile voicemailFile) {
@@ -39,6 +42,14 @@ public class VoicemailService {
                 .toUser(userRepository.findById(toUserId).get())
                 .build();
         voicemailRepository.save(voicemail);
+
+        String fromUserNickname = userRepository.findById(fromUserId).get().getNickname();
+        Alarm alarm = Alarm.builder()
+                .message(fromUserNickname + "님으로부터 보이스 메일이 도착했습니다! 지금 바로 확인해 볼까요?")
+                .user(userRepository.findById(toUserId).get())
+                .build();
+        alarmRepository.save(alarm);
+
     }
     //보이스 메일 등록 - 골목길 1
 
