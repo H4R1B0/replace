@@ -61,7 +61,7 @@ export default function App() {
           <Routes>
             <Route path={PATH.ROOT} element={<MainPage />} />
             <Route path={PATH.MAIN} element={<MainPage />} />
-            <Route path="room/:sequence" element={<RoomPage />}>
+            <Route path={PATH.ROOM} element={<RoomPage />}>
               <Route path="photos" element={<PhotoGridModal />} />
               <Route
                 path="photos/:photoSequence"
