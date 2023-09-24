@@ -10,10 +10,12 @@ import {
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { deleteSingleRoom } from "@apis/room";
 import { useParams } from "react-router-dom";
+import PhotoModal from "@components/ui/Modal/PhotoModal";
+import { useToggle } from "react-use";
 
 export default function RoomPage() {
   const { sequence } = useParams();
-
+  const [isPhotoModalOpen, togglePhotoModal] = useToggle(false);
   const queryClient = useQueryClient();
 
   const deleteRoomMutation = useMutation({
@@ -58,11 +60,15 @@ export default function RoomPage() {
                 />
               </EffectComposer>
               {/*TODO: onTrashcanClick에 전달하는 함수 상단에 정의하기 */}
-              <Room onTrashcanClick={() => handleDelete()} />
+              <Room
+                onTrashcanClick={() => handleDelete()}
+                onFrameClick={() => togglePhotoModal()}
+              />
             </Selection>
           </PresentationControls>
         </Stage>
       </Canvas>
+      <PhotoModal modalOpen={isPhotoModalOpen} onClose={togglePhotoModal} />
     </div>
   );
 }
