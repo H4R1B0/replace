@@ -68,7 +68,11 @@ export default function RoomPage() {
           </PresentationControls>
         </Stage>
       </Canvas>
-      <PhotoModal modalOpen={isPhotoModalOpen} onClose={togglePhotoModal} />
+      <PhotoModal
+        modalOpen={isPhotoModalOpen}
+        onClose={togglePhotoModal}
+        roomSequence={roomSequence}
+      />
     </div>
   );
 }
