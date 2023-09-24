@@ -1,10 +1,10 @@
 import styles from "./Button.module.css";
 
 export default function Button({
-  onClick = () => {},
   variant = "regular",
   children = "",
-}) {
+  ...other
+}: ButtonProps) {
   let variantClass;
   switch (variant) {
     case "regular":
@@ -15,8 +15,13 @@ export default function Button({
       break;
   }
   return (
-    <button className={`${styles.base} ${variantClass}`} onClick={onClick}>
+    <button {...other} className={`${styles.base} ${variantClass}`}>
       {children}
     </button>
   );
 }
+
+type ButtonProps = {
+  children?: string;
+  variant?: "regular" | "prominent";
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
