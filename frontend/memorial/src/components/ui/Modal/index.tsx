@@ -3,7 +3,6 @@ import Button from "../Button";
 
 export type ModalProps = {
   modalOpen?: boolean;
-  // TODO : onClose보다 onRequestClose가 더 좋은 이름이라고 생각함
   onClose?: () => void;
   title?: string; // 모달 제목
   subtitle?: string; // 모달 부제목(필수 X)

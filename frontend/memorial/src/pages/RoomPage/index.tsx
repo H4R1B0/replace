@@ -9,10 +9,11 @@ import {
 } from "@react-three/postprocessing";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { deleteSingleRoom } from "@apis/room";
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet, useParams, useNavigate } from "react-router-dom";
 
 export default function RoomPage() {
   const { sequence } = useParams();
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const deleteRoomMutation = useMutation({
@@ -60,7 +61,7 @@ export default function RoomPage() {
               {/* TODO: callback 함수 대신에 route transition 쓰기 */}
               <Room
                 onTrashcanClick={() => handleDelete()}
-                onFrameClick={() => console.log("frame clicked")}
+                onFrameClick={() => navigate("photos")}
               />
             </Selection>
           </PresentationControls>

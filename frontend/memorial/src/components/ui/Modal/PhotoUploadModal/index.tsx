@@ -6,9 +6,10 @@ import Button from "@components/ui/Button";
 import { useRef, useState } from "react";
 import { HiPhoto } from "react-icons/hi2";
 import Modal, { ModalProps } from "..";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 export default function PhotoUploadModal({ ...other }: PhotoUploadModalProps) {
+  const navigate = useNavigate();
   const { sequence } = useParams();
   const roomSequence = parseInt(sequence ?? "");
 
@@ -65,6 +66,7 @@ export default function PhotoUploadModal({ ...other }: PhotoUploadModalProps) {
           onChange={handleFileChange}
         />
         <Button disabled={imageSrc === ""}>Upload</Button>
+        <Button onClick={() => navigate(-1)}>뒤로가기</Button>
       </form>
     </Modal>
   );
