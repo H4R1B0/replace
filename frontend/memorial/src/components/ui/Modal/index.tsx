@@ -1,50 +1,42 @@
 import ReactModal from "react-modal";
 import Button from "../Button";
 
-interface ModalProps {
-  modalOpen: boolean;
-  // TODO : onClose보다 onRequestClose가 더 좋은 이름이라고 생각함
-  onClose: () => void;
+export type ModalProps = {
+  modalOpen?: boolean;
+  onClose?: () => void;
   title?: string; // 모달 제목
   subtitle?: string; // 모달 부제목(필수 X)
-  buttonLabel: string; // 모달 버튼
-  children: React.ReactNode; // 모달 내부에 들어갈 모든 내용 <Modal>해당 모달에 넣고 싶은 내용(=children)</Modal> 로 정의해서 사용하기
-}
+  buttonLabel?: string; // 모달 버튼
+  children?: React.ReactNode; // 모달 내부에 들어갈 모든 내용 <Modal>해당 모달에 넣고 싶은 내용(=children)</Modal> 로 정의해서 사용하기
+};
 
 export default function Modal({
-  modalOpen,
+  modalOpen = true,
   onClose,
   title,
   subtitle,
   buttonLabel,
   children,
 }: ModalProps) {
+  // TODO: scrollbar styles
   const customModalStyles: ReactModal.Styles = {
     overlay: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      background: "none",
       backgroundColor: " rgba(0, 0, 0, 0.4)",
-      width: "100%",
-      height: "100vh",
-      zIndex: "10",
-      position: "fixed",
-      top: "0",
-      left: "0",
     },
     content: {
-      maxWidth: "500px",
-      width: "80%",
-      height: "auto",
-      zIndex: "150",
-      position: "absolute",
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%)",
+      margin: "10%",
+      maxWidth: "calc(800px - 10%)", // TODO: use CSS variable
+      maxHeight: "80vh",
+      backgroundColor: "rgba(255,255,255,0.5)",
+      backdropFilter: "blur(15px)",
+      WebkitBackdropFilter: "blur(15px)",
+      border: "none",
       borderRadius: "10px",
-      boxShadow: "2px 2px 2px rgba(0, 0, 0, 0.25)",
-      backgroundColor: "white",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      overflow: "auto",
+      position: "unset",
     },
   };
 

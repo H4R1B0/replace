@@ -2,7 +2,7 @@ import { api } from "./index";
 import { RoomList } from "types/Room";
 
 type RegisterRoomRequest = {
-  roomSequence: number;
+  sequence: number;
   targetName: string;
 };
 
@@ -11,16 +11,16 @@ type RegisterRoomRequest = {
 export const fetchRoomList = async () => {
   return await api.get<RoomList>("/user/home");
 };
-// 기억의 방(집) 삭제
-export const deleteSingleRoom = async () => {
-  return await api.delete("/room");
-};
 
 // 기억의 방(집) 대상 등록
 export const registerRoomTarget = async ({
-  roomSequence,
+  sequence,
   targetName,
 }: RegisterRoomRequest) => {
-  return await api.put(`/room/${roomSequence}`, {}, { targetName });
+  return await api.put(`/room/${sequence}`, {}, { targetName });
 };
-// 기억의 방(집) 상세 조회
+
+// 기억의 방(집) 삭제
+export const deleteSingleRoom = async (sequence: number) => {
+  return await api.delete(`/room/${sequence}`);
+};

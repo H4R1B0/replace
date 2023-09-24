@@ -18,6 +18,15 @@ const LibraryPage = lazy(() => import("@pages/LibraryPage"));
 const PayphonePage = lazy(() => import("@pages/PayphonePage"));
 const HousePage = lazy(() => import("@pages/HousePage"));
 const SearchResultPage = lazy(() => import("@pages/SearchResultPage"));
+const PhotoViewModal = lazy(
+  () => import("@components/ui/Modal/PhotoViewModal")
+);
+const PhotoUploadModal = lazy(
+  () => import("@components/ui/Modal/PhotoUploadModal")
+);
+const PhotoGridModal = lazy(
+  () => import("@components/ui/Modal/PhotoGridModal")
+);
 
 export default function App() {
   function handleResize() {
@@ -52,7 +61,14 @@ export default function App() {
           <Routes>
             <Route path={PATH.ROOT} element={<MainPage />} />
             <Route path={PATH.MAIN} element={<MainPage />} />
-            <Route path={PATH.ROOM} element={<RoomPage />} />
+            <Route path={PATH.ROOM} element={<RoomPage />}>
+              <Route path="photos" element={<PhotoGridModal />} />
+              <Route
+                path="photos/:photoSequence"
+                element={<PhotoViewModal />}
+              />
+              <Route path="photos/upload" element={<PhotoUploadModal />} />
+            </Route>
             <Route path={PATH.TRIBUTE} element={<TributePage />} />
             <Route path={PATH.CREATETRIBUTE} element={<CreateTributePage />} />
             <Route path={PATH.TRIBUTELIST} element={<TributeListPage />} />

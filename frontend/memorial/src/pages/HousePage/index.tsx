@@ -1,5 +1,5 @@
 import { fetchRoomList } from "@apis/room";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import House from "@components/3d/House";
 import { Canvas } from "@react-three/fiber";
 import { Stage, PresentationControls } from "@react-three/drei";
@@ -9,27 +9,60 @@ import {
   EffectComposer,
   Outline,
 } from "@react-three/postprocessing";
-import Modal from "@components/ui/Modal";
+
 import { useToggle } from "react-use";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import RegisterRoomModal from "@components/ui/Modal/RegisterRoomModal";
+import { registerRoomTarget } from "@apis/room";
 
 export default function HousePage() {
   const [isModalOpen, toggleModal] = useToggle(false);
   const [selectedSequence, setSelectedSequence] = useState(1);
-
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
   //1. 등록되었는지 안되었는지 확인하기
   //2. 만약 등록되었다 -> navigate room
   //3. 등록 안되었다 -> 모달 보여주기
-  const handleWindowClick = (sequence: number) => {
-    toggleModal();
-    setSelectedSequence(sequence);
-  };
-  const { isLoading, isError } = useQuery({
+
+  const {
+    isLoading,
+    isError,
+    data: roomList,
+  } = useQuery({
     queryKey: ["roomList"],
     queryFn: fetchRoomList,
   });
+  const registerRoomMutation = useMutation({
+    mutationFn: registerRoomTarget,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["roomList"] });
+      navigate(`/room/${selectedSequence}`);
+    },
+  });
+
   if (isLoading) return "loading";
   if (isError) return `Error`;
+
+  const { rooms } = roomList;
+
+  const handleRoomRegister = (targetName: string) => {
+    registerRoomMutation.mutate({ sequence: selectedSequence, targetName });
+  };
+
+  const handleWindowClick = (sequence: number) => {
+    const room = rooms.find((room) => room.sequence === sequence);
+    if (!room) return;
+    if (room.targetName) {
+      // navigate to room
+      navigate(`/room/${room.sequence}`);
+      return;
+    }
+    // show modal
+    toggleModal();
+    setSelectedSequence(sequence);
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -63,9 +96,11 @@ export default function HousePage() {
           </PresentationControls>
         </Stage>
       </Canvas>
-      <Modal modalOpen={isModalOpen} onClose={toggleModal} buttonLabel="닫기">
-        <b>{selectedSequence}</b>
-      </Modal>
+      <RegisterRoomModal
+        modalOpen={isModalOpen}
+        onClose={toggleModal}
+        onRegister={handleRoomRegister}
+      />
     </div>
   );
 }
