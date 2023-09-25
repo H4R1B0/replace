@@ -30,7 +30,7 @@ export default function DeleteRoomConfirmModal() {
     deleteRoomMutation.mutate(roomSequence);
   };
   return (
-    <Modal buttonLabel="close">
+    <Modal buttonLabel="close" onClose={() => navigate("..")}>
       <p>Are you sure you want to delete this room?</p>
 
       <Button onClick={handleDelete}>Yes</Button>

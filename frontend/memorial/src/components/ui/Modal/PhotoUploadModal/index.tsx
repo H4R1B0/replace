@@ -49,7 +49,7 @@ export default function PhotoUploadModal({ ...other }: PhotoUploadModalProps) {
   };
 
   return (
-    <Modal {...other} buttonLabel="close">
+    <Modal {...other} buttonLabel="close" onClose={() => navigate("..")}>
       <p>Photo upload</p>
       <form onSubmit={handleFormSubmit}>
         <div className={styles.uploadPreview} onClick={handlePreviewClick}>
