@@ -24,9 +24,11 @@ export default function AudioUploadModal({ ...other }: AudioUploadModalProps) {
       queryClient.invalidateQueries({ queryKey: ["audioList", roomSequence] });
     },
   });
+
   const handlePreviewClick = () => {
     inputEl.current?.click();
   };
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -37,6 +39,7 @@ export default function AudioUploadModal({ ...other }: AudioUploadModalProps) {
     };
     reader.readAsDataURL(file);
   };
+
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -48,7 +51,7 @@ export default function AudioUploadModal({ ...other }: AudioUploadModalProps) {
   };
 
   return (
-    <Modal {...other} buttonLabel="close">
+    <Modal {...other} buttonLabel="close" onClose={() => navigate("..")}>
       <p>AudioUploadModal</p>
       <form onSubmit={handleFormSubmit}>
         <div className={styles.uploadPreview} onClick={handlePreviewClick}>
