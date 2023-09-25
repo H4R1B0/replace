@@ -10,6 +10,9 @@ import {
   Outline,
 } from "@react-three/postprocessing";
 import Button from "@components/ui/Button";
+import Input from "@components/ui/Input";
+import Textarea from "@components/ui/Textarea";
+import TrributeEventCard from "@components/ui/TrributeEventCard";
 
 type Book = {
   letterId: number;
@@ -43,6 +46,7 @@ export default function LibraryPage() {
     roomUuid: "12345",
     userId: "232134yi2",
   });
+  console.log(letter);
 
   // 편지 작성 시, 입력된 내용에 따라 letter의 state 변경시키기
   const onChangeLetter = (e: any) => {
@@ -130,6 +134,10 @@ export default function LibraryPage() {
       });
   };
 
+  const closeBookModal = () => {
+    setBookModalOpen(false);
+    setSelectedBook(null);
+  };
   return (
     <div className={styles.wrapper}>
       <Canvas
@@ -172,20 +180,30 @@ export default function LibraryPage() {
         title="편지를 작성해보세요."
         buttonLabel="서재로 돌아가기"
       >
-        <div>
-          <p>제목</p>
-          <input type="text" name="title" onChange={onChangeLetter} />
-          <p>내용</p>
-          <input type="text" name="content" onChange={onChangeLetter} />
-          <Button variant="regular" onClick={letterSubmit}>
-            편지 작성하기
-          </Button>
+        <div className={styles.letterForm}>
+          <div className={styles.letterFormTitle}>
+            <p className={styles.letterTitle}>제목</p>
+            <Input name="title" variant="short" onChange={onChangeLetter} />
+          </div>
+          <div className={styles.letterFormTitle}>
+            <p className={styles.letterTitle}>내용</p>
+            <Textarea
+              name="content"
+              variant="short"
+              onChange={onChangeLetter}
+            />
+          </div>
+          <div className={styles.button}>
+            <Button variant="regular" onClick={letterSubmit}>
+              편지 작성하기
+            </Button>
+          </div>
         </div>
       </Modal>
 
       <Modal
         modalOpen={bookModalOpen}
-        onClose={() => setBookModalOpen(false)}
+        onClose={closeBookModal}
         title="편지를 확인해보세요."
         buttonLabel="확인"
       >
@@ -194,24 +212,23 @@ export default function LibraryPage() {
             {books.length === 0 ? (
               <p>작성된 편지가 없어요.</p>
             ) : (
-              <ul>
+              <div>
                 {books.map((book) => {
                   if (!book) return null;
 
                   return (
-                    <li
-                      key={book.letterId}
-                      onClick={() => setSelectedBook(book)}
-                    >
-                      {book.title}
-                    </li>
+                    <div onClick={() => setSelectedBook(book)}>
+                      <TrributeEventCard key={book.letterId}>
+                        {book.title}
+                      </TrributeEventCard>
+                    </div>
                   );
                 })}
-              </ul>
+              </div>
             )}
           </div>
         ) : (
-          <div>
+          <div className={styles.letterForm}>
             <h2>{selectedBook?.title}</h2>
             <p>작성한 날짜 : {selectedBook?.writeTime}</p>
             <p>내용 : {selectedBook?.content}</p>
