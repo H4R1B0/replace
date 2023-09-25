@@ -31,6 +31,15 @@ const PhotoGridModal = lazy(
 const DeleteRoomConfirmModal = lazy(
   () => import("@components/ui/Modal/DeleteRoomConfirmModal")
 );
+const AudioOptionModal = lazy(
+  () => import("@components/ui/Modal/AudioOptionModal")
+);
+const AudioRecordModal = lazy(
+  () => import("@components/ui/Modal/AudioRecordModal")
+);
+const AudioUploadModal = lazy(
+  () => import("@components/ui/Modal/AudioUploadModal")
+);
 
 export default function App() {
   function handleResize() {
@@ -75,6 +84,9 @@ export default function App() {
                 />
                 <Route path="photos/upload" element={<PhotoUploadModal />} />
                 <Route path="delete" element={<DeleteRoomConfirmModal />} />
+                <Route path="audio" element={<AudioOptionModal />} />
+                <Route path="audio/record" element={<AudioRecordModal />} />
+                <Route path="audio/upload" element={<AudioUploadModal />} />
               </Route>
               <Route path={PATH.TRIBUTE} element={<TributePage />} />
               <Route
