@@ -4,9 +4,11 @@ import { uploadSingleAudio } from "@apis/audio";
 
 import Button from "@components/ui/Button";
 import { useRef, useState } from "react";
-import { HiPhoto } from "react-icons/hi2";
+import { HiFolder } from "react-icons/hi2";
 import Modal, { ModalProps } from "..";
 import { useParams, useNavigate } from "react-router-dom";
+import Dropzone from "react-dropzone";
+import ReactAudioPlayer from "react-audio-player";
 
 export default function AudioUploadModal({ ...other }: AudioUploadModalProps) {
   const navigate = useNavigate();
@@ -51,16 +53,12 @@ export default function AudioUploadModal({ ...other }: AudioUploadModalProps) {
       <p>AudioUploadModal</p>
       <form onSubmit={handleFormSubmit}>
         <div className={styles.uploadPreview} onClick={handlePreviewClick}>
-          <HiPhoto />
-          <audio controls>
-            <source src={audioSrc} type={audioSrc} />
-          </audio>
+          <HiFolder />
         </div>
-        {/* TODO: 만약 image 모든 형식을 받기 원한다면 image/* 로 accept를 바꿀 것 */}
         <input
           type="file"
-          name="photo"
-          accept=".wav"
+          name="audio"
+          accept="audio/*"
           style={{ visibility: "hidden" }}
           ref={inputEl}
           onChange={handleFileChange}
@@ -68,6 +66,7 @@ export default function AudioUploadModal({ ...other }: AudioUploadModalProps) {
         <Button disabled={audioSrc === ""}>Upload</Button>
         <Button onClick={() => navigate(-1)}>뒤로가기</Button>
       </form>
+      {audioSrc && <ReactAudioPlayer src={audioSrc} controls />}
     </Modal>
   );
 }
