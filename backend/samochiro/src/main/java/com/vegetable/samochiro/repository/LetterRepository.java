@@ -13,4 +13,8 @@ public interface LetterRepository extends JpaRepository<Letter, Long> {
 	Optional<List<Letter>> selectListByRoomUuid(@Param("roomUUid") String roomUUid);
 	//방별 편지리스트 검색
 
+	@Query("delete from Letter l where l.room.uuid=:roomUuid")
+	void deleteByRoomUuid(String roomUuid);
+	//room uuid로 편지 삭제
+
 }

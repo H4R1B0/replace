@@ -10,6 +10,7 @@ import com.vegetable.samochiro.dto.user.SecessionResponse;
 import com.vegetable.samochiro.dto.user.NicknameUpdateRequest;
 import com.vegetable.samochiro.oauth2.token.JwtToken;
 import com.vegetable.samochiro.oauth2.token.JwtTokenProvider;
+import com.vegetable.samochiro.oauth2.token.JwtTokenService;
 import com.vegetable.samochiro.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,6 +30,7 @@ public class UserService {
 
 	private final UserRepository userRepository;
 	private final JwtTokenProvider tokenProvider;
+	private final JwtTokenService jwtTokenService;
 
 	@Transactional
 	public String updateNickname(NicknameUpdateRequest updateRequest, String userId) {
@@ -127,5 +129,10 @@ public class UserService {
         return IsChangeNicknameResponse.builder().isChange(true).message("닉네임 변경이 불가합니다.").build();
     }
     //닉네임 변경 여부 조회 - 유저 9
+
+    public void logout(String accessToken) {
+        jwtTokenService.deleteJwtToken(accessToken);
+    }
+    //로그아웃 - 유저 4
 
 }

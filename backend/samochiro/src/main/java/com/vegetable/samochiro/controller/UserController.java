@@ -137,4 +137,12 @@ public class UserController {
 	}
 	//닉네임 변경 여부 조회 - 유저 9
 
+	@DeleteMapping
+	public ResponseEntity<String> logout(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+		String accessToken = authorizationHeader.substring(7);
+		userService.logout(accessToken);
+		return ResponseEntity.status(HttpStatus.OK).body("정상적으로 로그아웃되었습니다.");
+	}
+	//로그아웃 - 유저 4
+
 }

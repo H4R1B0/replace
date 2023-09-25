@@ -6,12 +6,12 @@ import com.vegetable.samochiro.dto.photo.PhotoDetailResponse;
 import com.vegetable.samochiro.dto.photo.PhotoListResponse;
 import com.vegetable.samochiro.repository.PhotoRepository;
 import com.vegetable.samochiro.repository.RoomRepository;
-import com.vegetable.samochiro.repository.UserRepository;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,7 +46,7 @@ public class PhotoService {
 
 	public List<PhotoListResponse> findPhotoList(String userId, int sequence) {
 		String roomUuid = roomRepository.findBySequenceAndUserId(sequence, userId).get().getUuid();
-		List<Photo> photoList = photoRepository.findAllByRoomId(roomUuid);
+		List<Photo> photoList = photoRepository.findAllByRoomUuid(roomUuid);
 
 		List<PhotoListResponse> responseList = new ArrayList<>();
 		for(Photo p: photoList) {
@@ -80,5 +80,15 @@ public class PhotoService {
 		gcssService.deleteFile(fileName);
 	}
 	//사진 삭제 조회 - 액자 4번
+
+	@Transactional
+    public void deletePhotosByRoomUuid(String roomUuid) {
+		List<Photo> photos = photoRepository.findAllByRoomUuid(roomUuid);
+		for (Photo photo : photos){
+			gcssService.deleteFile(photo.getName());
+			photoRepository.deleteById(photo.getId());
+		}
+    }
+	//사진 삭제 - 방 2
 	
 }
