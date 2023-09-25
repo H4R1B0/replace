@@ -1,75 +1,53 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+// import { setAuth } from "store/slices/authSlice";
+
+import PATH from "@constants/path";
 
 export default function RedirectKakaoPage() {
+  const navigate = useNavigate();
+  // URL에서 토큰 추출
+  const accessToken = new URL(window.location.href).searchParams.get("token");
+
   useEffect(() => {
-    // URL에서 쿼리 파라미터에서 인증 코드 가져오기
-    // const code = new URL(window.location.href).searchParams.get("code");
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get("code");
-    // 카카오 로그인 성공 후에 인증 코드가 URL에 포함
-    if (code) {
-      // 액세스 토큰 요청을 위한 데이터 준비
-      const data = {
-        grant_type: "authorization_code",
-        client_id: import.meta.env.VITE_KAKAO_REST_API_KEY, // 카카오 앱의 REST API KEY
-        redirect_uri: import.meta.env.VITE_KAKAO_REDIRECT_URI,
-        code: code,
-      };
+    // 토큰이 있는지 확인
+    if (accessToken) {
+      // 토큰을 세션 스토리지에 저장
+      sessionStorage.setItem("accessToken", accessToken);
+      console.log("토큰 저장 완료", accessToken);
 
-      // 액세스 토큰 요청 보내기
-      fetch("https://kauth.kakao.com/oauth/token", {
-        method: "POST",
+      // 리덕스에 토큰 저장
+      // dispatch(setAuth({ isAuthenticated: true, accessToken }));
+
+      // 최초 로그인 여부 확인
+      fetch("https://kapi.kakao.com/v2/user/me", {
+        method: "GET",
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+          Authorization: `Bearer ${accessToken}`,
         },
-        body: new URLSearchParams(data).toString(),
       })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("액세스 토큰 요청 실패");
+        .then((response) => response.json())
+        .then((userData) => {
+          console.log("사용자 정보 요청 성공:", userData);
+          const isFirstLogin = !userData.id;
+
+          if (isFirstLogin) {
+            navigate(PATH.HOUSE); // 튜토리얼 페이지 경로로 수정
+            console.log("첫 로그인");
+          } else {
+            navigate(PATH.HOUSE); // 기존 로그인 사용자의 홈 페이지 경로로 수정
+            console.log("기존 로그인");
           }
-          return response.json();
-        })
-        .then((tokenData) => {
-          // 액세스 토큰 받아오기 성공
-          const accessToken = tokenData.access_token;
-
-          // 엑세스 토큰을 세션스토리지에 저장
-          sessionStorage.Storage.clear();
-          sessionStorage.setItem("accessToken", accessToken);
-
-          // 최초 로그인 여부 추가
-          fetch("https://kapi.kakao.com/v2/user/me", {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          })
-            .then((response) => response.json())
-            .then((userData) => {
-              // 사용자 정보를 기반으로 최초 로그인 여부 확인
-              const isFirstLogin = !userData.id; // 사용자 정보에서 ID가 없으면 최초 로그인으로 간주
-
-              if (isFirstLogin) {
-                // 최초 로그인인 경우 -> 튜토리얼과 연결하기
-                window.location.href = "/tutorial";
-              } else {
-                // 기존 로그인인 경우
-                window.location.href = "/house";
-              }
-            })
-            .catch((error) => {
-              console.error("사용자 정보 요청 실패:", error);
-              window.location.href = "/error-page";
-            });
         })
         .catch((error) => {
-          console.error("액세스 토큰 요청 실패:", error);
-          // 오류 처리 로직?
-          window.location.href = "/error-page";
+          console.error("사용자 정보 요청 실패:", error);
+          navigate(PATH.ERROR); // 오류 페이지 경로로 수정
         });
+    } else {
+      // 토큰이 없으면 메인 페이지로 리다이렉션
+      navigate(PATH.MAIN);
     }
-  }, []);
+  }, [navigate]);
 
   return (
     <div>
