@@ -45,6 +45,7 @@ export default function RoomPage() {
               <Room
                 onTrashcanClick={() => navigate("delete")}
                 onFrameClick={() => navigate("photos")}
+                onTelephoneClick={() => navigate("audio")}
               />
             </Selection>
           </PresentationControls>

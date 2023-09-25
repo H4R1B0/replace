@@ -1,8 +1,9 @@
-import Modal from "..";
-export default function AudioRecordModal() {
+import Modal, { ModalProps } from "..";
+export default function AudioRecordModal({ ...other }: AudioRecordModalProps) {
   return (
-    <Modal>
+    <Modal {...other} buttonLabel="close">
       <p>AudioRecordModal</p>
     </Modal>
   );
 }
+type AudioRecordModalProps = ModalProps;

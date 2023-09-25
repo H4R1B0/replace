@@ -108,11 +108,13 @@ type GLTFResult = GLTF & {
   };
 };
 type RoomProps = {
+  onTelephoneClick?: () => void;
   onTrashcanClick?: () => void;
   onFrameClick?: () => void;
 } & JSX.IntrinsicElements["group"];
 
 export default function Room({
+  onTelephoneClick,
   onTrashcanClick,
   onFrameClick,
   ...other
@@ -359,6 +361,7 @@ export default function Room({
           scale={0.14}
           onPointerOver={togglePhoneHovered}
           onPointerOut={togglePhoneHovered}
+          onClick={onTelephoneClick}
         />
       </Select>
       <Select enabled={isFrameHovered}>
