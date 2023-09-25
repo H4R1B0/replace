@@ -1,12 +1,12 @@
 package com.vegetable.samochiro.service;
 
 
-import com.vegetable.samochiro.domain.AiVoice;
+import com.vegetable.samochiro.domain.AIVoice;
 import com.vegetable.samochiro.domain.Room;
 import com.vegetable.samochiro.domain.Voice;
 import com.vegetable.samochiro.dto.tel.GetAiVoiceResponse;
 import com.vegetable.samochiro.enums.SituationType;
-import com.vegetable.samochiro.repository.AiVoiceRepository;
+import com.vegetable.samochiro.repository.AIVoiceRepository;
 import com.vegetable.samochiro.repository.RoomRepository;
 import com.vegetable.samochiro.repository.VoiceRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class TelService {
     private final RoomRepository roomRepository;
     private final GCSService gcsService;
     private final VoiceRepository voiceRepository;
-    private final AiVoiceRepository aiVoiceRepository;
+    private final AIVoiceRepository aiVoiceRepository;
     private final String AUDIO_KEYWORD = "au";
 
     @Transactional
@@ -47,14 +47,23 @@ public class TelService {
 
     public GetAiVoiceResponse getAiVoice(String userId, int sequence, SituationType situationType) {
         String roomUuid = roomRepository.findBySequenceAndUserId(sequence, userId).get().getUuid();
-        List<AiVoice> aiVoices = aiVoiceRepository.findByRoomUuidAndSituation(roomUuid, situationType);
-        int aiVoicesSize = aiVoices.size();
+        List<AIVoice> AIVoices = aiVoiceRepository.findByRoomUuidAndSituation(roomUuid, situationType);
+        int aiVoicesSize = AIVoices.size();
         Random random = new Random();
         int idx = random.nextInt(aiVoicesSize);
         return GetAiVoiceResponse.builder()
                 .message("AI 음성 조회에 성공하였습니다.")
-                .voiceFileUrl(aiVoices.get(idx).getUrl())
+                .voiceFileUrl(AIVoices.get(idx).getUrl())
                 .build();
+    }
+
+    @Transactional
+    public void deleteVoicesByRoomUuid(String roomUuid) {
+        List<Voice> voices = voiceRepository.findByRoomUuid(roomUuid);
+        for(Voice voice : voices){
+            gcsService.deleteFile(voice.getName());
+            voiceRepository.deleteById(voice.getId());
+        }
     }
     //생성된 AI 음성 조회 - 전화기 3
 }

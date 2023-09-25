@@ -65,7 +65,7 @@ public class LetterController {
 	@DeleteMapping("/{letterId}")
 	public ResponseEntity<String> deleteLetter(@PathVariable Long letterId) {
 		try {
-			letterService.deleteLetter(letterId);
+			letterService.deleteLetterByRoomUuid(letterId);
 			return ResponseEntity.ok().body("삭제되었습니다.");
 		}
 		catch (Exception e) {
@@ -73,8 +73,6 @@ public class LetterController {
 			return ResponseEntity.badRequest().body("잘못된 요청입니다.");
 		}
 	}
-
-
 
 	@Data
 	@AllArgsConstructor
