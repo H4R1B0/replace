@@ -10,7 +10,7 @@ export default function DeleteRoomConfirmModal() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const deleteSuccessToast = async () => {
-    toast.success("room deleted");
+    toast.success("room deleted"), { id: "roomDeleted" };
     navigate("/house");
   };
 
