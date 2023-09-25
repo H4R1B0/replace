@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends JpaRepository<User, String> {
 	@Query("select u from User u where u.nickname = :nickname")
 	Optional<User> findByNickname(@Param("nickname") String nickname);
-	//닉네임 중복 검사, 닉네임 검색
+	//닉네임 중복 검사, 닉네임 검색, 남 집 조회
 
 	@Query("select u.nickname from User u where u.id=:userId")
 	Optional<String> findNicknameByUserId(String userId);

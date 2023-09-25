@@ -95,6 +95,23 @@ public class UserService {
 	}
 	//집 조회 - 집 1번
 
+	public HouseSearchResponse findHouseByNickname(String nickname) {
+		User user = userRepository.findByNickname(nickname).get();
+		List<Room> rooms = user.getRooms();
+		List<HouseSearchRoomResponse> roomDtoList = new ArrayList<>();
+		
+		for(Room r : rooms) {
+			HouseSearchRoomResponse roomResponse = new HouseSearchRoomResponse();
+			roomResponse.setTargetName(r.getTargetName());
+			roomResponse.setSequence(r.getSequence());
+			roomDtoList.add(roomResponse);
+		}
+
+		HouseSearchResponse response = new HouseSearchResponse(roomDtoList);
+		return response;
+	}
+	//남 집 조회 - 집 2번
+	
 	@Transactional
 	public SecessionResponse secession(String userId) {
 		userRepository.deleteById(userId);
