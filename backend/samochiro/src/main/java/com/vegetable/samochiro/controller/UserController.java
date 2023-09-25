@@ -107,6 +107,19 @@ public class UserController {
 	}
 	//집 조회 - 집 1번
 
+	@GetMapping("/home/{nickname}")
+	public ResponseEntity<HouseSearchResponse> searchHouseByNickname(@PathVariable String nickname) {
+		try {
+			HouseSearchResponse house = userService.findHouseByNickname(nickname);
+			return ResponseEntity.ok(house);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.badRequest().build();
+		}
+	}
+	//남 집 조회 - 집 2번
+
     @DeleteMapping("/{userId}")
     public ResponseEntity<SecessionResponse> secession(@PathVariable String userId) {
         SecessionResponse response = userService.secession(userId);
