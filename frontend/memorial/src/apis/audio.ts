@@ -5,6 +5,7 @@ type UploadSingleAudioRequest = {
   audio: File;
 };
 
+// 녹음한 음성 파일 업로드, 혹은 가지고 있는 음성 파일 업로드
 export const uploadSingleAudio = async ({
   sequence,
   audio,
