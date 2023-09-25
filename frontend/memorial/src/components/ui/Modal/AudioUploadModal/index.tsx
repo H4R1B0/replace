@@ -7,7 +7,6 @@ import { useRef, useState } from "react";
 import { HiFolder } from "react-icons/hi2";
 import Modal, { ModalProps } from "..";
 import { useParams, useNavigate } from "react-router-dom";
-import Dropzone from "react-dropzone";
 import ReactAudioPlayer from "react-audio-player";
 
 export default function AudioUploadModal({ ...other }: AudioUploadModalProps) {
