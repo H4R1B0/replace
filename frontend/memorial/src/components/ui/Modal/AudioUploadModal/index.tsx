@@ -63,7 +63,7 @@ export default function AudioUploadModal({ ...other }: AudioUploadModalProps) {
           onChange={handleFileChange}
         />
         <Button disabled={audioSrc === ""}>Upload</Button>
-        <Button onClick={() => navigate(-1)}>뒤로가기</Button>
+        <Button onClick={() => navigate("..")}>뒤로가기</Button>
       </form>
       {audioSrc && <ReactAudioPlayer src={audioSrc} controls />}
     </Modal>
