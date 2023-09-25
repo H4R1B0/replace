@@ -6,6 +6,7 @@ import { LiaSearchSolid } from "react-icons/lia";
 import PATH from "@constants/path";
 import NotFoundPage from "@pages/NotFoundPage";
 import "./App.css";
+import { Toaster } from "react-hot-toast";
 // import "@assets/fonts/font.css";
 
 const MainPage = lazy(() => import("@pages/MainPage"));
@@ -46,45 +47,54 @@ export default function App() {
   }, []);
 
   return (
-    <div className="viewport">
-      <nav>
-        <button title="Notifications">
-          <PiBellDuotone />
-        </button>
-        <div className="spacer"></div>
-        <button title="Search">
-          <LiaSearchSolid />
-        </button>
-        <button title="Settings">
-          <PiGearDuotone />
-        </button>
-      </nav>
-      <Router>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Routes>
-            <Route path={PATH.ROOT} element={<MainPage />} />
-            <Route path={PATH.MAIN} element={<MainPage />} />
-            <Route path={PATH.ROOM} element={<RoomPage />}>
-              <Route path="photos" element={<PhotoGridModal />} />
+    <>
+      <Toaster />
+      <div className="viewport">
+        <nav>
+          <button title="Notifications">
+            <PiBellDuotone />
+          </button>
+          <div className="spacer"></div>
+          <button title="Search">
+            <LiaSearchSolid />
+          </button>
+          <button title="Settings">
+            <PiGearDuotone />
+          </button>
+        </nav>
+        <Router>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Routes>
+              <Route path={PATH.ROOT} element={<MainPage />} />
+              <Route path={PATH.MAIN} element={<MainPage />} />
+              <Route path={PATH.ROOM} element={<RoomPage />}>
+                <Route path="photos" element={<PhotoGridModal />} />
+                <Route
+                  path="photos/:photoSequence"
+                  element={<PhotoViewModal />}
+                />
+                <Route path="photos/upload" element={<PhotoUploadModal />} />
+                <Route path="delete" element={<DeleteRoomConfirmModal />} />
+              </Route>
+              <Route path={PATH.TRIBUTE} element={<TributePage />} />
               <Route
-                path="photos/:photoSequence"
-                element={<PhotoViewModal />}
+                path={PATH.CREATETRIBUTE}
+                element={<CreateTributePage />}
               />
-              <Route path="photos/upload" element={<PhotoUploadModal />} />
-              <Route path="delete" element={<DeleteRoomConfirmModal />} />
-            </Route>
-            <Route path={PATH.TRIBUTE} element={<TributePage />} />
-            <Route path={PATH.CREATETRIBUTE} element={<CreateTributePage />} />
-            <Route path={PATH.TRIBUTELIST} element={<TributeListPage />} />
-            <Route path={PATH.TRIBUTEDETAIL} element={<TributeDetailPage />} />
-            <Route path={PATH.LIBRARY} element={<LibraryPage />} />
-            <Route path={PATH.PAYPHONE} element={<PayphonePage />} />
-            <Route path={PATH.HOUSE} element={<HousePage />} />
-            <Route path={PATH.SEARCH_RESULT} element={<SearchResultPage />} />
-            <Route path={PATH.NOT_FOUND} element={<NotFoundPage />} />
-          </Routes>
-        </Suspense>
-      </Router>
-    </div>
+              <Route path={PATH.TRIBUTELIST} element={<TributeListPage />} />
+              <Route
+                path={PATH.TRIBUTEDETAIL}
+                element={<TributeDetailPage />}
+              />
+              <Route path={PATH.LIBRARY} element={<LibraryPage />} />
+              <Route path={PATH.PAYPHONE} element={<PayphonePage />} />
+              <Route path={PATH.HOUSE} element={<HousePage />} />
+              <Route path={PATH.SEARCH_RESULT} element={<SearchResultPage />} />
+              <Route path={PATH.NOT_FOUND} element={<NotFoundPage />} />
+            </Routes>
+          </Suspense>
+        </Router>
+      </div>
+    </>
   );
 }
