@@ -34,7 +34,11 @@ export default function RedirectKakaoPage() {
           // 액세스 토큰 받아오기 성공
           const accessToken = tokenData.access_token;
 
-          // 엑세스 토큰 관리 방식도 추가하기?
+          // 엑세스 토큰을 세션스토리지에 저장
+          sessionStorage.Storage.clear();
+          sessionStorage.setItem("accessToken", accessToken);
+
+          // 최초 로그인 여부 추가
           fetch("https://kapi.kakao.com/v2/user/me", {
             method: "GET",
             headers: {
@@ -47,11 +51,11 @@ export default function RedirectKakaoPage() {
               const isFirstLogin = !userData.id; // 사용자 정보에서 ID가 없으면 최초 로그인으로 간주
 
               if (isFirstLogin) {
-                // 최초 로그인인 경우
-                window.location.href = "/";
+                // 최초 로그인인 경우 -> 튜토리얼과 연결하기
+                window.location.href = "/tutorial";
               } else {
                 // 기존 로그인인 경우
-                window.location.href = "/main";
+                window.location.href = "/house";
               }
             })
             .catch((error) => {
@@ -70,7 +74,7 @@ export default function RedirectKakaoPage() {
   return (
     <div>
       <h1>Redirect 페이지</h1>
-      <p>카카오 로그인 중...</p>
+      <p>카카오 로그인 중.../ 차후 로딩 페이지와 연결하기</p>
     </div>
   );
 }
