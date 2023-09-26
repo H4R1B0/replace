@@ -1,12 +1,14 @@
 package com.vegetable.samochiro.service;
 
 import com.google.cloud.storage.Blob;
+import com.google.cloud.storage.BlobId;
 import com.vegetable.samochiro.domain.Voice;
 import com.vegetable.samochiro.dto.ai.AITrainingRequest;
 import com.vegetable.samochiro.dto.ai.MultipartInputStreamFileResource;
 import com.vegetable.samochiro.repository.RoomRepository;
 import com.vegetable.samochiro.repository.VoiceRepository;
 
+import java.io.InputStream;
 import java.nio.channels.Channels;
 import java.util.List;
 
@@ -48,17 +50,18 @@ public class AIService {
 
         MultiValueMap<String, Object> multiPartBody = new LinkedMultiValueMap<>();
 
-        try {
-            for (Voice voice : voices) {
-                String fileName = voice.getName();
-                Blob blob = gcsService.getBlob(fileName);
+        for (Voice voice : voices) {
+            Blob blob = gcsService.getBlob(voice.getName());
 
-                // Blob을 InputStreamResource로 변환
-                Resource resource = new InputStreamResource(Channels.newInputStream(blob.reader()));
-                multiPartBody.add("files", new MultipartInputStreamFileResource(resource.getInputStream(), fileName));
+            if(blob != null) {
+                try {
+                    InputStream inputStream = Channels.newInputStream(blob.reader());
+                    Resource resource = new InputStreamResource(inputStream);
+                    multiPartBody.add("files", resource);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-        } catch (Exception e) {
-
         }
 
         RestTemplate restTemplate = new RestTemplate();
@@ -66,7 +69,7 @@ public class AIService {
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(multiPartBody, headers);
-        ResponseEntity<String> responseEntity = restTemplate.exchange(serverUrl, HttpMethod.POST, requestEntity, String.class);
+        restTemplate.postForEntity(serverUrl+"/download", requestEntity, String.class);
     }
     //학습하기 - ai 1번
 
