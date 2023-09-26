@@ -65,14 +65,14 @@ public class LetterController {
 	//편지 상세 조회 - 서재 3번
 
 	@DeleteMapping("/{letterId}")
-	public ResponseEntity<MessageResponse> deleteLetter(@PathVariable Long letterId) {
+	public ResponseEntity<Response> deleteLetter(@PathVariable Long letterId) {
 		try {
 			letterService.deleteLetter(letterId);
-			return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse("삭제되었습니다."));
+			return ResponseEntity.status(HttpStatus.OK).body(new Response("삭제되었습니다."));
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse("잘못된 요청입니다."));
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response("잘못된 요청입니다."));
 		}
 	}
 
