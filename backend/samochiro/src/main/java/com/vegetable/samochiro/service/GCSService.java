@@ -10,11 +10,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileInputStream;
@@ -78,7 +74,7 @@ public class GCSService {
         return blobList;
     }
 
-    public Blob test(String name){
+    public Blob getBlob(String name){
         return storage.get(bucketName, name);
     }
 
