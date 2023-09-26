@@ -11,6 +11,7 @@ import java.nio.channels.Channels;
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -28,6 +29,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class AIService {
 
     private final RoomRepository roomRepository;
@@ -69,6 +71,7 @@ public class AIService {
     //학습하기 - ai 1번
 
     public String doTest() {
+        log.info("테스트 시작");
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(headers);
