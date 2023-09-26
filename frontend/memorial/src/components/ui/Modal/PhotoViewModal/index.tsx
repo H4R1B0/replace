@@ -39,7 +39,7 @@ export default function PhotoViewModal({ ...other }: PhotoViewModalProps) {
   if (isError) return `Error`;
 
   return (
-    <Modal {...other} buttonLabel="close">
+    <Modal {...other} buttonLabel="close" onClose={() => navigate("..")}>
       <p>Photo view</p>
       <img src={photo.photoUrl} />
       <Button onClick={() => navigate(-1)}>Back</Button>

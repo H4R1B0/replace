@@ -3,17 +3,15 @@ import { useParams, useNavigate } from "react-router-dom";
 import Modal from "..";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { deleteSingleRoom } from "@apis/room";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 export default function DeleteRoomConfirmModal() {
   const { sequence } = useParams();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const deleteSuccessToast = async () => {
-    toast.success("room deleted");
-    setTimeout(() => {
-      navigate("/house");
-    }, 2000);
+    toast.success("room deleted"), { id: "roomDeleted" };
+    navigate("/house");
   };
 
   //TODO: deleteSuccessToast의 duration time이 끝난 뒤에 navigate("/house")로 이동하기
@@ -32,7 +30,7 @@ export default function DeleteRoomConfirmModal() {
     deleteRoomMutation.mutate(roomSequence);
   };
   return (
-    <Modal buttonLabel="close">
+    <Modal buttonLabel="close" onClose={() => navigate("..")}>
       <p>Are you sure you want to delete this room?</p>
 
       <Button onClick={handleDelete}>Yes</Button>
@@ -43,7 +41,6 @@ export default function DeleteRoomConfirmModal() {
       >
         No
       </Button>
-      <Toaster />
     </Modal>
   );
 }

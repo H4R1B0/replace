@@ -31,7 +31,7 @@ export default function PhotoGridModal({ ...other }: PhotoGridModalProps) {
   ));
 
   return (
-    <Modal {...other} buttonLabel="close">
+    <Modal {...other} buttonLabel="close" onClose={() => navigate("..")}>
       <p>Photo grid</p>
       {/* TODO: route link */}
       <Button onClick={() => navigate("upload")}>+</Button>
