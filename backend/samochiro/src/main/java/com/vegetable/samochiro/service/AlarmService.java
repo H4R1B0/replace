@@ -35,5 +35,11 @@ public class AlarmService {
 		alarmRepository.deleteById(alarmId);
 	}
 	//알림 삭제 - 알림 3번
-	
+
+	@Transactional
+    public void deleteAlarmByUserId(String userId) {
+		alarmRepository.deleteByUserId(userId);
+    }
+    //알림 삭제 - 유저 8
+
 }

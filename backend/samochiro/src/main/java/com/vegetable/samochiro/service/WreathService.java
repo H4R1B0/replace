@@ -318,4 +318,15 @@ public class WreathService {
 	}
 	//kmp 알고리즘
 
+	@Transactional
+    public void deleteWreathByUserId(String userId) {
+		List<Wreath> wreaths = wreathRepository.selectByUserId(userId).get();
+		for(Wreath wreath : wreaths){
+			wreathUserRepository.deleteByWreathId(wreath.getWreathId());
+			wreathCountRepository.deleteByWreathId(wreath.getWreathId());
+			wreathRepository.delete(wreath);
+		}
+    }
+    //사용자 아이디로 헌화 삭제 - 유저 8
+
 }

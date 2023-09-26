@@ -31,6 +31,14 @@ public class UserService {
 	private final UserRepository userRepository;
 	private final JwtTokenProvider tokenProvider;
 	private final JwtTokenService jwtTokenService;
+	private final LetterService letterService;
+	private final PhotoService photoService;
+	private final AIVoiceService aiVoiceService;
+	private final TelService telService;
+	private final VoicemailService voicemailService;
+	private final AlarmService alarmService;
+	private final DeclarationService declarationService;
+	private final WreathService wreathService;
 
 	@Transactional
 	public String updateNickname(NicknameUpdateRequest updateRequest, String userId) {
@@ -133,6 +141,32 @@ public class UserService {
     public void logout(String accessToken) {
         jwtTokenService.deleteJwtToken(accessToken);
     }
-    //로그아웃 - 유저 4
+	//로그아웃 - 유저 4
+
+	@Transactional
+    public void withdrawal(String userId) {
+		User findUser = userRepository.findById(userId).get();
+		List<Room> rooms = findUser.getRooms();
+		for(Room room : rooms){
+			String roomUuid = room.getUuid();
+			//편지 삭제
+			letterService.deleteLetterByRoomUuid(roomUuid);
+			//사진
+			photoService.deletePhotosByRoomUuid(roomUuid);
+			//ai 음성
+			aiVoiceService.deleteAIVoicesByRoomUuid(roomUuid);
+			//음성
+			telService.deleteVoicesByRoomUuid(roomUuid);
+			//보이스 메일
+			voicemailService.deleteVoicemailsByUserId(userId);
+			//알림
+			alarmService.deleteAlarmByUserId(userId);
+			//신고
+			declarationService.deleteDeclarationByUserId(userId);
+			//헌화
+			wreathService.deleteWreathByUserId(userId);
+		}
+    }
+    //회원 탈퇴 - 유저 8
 
 }

@@ -77,4 +77,14 @@ public class VoicemailService {
         voicemailRepository.deleteById(voicemailId);
     }
     //보이스 메일 삭제 - 골목길 4
+
+    @Transactional
+    public void deleteVoicemailsByUserId(String userId) {
+        List<Voicemail> voicemails = voicemailRepository.findByUserId(userId);
+        for (Voicemail voicemail : voicemails) {
+            gcsService.deleteFile(voicemail.getName());
+            voicemailRepository.deleteById(voicemail.getId());
+        }
+    }
+    //보이스 메일 삭제 - 유저 8
 }
