@@ -68,7 +68,7 @@ public class LetterService {
 	//편지 상세 조회 - 서재 3번
 
 	@Transactional
-	public void deleteLetterByRoomUuid(Long letterId) {
+	public void deleteLetter(Long letterId) {
 		letterRepository.deleteById(letterId);
 	}
 	//편지 삭제 - 서재 4번

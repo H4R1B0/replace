@@ -67,7 +67,7 @@ public class LetterController {
 	@DeleteMapping("/{letterId}")
 	public ResponseEntity<Response> deleteLetter(@PathVariable Long letterId) {
 		try {
-//			letterService.deleteLetter(letterId);
+			letterService.deleteLetter(letterId);
 			return ResponseEntity.status(HttpStatus.OK).body(new Response("삭제되었습니다."));
 		}
 		catch (Exception e) {
