@@ -59,6 +59,7 @@ export default function NicknamePage() {
       .then((response) => {
         if (response.status === 200) {
           return response.json();
+          navigate(PATH.HOUSE);
         } else {
           alert("닉네임 저장 실패");
         }
