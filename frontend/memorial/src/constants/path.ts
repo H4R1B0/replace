@@ -17,7 +17,7 @@ const PATH: { [key: string]: string } = {
   SEARCH: "/search",
   SEARCH_RESULT: "/search/result",
   ERROR_PAGE: "/error",
-  NOT_FOUND: "/notfound",
+  NOT_FOUND: "*",
   REDIRECT_KAKAO: "/oauth/redirect",
   NICKNAME: "/nickname",
 };
