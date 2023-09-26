@@ -1,10 +1,10 @@
 const BASE_URL = import.meta.env.VITE_APP_API_URL;
 
-const request = async (path: string, init?: RequestInit) => {
+const request = async (path: string, init?: RequestInit, json = true) => {
   const response = await fetch(`${BASE_URL}${path}`, {
     ...init,
     headers: {
-      "Content-Type": "application/json",
+      ...(json && { "Content-Type": "application/json" }),
       ...init?.headers,
     },
   });
@@ -47,22 +47,30 @@ export const api = {
 
   postPhoto: (path: string, photo: File, init?: RequestInit) => {
     const formData = new FormData();
-    formData.append("image", photo);
-    return request(path, {
-      headers: init?.headers,
-      method: "POST",
-      body: formData,
-    });
+    formData.append("file", photo);
+    return request(
+      path,
+      {
+        headers: init?.headers,
+        method: "POST",
+        body: formData,
+      },
+      false
+    );
   },
 
   postAudio: (path: string, audio: File, init?: RequestInit) => {
     const formData = new FormData();
-    formData.append("record", audio);
-    return request(path, {
-      headers: init?.headers,
-      method: "POST",
-      body: formData,
-    });
+    formData.append("audioFile", audio);
+    return request(
+      path,
+      {
+        headers: init?.headers,
+        method: "POST",
+        body: formData,
+      },
+      false
+    );
   },
 
   delete: <T = unknown>(path: string, payload?: T, init?: RequestInit) =>
