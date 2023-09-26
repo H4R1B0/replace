@@ -10,6 +10,9 @@ import {
   Outline,
 } from "@react-three/postprocessing";
 import Button from "@components/ui/Button";
+import Input from "@components/ui/Input";
+import Textarea from "@components/ui/Textarea";
+import TrributeEventCard from "@components/ui/TrributeEventCard";
 
 type Book = {
   letterId: number;
@@ -43,6 +46,7 @@ export default function LibraryPage() {
     roomUuid: "12345",
     userId: "232134yi2",
   });
+  console.log(letter);
 
   // 편지 작성 시, 입력된 내용에 따라 letter의 state 변경시키기
   const onChangeLetter = (e: any) => {
@@ -130,6 +134,10 @@ export default function LibraryPage() {
       });
   };
 
+  const closeBookModal = () => {
+    setBookModalOpen(false);
+    setSelectedBook(null);
+  };
   return (
     <div className={styles.wrapper}>
       <Canvas
@@ -171,59 +179,86 @@ export default function LibraryPage() {
         onClose={() => setLetterModalOpen(false)}
         title="편지를 작성해보세요."
         buttonLabel="서재로 돌아가기"
+        noButton={true}
       >
-        <div>
-          <p>제목</p>
-          <input type="text" name="title" onChange={onChangeLetter} />
-          <p>내용</p>
-          <input type="text" name="content" onChange={onChangeLetter} />
-          <Button variant="regular" onClick={letterSubmit}>
-            편지 작성하기
-          </Button>
+        <div className={styles.letter}>
+          <div className={styles.letterFormTitle}>
+            <p className={styles.letterTitle}>제목</p>
+            <Input name="title" variant="regular" onChange={onChangeLetter} />
+          </div>
+          <div className={styles.letterFormTitle}>
+            <p className={styles.letterTitle}>내용</p>
+            <Textarea name="content" variant="long" onChange={onChangeLetter} />
+          </div>
+          <div className={styles.button}>
+            <Button variant="regular" onClick={letterSubmit}>
+              작성하기
+            </Button>
+            <Button variant="regular" onClick={() => setLetterModalOpen(false)}>
+              돌아가기
+            </Button>
+          </div>
         </div>
       </Modal>
 
       <Modal
         modalOpen={bookModalOpen}
-        onClose={() => setBookModalOpen(false)}
-        title="편지를 확인해보세요."
-        buttonLabel="확인"
+        onClose={closeBookModal}
+        title={selectedBook ? selectedBook.title : "편지를 확인해보세요."}
+        buttonLabel="서재로 돌아가기"
+        noButton={selectedBook ? true : false}
       >
         {!selectedBook ? (
-          <div>
+          <div className={styles.letter}>
             {books.length === 0 ? (
               <p>작성된 편지가 없어요.</p>
             ) : (
-              <ul>
+              <div className={styles.listscrollwrapper}>
                 {books.map((book) => {
                   if (!book) return null;
 
                   return (
-                    <li
-                      key={book.letterId}
-                      onClick={() => setSelectedBook(book)}
-                    >
-                      {book.title}
-                    </li>
+                    <div onClick={() => setSelectedBook(book)}>
+                      <TrributeEventCard key={book.letterId}>
+                        <div className={styles.cardTitle}>{book.title}</div>
+                        <div className={styles.cardDate}>
+                          {formatDate(book.writeTime)}
+                        </div>
+                      </TrributeEventCard>
+                    </div>
                   );
                 })}
-              </ul>
+              </div>
             )}
           </div>
         ) : (
-          <div>
-            <h2>{selectedBook?.title}</h2>
-            <p>작성한 날짜 : {selectedBook?.writeTime}</p>
-            <p>내용 : {selectedBook?.content}</p>
-            <Button variant="regular" onClick={deleteLetter}>
-              삭제하기
-            </Button>
-            <Button variant="regular" onClick={() => setSelectedBook(null)}>
-              돌아가기
-            </Button>
+          <div className={styles.letter}>
+            <p className={`${styles.cardDate} ${styles.cardDateBig}`}>
+              {selectedBook && formatDate(selectedBook.writeTime)}
+            </p>
+            <div className={styles.letterBody}>
+              <p>{selectedBook?.content}</p>
+            </div>
+            <div className={styles.detailbutton}>
+              <Button variant="regular" onClick={deleteLetter}>
+                삭제 하기
+              </Button>
+              <Button variant="regular" onClick={() => setSelectedBook(null)}>
+                리스트 보기
+              </Button>
+            </div>
           </div>
         )}
       </Modal>
     </div>
   );
+}
+
+function formatDate(isoDateString: string) {
+  const date = new Date(isoDateString);
+  const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1)
+    .toString()
+    .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
+
+  return formattedDate;
 }

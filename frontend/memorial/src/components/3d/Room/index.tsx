@@ -108,10 +108,17 @@ type GLTFResult = GLTF & {
   };
 };
 type RoomProps = {
+  onTelephoneClick?: () => void;
   onTrashcanClick?: () => void;
+  onFrameClick?: () => void;
 } & JSX.IntrinsicElements["group"];
 
-export default function Room({ onTrashcanClick, ...other }: RoomProps) {
+export default function Room({
+  onTelephoneClick,
+  onTrashcanClick,
+  onFrameClick,
+  ...other
+}: RoomProps) {
   const { nodes, materials } = useGLTF(roomPath) as GLTFResult;
   const [isTrashcanHovered, toggleTrashcanHovered] = useToggle(false);
   const [isRadioHovered, toggleRadioHovered] = useToggle(false);
@@ -354,6 +361,7 @@ export default function Room({ onTrashcanClick, ...other }: RoomProps) {
           scale={0.14}
           onPointerOver={togglePhoneHovered}
           onPointerOut={togglePhoneHovered}
+          onClick={onTelephoneClick}
         />
       </Select>
       <Select enabled={isFrameHovered}>
@@ -363,6 +371,7 @@ export default function Room({ onTrashcanClick, ...other }: RoomProps) {
           scale={[0.448, 0.537, 0.432]}
           onPointerOver={toggleFrameHovered}
           onPointerOut={toggleFrameHovered}
+          onClick={onFrameClick}
         >
           <mesh
             castShadow

@@ -1,0 +1,28 @@
+.wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.listWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+  top: 43%;
+}
+
+.img {
+  height: 30%;
+  margin: 2rem 0;
+}
+
+.buttonwrapper {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}

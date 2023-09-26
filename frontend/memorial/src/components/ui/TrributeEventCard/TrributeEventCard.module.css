@@ -1,0 +1,13 @@
+.wrapper {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  padding: 2% 0;
+}
+.regular {
+  width: 90%;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 0.5rem;
+  padding: 4%;
+}

@@ -1,8 +1,16 @@
 import { api } from "./index";
 
-// 방에서 녹음한 음성 & 업로드한 파일 파일 등록 (POST)
-export const uploadRecordedAudio = async (sequence: number) => {
-  return await api.post(`/tel/${sequence}`);
+type UploadSingleAudioRequest = {
+  sequence: number;
+  audio: File;
+};
+
+// 녹음한 음성 파일 업로드, 혹은 가지고 있는 음성 파일 업로드
+export const uploadSingleAudio = async ({
+  sequence,
+  audio,
+}: UploadSingleAudioRequest) => {
+  return await api.postAudio(`/tel/${sequence}`, audio);
 };
 
 // 녹음한 음성 파일 리스트 조회 (수정완)

@@ -45,6 +45,26 @@ export const api = {
       body: JSON.stringify(payload),
     }),
 
+  postPhoto: (path: string, photo: File, init?: RequestInit) => {
+    const formData = new FormData();
+    formData.append("image", photo);
+    return request(path, {
+      headers: init?.headers,
+      method: "POST",
+      body: formData,
+    });
+  },
+
+  postAudio: (path: string, audio: File, init?: RequestInit) => {
+    const formData = new FormData();
+    formData.append("record", audio);
+    return request(path, {
+      headers: init?.headers,
+      method: "POST",
+      body: formData,
+    });
+  },
+
   delete: <T = unknown>(path: string, init?: RequestInit, payload?: T) =>
     request(path, {
       headers: init?.headers,
