@@ -9,6 +9,7 @@ import com.vegetable.samochiro.dto.user.NicknameUpdateResponse;
 import com.vegetable.samochiro.dto.user.SecessionResponse;
 import com.vegetable.samochiro.oauth2.token.JwtTokenService;
 import com.vegetable.samochiro.service.UserService;
+import com.vegetable.samochiro.util.HeaderUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -33,6 +34,7 @@ public class UserController {
 
 	private final UserService userService;
 	private final JwtTokenService jwtTokenService;
+    private final HeaderUtils headerUtils;
 
 	@PutMapping
 	public ResponseEntity<NicknameUpdateResponse> setNewNickname(@RequestBody NicknameUpdateRequest updateRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
@@ -144,5 +146,13 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.OK).body("정상적으로 로그아웃되었습니다.");
 	}
 	//로그아웃 - 유저 4
+
+	@DeleteMapping("/nickname")
+    public ResponseEntity<String> withdrawal(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+        String userId = headerUtils.getUserId(authorizationHeader);
+        userService.withdrawal(userId);
+        return ResponseEntity.status(HttpStatus.OK).body("회원 탈퇴에 성공하였습니다.");
+    }
+    //회원 탈퇴 - 유저 8
 
 }

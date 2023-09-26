@@ -11,4 +11,7 @@ public interface VoicemailRepository extends JpaRepository<Voicemail, Long> {
 
     @Query("select new com.vegetable.samochiro.dto.voicemail.VoicemailItem(v.id, v.sendDate, v.fromUser.nickname) from Voicemail v where v.toUser.id=:userId")
     List<VoicemailItem> getVoicemails(String userId);
+
+    @Query("select v from Voicemail v where v.toUser.id=:userId or v.fromUser.id=:userId")
+    List<Voicemail> findByUserId(String userId);
 }
