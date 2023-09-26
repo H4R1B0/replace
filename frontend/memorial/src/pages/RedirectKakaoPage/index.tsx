@@ -20,7 +20,7 @@ export default function RedirectKakaoPage() {
       // dispatch(setAuth({ isAuthenticated: true, accessToken }));
 
       // 최초 로그인 여부 확인
-      fetch("https://kapi.kakao.com/v2/user/me", {
+      fetch("https://j9b307.p.ssafy.io/api/user/isChange", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -30,9 +30,17 @@ export default function RedirectKakaoPage() {
         .then((userData) => {
           console.log("사용자 정보 요청 성공:", userData);
           const isFirstLogin = !userData.id;
+          // dispatchEvent(
+          //   setAuth({
+          //     isAuthenticated: true,
+          //     accessToken,
+          //     nickname: userData.nickname,
+          //   })
+          // );
 
           if (isFirstLogin) {
             navigate(PATH.HOUSE); // 튜토리얼 페이지 경로로 수정
+            // 닉네임 설정 화면
             console.log("첫 로그인");
           } else {
             navigate(PATH.HOUSE); // 기존 로그인 사용자의 홈 페이지 경로로 수정
