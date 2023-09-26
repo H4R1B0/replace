@@ -34,8 +34,8 @@ export default function AudioRecordModal({ ...other }: AudioRecordModalProps) {
   return (
     <Modal {...other} buttonLabel="close" onClose={() => navigate("..")}>
       <p>AudioRecordModal</p>
-      <Recorder onAudioDataReceived={(data) => setAudioData(data)} />
       <form onSubmit={handleFormSubmit}>
+        <Recorder onAudioDataReceived={(data) => setAudioData(data)} />
         <Button type="submit">서버로 저장</Button>
       </form>
     </Modal>
