@@ -28,31 +28,23 @@ export default function RedirectKakaoPage() {
       })
         .then((response) => response.json())
         .then((userData) => {
-          console.log("사용자 정보 요청 성공:", userData);
-          const isFirstLogin = !userData.id;
-          // dispatchEvent(
-          //   setAuth({
-          //     isAuthenticated: true,
-          //     accessToken,
-          //     nickname: userData.nickname,
-          //   })
-          // );
+          // console.log("사용자 정보 요청 성공:", userData);
+          const isFirstLogin = !userData.isChange;
 
           if (isFirstLogin) {
-            navigate(PATH.HOUSE); // 튜토리얼 페이지 경로로 수정
-            // 닉네임 설정 화면
+            navigate(PATH.NICKNAME); // 최초 로그인 사용자
             console.log("첫 로그인");
           } else {
-            navigate(PATH.HOUSE); // 기존 로그인 사용자의 홈 페이지 경로로 수정
+            navigate(PATH.HOUSE); // 기존 로그인 사용자
             console.log("기존 로그인");
           }
         })
         .catch((error) => {
           console.error("사용자 정보 요청 실패:", error);
-          navigate(PATH.ERROR); // 오류 페이지 경로로 수정
+          navigate(PATH.ERROR_PAGE);
         });
     } else {
-      // 토큰이 없으면 메인 페이지로 리다이렉션
+      // 토큰이 없으면 메인 페이지로 이동
       navigate(PATH.MAIN);
     }
   }, [navigate]);

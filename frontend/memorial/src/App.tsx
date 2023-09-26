@@ -19,6 +19,7 @@ const PayphonePage = lazy(() => import("@pages/PayphonePage"));
 const HousePage = lazy(() => import("@pages/HousePage"));
 const SearchResultPage = lazy(() => import("@pages/SearchResultPage"));
 const RedirectKakaoPage = lazy(() => import("@pages/RedirectKakaoPage"));
+const NicknamePage = lazy(() => import("@pages/NicknamePage"));
 
 export default function App() {
   function handleResize() {
@@ -64,6 +65,7 @@ export default function App() {
             <Route path={PATH.SEARCH_RESULT} element={<SearchResultPage />} />
             <Route path={PATH.NOT_FOUND} element={<NotFoundPage />} />
             <Route path={PATH.REDIRECT_KAKAO} element={<RedirectKakaoPage />} />
+            <Route path={PATH.NICKNAME} element={<NicknamePage />} />
           </Routes>
         </Suspense>
       </Router>
