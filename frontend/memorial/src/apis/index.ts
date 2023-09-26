@@ -31,14 +31,14 @@ export const api = {
   get: <T = unknown>(path: string, init?: RequestInit) =>
     request(path, init).then<T>((response) => response.json()),
 
-  put: <T = unknown>(path: string, init?: RequestInit, payload?: T) =>
+  put: <T = unknown>(path: string, payload?: T, init?: RequestInit) =>
     request(path, {
       headers: init?.headers,
       method: "PUT",
       body: JSON.stringify(payload),
     }),
 
-  post: <T = unknown>(path: string, init?: RequestInit, payload?: T) =>
+  post: <T = unknown>(path: string, payload?: T, init?: RequestInit) =>
     request(path, {
       headers: init?.headers,
       method: "POST",
@@ -65,7 +65,7 @@ export const api = {
     });
   },
 
-  delete: <T = unknown>(path: string, init?: RequestInit, payload?: T) =>
+  delete: <T = unknown>(path: string, payload?: T, init?: RequestInit) =>
     request(path, {
       headers: init?.headers,
       method: "DELETE",
@@ -75,6 +75,6 @@ export const api = {
 
 export const Header = () => ({
   headers: {
-    Authorization: `Bearer ${localStorage.getItem("login-token")}`,
+    Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
   },
 });

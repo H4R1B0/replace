@@ -1,4 +1,4 @@
-import { api } from "./index";
+import { api, Header } from "./index";
 
 type UploadSingleAudioRequest = {
   sequence: number;
@@ -10,22 +10,22 @@ export const uploadSingleAudio = async ({
   sequence,
   audio,
 }: UploadSingleAudioRequest) => {
-  return await api.postAudio(`/tel/${sequence}`, audio);
+  return await api.postAudio(`/tel/${sequence}`, audio, Header());
 };
 
 // 녹음한 음성 파일 리스트 조회 (수정완)
 export const fetchAudioFileList = async (sequence: number) => {
-  return await api.get(`/radio/${sequence}`);
+  return await api.get(`/radio/${sequence}`, Header());
 };
 
 // 녹음 음성 파일 상세 조회
 export const fetchSingleAudioFile = async (voiceId: number) => {
-  return await api.get(`/radio/detail/${voiceId}`);
+  return await api.get(`/radio/detail/${voiceId}`, Header());
 };
 
 // 녹음 음성 파일 삭제
 export const deleteSingleAudioFile = async (voiceId: string) => {
-  return await api.delete(`/radio/${voiceId}`);
+  return await api.delete(`/radio/${voiceId}`, Header());
 };
 
 // 생성된 AI 음성 조회
