@@ -75,6 +75,18 @@ public class AIService {
 
             try (DataOutputStream dos = new DataOutputStream(connection.getOutputStream())) {
 
+                // 문자열 파트 1 전송
+                dos.writeBytes("--" + BOUNDARY + "\r\n");
+                dos.writeBytes("Content-Disposition: form-data; name=\"roomUuid\"\r\n");
+                dos.writeBytes("\r\n");
+                dos.writeBytes(roomUuid + "\r\n");
+
+                // 문자열 파트 2 전송
+                dos.writeBytes("--" + BOUNDARY + "\r\n");
+                dos.writeBytes("Content-Disposition: form-data; name=\"gender\"\r\n");
+                dos.writeBytes("\r\n");
+                dos.writeBytes(gender + "\r\n");
+
                 for (Blob blob : blobs) {
                     // 파일 파트 헤더 작성
                     dos.writeBytes("--" + BOUNDARY + "\r\n");
