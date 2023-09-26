@@ -22,7 +22,7 @@ export default function PhotoGridModal({ ...other }: PhotoGridModalProps) {
   if (isLoading) return "loading";
   if (isError) return `Error`;
 
-  const photos = photoList?.photos.map((photo) => (
+  const photos = photoList?.photos?.map((photo) => (
     <img
       key={photo.photoId}
       src={photo.photoUrl}
