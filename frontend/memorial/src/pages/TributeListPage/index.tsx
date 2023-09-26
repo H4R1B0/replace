@@ -121,7 +121,7 @@ export default function TributeListPage() {
             placeholder="헌화 제목 검색"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            variant="short"
+            variant="regular"
           />
         </div>
         <div className={styles.btnWraper}>
@@ -150,7 +150,7 @@ export default function TributeListPage() {
             <p> 해당하는 헌화 공간이 없어요. </p>
           </div>
         ) : (
-          <div>
+          <div className={styles.eventCardWrapper}>
             {filteredWreathList.map((wreath) => {
               if (!wreath) return null;
 
@@ -163,8 +163,9 @@ export default function TributeListPage() {
                     <p className={styles.Title}>{wreath.title}</p>
                     <div className={styles.date}>
                       {wreath.startDate} - {wreath.endDate}
+                      {getRemainingDays(wreath.endDate)}
                     </div>
-                    <p>{wreath.subTitle}</p>
+                    {/* <p>{wreath.subTitle}</p> */}
                     <div className={styles.trributeStatus}>
                       <img
                         className={styles.img}
@@ -194,6 +195,13 @@ export default function TributeListPage() {
       </div>
     </div>
   );
+}
+function getRemainingDays(endDate: string) {
+  const end = new Date(endDate);
+  const now = new Date();
+  const differenceInTime = end.getTime() - now.getTime();
+  const differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24));
+  return differenceInDays;
 }
 
 function sortWreathList(data: Wreath[], option: number): Wreath[] {

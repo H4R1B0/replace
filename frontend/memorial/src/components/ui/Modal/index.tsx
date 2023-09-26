@@ -8,6 +8,7 @@ export type ModalProps = {
   subtitle?: string; // 모달 부제목(필수 X)
   buttonLabel?: string; // 모달 버튼
   children?: React.ReactNode; // 모달 내부에 들어갈 모든 내용 <Modal>해당 모달에 넣고 싶은 내용(=children)</Modal> 로 정의해서 사용하기
+  noButton?: boolean; //닫기 버튼이 필요 없는 모달에 사용함. noButton={true}를 전달하면 버튼 사라짐
 };
 
 export default function Modal({
@@ -17,6 +18,7 @@ export default function Modal({
   subtitle,
   buttonLabel,
   children,
+  noButton,
 }: ModalProps) {
   // TODO: scrollbar styles
   const customModalStyles: ReactModal.Styles = {
@@ -47,15 +49,21 @@ export default function Modal({
       ariaHideApp={false}
       contentLabel="Pop up Message"
       shouldCloseOnOverlayClick={false}
-      style={customModalStyles} // customStyles를 여기에 적용
+      style={customModalStyles}
     >
-      <div>
+      <div
+        style={{
+          textAlign: "center", // 모달 내 컨텐츠 중앙정렬
+        }}
+      >
         <h2>{title}</h2>
         {subtitle && <p>{subtitle}</p>}
         {children}
-        <Button variant="regular" onClick={onClose}>
-          {buttonLabel}
-        </Button>
+        {!noButton && (
+          <Button variant="regular" onClick={onClose}>
+            {buttonLabel}
+          </Button>
+        )}
       </div>
     </ReactModal>
   );
