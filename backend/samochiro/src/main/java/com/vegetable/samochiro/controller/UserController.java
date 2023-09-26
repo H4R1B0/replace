@@ -59,22 +59,20 @@ public class UserController {
 	//닉네임 설정 - 유저 5번
 
 	@PostMapping("/duplicate")
-	public ResponseEntity<String> checkDuplicateNickname(@RequestBody String nickname) {
+	public ResponseEntity<Boolean> checkDuplicateNickname(@RequestBody String nickname) {
 		boolean isDuplicate = userService.findDuplicateNickname(nickname);
 
 		try {
-			String message;
 			if(isDuplicate) {
-				message = "중복 된 닉네임입니다.";
+				return ResponseEntity.ok(true);
 			}
 			else {
-				message = "사용 가능한 닉네임입니다.";
+				return ResponseEntity.ok(false);
 			}
-			return ResponseEntity.ok(message);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("잘못된 요청입니다.");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 	}
 	//닉네임 중복 검사 - 유저 6번
