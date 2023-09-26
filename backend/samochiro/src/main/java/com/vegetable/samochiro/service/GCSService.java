@@ -7,6 +7,7 @@ import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 import com.vegetable.samochiro.domain.Voice;
+
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,26 +29,11 @@ public class GCSService {
     private String bucketName;
     @Value("${spring.cloud.gcp.credentials.project-id}")
     private String projectId;
-    private Storage storage;
-
-    public GCSService() {
-        try{
-            String rootPath = System.getProperty("user.dir");
-            log.info(rootPath);
-            StorageOptions storageOptions = StorageOptions.newBuilder()
-                .setProjectId(projectId)
-                .setCredentials(GoogleCredentials.fromStream(new FileInputStream("/avid-lock-397313-6129fb95bb28.json"))).build();
-            this.storage = storageOptions.getService();
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-    }
 
     public String uploadFile(String fileName, MultipartFile file) {
         try {
             String ext = file.getContentType(); // 파일의 형식 ex) JPG
-            BlobInfo blobInfo = storage.create(
+            BlobInfo blobInfo = getStorage().create(
                 BlobInfo.newBuilder(bucketName, fileName)
                     .setContentType(ext)
                     .build(),
@@ -63,24 +49,36 @@ public class GCSService {
 
     public void deleteFile(String voicemailName) {
         //버킷 명, 삭제 파일 이름, 프로젝트 ID
-        storage.delete(bucketName, voicemailName, Storage.BlobSourceOption.decryptionKey(projectId));
+        getStorage().delete(bucketName, voicemailName, Storage.BlobSourceOption.decryptionKey(projectId));
     }
 
     public List<Blob> downloadFiles(List<Voice> voiceList) {
         List<Blob> blobList = new ArrayList<>();
 
-        for(Voice v: voiceList) {
+        for (Voice v : voiceList) {
             String name = v.getName();
-            Blob blob = storage.get(bucketName, name);
-            blob.downloadTo(Paths.get(name.replaceAll(":","_")));
+            Blob blob = getStorage().get(bucketName, name);
+            blob.downloadTo(Paths.get(name.replaceAll(":", "_")));
             blobList.add(blob);
 
         }
         return blobList;
     }
 
-    public Blob getBlob(String name){
-        return storage.get(bucketName, name);
+    public Blob getBlob(String name) {
+        return getStorage().get(bucketName, name);
+    }
+
+    private Storage getStorage() {
+        try {
+            return StorageOptions.newBuilder()
+                .setProjectId(projectId)
+                .setCredentials(GoogleCredentials.fromStream(new FileInputStream("/avid-lock-397313-6129fb95bb28.json"))).build()
+                .getService();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
