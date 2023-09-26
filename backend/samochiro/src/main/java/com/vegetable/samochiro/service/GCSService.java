@@ -36,7 +36,7 @@ public class GCSService {
             log.info(rootPath);
             StorageOptions storageOptions = StorageOptions.newBuilder()
                 .setProjectId(projectId)
-                .setCredentials(GoogleCredentials.fromStream(new FileInputStream(rootPath))).build();
+                .setCredentials(GoogleCredentials.fromStream(new FileInputStream("/avid-lock-397313-6129fb95bb28.json"))).build();
             this.storage = storageOptions.getService();
         }
         catch (IOException e){
