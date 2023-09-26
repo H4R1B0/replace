@@ -10,12 +10,15 @@
 .listWrapper {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  position: relative;
+  top: 43%;
 }
 
 .img {
-  height: 20rem;
+  height: 30%;
+  margin: 2rem 0;
 }
 
 .buttonwrapper {

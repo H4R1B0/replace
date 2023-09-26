@@ -23,7 +23,7 @@
 }
 
 .short {
-  min-width: 85%;
+  min-width: 50%;
   width: 10rem;
 }
 
@@ -34,4 +34,10 @@
 
 .regular:focus {
   border: solid rgb(255, 199, 199) 0.15rem;
+}
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }

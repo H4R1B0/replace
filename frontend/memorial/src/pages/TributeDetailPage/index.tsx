@@ -143,8 +143,8 @@ export default function TributeDetailPage() {
       [e.target.name]: e.target.value,
     });
   };
-  console.log(reportDetail);
-  console.log(myTribute);
+  // console.log(reportDetail);
+  // console.log(myTribute);
 
   return (
     <div className={styles.wrapper}>
@@ -157,21 +157,25 @@ export default function TributeDetailPage() {
         <p>{wreathDetail?.subTitle}</p>
       </div>
       <Canvas
-        className={styles.canvas}
+        style={{
+          paddingLeft: "6%",
+          width: "100%",
+          height: "25rem",
+          touchAction: "none",
+        }}
         flat
         dpr={[1, 2]}
-        camera={{ fov: 1, position: [100, 30, -90] }}
-        style={{ touchAction: "none" }}
+        camera={{ fov: 10, position: [0, 0, 0.5] }}
       >
         <Stage environment="city" intensity={0.5} adjustCamera shadows={false}>
           <PresentationControls
             snap
             global
-            rotation={[0, -Math.PI / 4, 0]}
-            polar={[0, Math.PI / 4]}
-            azimuth={[-Math.PI / 4, Math.PI / 4]}
+            rotation={[0, -Math.PI / 3.8, 0]}
+            polar={[0, 0]}
+            azimuth={[-Math.PI / 8, Math.PI / 8]}
           >
-            {/* <pointLight position={[90, 10, 10]} /> */}
+            <pointLight position={[90, 10, 10]} />
             <Selection>
               <EffectComposer multisampling={8} autoClear={false}>
                 <Outline
@@ -222,34 +226,67 @@ export default function TributeDetailPage() {
         title="헌화를 남겨보세요."
         buttonLabel="확인"
       >
-        <div>
-          <input
-            type="radio"
-            name="wreathItem"
-            value="flower"
-            id="flower"
-            defaultChecked
-            onChange={onChangetribute}
-          />
-          <label htmlFor="flower">꽃</label>
-          <input
-            type="radio"
-            name="wreathItem"
-            value="candle"
-            id="candle"
-            onChange={onChangetribute}
-          />
-          <label htmlFor="flower">초</label>
-          <input
-            type="radio"
-            name="wreathItem"
-            value="ribbon"
-            id="ribbon"
-            onChange={onChangetribute}
-          />
-          <label htmlFor="flower">리본</label>
-
-          <button onClick={submitWreath}>헌화 남기기</button>
+        <div className={styles.tribute}>
+          <div className={styles.imgWrapper}>
+            <div className={styles.imgBox}>
+              <img
+                src="https://i.imgur.com/sUYpQGX.jpg"
+                alt="flower"
+                className={styles.img}
+              />
+              <div>
+                <input
+                  type="radio"
+                  name="wreathItem"
+                  value="flower"
+                  id="flower"
+                  defaultChecked
+                  onChange={onChangetribute}
+                />
+                <label htmlFor="flower">꽃</label>
+              </div>
+              설명 글 생각보다 길 지도 모르는 설명글
+            </div>
+            <div>
+              <img
+                src="https://i.imgur.com/Y4HyGbU.jpg"
+                alt="flower"
+                className={styles.img}
+              />
+              <div>
+                <input
+                  type="radio"
+                  name="wreathItem"
+                  value="candle"
+                  id="candle"
+                  onChange={onChangetribute}
+                />
+                <label htmlFor="flower">초</label>
+              </div>
+              설명 글 생각보다 길 지도 모르는 설명글
+            </div>
+            <div>
+              <img
+                src="https://i.imgur.com/qFuiPLe.png"
+                alt="flower"
+                className={styles.img}
+              />
+              <div>
+                <input
+                  type="radio"
+                  name="wreathItem"
+                  value="ribbon"
+                  id="ribbon"
+                  onChange={onChangetribute}
+                />
+                <label htmlFor="flower">리본</label>
+              </div>
+              설명 글 생각보다 길 지도 모르는 설명글
+            </div>
+          </div>
+          <div className={styles.btn}>
+            <Button onClick={submitWreath}>헌화 남기기</Button>
+          </div>
         </div>
       </Modal>
     </div>

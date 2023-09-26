@@ -179,23 +179,23 @@ export default function LibraryPage() {
         onClose={() => setLetterModalOpen(false)}
         title="편지를 작성해보세요."
         buttonLabel="서재로 돌아가기"
+        noButton={true}
       >
-        <div className={styles.letterForm}>
+        <div className={styles.letter}>
           <div className={styles.letterFormTitle}>
             <p className={styles.letterTitle}>제목</p>
-            <Input name="title" variant="short" onChange={onChangeLetter} />
+            <Input name="title" variant="regular" onChange={onChangeLetter} />
           </div>
           <div className={styles.letterFormTitle}>
             <p className={styles.letterTitle}>내용</p>
-            <Textarea
-              name="content"
-              variant="short"
-              onChange={onChangeLetter}
-            />
+            <Textarea name="content" variant="long" onChange={onChangeLetter} />
           </div>
           <div className={styles.button}>
             <Button variant="regular" onClick={letterSubmit}>
-              편지 작성하기
+              작성하기
+            </Button>
+            <Button variant="regular" onClick={() => setLetterModalOpen(false)}>
+              돌아가기
             </Button>
           </div>
         </div>
@@ -204,22 +204,26 @@ export default function LibraryPage() {
       <Modal
         modalOpen={bookModalOpen}
         onClose={closeBookModal}
-        title="편지를 확인해보세요."
-        buttonLabel="확인"
+        title={selectedBook ? selectedBook.title : "편지를 확인해보세요."}
+        buttonLabel="서재로 돌아가기"
+        noButton={selectedBook ? true : false}
       >
         {!selectedBook ? (
-          <div>
+          <div className={styles.letter}>
             {books.length === 0 ? (
               <p>작성된 편지가 없어요.</p>
             ) : (
-              <div>
+              <div className={styles.listscrollwrapper}>
                 {books.map((book) => {
                   if (!book) return null;
 
                   return (
                     <div onClick={() => setSelectedBook(book)}>
                       <TrributeEventCard key={book.letterId}>
-                        {book.title}
+                        <div className={styles.cardTitle}>{book.title}</div>
+                        <div className={styles.cardDate}>
+                          {formatDate(book.writeTime)}
+                        </div>
                       </TrributeEventCard>
                     </div>
                   );
@@ -228,19 +232,33 @@ export default function LibraryPage() {
             )}
           </div>
         ) : (
-          <div className={styles.letterForm}>
-            <h2>{selectedBook?.title}</h2>
-            <p>작성한 날짜 : {selectedBook?.writeTime}</p>
-            <p>내용 : {selectedBook?.content}</p>
-            <Button variant="regular" onClick={deleteLetter}>
-              삭제하기
-            </Button>
-            <Button variant="regular" onClick={() => setSelectedBook(null)}>
-              돌아가기
-            </Button>
+          <div className={styles.letter}>
+            <p className={`${styles.cardDate} ${styles.cardDateBig}`}>
+              {selectedBook && formatDate(selectedBook.writeTime)}
+            </p>
+            <div className={styles.letterBody}>
+              <p>{selectedBook?.content}</p>
+            </div>
+            <div className={styles.detailbutton}>
+              <Button variant="regular" onClick={deleteLetter}>
+                삭제 하기
+              </Button>
+              <Button variant="regular" onClick={() => setSelectedBook(null)}>
+                리스트 보기
+              </Button>
+            </div>
           </div>
         )}
       </Modal>
     </div>
   );
+}
+
+function formatDate(isoDateString: string) {
+  const date = new Date(isoDateString);
+  const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1)
+    .toString()
+    .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
+
+  return formattedDate;
 }
