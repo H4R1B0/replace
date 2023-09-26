@@ -43,7 +43,6 @@ const AudioRecordModal = lazy(
 const AudioUploadModal = lazy(
   () => import("@components/ui/Modal/AudioUploadModal")
 );
-import NicknamePage from "./pages/NicknamePage/index";
 
 export default function App() {
   function handleResize() {
