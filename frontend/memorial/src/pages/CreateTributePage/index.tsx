@@ -7,6 +7,8 @@ import Button from "@components/ui/Button";
 import formatDateToYYYYMMDD from "@mocks/handlers/tributeHandlers";
 import styles from "./CreateTributePage.module.css";
 import Textarea from "@components/ui/Textarea";
+import { useMutation } from "@tanstack/react-query";
+import { createTribute } from "@apis/tribute";
 
 type Tribute = {
   title: string;
@@ -25,7 +27,6 @@ export default function CreateTributePage() {
     endDate: "",
   });
 
-  const BASE_URL = import.meta.env.VITE_APP_API_URL;
   const navigate = useNavigate();
 
   const dayOptions = [];
@@ -68,36 +69,32 @@ export default function CreateTributePage() {
       });
     }
   };
-  const tributeSubmit = () => {
-    fetch(`${BASE_URL}/wreath`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(tribute),
-    })
-      .then((res) => {
-        console.log(res);
-        if (!res.ok) {
-          throw new Error(`Error: ${res.statusText}`);
-        }
-        return res.json();
-      })
-      .then(() => {
-        alert("작성 완료");
-        setTribute({
-          title: "",
-          subTitle: "",
-          description: "",
-          startDate: "",
-          endDate: "",
-        });
-        navigate(`${PATH.TRIBUTELIST}`);
-      })
 
-      .catch((error) => {
-        console.error("에러났음~~", error);
+  const tributeMutation = useMutation(createTribute, {
+    onSuccess: () => {
+      alert("작성 완료");
+      setTribute({
+        title: "",
+        subTitle: "",
+        description: "",
+        startDate: "",
+        endDate: "",
       });
+      navigate(`${PATH.TRIBUTELIST}`);
+    },
+    onError: (error: Error) => {
+      if (error.message === "400") {
+        alert("부정적인 단어가 포함되어 있어 등록할 수 없습니다. ");
+      } else {
+        console.error("에러 발생", error);
+      }
+    },
+  });
+
+  const tributeSubmit = () => {
+    tributeMutation.mutate({
+      ...tribute,
+    });
   };
 
   console.log(tribute);

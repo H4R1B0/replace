@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Outlet, useParams, useNavigate } from "react-router-dom";
 import Modal from "@components/ui/Modal";
 import Tribute from "@components/3d/Tribute";
@@ -11,6 +11,12 @@ import {
 } from "@react-three/postprocessing";
 import styles from "./TributeDetailPage.module.css";
 import Button from "@components/ui/Button";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import {
+  fetchTributeDetail,
+  updateTribute,
+  fetchReportDetail,
+} from "@apis/tribute";
 
 type WreathDetail = {
   wreathId: number;
@@ -36,8 +42,6 @@ type myTribute = {
 };
 
 export default function TributeDetailPage() {
-  const BASE_URL = import.meta.env.VITE_APP_API_URL;
-
   // 모달 관련 변수
   const [tributeModalOpen, setTributeModalOpen] = useState(false);
   const [reportModalOpen, setReportModalOpen] = useState(false);
@@ -49,9 +53,6 @@ export default function TributeDetailPage() {
   //페이지 이동을 위해 넣어둠
   const navigate = useNavigate();
 
-  // 모달 내 데이터 다시 불러오기 위한 변수. 쿼리로 변경 후 삭제
-  const [reloadWreathDetail, setReloadWreathDetail] = useState(false);
-
   //서버로 보내기 위한 데이터 변수
   const [wreathDetail, setWreathDetail] = useState<WreathDetail>();
   const [reportDetail, setReportDetail] = useState<ReportDetail>({
@@ -62,79 +63,82 @@ export default function TributeDetailPage() {
 
   const [myTribute, setMyTribute] = useState<myTribute>({
     wreathId: wreathIdNumber,
-    wreathItem: "",
+    wreathItem: "flower",
   });
 
-  //fetch 관련
-
-  // 1. 디테일 정보 불러오는 함수
-  useEffect(() => {
-    fetch(`${BASE_URL}/wreath/${wreathid}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setWreathDetail(data.response);
-        console.log(data.response);
-      });
-  }, [reloadWreathDetail]);
-  // 2. 헌화하기 함수
-  const submitWreath = () => {
-    fetch(`${BASE_URL}/wreath/declaration`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
+  const { isError: isWreathDetailError, error: wreathDetailError } = useQuery<
+    WreathDetail,
+    Error
+  >(
+    ["wreathDetail", wreathIdNumber],
+    () => fetchTributeDetail(wreathIdNumber),
+    {
+      enabled: !!wreathIdNumber,
+      onSuccess: (data) => {
+        setWreathDetail(data);
       },
-      body: JSON.stringify(myTribute),
-    })
-      .then((res) => {
-        console.log(res);
-        if (!res.ok) {
-          throw new Error(`Error: ${res.statusText}`);
-        }
-        alert("헌화 완료");
+    }
+  );
+
+  if (isWreathDetailError && wreathDetailError) {
+    console.error("wreath Detail Fetch Error:", wreathDetailError);
+  }
+
+  const tributeMutation = useMutation(updateTribute, {
+    onSuccess: () => {
+      alert("헌화 완료");
+      setTributeModalOpen(false);
+    },
+    onError: (error: Error) => {
+      if (error.message === "400") {
+        alert("이미 완료한 헌화입니다.");
         setTributeModalOpen(false);
-        setReloadWreathDetail((prev) => !prev);
-        return res.json();
-      })
-      .catch((error) => {
-        console.error("에러났음~~", error);
-      });
+      } else {
+        console.error("에러 발생", error);
+      }
+    },
+  });
+
+  const submitWreath = () => {
+    tributeMutation.mutate(myTribute);
   };
 
-  //3. 신고하기 함수
-  const submitReport = () => {
-    fetch(`${BASE_URL}/wreath/declaration`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(reportDetail),
-    })
-      .then((res) => {
-        console.log(res);
-        if (!res.ok) {
-          throw new Error(`Error: ${res.statusText}`);
-        }
-        alert("신고 완료");
-        setReportModalOpen(false);
-        setReportDetail({
-          declarationType: 1,
-          declarationContent: "",
-          wreathId: wreathIdNumber,
-        });
-        return res.json();
-      })
-      .catch((error) => {
-        console.error("에러났음~~", error);
+  console.log("myTribute", reportDetail);
+
+  const reportMutation = useMutation(fetchReportDetail, {
+    onSuccess: () => {
+      alert("신고 완료");
+      setReportModalOpen(false);
+      setReportDetail({
+        declarationType: 1,
+        declarationContent: "",
+        wreathId: wreathIdNumber,
       });
+    },
+    onError: (error: Error) => {
+      console.error("에러 발생", error);
+    },
+  });
+
+  const submitReport = () => {
+    reportMutation.mutate(reportDetail);
   };
 
   // 입력값 저장하는 함수
   const onChangeReport = (e: any) => {
-    setReportDetail({
-      ...reportDetail,
-      [e.target.name]: e.target.value,
-      declarationType: parseInt(e.target.value),
-    });
+    const { name, value } = e.target;
+
+    if (name === "declarationType") {
+      setReportDetail({
+        ...reportDetail,
+        [name]: parseInt(value),
+      });
+    } else {
+      setReportDetail({
+        ...reportDetail,
+        [name]: value,
+      });
+    }
   };
 
   const onChangetribute = (e: any) => {
@@ -143,8 +147,6 @@ export default function TributeDetailPage() {
       [e.target.name]: e.target.value,
     });
   };
-  // console.log(reportDetail);
-  // console.log(myTribute);
 
   return (
     <div className={styles.wrapper}>
