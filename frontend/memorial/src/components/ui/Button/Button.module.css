@@ -15,7 +15,7 @@ button {
 
 /* TODO: adjust styles according to design requirements */
 .regular {
-  min-width: 50%;
+  min-width: 20%;
   width: auto;
   height: 2.7rem;
   line-height: 2.7rem;
@@ -23,6 +23,19 @@ button {
   font-family: "SUITE-Bold";
   font-size: 1rem;
   padding: 0 10%;
+}
+
+.tributeList {
+  min-width: 45%;
+  width: auto;
+  height: 2.3rem;
+
+  text-align: center;
+  font-family: "SUITE-Regular";
+  font-size: 0.8rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: rgb(185, 182, 182);
 }
 
 .regular:hover {

@@ -1,9 +1,17 @@
 import { api } from "./index";
 import type { PhotoList, Photo } from "types/Photo";
 
+type UploadSinglePhotoRequest = {
+  sequence: number;
+  photo: File;
+};
+
 // 기억의 방 사진 등록
-export const uploadSinglePhoto = async (sequence: number) => {
-  return await api.post<Photo>(`/frame/${sequence}`);
+export const uploadSinglePhoto = async ({
+  sequence,
+  photo,
+}: UploadSinglePhotoRequest) => {
+  return await api.postPhoto(`/frame/${sequence}`, photo);
 };
 
 // 기억의 방 사진 리스트 조회

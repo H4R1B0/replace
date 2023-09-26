@@ -60,7 +60,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["msw", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:1.3.1"],\
             ["msw-storybook-addon", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:1.8.0"],\
             ["react", "npm:18.2.0"],\
+            ["react-audio-player", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:0.17.0"],\
             ["react-dom", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:18.2.0"],\
+            ["react-dropzone", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:14.2.3"],\
+            ["react-hot-toast", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:2.4.1"],\
             ["react-icons", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:4.11.0"],\
             ["react-modal", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:3.16.1"],\
             ["react-router-dom", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:6.16.0"],\
@@ -8128,6 +8131,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["attr-accept", [\
+        ["npm:2.2.2", {\
+          "packageLocation": "./.yarn/cache/attr-accept-npm-2.2.2-b9cd0d8eac-496f724935.zip/node_modules/attr-accept/",\
+          "packageDependencies": [\
+            ["attr-accept", "npm:2.2.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["audio-react-recorder", [\
         ["npm:1.0.5", {\
           "packageLocation": "./.yarn/cache/audio-react-recorder-npm-1.0.5-32f796226e-aeee30530c.zip/node_modules/audio-react-recorder/",\
@@ -10246,6 +10258,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["file-selector", [\
+        ["npm:0.6.0", {\
+          "packageLocation": "./.yarn/cache/file-selector-npm-0.6.0-04259af1f7-7d051b6e5d.zip/node_modules/file-selector/",\
+          "packageDependencies": [\
+            ["file-selector", "npm:0.6.0"],\
+            ["tslib", "npm:2.6.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["file-system-cache", [\
         ["npm:2.3.0", {\
           "packageLocation": "./.yarn/cache/file-system-cache-npm-2.3.0-9edc562b29-74afa2870a.zip/node_modules/file-system-cache/",\
@@ -10791,6 +10813,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/glsl-noise-npm-0.0.0-36e818e517-0798666345.zip/node_modules/glsl-noise/",\
           "packageDependencies": [\
             ["glsl-noise", "npm:0.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["goober", [\
+        ["npm:2.1.13", {\
+          "packageLocation": "./.yarn/cache/goober-npm-2.1.13-7afde46601-0c00b90d26.zip/node_modules/goober/",\
+          "packageDependencies": [\
+            ["goober", "npm:2.1.13"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:245c249cf823d0d21f3d8790f708901b020f568170a22394301254da6e19eecccdae7288e5b22287380664caee7053441caec4f6614792cc3c40e3699acfd4d5#npm:2.1.13", {\
+          "packageLocation": "./.yarn/__virtual__/goober-virtual-587c0a0037/0/cache/goober-npm-2.1.13-7afde46601-0c00b90d26.zip/node_modules/goober/",\
+          "packageDependencies": [\
+            ["goober", "virtual:245c249cf823d0d21f3d8790f708901b020f568170a22394301254da6e19eecccdae7288e5b22287380664caee7053441caec4f6614792cc3c40e3699acfd4d5#npm:2.1.13"],\
+            ["@types/csstype", null],\
+            ["csstype", null]\
+          ],\
+          "packagePeers": [\
+            "@types/csstype",\
+            "csstype"\
           ],\
           "linkType": "HARD"\
         }]\
@@ -13779,6 +13823,33 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["react-audio-player", [\
+        ["npm:0.17.0", {\
+          "packageLocation": "./.yarn/cache/react-audio-player-npm-0.17.0-e098631967-03042c6ed6.zip/node_modules/react-audio-player/",\
+          "packageDependencies": [\
+            ["react-audio-player", "npm:0.17.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:0.17.0", {\
+          "packageLocation": "./.yarn/__virtual__/react-audio-player-virtual-4d3a1a0e7e/0/cache/react-audio-player-npm-0.17.0-e098631967-03042c6ed6.zip/node_modules/react-audio-player/",\
+          "packageDependencies": [\
+            ["react-audio-player", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:0.17.0"],\
+            ["@types/react", "npm:18.2.8"],\
+            ["@types/react-dom", "npm:18.2.4"],\
+            ["prop-types", "npm:15.8.1"],\
+            ["react", "npm:18.2.0"],\
+            ["react-dom", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react-dom",\
+            "@types/react",\
+            "react-dom",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["react-colorful", [\
         ["npm:5.6.1", {\
           "packageLocation": "./.yarn/cache/react-colorful-npm-5.6.1-ba0c706357-e432b7cb0d.zip/node_modules/react-colorful/",\
@@ -13916,6 +13987,31 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["react-dropzone", [\
+        ["npm:14.2.3", {\
+          "packageLocation": "./.yarn/cache/react-dropzone-npm-14.2.3-b5d5b11ea4-174b744d5c.zip/node_modules/react-dropzone/",\
+          "packageDependencies": [\
+            ["react-dropzone", "npm:14.2.3"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:14.2.3", {\
+          "packageLocation": "./.yarn/__virtual__/react-dropzone-virtual-b3d878a293/0/cache/react-dropzone-npm-14.2.3-b5d5b11ea4-174b744d5c.zip/node_modules/react-dropzone/",\
+          "packageDependencies": [\
+            ["react-dropzone", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:14.2.3"],\
+            ["@types/react", "npm:18.2.8"],\
+            ["attr-accept", "npm:2.2.2"],\
+            ["file-selector", "npm:0.6.0"],\
+            ["prop-types", "npm:15.8.1"],\
+            ["react", "npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["react-element-to-jsx-string", [\
         ["npm:15.0.0", {\
           "packageLocation": "./.yarn/cache/react-element-to-jsx-string-npm-15.0.0-54fc35db27-c3907cc4c1.zip/node_modules/react-element-to-jsx-string/",\
@@ -13935,6 +14031,33 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:18.2.0"],\
             ["react-is", "npm:18.1.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react-dom",\
+            "@types/react",\
+            "react-dom",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["react-hot-toast", [\
+        ["npm:2.4.1", {\
+          "packageLocation": "./.yarn/cache/react-hot-toast-npm-2.4.1-923d48e94b-3e337816db.zip/node_modules/react-hot-toast/",\
+          "packageDependencies": [\
+            ["react-hot-toast", "npm:2.4.1"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:2.4.1", {\
+          "packageLocation": "./.yarn/__virtual__/react-hot-toast-virtual-245c249cf8/0/cache/react-hot-toast-npm-2.4.1-923d48e94b-3e337816db.zip/node_modules/react-hot-toast/",\
+          "packageDependencies": [\
+            ["react-hot-toast", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:2.4.1"],\
+            ["@types/react", "npm:18.2.8"],\
+            ["@types/react-dom", "npm:18.2.4"],\
+            ["goober", "virtual:245c249cf823d0d21f3d8790f708901b020f568170a22394301254da6e19eecccdae7288e5b22287380664caee7053441caec4f6614792cc3c40e3699acfd4d5#npm:2.1.13"],\
+            ["react", "npm:18.2.0"],\
+            ["react-dom", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:18.2.0"]\
           ],\
           "packagePeers": [\
             "@types/react-dom",\
@@ -14350,7 +14473,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["msw", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:1.3.1"],\
             ["msw-storybook-addon", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:1.8.0"],\
             ["react", "npm:18.2.0"],\
+            ["react-audio-player", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:0.17.0"],\
             ["react-dom", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:18.2.0"],\
+            ["react-dropzone", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:14.2.3"],\
+            ["react-hot-toast", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:2.4.1"],\
             ["react-icons", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:4.11.0"],\
             ["react-modal", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:3.16.1"],\
             ["react-router-dom", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:6.16.0"],\
@@ -25670,6 +25796,7 @@ function reportRequiredFilesToWatchMode(files) {
 }
 
 function applyPatch(pnpapi, opts) {
+  const defaultCache = {};
   let enableNativeHooks = true;
   process.versions.pnp = String(pnpapi.VERSIONS.std);
   const moduleExports = require$$0__default.default;
@@ -25689,13 +25816,62 @@ function applyPatch(pnpapi, opts) {
   }
   const originalModuleLoad = require$$0.Module._load;
   require$$0.Module._load = function(request, parent, isMain) {
-    if (request === `pnpapi`) {
-      const parentApiPath = opts.manager.getApiPathFromParent(parent);
-      if (parentApiPath) {
-        return opts.manager.getApiEntry(parentApiPath, true).instance;
+    if (!enableNativeHooks)
+      return originalModuleLoad.call(require$$0.Module, request, parent, isMain);
+    if (isBuiltinModule(request)) {
+      try {
+        enableNativeHooks = false;
+        return originalModuleLoad.call(require$$0.Module, request, parent, isMain);
+      } finally {
+        enableNativeHooks = true;
       }
     }
-    return originalModuleLoad.call(require$$0.Module, request, parent, isMain);
+    const parentApiPath = opts.manager.getApiPathFromParent(parent);
+    const parentApi = parentApiPath !== null ? opts.manager.getApiEntry(parentApiPath, true).instance : null;
+    if (parentApi === null)
+      return originalModuleLoad(request, parent, isMain);
+    if (request === `pnpapi`)
+      return parentApi;
+    const modulePath = require$$0.Module._resolveFilename(request, parent, isMain);
+    const isOwnedByRuntime = parentApi !== null ? parentApi.findPackageLocator(modulePath) !== null : false;
+    const moduleApiPath = isOwnedByRuntime ? parentApiPath : opts.manager.findApiPathFor(npath.dirname(modulePath));
+    const entry = moduleApiPath !== null ? opts.manager.getApiEntry(moduleApiPath) : { instance: null, cache: defaultCache };
+    const cacheEntry = entry.cache[modulePath];
+    if (cacheEntry) {
+      if (cacheEntry.loaded === false && cacheEntry.isLoading !== true) {
+        try {
+          cacheEntry.isLoading = true;
+          if (isMain) {
+            process.mainModule = cacheEntry;
+            cacheEntry.id = `.`;
+          }
+          cacheEntry.load(modulePath);
+        } finally {
+          cacheEntry.isLoading = false;
+        }
+      }
+      return cacheEntry.exports;
+    }
+    const module = new require$$0.Module(modulePath, parent != null ? parent : void 0);
+    module.pnpApiPath = moduleApiPath;
+    reportRequiredFilesToWatchMode([modulePath]);
+    entry.cache[modulePath] = module;
+    if (isMain) {
+      process.mainModule = module;
+      module.id = `.`;
+    }
+    let hasThrown = true;
+    try {
+      module.isLoading = true;
+      module.load(modulePath);
+      hasThrown = false;
+    } finally {
+      module.isLoading = false;
+      if (hasThrown) {
+        delete require$$0.Module._cache[modulePath];
+      }
+    }
+    return module.exports;
   };
   function getIssuerSpecsFromPaths(paths) {
     return paths.map((path) => ({
@@ -25763,7 +25939,7 @@ function applyPatch(pnpapi, opts) {
       const parentDirectory = (parent == null ? void 0 : parent.filename) != null ? npath.dirname(parent.filename) : null;
       const absoluteRequest = npath.isAbsolute(request) ? request : parentDirectory !== null ? npath.resolve(parentDirectory, request) : null;
       if (absoluteRequest !== null) {
-        const apiPath = parent && parentDirectory === npath.dirname(absoluteRequest) ? opts.manager.getApiPathFromParent(parent) : opts.manager.findApiPathFor(absoluteRequest);
+        const apiPath = parentDirectory === npath.dirname(absoluteRequest) && (parent == null ? void 0 : parent.pnpApiPath) ? parent.pnpApiPath : opts.manager.findApiPathFor(absoluteRequest);
         if (apiPath !== null) {
           issuerSpecs.unshift({
             apiPath,
@@ -27484,6 +27660,7 @@ function makeManager(pnpapi, opts) {
   const initialApiStats = opts.fakeFs.statSync(npath.toPortablePath(initialApiPath));
   const apiMetadata = /* @__PURE__ */ new Map([
     [initialApiPath, {
+      cache: require$$0.Module._cache,
       instance: pnpapi,
       stats: initialApiStats,
       lastRefreshCheck: Date.now()
@@ -27515,6 +27692,7 @@ function makeManager(pnpapi, opts) {
       }
     } else {
       apiMetadata.set(pnpApiPath, apiEntry = {
+        cache: {},
         instance: loadApiInstance(pnpApiPath),
         stats: opts.fakeFs.statSync(pnpApiPath),
         lastRefreshCheck: Date.now()
@@ -27584,16 +27762,19 @@ ${controlSegment}
     } while (curr !== PortablePath.root);
     return addToCacheAndReturn(start, curr, null);
   }
-  const moduleToApiPathCache = /* @__PURE__ */ new WeakMap();
   function getApiPathFromParent(parent) {
     if (parent == null)
       return initialApiPath;
-    let apiPath = moduleToApiPathCache.get(parent);
-    if (typeof apiPath !== `undefined`)
-      return apiPath;
-    apiPath = parent.filename ? findApiPathFor(parent.filename) : null;
-    moduleToApiPathCache.set(parent, apiPath);
-    return apiPath;
+    if (typeof parent.pnpApiPath === `undefined`) {
+      if (parent.filename !== null) {
+        return parent.pnpApiPath = findApiPathFor(parent.filename);
+      } else {
+        return initialApiPath;
+      }
+    }
+    if (parent.pnpApiPath !== null)
+      return parent.pnpApiPath;
+    return null;
   }
   return {
     getApiPathFromParent,

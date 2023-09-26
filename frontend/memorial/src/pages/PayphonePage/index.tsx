@@ -13,12 +13,13 @@ import {
   Outline,
 } from "@react-three/postprocessing";
 import { useEffect } from "react";
+import { AudioData } from "audio-react-recorder";
 
 export default function PayphonePage() {
   const BASE_URL = import.meta.env.VITE_APP_API_URL;
 
   // 등록 props를 위한 값
-  const [audioData, setAudioData] = useState<Blob | null>(null);
+  const [audioData, setAudioData] = useState<AudioData | null>(null);
 
   // 나와 방문자를 구분할 코드
   const isMe = false;
@@ -113,7 +114,7 @@ export default function PayphonePage() {
   };
 
   // 등록하기
-  const RegistVoicemail = async (audioData: Blob | null) => {
+  const RegistVoicemail = async (audioData: AudioData | null) => {
     if (!audioData) {
       console.error("오디오 데이터가 없습니다.");
       return;
@@ -121,7 +122,7 @@ export default function PayphonePage() {
 
     try {
       const formData = new FormData();
-      formData.append("audio", audioData);
+      formData.append("audio", audioData.blob as File);
 
       const response = await fetch(`${BASE_URL}/api/voicemail`, {
         method: "POST",
