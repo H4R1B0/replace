@@ -4,8 +4,12 @@ import lombok.Getter;
 
 @Getter
 public enum SituationType {
-    HELLO,
-    COMFORT,
-    ENCOURAGEMENT,
-    CONGRATULATION
+    CONSOLATION,
+    SAFETY,
+    ENCOURAGE,
+    CONGRATULATION,
+    THANKS,
+    WELCOME
+
+
 }
