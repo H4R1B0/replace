@@ -14,7 +14,7 @@ export default function RedirectKakaoPage() {
     if (accessToken) {
       // 토큰을 세션 스토리지에 저장
       sessionStorage.setItem("accessToken", accessToken);
-      console.log("토큰 저장 완료", accessToken);
+      // console.log("토큰 저장 완료", accessToken);
 
       // 리덕스에 토큰 저장
       // dispatch(setAuth({ isAuthenticated: true, accessToken }));
@@ -28,31 +28,23 @@ export default function RedirectKakaoPage() {
       })
         .then((response) => response.json())
         .then((userData) => {
-          console.log("사용자 정보 요청 성공:", userData);
-          const isFirstLogin = !userData.id;
-          // dispatchEvent(
-          //   setAuth({
-          //     isAuthenticated: true,
-          //     accessToken,
-          //     nickname: userData.nickname,
-          //   })
-          // );
+          // console.log("사용자 정보 요청 성공:", userData);
+          const isFirstLogin = !userData.isChange;
 
           if (isFirstLogin) {
-            navigate(PATH.HOUSE); // 튜토리얼 페이지 경로로 수정
-            // 닉네임 설정 화면
-            console.log("첫 로그인");
+            navigate(PATH.NICKNAME); // 최초 로그인 사용자
+            // console.log("첫 로그인");
           } else {
-            navigate(PATH.HOUSE); // 기존 로그인 사용자의 홈 페이지 경로로 수정
-            console.log("기존 로그인");
+            navigate(PATH.HOUSE); // 기존 로그인 사용자
+            // console.log("기존 로그인");
           }
         })
         .catch((error) => {
           console.error("사용자 정보 요청 실패:", error);
-          navigate(PATH.ERROR); // 오류 페이지 경로로 수정
+          navigate(PATH.ERROR_PAGE);
         });
     } else {
-      // 토큰이 없으면 메인 페이지로 리다이렉션
+      // 토큰이 없으면 메인 페이지로 이동
       navigate(PATH.MAIN);
     }
   }, [navigate]);
