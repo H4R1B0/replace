@@ -14,7 +14,7 @@ export default function RedirectKakaoPage() {
     if (accessToken) {
       // 토큰을 세션 스토리지에 저장
       sessionStorage.setItem("accessToken", accessToken);
-      console.log("토큰 저장 완료", accessToken);
+      // console.log("토큰 저장 완료", accessToken);
 
       // 리덕스에 토큰 저장
       // dispatch(setAuth({ isAuthenticated: true, accessToken }));
@@ -33,10 +33,10 @@ export default function RedirectKakaoPage() {
 
           if (isFirstLogin) {
             navigate(PATH.NICKNAME); // 최초 로그인 사용자
-            console.log("첫 로그인");
+            // console.log("첫 로그인");
           } else {
             navigate(PATH.HOUSE); // 기존 로그인 사용자
-            console.log("기존 로그인");
+            // console.log("기존 로그인");
           }
         })
         .catch((error) => {
