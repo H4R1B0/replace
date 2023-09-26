@@ -1,5 +1,6 @@
 package com.vegetable.samochiro.controller;
 
+import com.vegetable.samochiro.dto.common.MessageResponse;
 import com.vegetable.samochiro.dto.photo.PhotoDetailResponse;
 import com.vegetable.samochiro.dto.photo.PhotoListResponse;
 import com.vegetable.samochiro.service.PhotoService;
@@ -9,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +31,7 @@ public class PhotoController {
 	private final HeaderUtils headerUtils;
 
 	@PostMapping("/{sequence}")
-	public ResponseEntity<String> registerPhoto(@PathVariable int sequence,
+	public ResponseEntity<MessageResponse> registerPhoto(@PathVariable int sequence,
 		@RequestPart(value = "file") MultipartFile imageFile,
 		@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
 
@@ -37,11 +39,11 @@ public class PhotoController {
 			String userId = headerUtils.getUserId(authorizationHeader);
 			photoService.registerImageFile(userId, sequence, imageFile);
 
-			return ResponseEntity.ok().body("사진 등록이 완료되었습니다.");
+			return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse("사진 등록이 완료되었습니다."));
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.badRequest().body("잘못된 요청니다.");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse("잘못된 요청입니다."));
 		}
 	}
 	//사진 등록 - 액자 1번
@@ -76,14 +78,14 @@ public class PhotoController {
 	//사진 상세 조회 - 액자 3번
 
 	@DeleteMapping("/{photoId}")
-	public ResponseEntity<String> deletePhoto(@PathVariable Long photoId) {
+	public ResponseEntity<MessageResponse> deletePhoto(@PathVariable Long photoId) {
 		try {
 			photoService.DeletePhotoById(photoId);
-			return ResponseEntity.ok().body("삭제가 완료ㅗ디었습니다.");
+			return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse("삭제 되었습니다."));
 		}
 		catch(Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.badRequest().body("잘못된 요청입니다.");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse("잘못된 요청입니다."));
 		}
 	}
 	//사진 삭제 - 액자 4번
