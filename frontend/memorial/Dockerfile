@@ -6,4 +6,4 @@ RUN yarn cache clean
 RUN yarn install
 COPY . .
 EXPOSE 3000
-CMD [ "yarn", "run", "dev" ]
+CMD [ "yarn", "preview" ]
