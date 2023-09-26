@@ -48,10 +48,18 @@ export default function TributeListPage() {
   // fetch 관련, 추후 옮길 것.
   const BASE_URL = import.meta.env.VITE_APP_API_URL;
 
+  const userToken =
+    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLtmITspIAiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjk2MDQ5MDI1fQ.o0J4hHjslvrCVx78menpOJ7X3QilPTrBpTkryI-fnSs";
+
   useEffect(() => {
-    fetch(`${BASE_URL}/wreath`)
+    fetch(`${BASE_URL}/wreath`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+    })
       .then((res) => {
-        // 에러 코드에 따른 상태 관리를 위해 추가
+        console.log("첫 값", res);
         if (!res.ok) {
           throw new Error(`${res.status} 에러 발생`);
         }
@@ -59,7 +67,9 @@ export default function TributeListPage() {
         return res.json();
       })
       .then((data) => {
-        const sortedData = sortWreathList(data.response.data, sortOption);
+        console.log("data", data);
+
+        const sortedData = sortWreathList(data.data, sortOption);
         setAllWreathList({ data: sortedData });
         setWreathList({ data: sortedData });
       })
@@ -162,8 +172,7 @@ export default function TributeListPage() {
                   <TrributeEventCard>
                     <p className={styles.Title}>{wreath.title}</p>
                     <div className={styles.date}>
-                      {wreath.startDate} - {wreath.endDate}
-                      {getRemainingDays(wreath.endDate)}
+                      헌화 종료 까지 {getRemainingDays(wreath.endDate)} days
                     </div>
                     {/* <p>{wreath.subTitle}</p> */}
                     <div className={styles.trributeStatus}>
@@ -211,7 +220,7 @@ function sortWreathList(data: Wreath[], option: number): Wreath[] {
     case 1: // 최신 등록 순
       sortedData.sort(
         (a, b) =>
-          new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
+          new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
       );
       break;
     case 2: // 초 개수 순

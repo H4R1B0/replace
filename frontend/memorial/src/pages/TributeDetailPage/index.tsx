@@ -65,23 +65,39 @@ export default function TributeDetailPage() {
     wreathItem: "",
   });
 
+  // const userToken = sessionStorage.getItem("accessToken");
+  const userToken =
+    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLtmITspIAiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjk2MDQ5MDI1fQ.o0J4hHjslvrCVx78menpOJ7X3QilPTrBpTkryI-fnSs";
   //fetch 관련
 
   // 1. 디테일 정보 불러오는 함수
   useEffect(() => {
-    fetch(`${BASE_URL}/wreath/${wreathid}`)
-      .then((res) => res.json())
+    fetch(`${BASE_URL}/wreath/${wreathid}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        if (!res.ok) {
+          throw new Error(`${res.status} 에러 발생`);
+        }
+        console.log("결과", res);
+        return res.json();
+      })
       .then((data) => {
-        setWreathDetail(data.response);
-        console.log(data.response);
+        console.log(data);
+        setWreathDetail(data);
       });
   }, [reloadWreathDetail]);
   // 2. 헌화하기 함수
   const submitWreath = () => {
-    fetch(`${BASE_URL}/wreath/declaration`, {
+    fetch(`${BASE_URL}/wreath`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${userToken}`,
       },
       body: JSON.stringify(myTribute),
     })
@@ -100,6 +116,7 @@ export default function TributeDetailPage() {
       });
   };
 
+  console.log("myTribute", myTribute);
   //3. 신고하기 함수
   const submitReport = () => {
     fetch(`${BASE_URL}/wreath/declaration`, {

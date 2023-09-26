@@ -28,6 +28,10 @@ export default function CreateTributePage() {
   const BASE_URL = import.meta.env.VITE_APP_API_URL;
   const navigate = useNavigate();
 
+  // const userToken = sessionStorage.getItem("accessToken");
+  const userToken =
+    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLtmITspIAiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjk2MDQ5MDI1fQ.o0J4hHjslvrCVx78menpOJ7X3QilPTrBpTkryI-fnSs";
+
   const dayOptions = [];
   for (let i = 1; i <= 30; i++) {
     dayOptions.push({ value: i, innertext: `${i}`, id: i });
@@ -73,6 +77,7 @@ export default function CreateTributePage() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${userToken}`,
       },
       body: JSON.stringify(tribute),
     })

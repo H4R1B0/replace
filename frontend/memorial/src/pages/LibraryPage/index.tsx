@@ -25,8 +25,7 @@ type Letter = {
   title: string;
   content: string;
   writeTime: string;
-  roomUuid: string;
-  userId: string;
+  sequence: number;
 };
 
 export default function LibraryPage() {
@@ -43,35 +42,42 @@ export default function LibraryPage() {
     title: "",
     content: "",
     writeTime: "",
-    roomUuid: "12345",
-    userId: "232134yi2",
+    sequence: 1,
   });
-  console.log(letter);
 
   // 편지 작성 시, 입력된 내용에 따라 letter의 state 변경시키기
   const onChangeLetter = (e: any) => {
     setLetter({
       ...letter,
       [e.target.name]: e.target.value,
-      writeTime: new Date().toISOString(),
+      // writeTime: new Date().toISOString(),
     });
   };
 
   const BASE_URL = import.meta.env.VITE_APP_API_URL;
 
+  // const userToken = sessionStorage.getItem("accessToken");
+  const userToken =
+    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLtmITspIAiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjk2MDQ5MDI1fQ.o0J4hHjslvrCVx78menpOJ7X3QilPTrBpTkryI-fnSs";
   // api 불러오기.다른 곳으로 이동시킬 것
   useEffect(() => {
-    fetch(`${BASE_URL}/letter/list`)
+    fetch(`${BASE_URL}/letter/1`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+    })
       .then((res) => {
         // 에러 코드에 따른 상태 관리를 위해 추가
         if (!res.ok) {
           throw new Error(`${res.status} 에러 발생`);
         }
-
+        console.log("결과", res);
         return res.json();
       })
       .then((data) => {
-        setBooks(data.response);
+        setBooks(data.data);
+        console.log(data.data, books);
       })
       .catch((err) => console.log(err));
   }, [letter, selectedBook]);
@@ -81,8 +87,8 @@ export default function LibraryPage() {
       fetch(`${BASE_URL}/letter/detail/${selectedBook?.letterId}`)
         .then((res) => res.json())
         .then((data) => {
-          setSelectedBook(data.response);
-          console.log(data.response);
+          setSelectedBook(data);
+          console.log("선택한 책", data);
         });
     }
   }, []);
@@ -100,15 +106,17 @@ export default function LibraryPage() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${userToken}`,
       },
       body: JSON.stringify(letter),
     })
       .then((res) => {
-        console.log(res);
+        console.log("res", res);
         if (!res.ok) {
           throw new Error(`Error: ${res.statusText}`);
+        } else {
+          return res.json();
         }
-        return res.json();
       })
       .then((data) => {
         setBooks((prevBooks) => {
@@ -124,13 +132,13 @@ export default function LibraryPage() {
         setLetter({
           title: "",
           content: "",
-          writeTime: "",
-          roomUuid: "12345",
-          userId: "232134yi2",
+          writeTime: "2023-09-05 14:30:00",
+          sequence: 1,
         });
       })
       .catch((error) => {
         console.error("에러났음~~", error);
+        // console.log(userToken);
       });
   };
 
@@ -210,11 +218,11 @@ export default function LibraryPage() {
       >
         {!selectedBook ? (
           <div className={styles.letter}>
-            {books.length === 0 ? (
+            {books?.length === 0 ? (
               <p>작성된 편지가 없어요.</p>
             ) : (
               <div className={styles.listscrollwrapper}>
-                {books.map((book) => {
+                {books?.map((book) => {
                   if (!book) return null;
 
                   return (
