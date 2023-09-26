@@ -11,7 +11,7 @@ const PATH: { [key: string]: string } = {
   // View photos: "/room/:sequence/photos",
   // View single photo: "/room/:sequence/photos/:photoid",
   // Upload photo: "/room/:sequence/photos/upload",
-  LIBRARY: "/library",
+  LIBRARY: "/library/:sequence",
   PAYPHONE: "/payphone",
   HOUSE: "/house",
   SEARCH: "/search",
