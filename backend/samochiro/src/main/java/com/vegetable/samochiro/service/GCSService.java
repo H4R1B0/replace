@@ -80,7 +80,7 @@ public class GCSService {
     }
 
     public Blob getBlob(String name){
-        return storage.get(BlobId.of(bucketName, name));
+        return storage.get(bucketName, name);
     }
 
 }
