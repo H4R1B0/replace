@@ -5,7 +5,7 @@ Files: tribute.glb [9MB] > tribute-transformed.glb [1.01MB] (89%)
 */
 
 import * as THREE from "three";
-import tributePath from "./tribute.glb?url";
+import tributePath from "./flower.glb?url";
 import { useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 
@@ -30,15 +30,10 @@ type GLTFResult = GLTF & {
   };
 };
 type TributeProps = {
-  onTrashcanClick?: () => void;
-  onFrameClick?: () => void;
+  onTributeClick?: () => void;
 } & JSX.IntrinsicElements["group"];
 
-export default function Tribute({
-  onTrashcanClick,
-  onFrameClick,
-  ...other
-}: TributeProps) {
+export default function Tribute({ onTributeClick, ...other }: TributeProps) {
   const { nodes, materials } = useGLTF(tributePath) as GLTFResult;
   return (
     <group {...other} dispose={null}>
