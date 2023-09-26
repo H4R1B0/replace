@@ -21,13 +21,18 @@ export default function Textarea({
     case "short":
       variantClass = styles.short;
       break;
+    case "long":
+      variantClass = styles.long;
+      break;
   }
   return (
-    <textarea
-      placeholder={placeholder}
-      className={`${styles.base} ${variantClass}`}
-      onChange={onChange}
-      name={name}
-    />
+    <div className={styles.wrapper}>
+      <textarea
+        placeholder={placeholder}
+        className={`${styles.base} ${variantClass}`}
+        onChange={onChange}
+        name={name}
+      />
+    </div>
   );
 }

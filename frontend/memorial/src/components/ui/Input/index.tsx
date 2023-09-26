@@ -25,12 +25,14 @@ export default function Input({
       break;
   }
   return (
-    <input
-      placeholder={placeholder}
-      className={`${styles.base} ${variantClass}`}
-      onChange={onChange}
-      name={name}
-      value={value}
-    />
+    <div className={styles.wrapper}>
+      <input
+        placeholder={placeholder}
+        className={`${styles.base} ${variantClass}`}
+        onChange={onChange}
+        name={name}
+        value={value}
+      />
+    </div>
   );
 }

@@ -36,3 +36,24 @@
 .regular:focus {
   border: solid rgb(255, 199, 199) 0.15rem;
 }
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.long {
+  height: 8rem;
+  min-width: 100%;
+  width: 20rem;
+}
+
+.long::placeholder {
+  text-indent: 0.5rem;
+  font-family: "SUITE-Regular";
+}
+
+.long:focus {
+  border: solid rgb(255, 199, 199) 0.15rem;
+}
