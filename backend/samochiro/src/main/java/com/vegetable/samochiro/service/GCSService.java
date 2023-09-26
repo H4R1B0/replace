@@ -10,6 +10,8 @@ import com.vegetable.samochiro.domain.Voice;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +20,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 @Service
+@Slf4j
 //@Transactional(readOnly = true)
 //@RequiredArgsConstructor
 public class GCSService {
@@ -30,9 +33,10 @@ public class GCSService {
     public GCSService() {
         try{
             String rootPath = System.getProperty("user.dir");
+            log.info(rootPath);
             StorageOptions storageOptions = StorageOptions.newBuilder()
                 .setProjectId(projectId)
-                .setCredentials(GoogleCredentials.fromStream(new FileInputStream(rootPath + "/src/main/resources/avid-lock-397313-6129fb95bb28.json"))).build();
+                .setCredentials(GoogleCredentials.fromStream(new FileInputStream(rootPath))).build();
             this.storage = storageOptions.getService();
         }
         catch (IOException e){
