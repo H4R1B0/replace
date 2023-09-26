@@ -5,6 +5,7 @@ import com.vegetable.samochiro.service.AIService;
 import com.vegetable.samochiro.util.HeaderUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -26,6 +27,12 @@ public class AIController {
 		aiService.doTraining(request, userId);
 	}
 	//학습하기 - ai 1번 (from front)
+
+	//test용
+	@GetMapping
+	public String getMsg(){
+		return aiService.doTest();
+	}
 
 
 

@@ -68,4 +68,12 @@ public class AIService {
     }
     //학습하기 - ai 1번
 
+    public String doTest() {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(headers);
+        return restTemplate.exchange(serverUrl, HttpMethod.GET, requestEntity, String.class).toString();
+    }
+
+
 }
