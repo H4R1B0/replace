@@ -42,6 +42,7 @@ public class AIController {
 		@RequestPart List<MultipartFile> thanksList,
 		@RequestPart List<MultipartFile> welcomeList) {
 		System.out.println("옴");
+		System.out.println(welcomeList.size());
 
 	}
 	//학습된 음성 데이터 받아서 저장 - from ai
