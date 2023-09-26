@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AiVoice {
+public class AIVoice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

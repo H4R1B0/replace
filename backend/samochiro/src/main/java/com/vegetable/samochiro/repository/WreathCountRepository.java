@@ -13,6 +13,11 @@ public interface WreathCountRepository extends JpaRepository<WreathCount, Long> 
 	Optional<WreathCount> selectWreathCount(@Param("wreathId") Long wreathId);
 	//헌화 카운트 테이블 조회
 
+    @Modifying
+	@Query("delete from WreathCount wc where wc.wreath.wreathId=:wreathId")
+	void deleteByWreathId(Long wreathId);
+    //헌화 아이디로 헌화 카운트 삭제
+
 //	@Modifying
 //	@Query("delete from WreathCount wc where wc.wreath.wreathId = :wreathId")
 //	void deleteByWreathId(@Param("wreathId") Long wreathId);

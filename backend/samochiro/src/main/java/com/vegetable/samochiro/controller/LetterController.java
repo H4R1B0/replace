@@ -76,8 +76,6 @@ public class LetterController {
 		}
 	}
 
-
-
 	@Data
 	@AllArgsConstructor
 	static class Response<T> {
