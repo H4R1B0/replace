@@ -23,6 +23,7 @@ public class AIController {
 	@PostMapping
 	public void doTraining(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader,
 		@RequestBody AITrainingRequest request) {
+		System.out.println("request = " + request.getGender());
 		String userId = headerUtils.getUserId(authorizationHeader);
 		aiService.doTraining(request, userId);
 	}
@@ -33,10 +34,4 @@ public class AIController {
 	public String getMsg(){
 		return aiService.doTest();
 	}
-
-
-
-
-
-
 }

@@ -1,5 +1,6 @@
 package com.vegetable.samochiro.controller;
 
+import com.vegetable.samochiro.dto.common.MessageResponse;
 import com.vegetable.samochiro.dto.room.RegisterTargetNameRequest;
 import com.vegetable.samochiro.oauth2.token.JwtTokenService;
 import com.vegetable.samochiro.repository.VoiceRepository;
@@ -32,12 +33,12 @@ public class RoomController {
     private final TelService telService;
 
     @PutMapping("/{roomSequence}")
-    public ResponseEntity<String> registerTargetName(@PathVariable int roomSequence, @RequestBody RegisterTargetNameRequest request, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+    public ResponseEntity<MessageResponse> registerTargetName(@PathVariable int roomSequence, @RequestBody RegisterTargetNameRequest request, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
         String accessToken = authorizationHeader.substring(7);
         String userId = jwtTokenService.findUserId(accessToken);
 
         roomService.registerTargetName(roomSequence, userId, request);
-        return ResponseEntity.status(HttpStatus.OK).body("방의 대상이 등록되었습니다.");
+        return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse("방의 대상이 등록되었습니다."));
     }
     //기억의 방 대상 등록 - 방 1
 

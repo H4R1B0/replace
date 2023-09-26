@@ -1,5 +1,6 @@
 package com.vegetable.samochiro.controller;
 
+import com.vegetable.samochiro.dto.common.MessageResponse;
 import com.vegetable.samochiro.dto.tel.GetAiVoiceResponse;
 import com.vegetable.samochiro.enums.SituationType;
 import com.vegetable.samochiro.service.TelService;
@@ -29,11 +30,11 @@ public class TelController {
     private final TelService telService;
 
     @PostMapping("/{sequence}")
-    public ResponseEntity<String> registerAudioFile(@PathVariable int sequence, @RequestPart MultipartFile audioFile, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+    public ResponseEntity<MessageResponse> registerAudioFile(@PathVariable int sequence, @RequestPart MultipartFile audioFile, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
         String userId = headerUtils.getUserId(authorizationHeader);
         //사용자 아이디, 방 번호, 파일
         telService.registerAudioFile(userId, sequence, audioFile);
-        return ResponseEntity.status(HttpStatus.OK).body("음성 파일이 등록되었습니다.");
+        return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse("음성 파일이 등록되었습니다."));
     }
     //음성 파일 등록 - 전화기 1
 

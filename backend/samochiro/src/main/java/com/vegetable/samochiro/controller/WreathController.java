@@ -1,5 +1,6 @@
 package com.vegetable.samochiro.controller;
 
+import com.vegetable.samochiro.dto.common.MessageResponse;
 import com.vegetable.samochiro.dto.wreath.DeclarationSaveRequest;
 import com.vegetable.samochiro.dto.wreath.WreathDetailResponse;
 import com.vegetable.samochiro.dto.wreath.WreathListResponse;
@@ -34,20 +35,20 @@ public class WreathController {
 	private final HeaderUtils headerUtils;
 
 	@PostMapping
-	public ResponseEntity<String> saveNewWreath(@RequestBody WreathSaveRequest saveRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+	public ResponseEntity<MessageResponse> saveNewWreath(@RequestBody WreathSaveRequest saveRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
 		try {
 			String userId = headerUtils.getUserId(authorizationHeader);
 			if(wreathService.saveWreath(saveRequest, userId)) {
-				return ResponseEntity.ok("헌화 카드가 등록되었습니다.");
+				return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse("헌화 카드가 등록되었습니다."));
 			}
 			else {
 				//throw new NegativeWordException("부정적인 내용이 포함되어 있습니다."); //exception handler 만들어서 나중에 처리할 것
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("부정적인 내용이 포함되어 있습니다.");
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse("부정적인 내용이 포함되어 있습니다."));
 			}
 		}
 		catch(Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("잘못된 요청입니다.");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse("잘못된 요청입니다."));
 		}
 	}
 	//헌화 등록 - 헌화 1번
@@ -93,34 +94,34 @@ public class WreathController {
 	//헌화 제목 검색 - 헌화 4번
 
 	@PutMapping
-	public ResponseEntity<String> updateWreathCount(@RequestBody WreathUpdateRequest updateRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+	public ResponseEntity<MessageResponse> updateWreathCount(@RequestBody WreathUpdateRequest updateRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
 		try {
 			String userId = headerUtils.getUserId(authorizationHeader);
 			boolean isNotCompleted = wreathService.updateWreath(updateRequest, userId);
 			if(!isNotCompleted) {
-				return ResponseEntity.badRequest().body("이미 완료한 헌화입니다.");
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse("이미 완료한 헌화입니다."));
 			}
 			else {
-				return ResponseEntity.ok().body("헌화가 완료되었습니다.");
+				return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse("헌화가 완료되었습니다."));
 			}
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.badRequest().body("잘못된 요청입니다.");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse("잘못된 요청입니다."));
 		}
 	}
 	//헌화하기 - 헌화 5번
 
 	@PostMapping("/declaration")
-	public ResponseEntity<String> saveDeclaration(@RequestBody DeclarationSaveRequest saveRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+	public ResponseEntity<MessageResponse> saveDeclaration(@RequestBody DeclarationSaveRequest saveRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
 		try {
 			String userId = headerUtils.getUserId(authorizationHeader);
 			wreathService.saveDeclaration(saveRequest, userId);
-			return ResponseEntity.ok("신고 완료되었습니다.");
+			return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse("신고 완료되었습니다."));
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.badRequest().body("잘못된 요청입니다.");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse("잘못된 요청입니다."));
 		}
 	}
 	//신고 등록 - 헌화 6번
