@@ -15,9 +15,7 @@ public class CrawlingUtils {
 		ArrayList<String> list = new ArrayList<>();
 
 		try {
-			String rootPath = System.getProperty("user.dir");
-
-			FileInputStream fin = new FileInputStream(rootPath + "/src/main/resources/negative_crawling.txt");
+			FileInputStream fin = new FileInputStream( "/negative_crawling.txt");
 			InputStreamReader isr = new InputStreamReader(fin, "UTF-8");
 			BufferedReader br = new BufferedReader(isr);
 
