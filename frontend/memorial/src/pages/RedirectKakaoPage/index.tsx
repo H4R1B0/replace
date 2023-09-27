@@ -34,11 +34,11 @@ export default function RedirectKakaoPage() {
             navigate(PATH.NICKNAME); // 최초 로그인 사용자
             // console.log("첫 로그인");
           } else {
-            navigate(PATH.HOUSE); // 기존 로그인 사용자
             // console.log("기존 로그인");
             // 기존 사용자 정보를 세션 스토리지에 저장
             const { nickname } = userData;
             sessionStorage.setItem("nickname", nickname);
+            navigate(`/house/${nickname}`); // 기존 로그인 사용자
 
             // 기존 사용자 정보를 리덕스에 저장
             //     dispatch(

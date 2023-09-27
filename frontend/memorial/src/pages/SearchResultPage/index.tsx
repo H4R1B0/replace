@@ -12,7 +12,7 @@ export default function SearchResultPage() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [searchResult, setSearchResult] = useState<User | null>(null);
-  const accessToken = sessionStorage.getItem("accessToken");
+  const accessToken: string | null = sessionStorage.getItem("accessToken");
 
   const BASE_URL = import.meta.env.VITE_APP_API_URL;
 
