@@ -13,7 +13,7 @@ const PATH: { [key: string]: string } = {
   // Upload photo: "/room/:sequence/photos/upload",
   LIBRARY: "/library/:sequence",
   PAYPHONE: "/payphone",
-  HOUSE: "/house",
+  HOUSE: "/house/:nickname",
   SEARCH: "/search",
   SEARCH_RESULT: "/search/result",
   ERROR_PAGE: "/error",
