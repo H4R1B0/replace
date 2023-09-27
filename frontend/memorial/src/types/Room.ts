@@ -4,6 +4,5 @@ export type Room = {
 };
 
 export type RoomList = {
-  nickname: string;
   rooms: Room[];
 };

@@ -16,23 +16,27 @@ import { useNavigate } from "react-router-dom";
 
 import RegisterRoomModal from "@components/ui/Modal/RegisterRoomModal";
 import { registerRoomTarget } from "@apis/room";
+import { useParams } from "react-router-dom";
 
 export default function HousePage() {
   const [isModalOpen, toggleModal] = useToggle(false);
   const [selectedSequence, setSelectedSequence] = useState(1);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { nickname } = useParams();
   //1. 등록되었는지 안되었는지 확인하기
   //2. 만약 등록되었다 -> navigate room
   //3. 등록 안되었다 -> 모달 보여주기
+
+  if (typeof nickname === "undefined") return;
 
   const {
     isLoading,
     isError,
     data: roomList,
   } = useQuery({
-    queryKey: ["roomList"],
-    queryFn: fetchRoomList,
+    queryKey: ["roomList", nickname],
+    queryFn: () => fetchRoomList(nickname),
   });
   const registerRoomMutation = useMutation({
     mutationFn: registerRoomTarget,
