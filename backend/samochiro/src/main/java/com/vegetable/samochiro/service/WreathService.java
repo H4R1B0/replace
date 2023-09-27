@@ -49,6 +49,7 @@ public class WreathService {
 		List<String> badWordList = crawlingUtils.getBadWordList();
 		for(String w: badWordList) {
 			String content = saveRequest.getDescription();
+			System.out.println(content);
 			if(kmpSearch(content, w)) { //부정적인 내용이 있으면
 				isNegative = true;
 				return false;
@@ -172,25 +173,62 @@ public class WreathService {
 	//헌화하기 - 헌화 5번
 
 	@Transactional
-	public void saveDeclaration(DeclarationSaveRequest saveRequest, String userId) {
+	public boolean saveDeclaration(DeclarationSaveRequest saveRequest, String userId) {
 		Optional<Wreath> wreath = wreathRepository.findById(saveRequest.getWreathId());
 		int newCount = wreath.get().getDeclarationCount()+1; //신고 수 +1
 
-		if(newCount >= 1) { //신고 수가 10개가 넘으면
-			boolean flag = false;
-			//해당 헌화 내용 알고리즘 돌리기
-			List<String> badWordList = crawlingUtils.getBadWordList();
-			for(String word : badWordList) {
-				if(kmpSearch(wreath.get().getDescription(), word)) { //욕설, 비하, 모욕이 있으면
-					declarationRepository.deleteByWreathId(wreath.get().getWreathId()); //해당 헌화 신고 삭제
+		Optional<Declaration> selectedByWreathUserId = declarationRepository.selectByWreathUserId(
+			saveRequest.getWreathId(), userId);
+		if(selectedByWreathUserId.isPresent()) { //이미 한 신고라면
+			return true;
+		}
+		else {
+			if(newCount >= 10) { //신고 수가 10개가 넘으면
+				boolean flag = false;
+				//해당 헌화 내용 알고리즘 돌리기
+				List<String> badWordList = crawlingUtils.getBadWordList();
+				for(String word : badWordList) {
+					if(kmpSearch(wreath.get().getDescription(), word)) { //욕설, 비하, 모욕이 있으면
+						declarationRepository.deleteByWreathId(wreath.get().getWreathId()); //해당 헌화 신고 삭제
 //					wreathCountRepository.deleteByWreathId(wreath.get().getWreathId()); //헌화 카운트 삭제
-					wreathUserRepository.deleteByWreathId(wreath.get().getWreathId()); //헌화한 사용자 삭제
-					wreathRepository.deleteById(wreath.get().getWreathId()); //해당 헌화 삭제
-					flag = true;
-					break;
+						wreathUserRepository.deleteByWreathId(wreath.get().getWreathId()); //헌화한 사용자 삭제
+						wreathRepository.deleteById(wreath.get().getWreathId()); //해당 헌화 삭제
+						flag = true;
+						break;
+					}
+				}
+				if(!flag) { //욕설, 비하, 모욕이 없으면
+					wreath.get().setDeclarationCount(newCount);
+
+					String type = "";
+					if(saveRequest.getDeclarationType()==1) {
+						type = "스팸/도배글";
+					}
+					else if(saveRequest.getDeclarationType()==2) {
+						type = "잘못된 정보 포함";
+					}
+					else if(saveRequest.getDeclarationType()==3) {
+						type = "개인 정보 포함";
+					}
+					else if(saveRequest.getDeclarationType()==4) {
+						type = "욕설/생명경시";
+					}
+					else if(saveRequest.getDeclarationType()==5) {
+						type = "혐오/차별적";
+					}
+
+					Declaration declaration = Declaration.builder()
+						.declarationType(type)
+						.declarationContent(saveRequest.getDeclarationContent())
+						.wreath(wreath.get())
+						.user(userRepository.findById(userId).get())
+						.build();
+
+					declarationRepository.save(declaration);
 				}
 			}
-			if(!flag) { //욕설, 비하, 모욕이 없으면
+
+			else {
 				wreath.get().setDeclarationCount(newCount);
 
 				String type = "";
@@ -220,36 +258,7 @@ public class WreathService {
 				declarationRepository.save(declaration);
 			}
 		}
-
-		else {
-			wreath.get().setDeclarationCount(newCount);
-
-			String type = "";
-			if(saveRequest.getDeclarationType()==1) {
-				type = "스팸/도배글";
-			}
-			else if(saveRequest.getDeclarationType()==2) {
-				type = "잘못된 정보 포함";
-			}
-			else if(saveRequest.getDeclarationType()==3) {
-				type = "개인 정보 포함";
-			}
-			else if(saveRequest.getDeclarationType()==4) {
-				type = "욕설/생명경시";
-			}
-			else if(saveRequest.getDeclarationType()==5) {
-				type = "혐오/차별적";
-			}
-
-			Declaration declaration = Declaration.builder()
-				.declarationType(type)
-				.declarationContent(saveRequest.getDeclarationContent())
-				.wreath(wreath.get())
-				.user(userRepository.findById(userId).get())
-				.build();
-
-			declarationRepository.save(declaration);
-		}
+		return false;
 	}
 	//신고 등록 - 헌화 6번
 
