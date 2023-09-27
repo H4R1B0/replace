@@ -11,9 +11,7 @@ interface User {
 export default function SearchResultPage() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [searchResult, setSearchResult] = useState<User>({
-    nickname: "test",
-  } as User);
+  const [searchResult, setSearchResult] = useState<User | null>(null);
   const accessToken = sessionStorage.getItem("accessToken");
 
   const BASE_URL = import.meta.env.VITE_APP_API_URL;
@@ -41,7 +39,12 @@ export default function SearchResultPage() {
 
   // 해당 사용자 집으로 이동하기
   const handleMove = () => {
-    navigate(`/house/${searchResult.nickname}`);
+    if (searchResult === null) {
+      console.error("검색 결과가 없습니다.");
+      return;
+    } else {
+      navigate(`/house/${searchResult.nickname}`);
+    }
   };
 
   return (
