@@ -1,14 +1,24 @@
 import Library from "@components/3d/Library";
 import { Canvas } from "@react-three/fiber";
 import { Stage, PresentationControls } from "@react-three/drei";
-import styles from "./LibraryPage.module.css";
-import Modal from "@components/ui/Modal";
-import { useState, useEffect } from "react";
 import {
   Selection,
   EffectComposer,
   Outline,
 } from "@react-three/postprocessing";
+
+import styles from "./LibraryPage.module.css";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import {
+  fetchBookList,
+  fetchBookDetail,
+  createLetter,
+  deleteBook,
+} from "@apis/library";
+
+import Modal from "@components/ui/Modal";
 import Button from "@components/ui/Button";
 import Input from "@components/ui/Input";
 import Textarea from "@components/ui/Textarea";
@@ -25,11 +35,16 @@ type Letter = {
   title: string;
   content: string;
   writeTime: string;
-  roomUuid: string;
-  userId: string;
+  sequence: number;
+};
+
+type BookList = {
+  data: Book[];
 };
 
 export default function LibraryPage() {
+  const { sequence } = useParams();
+  const roomSequence = parseInt(sequence ?? "");
   // 모달을 열기 위한 State
   const [letterModalOpen, setLetterModalOpen] = useState(false);
   const [bookModalOpen, setBookModalOpen] = useState(false);
@@ -37,101 +52,95 @@ export default function LibraryPage() {
   // 저장된 편지들을 저장하는 곳.
   const [selectedBook, setSelectedBook] = useState<Book | null>();
   const [books, setBooks] = useState<Book[]>([]);
-
+  console.log(books);
   // 편지 작성을 위한 데이터를 저장하는 곳.
   const [letter, setLetter] = useState<Letter>({
     title: "",
     content: "",
     writeTime: "",
-    roomUuid: "12345",
-    userId: "232134yi2",
+    sequence: roomSequence,
   });
-  console.log(letter);
 
   // 편지 작성 시, 입력된 내용에 따라 letter의 state 변경시키기
   const onChangeLetter = (e: any) => {
     setLetter({
       ...letter,
       [e.target.name]: e.target.value,
-      writeTime: new Date().toISOString(),
     });
   };
 
-  const BASE_URL = import.meta.env.VITE_APP_API_URL;
+  const { isError: isBookListError, error: bookListError } = useQuery<
+    BookList,
+    Error
+  >(["books", roomSequence], () => fetchBookList(roomSequence), {
+    enabled: !!roomSequence,
+    onSuccess: (data) => {
+      setBooks(data.data);
+    },
+  });
 
-  // api 불러오기.다른 곳으로 이동시킬 것
-  useEffect(() => {
-    fetch(`${BASE_URL}/letter/list`)
-      .then((res) => {
-        // 에러 코드에 따른 상태 관리를 위해 추가
-        if (!res.ok) {
-          throw new Error(`${res.status} 에러 발생`);
-        }
+  if (isBookListError && bookListError) {
+    console.error("Book List Fetch Error:", bookListError);
+  }
 
-        return res.json();
-      })
-      .then((data) => {
-        setBooks(data.response);
-      })
-      .catch((err) => console.log(err));
-  }, [letter, selectedBook]);
-
-  useEffect(() => {
-    if (selectedBook) {
-      fetch(`${BASE_URL}/letter/detail/${selectedBook?.letterId}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setSelectedBook(data.response);
-          console.log(data.response);
-        });
+  const { isError: isBookDetailError, error: bookDetailError } = useQuery<
+    Book,
+    Error
+  >(
+    ["bookDetail", selectedBook?.letterId],
+    () => fetchBookDetail(selectedBook?.letterId!),
+    {
+      enabled: !!selectedBook,
+      onSuccess: (data) => {
+        setSelectedBook(data);
+      },
     }
-  }, []);
+  );
+
+  if (isBookDetailError && bookDetailError) {
+    console.error("Book Detail Fetch Error:", bookDetailError);
+  }
+
+  console.log(sessionStorage.getItem("accessToken"));
+  const deleteMutation = useMutation(deleteBook, {
+    onSuccess: () => {
+      alert("삭제되었습니다.");
+      setSelectedBook(null); // 선택한 책을 삭제한 후 null로 설정
+    },
+    onError: (error) => {
+      console.error("Error deleting the book:", error); // 에러가 발생했을 때 콘솔에 로그 출력
+    },
+  });
 
   const deleteLetter = () => {
-    fetch(`${BASE_URL}/letter/${selectedBook?.letterId}`, {
-      method: "DELETE",
-    }).then((res) => console.log(res));
-    alert("삭제되었습니다.");
-    setSelectedBook(null);
+    if (selectedBook) {
+      deleteMutation.mutate(selectedBook.letterId); // 선택한 책의 ID를 사용하여 뮤테이션 실행
+    }
   };
 
-  const letterSubmit = () => {
-    fetch(`${BASE_URL}/letter`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(letter),
-    })
-      .then((res) => {
-        console.log(res);
-        if (!res.ok) {
-          throw new Error(`Error: ${res.statusText}`);
-        }
-        return res.json();
-      })
-      .then((data) => {
-        setBooks((prevBooks) => {
-          const updatedBooks = [...prevBooks, data.response];
-          console.log("Updated books:", updatedBooks);
-          return updatedBooks;
-        });
-
-        setLetterModalOpen(false);
-
-        alert("작성 완료");
-
-        setLetter({
-          title: "",
-          content: "",
-          writeTime: "",
-          roomUuid: "12345",
-          userId: "232134yi2",
-        });
-      })
-      .catch((error) => {
-        console.error("에러났음~~", error);
+  const createMutation = useMutation(createLetter, {
+    onSuccess: () => {
+      setLetterModalOpen(false);
+      alert("작성 완료");
+      setLetter({
+        title: "",
+        content: "",
+        writeTime: "",
+        sequence: roomSequence,
       });
+    },
+    onError: (error) => {
+      console.error("작성 실패", error);
+    },
+  });
+
+  const letterSubmit = () => {
+    const newLetter = {
+      ...letter,
+      writeTime: getCurrentDateTime(),
+    };
+    console.log(newLetter);
+    createMutation.mutate(newLetter); // 변형된 편지를 사용하여 뮤테이션을 실행합니다.
   };
 
   const closeBookModal = () => {
@@ -210,16 +219,19 @@ export default function LibraryPage() {
       >
         {!selectedBook ? (
           <div className={styles.letter}>
-            {books.length === 0 ? (
+            {books?.length === 0 ? (
               <p>작성된 편지가 없어요.</p>
             ) : (
               <div className={styles.listscrollwrapper}>
-                {books.map((book) => {
+                {books?.map((book) => {
                   if (!book) return null;
 
                   return (
-                    <div onClick={() => setSelectedBook(book)}>
-                      <TrributeEventCard key={book.letterId}>
+                    <div
+                      onClick={() => setSelectedBook(book)}
+                      key={book.letterId}
+                    >
+                      <TrributeEventCard>
                         <div className={styles.cardTitle}>{book.title}</div>
                         <div className={styles.cardDate}>
                           {formatDate(book.writeTime)}
@@ -261,4 +273,16 @@ function formatDate(isoDateString: string) {
     .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
 
   return formattedDate;
+}
+
+function getCurrentDateTime() {
+  const current = new Date();
+  const year = current.getFullYear();
+  const month = (current.getMonth() + 1).toString().padStart(2, "0");
+  const day = current.getDate().toString().padStart(2, "0");
+  const hours = current.getHours().toString().padStart(2, "0");
+  const minutes = current.getMinutes().toString().padStart(2, "0");
+  const seconds = current.getSeconds().toString().padStart(2, "0");
+
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }

@@ -5,6 +5,8 @@ import TrributeEventCard from "@components/ui/TrributeEventCard";
 import Button from "@components/ui/Button";
 import Input from "@components/ui/Input";
 import Select from "@components/ui/Select";
+import { useQuery } from "@tanstack/react-query";
+import { fetchTributeList, fetchMyTributeList } from "@apis/tribute";
 
 type Wreath = {
   wreathId: number;
@@ -46,42 +48,34 @@ export default function TributeListPage() {
   const [wreathList, setWreathList] = useState<WreathData>({ data: [] });
   console.log("gg", myWreathList);
   // fetch 관련, 추후 옮길 것.
-  const BASE_URL = import.meta.env.VITE_APP_API_URL;
-
-  useEffect(() => {
-    fetch(`${BASE_URL}/wreath`)
-      .then((res) => {
-        // 에러 코드에 따른 상태 관리를 위해 추가
-        if (!res.ok) {
-          throw new Error(`${res.status} 에러 발생`);
-        }
-
-        return res.json();
-      })
-      .then((data) => {
-        const sortedData = sortWreathList(data.response.data, sortOption);
+  const { isError: isTributeListError, error: tributeListError } = useQuery(
+    ["tributeList"],
+    fetchTributeList,
+    {
+      onSuccess: (data) => {
+        const sortedData = sortWreathList(data.data, sortOption);
         setAllWreathList({ data: sortedData });
         setWreathList({ data: sortedData });
-      })
-      .catch((err) => console.log(err));
-  }, []);
+      },
+    }
+  );
 
-  useEffect(() => {
-    fetch(`${BASE_URL}/wreath/me`)
-      .then((res) => {
-        // 에러 코드에 따른 상태 관리를 위해 추가
-        if (!res.ok) {
-          throw new Error(`${res.status} 에러 발생`);
-        }
+  if (isTributeListError)
+    console.error("Error fetching the tribute list", tributeListError);
 
-        return res.json();
-      })
-      .then((data) => {
-        const sortedData = sortWreathList(data.response.data, sortOption);
+  const { isError: isMyTributeListError, error: myTributeListError } = useQuery(
+    ["mytributeList"],
+    fetchMyTributeList,
+    {
+      onSuccess: (data) => {
+        const sortedData = sortWreathList(data.data, sortOption);
         setMyWreathList({ data: sortedData });
-      })
-      .catch((err) => console.log(err));
-  }, []);
+      },
+    }
+  );
+
+  if (isMyTributeListError)
+    console.error("Error fetching my tribute list", myTributeListError);
 
   // 정렬 옵션
   const [sortOption, setSortOption] = useState(1);
@@ -93,6 +87,11 @@ export default function TributeListPage() {
     console.log(selectedValue);
   };
 
+  const selectSort = [
+    { value: "1", innertext: "남은 날짜 순", id: 1 },
+    { value: "2", innertext: "헌화 개수 순", id: 2 },
+  ];
+
   useEffect(() => {
     const sortedData = sortWreathList(wreathList.data, sortOption);
     setWreathList({ data: sortedData });
@@ -103,15 +102,6 @@ export default function TributeListPage() {
   const filteredWreathList = wreathList.data.filter((wreath) =>
     wreath.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
-  // console.log(wreathList);
-  // console.log(myWreathList);
-  // console.log(tributeListToggle);
-
-  const selectSort = [
-    { value: "1", innertext: "최신 등록 순", id: 1 },
-    { value: "2", innertext: "헌화 개수 순", id: 2 },
-  ];
 
   return (
     <div className={styles.Wrapper}>
@@ -162,8 +152,7 @@ export default function TributeListPage() {
                   <TrributeEventCard>
                     <p className={styles.Title}>{wreath.title}</p>
                     <div className={styles.date}>
-                      {wreath.startDate} - {wreath.endDate}
-                      {getRemainingDays(wreath.endDate)}
+                      헌화 종료 까지 {getRemainingDays(wreath.endDate)} days
                     </div>
                     {/* <p>{wreath.subTitle}</p> */}
                     <div className={styles.trributeStatus}>
@@ -208,10 +197,9 @@ function sortWreathList(data: Wreath[], option: number): Wreath[] {
   let sortedData = [...data]; // 데이터 복사
 
   switch (option) {
-    case 1: // 최신 등록 순
+    case 1: // getRemainingDays가 작은 순
       sortedData.sort(
-        (a, b) =>
-          new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
+        (a, b) => getRemainingDays(a.endDate) - getRemainingDays(b.endDate)
       );
       break;
     case 2: // 초 개수 순

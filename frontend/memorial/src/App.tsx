@@ -111,6 +111,7 @@ export default function App() {
                 element={<RedirectKakaoPage />}
               />
               <Route path={PATH.NICKNAME} element={<NicknamePage />} />
+              <Route path={PATH.NOT_FOUND} element={<NotFoundPage />} />
             </Routes>
           </Suspense>
         </Router>

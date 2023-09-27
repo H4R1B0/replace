@@ -44,6 +44,8 @@ export default function AudioUploadModal({ ...other }: AudioUploadModalProps) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const file = formData.get("audio") as File;
+    console.log("fomrData", formData);
+    console.log(file);
     uploadAudioMutation.mutate({
       sequence: roomSequence,
       audio: file,

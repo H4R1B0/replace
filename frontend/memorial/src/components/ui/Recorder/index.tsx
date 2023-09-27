@@ -73,7 +73,11 @@ export default function Recorder({ onAudioDataReceived }: RecorderProps) {
             <HiPlayCircle />
           </button>
         )} */}
-        <button className={styles.recordbtn} onClick={stopRecording}>
+        <button
+          type="button"
+          className={styles.recordbtn}
+          onClick={stopRecording}
+        >
           <HiStopCircle />
         </button>
         {audioData && (

@@ -36,7 +36,7 @@ export default function AudioRecordModal({ ...other }: AudioRecordModalProps) {
       <p>AudioRecordModal</p>
       <form onSubmit={handleFormSubmit}>
         <Recorder onAudioDataReceived={(data) => setAudioData(data)} />
-        <Button>서버로 저장</Button>
+        <Button type="submit">서버로 저장</Button>
       </form>
     </Modal>
   );
