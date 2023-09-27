@@ -13,6 +13,6 @@ export default defineConfig(({ mode }) => ({
   cacheDir: ".yarn",
   define: {
     "meta.env.VITE_APP_ENV": mode === "production" ? "production" : "development",
-    global: "globalThis",
+    // global: "globalThis",
   },
 }));
