@@ -35,7 +35,7 @@ public class AIController {
 
 	@PostMapping("/save")
 	public void getAIVoiceFile(@RequestPart String roomUuid,
-		@RequestPart List<MultipartFile> congratuationList,
+		@RequestPart List<MultipartFile> congratulationList,
 		@RequestPart List<MultipartFile> consolationList,
 		@RequestPart List<MultipartFile> encourageList ,
 		@RequestPart List<MultipartFile> safetyList,
