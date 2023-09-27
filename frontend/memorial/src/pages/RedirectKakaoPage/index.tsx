@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { setUser } from "store/slices/authSlice";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 
 import PATH from "@constants/path";
 
 export default function RedirectKakaoPage() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   // URL에서 토큰 추출
   const accessToken = new URL(window.location.href).searchParams.get("token");
 
@@ -41,13 +41,13 @@ export default function RedirectKakaoPage() {
             sessionStorage.setItem("nickname", nickname);
 
             // 기존 사용자 정보를 리덕스에 저장
-            dispatch(
-              setUser({
-                nickname,
-                isAuthenticated: true,
-                accessToken,
-              })
-            );
+            //     dispatch(
+            //       setUser({
+            //         nickname,
+            //         isAuthenticated: true,
+            //         accessToken,
+            //       })
+            //     );
           }
         })
         .catch((error) => {

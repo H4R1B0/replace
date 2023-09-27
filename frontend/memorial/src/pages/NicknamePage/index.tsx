@@ -4,7 +4,7 @@ import INPUT from "@components/ui/Input";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { setUser } from "store/slices/authSlice";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import PATH from "@constants/path";
 
 export default function NicknamePage() {
@@ -12,7 +12,7 @@ export default function NicknamePage() {
   //   const accessToken = sessionStorage.getItem("accessToken");
   const accessToken: string | null = sessionStorage.getItem("accessToken");
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const [nickname, setNickname] = useState<string>("");
   const [gender, setGender] = useState<string>("");
@@ -57,6 +57,7 @@ export default function NicknamePage() {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         nickname: nickname,
@@ -64,19 +65,19 @@ export default function NicknamePage() {
       }),
     })
       .then((response) => {
-        if (response.status === 200) {
+        if (response.ok) {
           navigate(PATH.HOUSE);
           // 닉네임 저장
           sessionStorage.setItem("nickname", nickname);
 
           // 기존 사용자 정보를 리덕스에 저장
-          dispatch(
-            setUser({
-              nickname,
-              isAuthenticated: true,
-              accessToken: accessToken || "",
-            })
-          );
+          // dispatch(
+          //   setUser({
+          //     nickname,
+          //     isAuthenticated: true,
+          //     accessToken: accessToken || "",
+          //   })
+          // );
         } else {
           alert("닉네임 저장 실패");
         }
