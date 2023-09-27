@@ -46,6 +46,7 @@ public class UserService {
 		findUser.get().setNickname(updateRequest.getNickname());
 		findUser.get().setGender(updateRequest.getGender());
 		findUser.get().setChange(true);
+		findUser.get().getRooms().get(0).setTargetName(findUser.get().getNickname());
 		userRepository.save(findUser.get());
 		//update
 
