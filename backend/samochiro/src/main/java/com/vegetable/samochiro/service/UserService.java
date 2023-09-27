@@ -134,7 +134,8 @@ public class UserService {
         if (!isChangeNickname) {
             return IsChangeNicknameResponse.builder().isChange(false).message("닉네임 변경이 가능합니다.").build();
         }
-        return IsChangeNicknameResponse.builder().isChange(true).message("닉네임 변경이 불가합니다.").build();
+		String nickname = userRepository.findById(userId).get().getNickname();
+        return IsChangeNicknameResponse.builder().isChange(true).message("닉네임 변경이 불가합니다.").nickname(nickname).build();
     }
     //닉네임 변경 여부 조회 - 유저 9
 
