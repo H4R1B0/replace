@@ -4,7 +4,7 @@ export default function KakaoLoginButton() {
 
   // const KAKAO_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
   // const KAKAO_URL = `https://j9b307.p.ssafy.io/api/oauth2/authorization/kakao?redirect_uri=https://j9b307.p.ssafy.io/oauth/redirect`;
-  const KAKAO_URL = `https://j9b307.p.ssafy.io/api/oauth2/authorization/kakao?redirect_uri=https://j9b307.p.ssafy.io/oauth/redirect`;
+  const KAKAO_URL = `https://j9b307.p.ssafy.io/api/oauth2/authorization/kakao?redirect_uri=http://localhost:3000//oauth/redirect`;
 
   const handleKakaoLogin = () => {
     window.location.href = KAKAO_URL;
