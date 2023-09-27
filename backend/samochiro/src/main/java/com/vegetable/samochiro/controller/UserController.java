@@ -9,6 +9,7 @@ import com.vegetable.samochiro.dto.user.NicknameUpdateResponse;
 import com.vegetable.samochiro.dto.user.SecessionResponse;
 import com.vegetable.samochiro.oauth2.token.JwtTokenService;
 import com.vegetable.samochiro.service.UserService;
+import com.vegetable.samochiro.util.HeaderUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -33,6 +34,7 @@ public class UserController {
 
 	private final UserService userService;
 	private final JwtTokenService jwtTokenService;
+    private final HeaderUtils headerUtils;
 
 	@PutMapping
 	public ResponseEntity<NicknameUpdateResponse> setNewNickname(@RequestBody NicknameUpdateRequest updateRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
@@ -57,22 +59,20 @@ public class UserController {
 	//닉네임 설정 - 유저 5번
 
 	@PostMapping("/duplicate")
-	public ResponseEntity<String> checkDuplicateNickname(@RequestBody String nickname) {
+	public ResponseEntity<Boolean> checkDuplicateNickname(@RequestBody String nickname) {
 		boolean isDuplicate = userService.findDuplicateNickname(nickname);
 
 		try {
-			String message;
 			if(isDuplicate) {
-				message = "중복 된 닉네임입니다.";
+				return ResponseEntity.ok(true);
 			}
 			else {
-				message = "사용 가능한 닉네임입니다.";
+				return ResponseEntity.ok(false);
 			}
-			return ResponseEntity.ok(message);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("잘못된 요청입니다.");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 	}
 	//닉네임 중복 검사 - 유저 6번
@@ -107,6 +107,19 @@ public class UserController {
 	}
 	//집 조회 - 집 1번
 
+	@GetMapping("/home/{nickname}")
+	public ResponseEntity<HouseSearchResponse> searchHouseByNickname(@PathVariable String nickname) {
+		try {
+			HouseSearchResponse house = userService.findHouseByNickname(nickname);
+			return ResponseEntity.ok(house);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.badRequest().build();
+		}
+	}
+	//남 집 조회 - 집 2번
+
     @DeleteMapping("/{userId}")
     public ResponseEntity<SecessionResponse> secession(@PathVariable String userId) {
         SecessionResponse response = userService.secession(userId);
@@ -123,5 +136,21 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 	//닉네임 변경 여부 조회 - 유저 9
+
+	@DeleteMapping
+	public ResponseEntity<String> logout(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+		String accessToken = authorizationHeader.substring(7);
+		userService.logout(accessToken);
+		return ResponseEntity.status(HttpStatus.OK).body("정상적으로 로그아웃되었습니다.");
+	}
+	//로그아웃 - 유저 4
+
+	@DeleteMapping("/nickname")
+    public ResponseEntity<String> withdrawal(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+        String userId = headerUtils.getUserId(authorizationHeader);
+        userService.withdrawal(userId);
+        return ResponseEntity.status(HttpStatus.OK).body("회원 탈퇴에 성공하였습니다.");
+    }
+    //회원 탈퇴 - 유저 8
 
 }

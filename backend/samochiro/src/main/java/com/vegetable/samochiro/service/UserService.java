@@ -10,6 +10,7 @@ import com.vegetable.samochiro.dto.user.SecessionResponse;
 import com.vegetable.samochiro.dto.user.NicknameUpdateRequest;
 import com.vegetable.samochiro.oauth2.token.JwtToken;
 import com.vegetable.samochiro.oauth2.token.JwtTokenProvider;
+import com.vegetable.samochiro.oauth2.token.JwtTokenService;
 import com.vegetable.samochiro.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,6 +30,15 @@ public class UserService {
 
 	private final UserRepository userRepository;
 	private final JwtTokenProvider tokenProvider;
+	private final JwtTokenService jwtTokenService;
+	private final LetterService letterService;
+	private final PhotoService photoService;
+	private final AIVoiceService aiVoiceService;
+	private final TelService telService;
+	private final VoicemailService voicemailService;
+	private final AlarmService alarmService;
+	private final DeclarationService declarationService;
+	private final WreathService wreathService;
 
 	@Transactional
 	public String updateNickname(NicknameUpdateRequest updateRequest, String userId) {
@@ -95,6 +105,23 @@ public class UserService {
 	}
 	//집 조회 - 집 1번
 
+	public HouseSearchResponse findHouseByNickname(String nickname) {
+		User user = userRepository.findByNickname(nickname).get();
+		List<Room> rooms = user.getRooms();
+		List<HouseSearchRoomResponse> roomDtoList = new ArrayList<>();
+		
+		for(Room r : rooms) {
+			HouseSearchRoomResponse roomResponse = new HouseSearchRoomResponse();
+			roomResponse.setTargetName(r.getTargetName());
+			roomResponse.setSequence(r.getSequence());
+			roomDtoList.add(roomResponse);
+		}
+
+		HouseSearchResponse response = new HouseSearchResponse(roomDtoList);
+		return response;
+	}
+	//남 집 조회 - 집 2번
+	
 	@Transactional
 	public SecessionResponse secession(String userId) {
 		userRepository.deleteById(userId);
@@ -110,5 +137,36 @@ public class UserService {
         return IsChangeNicknameResponse.builder().isChange(true).message("닉네임 변경이 불가합니다.").build();
     }
     //닉네임 변경 여부 조회 - 유저 9
+
+    public void logout(String accessToken) {
+        jwtTokenService.deleteJwtToken(accessToken);
+    }
+	//로그아웃 - 유저 4
+
+	@Transactional
+    public void withdrawal(String userId) {
+		User findUser = userRepository.findById(userId).get();
+		List<Room> rooms = findUser.getRooms();
+		for(Room room : rooms){
+			String roomUuid = room.getUuid();
+			//편지 삭제
+			letterService.deleteLetterByRoomUuid(roomUuid);
+			//사진
+			photoService.deletePhotosByRoomUuid(roomUuid);
+			//ai 음성
+			aiVoiceService.deleteAIVoicesByRoomUuid(roomUuid);
+			//음성
+			telService.deleteVoicesByRoomUuid(roomUuid);
+			//보이스 메일
+			voicemailService.deleteVoicemailsByUserId(userId);
+			//알림
+			alarmService.deleteAlarmByUserId(userId);
+			//신고
+			declarationService.deleteDeclarationByUserId(userId);
+			//헌화
+			wreathService.deleteWreathByUserId(userId);
+		}
+    }
+    //회원 탈퇴 - 유저 8
 
 }

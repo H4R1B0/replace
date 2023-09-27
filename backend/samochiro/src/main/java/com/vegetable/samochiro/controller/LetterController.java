@@ -1,5 +1,6 @@
 package com.vegetable.samochiro.controller;
 
+import com.vegetable.samochiro.dto.common.MessageResponse;
 import com.vegetable.samochiro.dto.letter.LetterDetailResponse;
 import com.vegetable.samochiro.dto.letter.LetterListResponse;
 import com.vegetable.samochiro.dto.letter.LetterSaveRequest;
@@ -11,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,15 +25,15 @@ public class LetterController {
 	private final HeaderUtils headerUtils;
 
 	@PostMapping
-	public ResponseEntity<String> saveNewLetter(@RequestBody LetterSaveRequest saveRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+	public ResponseEntity<MessageResponse> saveNewLetter(@RequestBody LetterSaveRequest saveRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
 		try {
 			String userId = headerUtils.getUserId(authorizationHeader);
 			letterService.saveLetter(saveRequest, userId);
-			return ResponseEntity.ok().body("편지가 등록되었습니다.");
+			return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse("편지가 등록되었습니다."));
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.badRequest().body("잘못된 요청입니다.");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse("잘못된 요청입니다."));
 		}
 	}
 	//편지 등록 - 서재 1번
@@ -63,18 +65,16 @@ public class LetterController {
 	//편지 상세 조회 - 서재 3번
 
 	@DeleteMapping("/{letterId}")
-	public ResponseEntity<String> deleteLetter(@PathVariable Long letterId) {
+	public ResponseEntity<Response> deleteLetter(@PathVariable Long letterId) {
 		try {
 			letterService.deleteLetter(letterId);
-			return ResponseEntity.ok().body("삭제되었습니다.");
+			return ResponseEntity.status(HttpStatus.OK).body(new Response("삭제되었습니다."));
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.badRequest().body("잘못된 요청입니다.");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response("잘못된 요청입니다."));
 		}
 	}
-
-
 
 	@Data
 	@AllArgsConstructor

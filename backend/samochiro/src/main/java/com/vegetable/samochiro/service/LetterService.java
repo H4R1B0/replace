@@ -24,7 +24,6 @@ public class LetterService {
 	private final UserRepository userRepository;
 	private final RoomRepository roomRepository;
 
-
 	@Transactional
 	public void saveLetter(LetterSaveRequest saveRequest, String userId) {
 		Letter letter = Letter.builder()
@@ -73,5 +72,11 @@ public class LetterService {
 		letterRepository.deleteById(letterId);
 	}
 	//편지 삭제 - 서재 4번
+
+	@Transactional
+	public void deleteLetterByRoomUuid(String roomUuid) {
+		letterRepository.deleteByRoomUuid(roomUuid);
+	}
+	//편지 삭제 - 방 2
 	
 }

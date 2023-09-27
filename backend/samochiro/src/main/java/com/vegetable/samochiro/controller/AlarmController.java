@@ -1,6 +1,7 @@
 package com.vegetable.samochiro.controller;
 
 import com.vegetable.samochiro.dto.alarm.AlarmListResponse;
+import com.vegetable.samochiro.dto.common.MessageResponse;
 import com.vegetable.samochiro.service.AlarmService;
 import com.vegetable.samochiro.util.HeaderUtils;
 import java.util.List;
@@ -9,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,13 +44,13 @@ public class AlarmController {
 	//알람 리스트 조회 - 알람 2번
 
 	@DeleteMapping
-	public ResponseEntity<String> deleteAlarm(@PathVariable Long alarmId) {
+	public ResponseEntity<MessageResponse> deleteAlarm(@PathVariable Long alarmId) {
 		try {
 			alarmService.deleteAlarm(alarmId);
-			return ResponseEntity.ok("삭제가 완료되었습니다.");
+			return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse("삭제가 완료되었습니다."));
 		}
 		catch (Exception e) {
-			return ResponseEntity.badRequest().body("잘못된 요청입니다.");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse("잘못된 요청입니다."));
 		}
 	}
 	//알람 삭제 - 알람 3번

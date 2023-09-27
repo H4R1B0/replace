@@ -25,4 +25,9 @@ public class RoomService {
         findRoom.get().setTargetGender(request.getTargetGender());
     }
     //기억의 방 대상 등록 - 방 1
+
+    public String getRoomUuid(String userId) {
+        return roomRepository.findById(userId).get().getUuid();
+    }
+    //방 uuid 조회
 }
