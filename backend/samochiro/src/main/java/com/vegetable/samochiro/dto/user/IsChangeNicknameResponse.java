@@ -8,4 +8,5 @@ import lombok.Getter;
 public class IsChangeNicknameResponse {
     private Boolean isChange;
     private String message;
+    private String nickname;
 }
