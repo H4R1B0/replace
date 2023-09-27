@@ -6,4 +6,6 @@ COPY ${JAR_FILE} samochiro-0.0.1-SNAPSHOT.jar
 
 COPY src/main/resources/avid-lock-397313-6129fb95bb28.json .
 
+ENV TZ=Asia/Seoul
+
 ENTRYPOINT ["java","-jar","-Dserver.port=5000","samochiro-0.0.1-SNAPSHOT.jar"]
