@@ -116,8 +116,13 @@ public class WreathController {
 	public ResponseEntity<MessageResponse> saveDeclaration(@RequestBody DeclarationSaveRequest saveRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
 		try {
 			String userId = headerUtils.getUserId(authorizationHeader);
-			wreathService.saveDeclaration(saveRequest, userId);
-			return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse("신고 완료되었습니다."));
+			boolean isCompleted = wreathService.saveDeclaration(saveRequest, userId);
+			if(isCompleted) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse("이미 신고한 헌화입니다."));
+			}
+			else {
+				return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse("신고 완료되었습니다."));
+			}
 		}
 		catch (Exception e) {
 			e.printStackTrace();
