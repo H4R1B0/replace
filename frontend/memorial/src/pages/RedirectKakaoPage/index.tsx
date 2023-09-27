@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { setUser } from "store/slices/authSlice";
+// import { setUser } from "store/slices/authSlice";
 // import { useDispatch } from "react-redux";
 
 import PATH from "@constants/path";
