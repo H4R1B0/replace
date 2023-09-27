@@ -66,7 +66,7 @@ export default function NicknamePage() {
     })
       .then((response) => {
         if (response.ok) {
-          navigate(PATH.HOUSE);
+          navigate(`/house/${nickname}`);
           // 닉네임 저장
           sessionStorage.setItem("nickname", nickname);
 
