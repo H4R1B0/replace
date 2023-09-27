@@ -5,6 +5,7 @@ import com.vegetable.samochiro.service.AIService;
 import com.vegetable.samochiro.util.HeaderUtils;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/ai")
@@ -41,8 +43,9 @@ public class AIController {
 		@RequestPart List<MultipartFile> safetyList,
 		@RequestPart List<MultipartFile> thanksList,
 		@RequestPart List<MultipartFile> welcomeList) {
-		System.out.println("옴");
-		System.out.println(welcomeList.size());
+		log.info("옴");
+
+		//aiService.saveAIVoiceFile(roomUuid, congratulationList, consolationList, encourageList, safetyList, thanksList, welcomeList);
 
 	}
 	//학습된 음성 데이터 받아서 저장 - from ai
