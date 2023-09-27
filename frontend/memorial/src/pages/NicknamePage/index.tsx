@@ -5,7 +5,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 // import { setUser } from "store/slices/authSlice";
 // import { useDispatch } from "react-redux";
-import PATH from "@constants/path";
 
 export default function NicknamePage() {
   const BASE_URL = import.meta.env.VITE_APP_API_URL;
