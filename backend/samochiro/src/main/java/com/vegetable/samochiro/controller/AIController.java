@@ -37,13 +37,9 @@ public class AIController {
 
 	@PostMapping("/save")
 	public void getAIVoiceFile(@RequestPart String roomUuid,
-		@RequestPart List<MultipartFile> congratulationList,
-		@RequestPart List<MultipartFile> consolationList,
-		@RequestPart List<MultipartFile> encourageList ,
-		@RequestPart List<MultipartFile> safetyList,
-		@RequestPart List<MultipartFile> thanksList,
 		@RequestPart List<MultipartFile> welcomeList) {
 		log.info("옴");
+		System.out.println("roomUuid = " + roomUuid + ", welcomeList = " + welcomeList);
 
 		//aiService.saveAIVoiceFile(roomUuid, congratulationList, consolationList, encourageList, safetyList, thanksList, welcomeList);
 
