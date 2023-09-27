@@ -25,6 +25,12 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         String token = resolveToken((HttpServletRequest) request);
+        System.out.println("request.URI = " + ((HttpServletRequest) request).getRequestURI());
+        if(((HttpServletRequest) request).getRequestURI().equals("/api/ai/save")){
+            chain.doFilter(request, response);
+            return;
+        }
+
         try {
             // 토큰 유효성 검사
             if (token != null && jwtTokenProvider.validateToken(token)) {
