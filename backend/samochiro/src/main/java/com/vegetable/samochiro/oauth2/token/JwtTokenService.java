@@ -1,7 +1,8 @@
 package com.vegetable.samochiro.oauth2.token;
 
+import com.vegetable.samochiro.domain.CustomErrorType;
+import com.vegetable.samochiro.exception.UserNotFoundException;
 import com.vegetable.samochiro.repository.JwtTokenRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,12 +23,20 @@ public class JwtTokenService {
     }
 
     public String findUserId(String accessToken) {
-        Optional<JwtToken> jwtToken = jwtTokenRepository.findById(accessToken);
-        return jwtToken.get().getUserId();
+        JwtToken jwtToken = findJwtToken(accessToken);
+        return jwtToken.getUserId();
     }
 
     public void deleteJwtToken(String accessToken) {
-        jwtTokenRepository.deleteById(accessToken);
+        JwtToken jwtToken = findJwtToken(accessToken);
+        jwtTokenRepository.delete(jwtToken);
+    }
+
+    private JwtToken findJwtToken(String accessToken) {
+        Optional<JwtToken> jwtToken = jwtTokenRepository.findById(accessToken);
+        if (jwtToken.isEmpty())
+            throw new UserNotFoundException(CustomErrorType.USER_NOT_FOUND.getMessage());
+        return jwtToken.get();
     }
 
     public void saveJwtToken(String accessToken, String userId) {
