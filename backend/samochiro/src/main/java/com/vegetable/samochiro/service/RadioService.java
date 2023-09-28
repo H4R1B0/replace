@@ -30,6 +30,7 @@ public class RadioService {
                     VoiceItem.builder()
                             .voiceId(voice.getId())
                             .registDate(voice.getRegistDate())
+                            .voiceUrl(voice.getUrl())
                             .build()
             );
         }

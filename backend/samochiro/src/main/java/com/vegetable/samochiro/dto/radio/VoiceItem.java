@@ -15,5 +15,6 @@ public class VoiceItem {
 
     private long voiceId;
     private LocalDateTime registDate;
+    private String voiceUrl;
 
 }
