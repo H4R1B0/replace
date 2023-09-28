@@ -31,6 +31,7 @@ public class RoomService {
     }
     //방 uuid 조회
 
+    @Transactional
     public void resetTargetName(String roomUuid) {
         Optional<Room> room = roomRepository.findByRoomUuid(roomUuid);
         room.get().setTargetName(null);
