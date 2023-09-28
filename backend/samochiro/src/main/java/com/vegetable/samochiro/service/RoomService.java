@@ -4,6 +4,7 @@ package com.vegetable.samochiro.service;
 import com.vegetable.samochiro.domain.Room;
 import com.vegetable.samochiro.dto.room.RegisterTargetNameRequest;
 import com.vegetable.samochiro.enums.CustomErrorType;
+import com.vegetable.samochiro.exception.RegisteredRoomException;
 import com.vegetable.samochiro.exception.RoomNotFoundException;
 import com.vegetable.samochiro.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,8 @@ public class RoomService {
         Optional<Room> findRoom = roomRepository.findBySequenceAndUserId(roomSequence, userId);
         if (findRoom.isEmpty())
             throw new RoomNotFoundException(CustomErrorType.ROOM_NOT_FOUND.getMessage());
+        if (findRoom.get().getTargetName() != null)
+            throw new RegisteredRoomException(CustomErrorType.ROOM_REGISTERED.getMessage());
         findRoom.get().setTargetName(targetName);
         findRoom.get().setTargetGender(request.getTargetGender());
     }

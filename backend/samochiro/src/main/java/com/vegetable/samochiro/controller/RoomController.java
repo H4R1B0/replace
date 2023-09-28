@@ -4,7 +4,7 @@ import com.vegetable.samochiro.dto.common.MessageResponse;
 import com.vegetable.samochiro.dto.room.RegisterTargetNameRequest;
 import com.vegetable.samochiro.enums.CustomErrorType;
 import com.vegetable.samochiro.exception.RoomRangeException;
-import com.vegetable.samochiro.exception.RoomRegisterException;
+import com.vegetable.samochiro.exception.FirstRoomRegisterException;
 import com.vegetable.samochiro.oauth2.token.JwtTokenService;
 import com.vegetable.samochiro.service.AIVoiceService;
 import com.vegetable.samochiro.service.LetterService;
@@ -36,7 +36,7 @@ public class RoomController {
     @PutMapping("/{sequence}")
     public ResponseEntity<MessageResponse> registerTargetName(@PathVariable int sequence, @RequestBody RegisterTargetNameRequest request, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
         if (sequence == 1) {
-            throw new RoomRegisterException(CustomErrorType.USER_ROOM_CANT_REGISTER.getMessage());
+            throw new FirstRoomRegisterException(CustomErrorType.USER_ROOM_CANT_REGISTER.getMessage());
         }
         if (sequence < 2 || sequence > 3){
             throw new RoomRangeException(CustomErrorType.OUT_OF_ROOM_RANGE.getMessage());

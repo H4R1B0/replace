@@ -1,6 +1,6 @@
 package com.vegetable.samochiro.service;
 
-import com.vegetable.samochiro.domain.CustomErrorType;
+import com.vegetable.samochiro.enums.CustomErrorType;
 import com.vegetable.samochiro.domain.Room;
 import com.vegetable.samochiro.domain.User;
 import com.vegetable.samochiro.dto.user.HouseSearchResponse;
