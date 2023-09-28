@@ -7,24 +7,25 @@ import toast from "react-hot-toast";
 
 export default function DeleteRoomConfirmModal() {
   const { sequence } = useParams();
+  if (typeof sequence === "undefined") return;
+  const roomSequence = parseInt(sequence);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const nickname = sessionStorage.getItem("nickname");
+
   const deleteSuccessToast = async () => {
     toast.success("room deleted"), { id: "roomDeleted" };
-    navigate("/house");
+    navigate(`/house/${nickname}`);
   };
 
   //TODO: deleteSuccessToast의 duration time이 끝난 뒤에 navigate("/house")로 이동하기
   const deleteRoomMutation = useMutation({
     mutationFn: deleteSingleRoom,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["trashcan"] });
+      queryClient.invalidateQueries({ queryKey: ["roomList"] });
       deleteSuccessToast();
     },
   });
-
-  if (typeof sequence === "undefined") return;
-  const roomSequence = parseInt(sequence);
 
   const handleDelete = () => {
     deleteRoomMutation.mutate(roomSequence);
