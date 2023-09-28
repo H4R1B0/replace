@@ -3,13 +3,13 @@ package com.vegetable.samochiro.service;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.Storage;
-import com.vegetable.samochiro.domain.AiVoice;
+import com.vegetable.samochiro.domain.AIVoice;
 import com.vegetable.samochiro.domain.Room;
 import com.vegetable.samochiro.domain.Voice;
 import com.vegetable.samochiro.dto.ai.AITrainingRequest;
 import com.vegetable.samochiro.dto.ai.MultipartInputStreamFileResource;
 import com.vegetable.samochiro.enums.SituationType;
-import com.vegetable.samochiro.repository.AiVoiceRepository;
+import com.vegetable.samochiro.repository.AIVoiceRepository;
 import com.vegetable.samochiro.repository.RoomRepository;
 import com.vegetable.samochiro.repository.VoiceRepository;
 
@@ -54,7 +54,7 @@ public class AIService {
     private final RoomRepository roomRepository;
     private final VoiceRepository voiceRepository;
     private final GCSService gcsService;
-    private final AiVoiceRepository aiVoiceRepository;
+    private final AIVoiceRepository aiVoiceRepository;
     @Value("${url.gpu}")
     private String serverUrl;
     private static final String BOUNDARY = "*****";
@@ -148,7 +148,7 @@ public class AIService {
                 String fileName = currentTime + "ai" + file.getOriginalFilename();
                 String url = gcsService.uploadFile(fileName, file);
 
-                AiVoice aiVoice = AiVoice.builder()
+                AIVoice aiVoice = AIVoice.builder()
                     .url(url)
                     .name(fileName)
                     .registDate(current)
@@ -165,7 +165,7 @@ public class AIService {
                 String fileName = currentTime + "ai" + file.getOriginalFilename();
                 String url = gcsService.uploadFile(fileName, file);
 
-                AiVoice aiVoice = AiVoice.builder()
+                AIVoice aiVoice = AIVoice.builder()
                     .url(url)
                     .name(fileName)
                     .registDate(current)
@@ -182,7 +182,7 @@ public class AIService {
                 String fileName = currentTime + "ai" + file.getOriginalFilename();
 				String url = gcsService.uploadFile(fileName, file);
 
-				AiVoice aiVoice = AiVoice.builder()
+                AIVoice aiVoice = AIVoice.builder()
 					.url(url)
 					.name(fileName)
 					.registDate(current)
@@ -199,7 +199,7 @@ public class AIService {
                 String fileName = currentTime + "ai" + file.getOriginalFilename();
                 String url = gcsService.uploadFile(fileName, file);
 
-                AiVoice aiVoice = AiVoice.builder()
+                AIVoice aiVoice = AIVoice.builder()
                     .url(url)
                     .name(fileName)
                     .registDate(current)
@@ -216,7 +216,7 @@ public class AIService {
 				String fileName = currentTime + "ai" + file.getOriginalFilename();
 				String url = gcsService.uploadFile(fileName, file);
 
-				AiVoice aiVoice = AiVoice.builder()
+                AIVoice aiVoice = AIVoice.builder()
 					.url(url)
 					.name(fileName)
 					.registDate(current)
@@ -233,7 +233,7 @@ public class AIService {
                 String fileName = currentTime + "ai" + file.getOriginalFilename();
                 String url = gcsService.uploadFile(fileName, file);
 
-                AiVoice aiVoice = AiVoice.builder()
+                AIVoice aiVoice = AIVoice.builder()
                     .url(url)
                     .name(fileName)
                     .registDate(current)
