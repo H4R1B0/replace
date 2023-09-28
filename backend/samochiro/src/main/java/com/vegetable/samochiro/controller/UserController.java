@@ -145,7 +145,7 @@ public class UserController {
 	}
 	//로그아웃 - 유저 4
 
-	@DeleteMapping("/nickname")
+	@DeleteMapping("/me")
     public ResponseEntity<String> withdrawal(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
         String userId = headerUtils.getUserId(authorizationHeader);
         userService.withdrawal(userId);
