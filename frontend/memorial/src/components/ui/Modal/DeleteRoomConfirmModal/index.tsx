@@ -22,7 +22,7 @@ export default function DeleteRoomConfirmModal() {
   const deleteRoomMutation = useMutation({
     mutationFn: deleteSingleRoom,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["roomList"] });
+      queryClient.invalidateQueries({ queryKey: ["roomList", nickname] });
       deleteSuccessToast();
     },
   });

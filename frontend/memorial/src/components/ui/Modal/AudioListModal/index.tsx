@@ -24,7 +24,8 @@ export default function AudioListModal({ ...other }: AudioListModalProps) {
   const deleteAudioFileMutation = useMutation({
     mutationFn: deleteSingleAudioFile,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["audioList"] });
+      queryClient.invalidateQueries({ queryKey: ["audioList", roomSequence] });
+      console.log("delete success");
     },
     onError: (error) => {
       console.log(error);
@@ -33,6 +34,7 @@ export default function AudioListModal({ ...other }: AudioListModalProps) {
 
   const handleDelete = (voiceId: number) => {
     if (!voiceId) return;
+    console.log(voiceId);
     deleteAudioFileMutation.mutate(voiceId);
   };
 
