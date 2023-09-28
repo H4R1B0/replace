@@ -51,6 +51,7 @@ public class RadioService {
     }
     //음성 파일 상세 조회 - 라디오 2
 
+    @Transactional
     public void deleteVoice(long voiceId) {
         voiceRepository.deleteById(voiceId);
     }
