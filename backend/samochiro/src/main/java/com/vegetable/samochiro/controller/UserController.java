@@ -129,9 +129,7 @@ public class UserController {
 
 	@GetMapping("/isChange")
 	public ResponseEntity<IsChangeNicknameResponse> isChangeNickname(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
-		String accessToken = authorizationHeader.substring(7);
-		String userId = jwtTokenService.findUserId(accessToken);
-
+		String userId = headerUtils.getUserId(authorizationHeader);
 		IsChangeNicknameResponse response = userService.isChangeNickname(userId);
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}

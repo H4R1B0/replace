@@ -54,6 +54,8 @@ public class RoomController {
         aiVoiceService.deleteAIVoicesByRoomUuid(roomUuid);
         //음성
         telService.deleteVoicesByRoomUuid(roomUuid);
+        //방 대상
+        roomService.resetTargetName(roomUuid);
 
         return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse("방 데이터 삭제에 성공하였습니다."));
     }

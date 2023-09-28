@@ -1,5 +1,6 @@
 package com.vegetable.samochiro.service;
 
+import com.vegetable.samochiro.domain.CustomErrorType;
 import com.vegetable.samochiro.domain.Room;
 import com.vegetable.samochiro.domain.User;
 import com.vegetable.samochiro.dto.user.HouseSearchResponse;
@@ -8,6 +9,7 @@ import com.vegetable.samochiro.dto.user.IsChangeNicknameResponse;
 import com.vegetable.samochiro.dto.user.NicknameSearchResponse;
 import com.vegetable.samochiro.dto.user.SecessionResponse;
 import com.vegetable.samochiro.dto.user.NicknameUpdateRequest;
+import com.vegetable.samochiro.exception.UserNotFoundException;
 import com.vegetable.samochiro.oauth2.token.JwtToken;
 import com.vegetable.samochiro.oauth2.token.JwtTokenProvider;
 import com.vegetable.samochiro.oauth2.token.JwtTokenService;
@@ -132,14 +134,17 @@ public class UserService {
 	}
 	//회원 탈퇴 - 유저 8
 
-    public IsChangeNicknameResponse isChangeNickname(String userId) {
-        boolean isChangeNickname = userRepository.findById(userId).get().isChange();
-        if (!isChangeNickname) {
-            return IsChangeNicknameResponse.builder().isChange(false).message("닉네임 변경이 가능합니다.").build();
-        }
-		String nickname = userRepository.findById(userId).get().getNickname();
-        return IsChangeNicknameResponse.builder().isChange(true).message("닉네임 변경이 불가합니다.").nickname(nickname).build();
-    }
+	public IsChangeNicknameResponse isChangeNickname(String userId) {
+		Optional<User> findUser = userRepository.findById(userId);
+		if (findUser.isEmpty())
+			throw new UserNotFoundException(CustomErrorType.USER_NOT_FOUND.getMessage());
+		boolean isChangeNickname = findUser.get().isChange();
+		if (!isChangeNickname) {
+			return IsChangeNicknameResponse.builder().isChange(false).message("닉네임 변경이 가능합니다.").build();
+		}
+		String nickname = findUser.get().getNickname();
+		return IsChangeNicknameResponse.builder().isChange(true).message("닉네임 변경이 불가합니다.").nickname(nickname).build();
+	}
     //닉네임 변경 여부 조회 - 유저 9
 
     public void logout(String accessToken) {
@@ -149,9 +154,11 @@ public class UserService {
 
 	@Transactional
     public void withdrawal(String userId) {
-		User findUser = userRepository.findById(userId).get();
-		List<Room> rooms = findUser.getRooms();
-		for(Room room : rooms){
+		Optional<User> findUser = userRepository.findById(userId);
+		if (findUser.isEmpty())
+			throw new UserNotFoundException(CustomErrorType.USER_NOT_FOUND.getMessage());
+		List<Room> rooms = findUser.get().getRooms();
+		for (Room room : rooms) {
 			String roomUuid = room.getUuid();
 			//편지 삭제
 			letterService.deleteLetterByRoomUuid(roomUuid);
@@ -171,7 +178,7 @@ public class UserService {
 			wreathService.deleteWreathByUserId(userId);
 			roomRepository.delete(room);
 		}
-		userRepository.delete(findUser);
+		userRepository.delete(findUser.get());
     }
     //회원 탈퇴 - 유저 8
 
