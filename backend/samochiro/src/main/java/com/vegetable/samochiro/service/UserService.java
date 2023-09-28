@@ -11,6 +11,7 @@ import com.vegetable.samochiro.dto.user.NicknameUpdateRequest;
 import com.vegetable.samochiro.oauth2.token.JwtToken;
 import com.vegetable.samochiro.oauth2.token.JwtTokenProvider;
 import com.vegetable.samochiro.oauth2.token.JwtTokenService;
+import com.vegetable.samochiro.repository.RoomRepository;
 import com.vegetable.samochiro.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
 	private final UserRepository userRepository;
+	private final RoomRepository roomRepository;
 	private final JwtTokenProvider tokenProvider;
 	private final JwtTokenService jwtTokenService;
 	private final LetterService letterService;
@@ -167,7 +169,9 @@ public class UserService {
 			declarationService.deleteDeclarationByUserId(userId);
 			//헌화
 			wreathService.deleteWreathByUserId(userId);
+			roomRepository.delete(room);
 		}
+		userRepository.delete(findUser);
     }
     //회원 탈퇴 - 유저 8
 
