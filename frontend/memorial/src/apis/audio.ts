@@ -1,4 +1,5 @@
 import { api, Header } from "./index";
+import { AudioList } from "types/Audio";
 
 type UploadSingleAudioRequest = {
   sequence: number;
@@ -15,7 +16,7 @@ export const uploadSingleAudio = async ({
 
 // 녹음한 음성 파일 리스트 조회 (수정완)
 export const fetchAudioFileList = async (sequence: number) => {
-  return await api.get(`/radio/${sequence}`, Header());
+  return await api.get<AudioList>(`/radio/${sequence}`, Header());
 };
 
 // 녹음 음성 파일 상세 조회

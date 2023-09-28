@@ -6,10 +6,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
 
-// if (import.meta.env.DEV) {
-//   const { worker } = await import("./mocks/browser.ts");
-//   worker.start();
-// }
+if (import.meta.env.DEV) {
+  const { worker } = await import("./mocks/browser.ts");
+  worker.start();
+}
 
 console.log(import.meta.env);
 ReactDOM.createRoot(document.getElementById("root")!).render(
