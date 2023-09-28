@@ -1,6 +1,6 @@
 package com.vegetable.samochiro.oauth2.token;
 
-import com.vegetable.samochiro.domain.CustomErrorType;
+import com.vegetable.samochiro.enums.CustomErrorType;
 import com.vegetable.samochiro.exception.UserNotFoundException;
 import com.vegetable.samochiro.repository.JwtTokenRepository;
 import org.springframework.beans.factory.annotation.Value;

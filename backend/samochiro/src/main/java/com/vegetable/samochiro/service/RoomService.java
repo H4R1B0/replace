@@ -3,6 +3,8 @@ package com.vegetable.samochiro.service;
 
 import com.vegetable.samochiro.domain.Room;
 import com.vegetable.samochiro.dto.room.RegisterTargetNameRequest;
+import com.vegetable.samochiro.enums.CustomErrorType;
+import com.vegetable.samochiro.exception.RoomNotFoundException;
 import com.vegetable.samochiro.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,8 @@ public class RoomService {
     public void registerTargetName(int roomSequence, String userId, RegisterTargetNameRequest request) {
         String targetName = request.getTargetName();
         Optional<Room> findRoom = roomRepository.findBySequenceAndUserId(roomSequence, userId);
+        if (findRoom.isEmpty())
+            throw new RoomNotFoundException(CustomErrorType.ROOM_NOT_FOUND.getMessage());
         findRoom.get().setTargetName(targetName);
         findRoom.get().setTargetGender(request.getTargetGender());
     }

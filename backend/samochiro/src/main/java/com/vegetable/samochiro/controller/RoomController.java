@@ -2,9 +2,10 @@ package com.vegetable.samochiro.controller;
 
 import com.vegetable.samochiro.dto.common.MessageResponse;
 import com.vegetable.samochiro.dto.room.RegisterTargetNameRequest;
+import com.vegetable.samochiro.enums.CustomErrorType;
+import com.vegetable.samochiro.exception.RoomRangeException;
+import com.vegetable.samochiro.exception.RoomRegisterException;
 import com.vegetable.samochiro.oauth2.token.JwtTokenService;
-import com.vegetable.samochiro.repository.VoiceRepository;
-import com.vegetable.samochiro.service.AIService;
 import com.vegetable.samochiro.service.AIVoiceService;
 import com.vegetable.samochiro.service.LetterService;
 import com.vegetable.samochiro.service.PhotoService;
@@ -32,12 +33,17 @@ public class RoomController {
     private final AIVoiceService aiVoiceService;
     private final TelService telService;
 
-    @PutMapping("/{roomSequence}")
-    public ResponseEntity<MessageResponse> registerTargetName(@PathVariable int roomSequence, @RequestBody RegisterTargetNameRequest request, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
-        String accessToken = authorizationHeader.substring(7);
-        String userId = jwtTokenService.findUserId(accessToken);
+    @PutMapping("/{sequence}")
+    public ResponseEntity<MessageResponse> registerTargetName(@PathVariable int sequence, @RequestBody RegisterTargetNameRequest request, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+        if (sequence == 1) {
+            throw new RoomRegisterException(CustomErrorType.USER_ROOM_CANT_REGISTER.getMessage());
+        }
+        if (sequence < 2 || sequence > 3){
+            throw new RoomRangeException(CustomErrorType.OUT_OF_ROOM_RANGE.getMessage());
+        }
+        String userId = headerUtils.getUserId(authorizationHeader);
 
-        roomService.registerTargetName(roomSequence, userId, request);
+        roomService.registerTargetName(sequence, userId, request);
         return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse("방의 대상이 등록되었습니다."));
     }
     //기억의 방 대상 등록 - 방 1
