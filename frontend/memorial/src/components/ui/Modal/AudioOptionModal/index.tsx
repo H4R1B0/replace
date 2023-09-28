@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 export default function AudioOptionModal({ ...other }: AudioOptionModalProps) {
   const navigate = useNavigate();
   return (
+    // TODO: 모달을 닫을 때 useHistory를 사용하기
     <Modal {...other} buttonLabel="close">
       <p>AudioOptionModal</p>
       <Button onClick={() => navigate("record")}>녹음하기</Button>

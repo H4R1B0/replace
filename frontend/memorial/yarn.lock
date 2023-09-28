@@ -4941,6 +4941,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/uuid@npm:^9.0.4":
+  version: 9.0.4
+  resolution: "@types/uuid@npm:9.0.4"
+  checksum: 356e2504456eaebbc43a5af5ca6c07d71f5ae5520b5767cb1c62cd0ec55475fc4ee3d16a2874f4a5fce78e40e8583025afd3a7d9ba41f82939de310665f53f0e
+  languageName: node
+  linkType: hard
+
 "@types/webxr@npm:*, @types/webxr@npm:^0.5.2":
   version: 0.5.4
   resolution: "@types/webxr@npm:0.5.4"
@@ -10943,6 +10950,7 @@ __metadata:
     "@types/react-dom": ^18.2.4
     "@types/react-modal": ^3.16.0
     "@types/three": ^0.156.0
+    "@types/uuid": ^9.0.4
     "@typescript-eslint/eslint-plugin": ^5.59.8
     "@typescript-eslint/parser": ^5.59.8
     "@use-gesture/react": ^10.3.0
@@ -10970,6 +10978,7 @@ __metadata:
     three: ^0.156.1
     three-stdlib: ^2.25.1
     typescript: ^5.1.3
+    uuid: ^9.0.1
     vite: ^4.3.9
     vite-plugin-svgr: ^3.2.0
     vite-tsconfig-paths: ^4.2.1
@@ -12691,7 +12700,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:^9.0.0":
+"uuid@npm:^9.0.0, uuid@npm:^9.0.1":
   version: 9.0.1
   resolution: "uuid@npm:9.0.1"
   bin:

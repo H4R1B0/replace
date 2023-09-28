@@ -47,6 +47,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/react-dom", "npm:18.2.4"],\
             ["@types/react-modal", "npm:3.16.0"],\
             ["@types/three", "npm:0.156.0"],\
+            ["@types/uuid", "npm:9.0.4"],\
             ["@typescript-eslint/eslint-plugin", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:5.59.8"],\
             ["@typescript-eslint/parser", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:5.59.8"],\
             ["@use-gesture/react", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:10.3.0"],\
@@ -74,6 +75,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["three", "npm:0.156.1"],\
             ["three-stdlib", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:2.26.0"],\
             ["typescript", "patch:typescript@npm%3A5.1.3#~builtin<compat/typescript>::version=5.1.3&hash=5da071"],\
+            ["uuid", "npm:9.0.1"],\
             ["vite", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:4.3.9"],\
             ["vite-plugin-svgr", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:3.2.0"],\
             ["vite-tsconfig-paths", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:4.2.1"],\
@@ -7268,6 +7270,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-use-sync-external-store-npm-0.0.3-875a91a914-161ddb8eec.zip/node_modules/@types/use-sync-external-store/",\
           "packageDependencies": [\
             ["@types/use-sync-external-store", "npm:0.0.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/uuid", [\
+        ["npm:9.0.4", {\
+          "packageLocation": "./.yarn/cache/@types-uuid-npm-9.0.4-ecc469cca8-356e250445.zip/node_modules/@types/uuid/",\
+          "packageDependencies": [\
+            ["@types/uuid", "npm:9.0.4"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -14569,6 +14580,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/react-dom", "npm:18.2.4"],\
             ["@types/react-modal", "npm:3.16.0"],\
             ["@types/three", "npm:0.156.0"],\
+            ["@types/uuid", "npm:9.0.4"],\
             ["@typescript-eslint/eslint-plugin", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:5.59.8"],\
             ["@typescript-eslint/parser", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:5.59.8"],\
             ["@use-gesture/react", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:10.3.0"],\
@@ -14596,6 +14608,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["three", "npm:0.156.1"],\
             ["three-stdlib", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:2.26.0"],\
             ["typescript", "patch:typescript@npm%3A5.1.3#~builtin<compat/typescript>::version=5.1.3&hash=5da071"],\
+            ["uuid", "npm:9.0.1"],\
             ["vite", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:4.3.9"],\
             ["vite-plugin-svgr", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:3.2.0"],\
             ["vite-tsconfig-paths", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:4.2.1"],\

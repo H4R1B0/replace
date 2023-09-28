@@ -25,7 +25,7 @@ export const fetchSingleAudioFile = async (voiceId: number) => {
 };
 
 // 녹음 음성 파일 삭제
-export const deleteSingleAudioFile = async (voiceId: string) => {
+export const deleteSingleAudioFile = async (voiceId: number) => {
   return await api.delete(`/radio/${voiceId}`, Header());
 };
 
