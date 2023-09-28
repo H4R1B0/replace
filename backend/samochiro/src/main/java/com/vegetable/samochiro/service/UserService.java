@@ -1,5 +1,6 @@
 package com.vegetable.samochiro.service;
 
+import com.vegetable.samochiro.domain.CustomErrorType;
 import com.vegetable.samochiro.domain.Room;
 import com.vegetable.samochiro.domain.User;
 import com.vegetable.samochiro.dto.user.HouseSearchResponse;
@@ -8,6 +9,7 @@ import com.vegetable.samochiro.dto.user.IsChangeNicknameResponse;
 import com.vegetable.samochiro.dto.user.NicknameSearchResponse;
 import com.vegetable.samochiro.dto.user.SecessionResponse;
 import com.vegetable.samochiro.dto.user.NicknameUpdateRequest;
+import com.vegetable.samochiro.exception.UserNotFoundException;
 import com.vegetable.samochiro.oauth2.token.JwtToken;
 import com.vegetable.samochiro.oauth2.token.JwtTokenProvider;
 import com.vegetable.samochiro.oauth2.token.JwtTokenService;
@@ -149,9 +151,11 @@ public class UserService {
 
 	@Transactional
     public void withdrawal(String userId) {
-		User findUser = userRepository.findById(userId).get();
-		List<Room> rooms = findUser.getRooms();
-		for(Room room : rooms){
+		Optional<User> findUser = userRepository.findById(userId);
+		if (findUser.isEmpty())
+			throw new UserNotFoundException(CustomErrorType.USER_NOT_FOUND.getMessage());
+		List<Room> rooms = findUser.get().getRooms();
+		for (Room room : rooms) {
 			String roomUuid = room.getUuid();
 			//편지 삭제
 			letterService.deleteLetterByRoomUuid(roomUuid);
@@ -171,7 +175,7 @@ public class UserService {
 			wreathService.deleteWreathByUserId(userId);
 			roomRepository.delete(room);
 		}
-		userRepository.delete(findUser);
+		userRepository.delete(findUser.get());
     }
     //회원 탈퇴 - 유저 8
 
