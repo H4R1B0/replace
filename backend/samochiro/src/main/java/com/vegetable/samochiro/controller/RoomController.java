@@ -43,9 +43,9 @@ public class RoomController {
     //기억의 방 대상 등록 - 방 1
 
     @DeleteMapping("/{sequence}")
-    public ResponseEntity<String> deleteRoom(@PathVariable int sequence, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+    public ResponseEntity<MessageResponse> deleteRoom(@PathVariable int sequence, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
         String userId = headerUtils.getUserId(authorizationHeader);
-        String roomUuid = roomService.getRoomUuid(userId);
+        String roomUuid = roomService.getRoomUuid(sequence, userId);
         //편지 삭제
         letterService.deleteLetterByRoomUuid(roomUuid);
         //사진
@@ -55,7 +55,7 @@ public class RoomController {
         //음성
         telService.deleteVoicesByRoomUuid(roomUuid);
 
-        return ResponseEntity.status(HttpStatus.OK).body("방 데이터 삭제에 성공하였습니다.");
+        return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse("방 데이터 삭제에 성공하였습니다."));
     }
     //등록된 방 데이터 삭제 - 방 2
 }

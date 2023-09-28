@@ -26,8 +26,8 @@ public class RoomService {
     }
     //기억의 방 대상 등록 - 방 1
 
-    public String getRoomUuid(String userId) {
-        return roomRepository.findById(userId).get().getUuid();
+    public String getRoomUuid(int roomSequence, String userId) {
+        return roomRepository.findBySequenceAndUserId(roomSequence, userId).get().getUuid();
     }
     //방 uuid 조회
 }
