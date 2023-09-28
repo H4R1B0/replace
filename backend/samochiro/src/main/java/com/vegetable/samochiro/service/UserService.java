@@ -134,14 +134,17 @@ public class UserService {
 	}
 	//회원 탈퇴 - 유저 8
 
-    public IsChangeNicknameResponse isChangeNickname(String userId) {
-        boolean isChangeNickname = userRepository.findById(userId).get().isChange();
-        if (!isChangeNickname) {
-            return IsChangeNicknameResponse.builder().isChange(false).message("닉네임 변경이 가능합니다.").build();
-        }
-		String nickname = userRepository.findById(userId).get().getNickname();
-        return IsChangeNicknameResponse.builder().isChange(true).message("닉네임 변경이 불가합니다.").nickname(nickname).build();
-    }
+	public IsChangeNicknameResponse isChangeNickname(String userId) {
+		Optional<User> findUser = userRepository.findById(userId);
+		if (findUser.isEmpty())
+			throw new UserNotFoundException(CustomErrorType.USER_NOT_FOUND.getMessage());
+		boolean isChangeNickname = findUser.get().isChange();
+		if (!isChangeNickname) {
+			return IsChangeNicknameResponse.builder().isChange(false).message("닉네임 변경이 가능합니다.").build();
+		}
+		String nickname = findUser.get().getNickname();
+		return IsChangeNicknameResponse.builder().isChange(true).message("닉네임 변경이 불가합니다.").nickname(nickname).build();
+	}
     //닉네임 변경 여부 조회 - 유저 9
 
     public void logout(String accessToken) {
