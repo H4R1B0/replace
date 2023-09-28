@@ -11,4 +11,7 @@ import java.util.Optional;
 public interface RoomRepository extends JpaRepository<Room, String> {
     @Query("select r from Room r join fetch r.user u where r.sequence=:roomSequence and u.id=:userId")
     Optional<Room> findBySequenceAndUserId(int roomSequence, String userId);
+
+    @Query("select r from Room r where r.uuid=:roomUuid")
+    Optional<Room> findByRoomUuid(String roomUuid);
 }

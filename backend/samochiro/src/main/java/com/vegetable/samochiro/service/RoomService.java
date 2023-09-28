@@ -30,4 +30,11 @@ public class RoomService {
         return roomRepository.findBySequenceAndUserId(roomSequence, userId).get().getUuid();
     }
     //방 uuid 조회
+
+    public void resetTargetName(String roomUuid) {
+        Optional<Room> room = roomRepository.findByRoomUuid(roomUuid);
+        room.get().setTargetName(null);
+    }
+    //방 대상 지우기
+
 }
