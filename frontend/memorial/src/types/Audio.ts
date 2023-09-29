@@ -8,3 +8,8 @@ export type AudioList = {
   voiceItems: Audio[];
   total: number;
 };
+
+export type AIAudioBySituation = {
+  message: string;
+  voiceFileUrl: string;
+};

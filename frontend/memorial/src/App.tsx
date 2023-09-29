@@ -46,6 +46,10 @@ const AudioUploadModal = lazy(
 const AudioListModal = lazy(
   () => import("@components/ui/Modal/AudioListModal")
 );
+const RadioOptionModal = lazy(
+  () => import("@components/ui/Modal/RadioOptionModal")
+);
+const AIOptionModal = lazy(() => import("@components/ui/Modal/AIOptionModal"));
 
 export default function App() {
   function handleResize() {
@@ -94,7 +98,9 @@ export default function App() {
                 {/* TODO: audio 경로를 phone으로 수정하기 */}
                 <Route path="audio/record" element={<AudioRecordModal />} />
                 <Route path="audio/upload" element={<AudioUploadModal />} />
-                <Route path="radio" element={<AudioListModal />} />
+                <Route path="radio" element={<RadioOptionModal />} />
+                <Route path="radio/list" element={<AudioListModal />} />
+                <Route path="radio/ai" element={<AIOptionModal />} />
               </Route>
               <Route path={PATH.TRIBUTE} element={<TributePage />} />
               <Route
