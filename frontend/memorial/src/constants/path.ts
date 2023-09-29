@@ -7,7 +7,7 @@ const PATH: { [key: string]: string } = {
   TRIBUTELIST: "/tribute/list",
   CREATETRIBUTE: "/tribute/create",
   TRIBUTEDETAIL: "/tribute/:wreathid",
-  ROOM: "/room/:sequence",
+  ROOM: "/room/:nickanme/:sequence",
   // View photos: "/room/:sequence/photos",
   // View single photo: "/room/:sequence/photos/:photoid",
   // Upload photo: "/room/:sequence/photos/upload",

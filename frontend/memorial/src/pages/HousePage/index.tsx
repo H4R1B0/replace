@@ -60,7 +60,7 @@ export default function HousePage() {
     if (!room) return;
     if (room.targetName) {
       // navigate to room
-      navigate(`/room/${room.sequence}`);
+      navigate(`/room/${nickname}/${room.sequence}`);
       return;
     }
     // show modal
