@@ -2,7 +2,6 @@ package com.vegetable.samochiro.service;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.Blob;
-import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
@@ -14,11 +13,9 @@ import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.FileInputStream;
-import java.io.IOException;
 
 @Service
 @Slf4j
@@ -27,17 +24,19 @@ import java.io.IOException;
 public class GCSService {
     @Value("${spring.cloud.gcp.storage.bucket-name}")
     private String bucketName;
-    @Value("${spring.cloud.gcp.credentials.project-id}")
+    @Value("${spring.cloud.gcp.storage.project-id}")
     private String projectId;
+    @Value("${spring.cloud.gcp.storage.credentials.location}")
+    private String location;
 
     public String uploadFile(String fileName, MultipartFile file) {
         try {
             String ext = file.getContentType(); // 파일의 형식 ex) JPG
             BlobInfo blobInfo = getStorage().create(
-                BlobInfo.newBuilder(bucketName, fileName)
-                    .setContentType(ext)
-                    .build(),
-                file.getInputStream()
+                    BlobInfo.newBuilder(bucketName, fileName)
+                            .setContentType(ext)
+                            .build(),
+                    file.getInputStream()
             );
             return blobInfo.getMediaLink();
         } catch (Exception e) {
@@ -70,11 +69,16 @@ public class GCSService {
     }
 
     private Storage getStorage() {
+        ClassPathResource resource = new ClassPathResource(location);
+        if (!resource.exists()) {
+            log.error("Invalid filePath : {}", location);
+            throw new IllegalArgumentException();
+        }
         try {
             return StorageOptions.newBuilder()
-                .setProjectId(projectId)
-                .setCredentials(GoogleCredentials.fromStream(new FileInputStream("/avid-lock-397313-6129fb95bb28.json"))).build()
-                .getService();
+                    .setProjectId(projectId)
+                    .setCredentials(GoogleCredentials.fromStream(resource.getInputStream())).build()
+                    .getService();
         } catch (Exception e) {
             e.printStackTrace();
         }
