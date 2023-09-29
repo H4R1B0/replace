@@ -6,18 +6,28 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class CrawlingUtils {
+	@Value("${spring.file.negative-crawling}")
+	private String location;
 
 	public List<String> getBadWordList() {
 		ArrayList<String> list = new ArrayList<>();
 
 		try {
-			FileInputStream fin = new FileInputStream( "/negative_crawling.txt");
-			InputStreamReader isr = new InputStreamReader(fin, "UTF-8");
-			BufferedReader br = new BufferedReader(isr);
+			ClassPathResource resource = new ClassPathResource(location);
+			if (!resource.exists()) {
+				log.error("Invalid filePath : {}", location);
+				throw new IllegalArgumentException();
+			}
+			BufferedReader br = new BufferedReader(new InputStreamReader(resource.getInputStream()));
 
 			String line;
 
@@ -26,8 +36,6 @@ public class CrawlingUtils {
 			}
 
 			br.close();
-			isr.close();
-			fin.close();
 
 		} catch (IOException e) {
 			// TODO: handle exception
