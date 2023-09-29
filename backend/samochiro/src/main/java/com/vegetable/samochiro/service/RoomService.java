@@ -34,14 +34,19 @@ public class RoomService {
     //기억의 방 대상 등록 - 방 1
 
     public String getRoomUuid(int roomSequence, String userId) {
-        return roomRepository.findBySequenceAndUserId(roomSequence, userId).get().getUuid();
+        Optional<Room> findRoom = roomRepository.findBySequenceAndUserId(roomSequence, userId);
+        if(findRoom.isEmpty())
+            throw new RoomNotFoundException(CustomErrorType.ROOM_NOT_FOUND.getMessage());
+        return findRoom.get().getUuid();
     }
     //방 uuid 조회
 
     @Transactional
     public void resetTargetName(String roomUuid) {
-        Optional<Room> room = roomRepository.findByRoomUuid(roomUuid);
-        room.get().setTargetName(null);
+        Optional<Room> findRoom = roomRepository.findByRoomUuid(roomUuid);
+        if (findRoom.isEmpty())
+            throw new RoomNotFoundException(CustomErrorType.ROOM_NOT_FOUND.getMessage());
+        findRoom.get().setTargetName(null);
     }
     //방 대상 지우기
 
