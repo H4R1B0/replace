@@ -249,7 +249,7 @@ export default function PayphonePage() {
             title="다른 사용자가 남긴 목소리를 들어보세요"
             buttonLabel="닫기"
           >
-            {detailVoicemail && (
+            {detailVoicemail && detailVoicemail.voicemailUrl && (
               <AudioPlayer url={detailVoicemail.voicemailUrl} />
             )}
             <Button onClick={() => setdetailModalOpen(false)}>뒤로가기</Button>
