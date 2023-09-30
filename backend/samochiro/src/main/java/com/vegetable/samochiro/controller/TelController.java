@@ -7,6 +7,7 @@ import com.vegetable.samochiro.enums.SituationType;
 import com.vegetable.samochiro.exception.FileContentTypeException;
 import com.vegetable.samochiro.exception.FirstRoomRegisterException;
 import com.vegetable.samochiro.exception.RoomRangeException;
+import com.vegetable.samochiro.exception.SituationEnumException;
 import com.vegetable.samochiro.service.TelService;
 import com.vegetable.samochiro.util.HeaderUtils;
 import lombok.RequiredArgsConstructor;
@@ -57,10 +58,14 @@ public class TelController {
     @GetMapping("/{sequence}")
     public ResponseEntity<GetAiVoiceResponse> getAiVoice(@PathVariable int sequence, @RequestParam String situation, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
         String userId = headerUtils.getUserId(authorizationHeader);
-        SituationType situationType = SituationType.valueOf(situation);
-        //사용자 아이디, 방 번호, 상황
-        GetAiVoiceResponse response = telService.getAiVoice(userId, sequence, situationType);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        try {
+            SituationType situationType = SituationType.valueOf(situation);
+            //사용자 아이디, 방 번호, 상황
+            GetAiVoiceResponse response = telService.getAiVoice(userId, sequence, situationType);
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        } catch (IllegalArgumentException e) {
+            throw new SituationEnumException(CustomErrorType.SITUATION_ENUM.getMessage());
+        }
     }
     //생성된 AI 음성 조회 - 전화기 3
 

@@ -7,6 +7,7 @@ import com.vegetable.samochiro.domain.Voice;
 import com.vegetable.samochiro.dto.tel.GetAiVoiceResponse;
 import com.vegetable.samochiro.enums.CustomErrorType;
 import com.vegetable.samochiro.enums.SituationType;
+import com.vegetable.samochiro.exception.AIVoiceNotFoundException;
 import com.vegetable.samochiro.exception.RoomNotFoundException;
 import com.vegetable.samochiro.repository.AIVoiceRepository;
 import com.vegetable.samochiro.repository.RoomRepository;
@@ -53,9 +54,16 @@ public class TelService {
     //음성 파일 등록 - 전화기 1
 
     public GetAiVoiceResponse getAiVoice(String userId, int sequence, SituationType situationType) {
-        String roomUuid = roomRepository.findBySequenceAndUserId(sequence, userId).get().getUuid();
+        Optional<Room> findRoom = roomRepository.findBySequenceAndUserId(sequence, userId);
+        if (findRoom.isEmpty()) {
+            throw new RoomNotFoundException(CustomErrorType.ROOM_NOT_FOUND.getMessage());
+        }
+        String roomUuid = findRoom.get().getUuid();
         List<AIVoice> AIVoices = aiVoiceRepository.findByRoomUuidAndSituation(roomUuid, situationType);
         int aiVoicesSize = AIVoices.size();
+        if (aiVoicesSize == 0) {
+            throw new AIVoiceNotFoundException(CustomErrorType.AIVOICE_NOT_FOUND.getMessage());
+        }
         Random random = new Random();
         int idx = random.nextInt(aiVoicesSize);
         return GetAiVoiceResponse.builder()
@@ -63,6 +71,7 @@ public class TelService {
                 .voiceFileUrl(AIVoices.get(idx).getUrl())
                 .build();
     }
+    //생성된 AI 음성 조회 - 전화기 3
 
     @Transactional
     public void deleteVoicesByRoomUuid(String roomUuid) {
@@ -72,5 +81,5 @@ public class TelService {
             voiceRepository.deleteById(voice.getId());
         }
     }
-    //생성된 AI 음성 조회 - 전화기 3
+    //등록된 방 데이터 삭제 - 방 2
 }
