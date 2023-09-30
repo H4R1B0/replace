@@ -65,7 +65,11 @@ public class RadioService {
 
     @Transactional
     public void deleteVoice(long voiceId) {
-        voiceRepository.deleteById(voiceId);
+        Optional<Voice> voice = voiceRepository.findById(voiceId);
+        if (voice.isEmpty()) {
+            throw new VoiceNotFoundException(CustomErrorType.VOICE_NOT_FOUND.getMessage());
+        }
+        voiceRepository.delete(voice.get());
     }
     //음성 파일 삭제 - 라디오 3
 }
