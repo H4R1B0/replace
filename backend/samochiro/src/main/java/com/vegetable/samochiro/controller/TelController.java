@@ -2,7 +2,11 @@ package com.vegetable.samochiro.controller;
 
 import com.vegetable.samochiro.dto.common.MessageResponse;
 import com.vegetable.samochiro.dto.tel.GetAiVoiceResponse;
+import com.vegetable.samochiro.enums.CustomErrorType;
 import com.vegetable.samochiro.enums.SituationType;
+import com.vegetable.samochiro.exception.FileContentTypeException;
+import com.vegetable.samochiro.exception.FirstRoomRegisterException;
+import com.vegetable.samochiro.exception.RoomRangeException;
 import com.vegetable.samochiro.service.TelService;
 import com.vegetable.samochiro.util.HeaderUtils;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +35,18 @@ public class TelController {
 
     @PostMapping("/{sequence}")
     public ResponseEntity<MessageResponse> registerAudioFile(@PathVariable int sequence, @RequestPart MultipartFile audioFile, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+        if (sequence == 1) {
+            throw new FirstRoomRegisterException(CustomErrorType.USER_ROOM_CANT_REGISTER.getMessage());
+        }
+        if (sequence < 2 || sequence > 3) {
+            throw new RoomRangeException(CustomErrorType.OUT_OF_ROOM_RANGE.getMessage());
+        }
+
+        boolean isAllowedContentType = headerUtils.isAudio(audioFile.getContentType());
+        if (!isAllowedContentType) {
+            throw new FileContentTypeException(CustomErrorType.ALLOW_AUDIO_TYPE.getMessage());
+        }
+
         String userId = headerUtils.getUserId(authorizationHeader);
         //사용자 아이디, 방 번호, 파일
         telService.registerAudioFile(userId, sequence, audioFile);
