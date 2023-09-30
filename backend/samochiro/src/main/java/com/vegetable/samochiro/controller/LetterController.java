@@ -26,55 +26,33 @@ public class LetterController {
 
 	@PostMapping
 	public ResponseEntity<MessageResponse> saveNewLetter(@RequestBody LetterSaveRequest saveRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
-		try {
-			String userId = headerUtils.getUserId(authorizationHeader);
-			letterService.saveLetter(saveRequest, userId);
-			return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse("편지가 등록되었습니다."));
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse("잘못된 요청입니다."));
-		}
+		String userId = headerUtils.getUserId(authorizationHeader);
+		letterService.saveLetter(saveRequest, userId);
+		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse("편지가 등록되었습니다."));
 	}
 	//편지 등록 - 서재 1번
 
 	@GetMapping("/{sequence}")
 	public ResponseEntity<Response> getLetterList(@PathVariable int sequence, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
-		try {
-			String userId = headerUtils.getUserId(authorizationHeader);
-			List<LetterListResponse> letterList = letterService.findLetterList(userId, sequence);
-			return ResponseEntity.ok(new Response(letterList));
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.badRequest().body(new Response("잘못된 요청입니다."));
-		}
+		String userId = headerUtils.getUserId(authorizationHeader);
+		List<LetterListResponse> letterList = letterService.findLetterList(userId, sequence);
+		return ResponseEntity.ok(new Response(letterList));
 	}
 	//방 별 편지 리스트 조회 - 서재 2번
 
 	@GetMapping("/detail/{letterId}")
 	public ResponseEntity<LetterDetailResponse> getLetterDetail(@PathVariable Long letterId) {
-		try {
-			LetterDetailResponse letterDetail = letterService.findLetterDetail(letterId);
-			return ResponseEntity.ok(letterDetail);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.badRequest().build();
-		}
+		LetterDetailResponse letterDetail = letterService.findLetterDetail(letterId);
+		return ResponseEntity.ok(letterDetail);
 	}
 	//편지 상세 조회 - 서재 3번
 
 	@DeleteMapping("/{letterId}")
 	public ResponseEntity<Response> deleteLetter(@PathVariable Long letterId) {
-		try {
-			letterService.deleteLetter(letterId);
-			return ResponseEntity.status(HttpStatus.OK).body(new Response("삭제되었습니다."));
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response("잘못된 요청입니다."));
-		}
+		letterService.deleteLetter(letterId);
+		return ResponseEntity.status(HttpStatus.OK).body(new Response("삭제되었습니다."));
 	}
+	//편지 삭 - 서재 4번
 
 	@Data
 	@AllArgsConstructor
