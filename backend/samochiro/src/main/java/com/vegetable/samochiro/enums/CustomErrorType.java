@@ -15,6 +15,7 @@ public enum CustomErrorType {
     VOICEMAIL_CANT_SEND_SELF("보이스메일은 본인에게 보낼 수 없습니다."),
     ALLOW_AUDIO_TYPE("등록 가능한 확장자는 wav, mp3, m4a 입니다."),
     REGISTERED_VOICE_NOT_FOUND("등록된 음성 파일이 없습니다."),
-    VOICEMAIL_NOT_FOUND("해당 보이스 메일을 찾을 수 없습니다.");
+    VOICEMAIL_NOT_FOUND("해당 보이스 메일을 찾을 수 없습니다."),
+    LETTER_NOT_FOUND("해당 편지를 찾을 수 없습니다.");
     private final String message;
 }

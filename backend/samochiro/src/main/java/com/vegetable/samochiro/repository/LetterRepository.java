@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 public interface LetterRepository extends JpaRepository<Letter, Long> {
 
 	@Query("select l from Letter l where l.room.uuid = :roomUUid")
-	Optional<List<Letter>> selectListByRoomUuid(@Param("roomUUid") String roomUUid);
+	List<Letter> selectListByRoomUuid(@Param("roomUUid") String roomUUid);
 	//방별 편지리스트 검색
 
 	@Modifying
