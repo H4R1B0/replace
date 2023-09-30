@@ -46,11 +46,11 @@ export default function PayphonePage() {
   // 리스트 불러오기 위한 State
   interface Voicemail {
     voicemailId: number;
-    sendDate: string;
-    voicemailUrl: string;
-    fromUser: string;
-    toUser: string;
+    sendDate?: string;
+    fromUserNickname?: string;
+    voicemailUrl?: string;
   }
+
   const [voicemailList, setVoicemailList] = useState<Voicemail[]>([]);
   // 리스트 가져오기
   useEffect(() => {
@@ -58,35 +58,45 @@ export default function PayphonePage() {
   }, []);
 
   const getVoicemailList = async () => {
-    fetch(`${BASE_URL}/api/voicemail`)
+    fetch(`${BASE_URL}/voicemail`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    })
       .then((response) => {
         // 에러 코드에 따른 상태 관리를 위해 추가
         if (!response.ok) {
           throw new Error(`${response.status} 에러 발생`);
         }
-        console.log("res", response);
         return response.json();
       })
       .then((data) => {
-        console.log("data", data.Response.voicemailList);
-        setVoicemailList(data.Response.voicemailList);
+        console.log("data", data);
+        console.log("response", data.voicemails);
+        setVoicemailList(data.voicemails);
       })
       .catch((error) => console.log(error));
   };
 
   const getVoicemailDetail = async (voicemailId: number) => {
-    fetch(`${BASE_URL}/api/voicemail/${voicemailId}`)
+    fetch(`${BASE_URL}/voicemail/${voicemailId}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
       .then((response) => {
         // 에러 코드에 따른 상태 관리를 위해 추가
         if (!response.ok) {
           throw new Error(`${response.status} 에러 발생`);
         }
-        console.log("res", response);
         return response.json();
       })
       .then((data) => {
         console.log("data", data.Response);
-        setDetailVoicemail(data.Response);
+        setDetailVoicemail(data);
       })
       .catch((error) => console.log(error));
   };
@@ -102,6 +112,9 @@ export default function PayphonePage() {
     try {
       const response = await fetch(`${BASE_URL}/api/voicemail/${voicemailId}`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
       });
 
       if (!response.ok) {
