@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler({UserNotFoundException.class, FirstRoomRegisterException.class, RoomRangeException.class, RegisteredRoomException.class, FirstRoomDeleteException.class})
+    @ExceptionHandler({UserNotFoundException.class, FirstRoomRegisterException.class,
+            RoomRangeException.class, RegisteredRoomException.class, FirstRoomDeleteException.class, SendVoicemailSelfException.class,
+            FileContentTypeException.class
+    })
     public ResponseEntity<CustomErrorResponse> badRequestException(Exception e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new CustomErrorResponse(e.getMessage()));
     }
