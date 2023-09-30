@@ -3,6 +3,8 @@ package com.vegetable.samochiro.controller;
 import com.vegetable.samochiro.dto.radio.RadioDeleteVoiceResponse;
 import com.vegetable.samochiro.dto.radio.RadioVoiceResponse;
 import com.vegetable.samochiro.dto.radio.RadioVoicesResponse;
+import com.vegetable.samochiro.enums.CustomErrorType;
+import com.vegetable.samochiro.exception.RoomRangeException;
 import com.vegetable.samochiro.service.RadioService;
 import com.vegetable.samochiro.util.HeaderUtils;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +28,10 @@ public class RadioController {
 
     @GetMapping("/{sequence}")
     public ResponseEntity<RadioVoicesResponse> getVoices(@PathVariable int sequence, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+        if (sequence < 1 || sequence > 3) {
+            throw new RoomRangeException(CustomErrorType.OUT_OF_ROOM_RANGE.getMessage());
+        }
+
         String userId = headerUtils.getUserId(authorizationHeader);
         RadioVoicesResponse response = radioService.getVoices(userId, sequence);
         return ResponseEntity.status(HttpStatus.OK).body(response);

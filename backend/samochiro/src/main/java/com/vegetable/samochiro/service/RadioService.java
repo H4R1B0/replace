@@ -1,9 +1,12 @@
 package com.vegetable.samochiro.service;
 
+import com.vegetable.samochiro.domain.Room;
 import com.vegetable.samochiro.domain.Voice;
 import com.vegetable.samochiro.dto.radio.RadioVoiceResponse;
 import com.vegetable.samochiro.dto.radio.RadioVoicesResponse;
 import com.vegetable.samochiro.dto.radio.VoiceItem;
+import com.vegetable.samochiro.enums.CustomErrorType;
+import com.vegetable.samochiro.exception.RoomNotFoundException;
 import com.vegetable.samochiro.repository.RoomRepository;
 import com.vegetable.samochiro.repository.VoiceRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -22,7 +26,11 @@ public class RadioService {
     private final VoiceRepository voiceRepository;
 
     public RadioVoicesResponse getVoices(String userId, int sequence) {
-        String roomUuid = roomRepository.findBySequenceAndUserId(sequence, userId).get().getUuid();
+        Optional<Room> findRoom = roomRepository.findBySequenceAndUserId(sequence, userId);
+        if (findRoom.isEmpty()) {
+            throw new RoomNotFoundException(CustomErrorType.ROOM_NOT_FOUND.getMessage());
+        }
+        String roomUuid = findRoom.get().getUuid();
         List<Voice> voices = voiceRepository.findByRoomUuid(roomUuid);
         List<VoiceItem> voiceItems = new ArrayList<>();
         for (Voice voice : voices) {
