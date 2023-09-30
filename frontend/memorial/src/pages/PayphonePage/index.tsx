@@ -17,12 +17,16 @@ import { AudioData } from "audio-react-recorder";
 
 export default function PayphonePage() {
   const BASE_URL = import.meta.env.VITE_APP_API_URL;
+  const accessToken: string | null = sessionStorage.getItem("accessToken");
+  // 방문한 페이지의 주인을 찾기 위함.
+  const nowUrl = window.location.href;
+  const urlSplit = decodeURIComponent(nowUrl.split("/").pop() ?? "").split("?");
+  const houseUserNickname = urlSplit[urlSplit.length - 1];
+  // 나와 방문자를 구분할 코드
+  const isMe = houseUserNickname === sessionStorage.getItem("nickname");
 
   // 등록 props를 위한 값
   const [audioData, setAudioData] = useState<AudioData | null>(null);
-
-  // 나와 방문자를 구분할 코드
-  const isMe = false;
 
   // 모달 열고 닫기 위한 State
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -119,28 +123,38 @@ export default function PayphonePage() {
       console.error("오디오 데이터가 없습니다.");
       return;
     }
-
     try {
       const formData = new FormData();
-      formData.append("audio", audioData.blob as File);
+      formData.append("file", audioData.blob as File);
+      console.log("audioData", audioData);
+      const requestData = {
+        toUserNickname: houseUserNickname,
+      };
+      formData.append(
+        "request",
+        new Blob([JSON.stringify(requestData)], { type: "application/json" })
+      );
 
-      const response = await fetch(`${BASE_URL}/api/voicemail`, {
+      const response = await fetch(`${BASE_URL}/voicemail`, {
         method: "POST",
-        body: formData,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: formData, // 수정된 부분
       });
 
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`);
       }
-      // 음성메세지 목록에 데이터 추가
-      const data = await response.json();
-      setVoicemailList((prevVoicemailList) => [
-        ...prevVoicemailList,
-        data.Response,
-      ]);
       alert("등록 완료이 완료");
       setAudioData(null);
       setModalOpen(false);
+      // 음성 메시지 목록에 데이터 추가
+      // const data = await response.json();
+      // setVoicemailList((prevVoicemailList) => [
+      //   ...prevVoicemailList,
+      //   data.Response,
+      // ]);
     } catch (error) {
       console.error("에러", error);
     }
