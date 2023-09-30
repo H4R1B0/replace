@@ -7,6 +7,7 @@ import com.vegetable.samochiro.dto.radio.RadioVoicesResponse;
 import com.vegetable.samochiro.dto.radio.VoiceItem;
 import com.vegetable.samochiro.enums.CustomErrorType;
 import com.vegetable.samochiro.exception.RoomNotFoundException;
+import com.vegetable.samochiro.exception.VoiceNotFoundException;
 import com.vegetable.samochiro.repository.RoomRepository;
 import com.vegetable.samochiro.repository.VoiceRepository;
 import lombok.RequiredArgsConstructor;
@@ -50,11 +51,14 @@ public class RadioService {
     //음성 파일 리스트 조회 - 라디오 1
 
     public RadioVoiceResponse getVoice(long voiceId) {
-        Voice voice = voiceRepository.findById(voiceId).get();
+        Optional<Voice> voice = voiceRepository.findById(voiceId);
+        if (voice.isEmpty()) {
+            throw new VoiceNotFoundException(CustomErrorType.VOICE_NOT_FOUND.getMessage());
+        }
         return RadioVoiceResponse.builder()
                 .voiceId(voiceId)
-                .voiceUrl(voice.getUrl())
-                .registDate(voice.getRegistDate())
+                .voiceUrl(voice.get().getUrl())
+                .registDate(voice.get().getRegistDate())
                 .build();
     }
     //음성 파일 상세 조회 - 라디오 2
