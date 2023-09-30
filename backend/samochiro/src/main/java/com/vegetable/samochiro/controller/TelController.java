@@ -2,7 +2,12 @@ package com.vegetable.samochiro.controller;
 
 import com.vegetable.samochiro.dto.common.MessageResponse;
 import com.vegetable.samochiro.dto.tel.GetAiVoiceResponse;
+import com.vegetable.samochiro.enums.CustomErrorType;
 import com.vegetable.samochiro.enums.SituationType;
+import com.vegetable.samochiro.exception.FileContentTypeException;
+import com.vegetable.samochiro.exception.FirstRoomRegisterException;
+import com.vegetable.samochiro.exception.RoomRangeException;
+import com.vegetable.samochiro.exception.SituationEnumException;
 import com.vegetable.samochiro.service.TelService;
 import com.vegetable.samochiro.util.HeaderUtils;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +36,15 @@ public class TelController {
 
     @PostMapping("/{sequence}")
     public ResponseEntity<MessageResponse> registerAudioFile(@PathVariable int sequence, @RequestPart MultipartFile audioFile, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+        if (sequence < 1 || sequence > 3) {
+            throw new RoomRangeException(CustomErrorType.OUT_OF_ROOM_RANGE.getMessage());
+        }
+
+        boolean isAllowedContentType = headerUtils.isAudio(audioFile.getContentType());
+        if (!isAllowedContentType) {
+            throw new FileContentTypeException(CustomErrorType.ALLOW_AUDIO_TYPE.getMessage());
+        }
+
         String userId = headerUtils.getUserId(authorizationHeader);
         //사용자 아이디, 방 번호, 파일
         telService.registerAudioFile(userId, sequence, audioFile);
@@ -41,10 +55,14 @@ public class TelController {
     @GetMapping("/{sequence}")
     public ResponseEntity<GetAiVoiceResponse> getAiVoice(@PathVariable int sequence, @RequestParam String situation, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
         String userId = headerUtils.getUserId(authorizationHeader);
-        SituationType situationType = SituationType.valueOf(situation);
-        //사용자 아이디, 방 번호, 상황
-        GetAiVoiceResponse response = telService.getAiVoice(userId, sequence, situationType);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        try {
+            SituationType situationType = SituationType.valueOf(situation);
+            //사용자 아이디, 방 번호, 상황
+            GetAiVoiceResponse response = telService.getAiVoice(userId, sequence, situationType);
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        } catch (IllegalArgumentException e) {
+            throw new SituationEnumException(CustomErrorType.SITUATION_ENUM.getMessage());
+        }
     }
     //생성된 AI 음성 조회 - 전화기 3
 
