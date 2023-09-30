@@ -235,7 +235,7 @@ export default function PayphonePage() {
                   onClick={() => detailModal(voicemail.voicemailId)}
                   key={voicemail.voicemailId}
                 >
-                  {voicemail.fromUser}
+                  {voicemail.fromUserNickname}
                   {voicemail.sendDate}
                 </p>
               ))}
