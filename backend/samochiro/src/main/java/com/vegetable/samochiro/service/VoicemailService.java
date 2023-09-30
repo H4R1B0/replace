@@ -9,6 +9,7 @@ import com.vegetable.samochiro.dto.voicemail.VoicemailItemsResponse;
 import com.vegetable.samochiro.dto.voicemail.VoicemailResponse;
 import com.vegetable.samochiro.enums.CustomErrorType;
 import com.vegetable.samochiro.exception.UserNotFoundException;
+import com.vegetable.samochiro.exception.VoicemailNotFoundException;
 import com.vegetable.samochiro.repository.AlarmRepository;
 import com.vegetable.samochiro.repository.UserRepository;
 import com.vegetable.samochiro.repository.VoicemailRepository;
@@ -70,18 +71,25 @@ public class VoicemailService {
 
 
     public VoicemailResponse getVoicemail(long voicemailId) {
-        Voicemail voicemail = voicemailRepository.findById(voicemailId).get();
+        Optional<Voicemail> findVoicemail = voicemailRepository.findById(voicemailId);
+        if (findVoicemail.isEmpty()) {
+            throw new VoicemailNotFoundException(CustomErrorType.VOICEMAIL_NOT_FOUND.getMessage());
+        }
         return VoicemailResponse.builder()
-                .voicemailId(voicemail.getId())
-                .sendDate(voicemail.getSendDate())
-                .voicemailUrl(voicemail.getUrl())
-                .fromUserNickname(voicemail.getToUser().getNickname()).build();
+                .voicemailId(findVoicemail.get().getId())
+                .sendDate(findVoicemail.get().getSendDate())
+                .voicemailUrl(findVoicemail.get().getUrl())
+                .fromUserNickname(findVoicemail.get().getFromUser().getNickname()).build();
     }
     //보이스 메일 상세 조회 - 골목길 3
 
     @Transactional
     public void deleteVoicemail(long voicemailId) {
-        String voicemailName = voicemailRepository.findById(voicemailId).get().getName();
+        Optional<Voicemail> findVoicemail = voicemailRepository.findById(voicemailId);
+        if (findVoicemail.isEmpty()) {
+            throw new VoicemailNotFoundException(CustomErrorType.VOICEMAIL_NOT_FOUND.getMessage());
+        }
+        String voicemailName = findVoicemail.get().getName();
         gcsService.deleteFile(voicemailName);
         voicemailRepository.deleteById(voicemailId);
     }
