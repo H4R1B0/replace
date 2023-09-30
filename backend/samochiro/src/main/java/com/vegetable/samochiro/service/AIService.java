@@ -1,14 +1,14 @@
 package com.vegetable.samochiro.service;
 
 import com.google.cloud.storage.Blob;
-import com.google.cloud.storage.BlobId;
-import com.google.cloud.storage.Storage;
 import com.vegetable.samochiro.domain.AIVoice;
 import com.vegetable.samochiro.domain.Room;
 import com.vegetable.samochiro.domain.Voice;
 import com.vegetable.samochiro.dto.ai.AITrainingRequest;
-import com.vegetable.samochiro.dto.ai.MultipartInputStreamFileResource;
+import com.vegetable.samochiro.enums.CustomErrorType;
 import com.vegetable.samochiro.enums.SituationType;
+import com.vegetable.samochiro.exception.RoomNotFoundException;
+import com.vegetable.samochiro.exception.VoiceCountZeroException;
 import com.vegetable.samochiro.repository.AIVoiceRepository;
 import com.vegetable.samochiro.repository.RoomRepository;
 import com.vegetable.samochiro.repository.VoiceRepository;
@@ -18,25 +18,20 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.channels.Channels;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
@@ -60,12 +55,17 @@ public class AIService {
     private static final String BOUNDARY = "*****";
 
     public void doTraining(AITrainingRequest request, String userId) {
-        String roomUuid = roomRepository.findBySequenceAndUserId(request.getSequence(), userId)
-            .get().getUuid();
+        Optional<Room> findRoom = roomRepository.findBySequenceAndUserId(request.getSequence(), userId);
+        if (findRoom.isEmpty())
+            throw new RoomNotFoundException(CustomErrorType.ROOM_NOT_FOUND.getMessage());
+        String roomUuid = findRoom.get().getUuid();
         String gender = request.getGender();
 
         //파일 목록 조회
         List<Voice> voices = voiceRepository.findByRoomUuid(roomUuid);
+        if (voices.size() == 0)
+            throw new VoiceCountZeroException(CustomErrorType.REGISTERED_VOICE_NOT_FOUND.getMessage());
+
         List<Blob> blobs = new ArrayList<>();
         try {
             URL url = new URL(serverUrl);

@@ -5,12 +5,16 @@ import com.vegetable.samochiro.dto.voicemail.VoicemailItemsResponse;
 import com.vegetable.samochiro.dto.voicemail.RegisterVoicemailRequest;
 import com.vegetable.samochiro.dto.voicemail.RegisterVoicemailResponse;
 import com.vegetable.samochiro.dto.voicemail.VoicemailResponse;
+import com.vegetable.samochiro.enums.CustomErrorType;
+import com.vegetable.samochiro.exception.FileContentTypeException;
+import com.vegetable.samochiro.exception.SendVoicemailSelfException;
 import com.vegetable.samochiro.service.VoicemailService;
 import com.vegetable.samochiro.util.HeaderUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,6 +33,17 @@ public class VoicemailController {
             @RequestPart(value = "file") MultipartFile voicemailFile,
             @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader
     ) {
+        String fromUserNickname = SecurityContextHolder.getContext().getAuthentication().getName();
+        String toUserNickname = registerVoicemailRequest.getToUserNickname();
+        if (toUserNickname.equals(fromUserNickname)) {
+            throw new SendVoicemailSelfException(CustomErrorType.VOICEMAIL_CANT_SEND_SELF.getMessage());
+        }
+
+        boolean isAllowedContentType = headerUtils.isAudio(voicemailFile.getContentType());
+        if (!isAllowedContentType) {
+            throw new FileContentTypeException(CustomErrorType.ALLOW_AUDIO_TYPE.getMessage());
+        }
+
         String fromUserId = headerUtils.getUserId(authorizationHeader);
         voicemailService.registerVoicemail(registerVoicemailRequest, fromUserId, voicemailFile);
         RegisterVoicemailResponse response = RegisterVoicemailResponse.builder().message("보이스 메일이 정상적으로 등록되었습니다.").build();
