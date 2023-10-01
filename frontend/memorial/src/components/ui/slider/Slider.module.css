@@ -1,0 +1,90 @@
+.Wrapper {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+.sliderContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: center; */
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  height: 80%;
+  overflow: hidden;
+}
+
+.sliderWrapper {
+  display: flex;
+
+  transition: transform 0.5s ease-in-out;
+}
+
+.sliderImage {
+  width: 100vw;
+  padding-left: 50px;
+  padding-right: 50px;
+  max-width: 400px;
+  object-fit: cover;
+  animation: bounce 1s infinite alternate;
+}
+
+@keyframes bounce {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-15px);
+  }
+}
+
+.btnwrapper {
+  max-width: 400px;
+  background-color: white;
+  border: none;
+  width: 90vw;
+  min-height: 5rem;
+  height: 30%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10%;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.sliderButton {
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+.sliderButtonPrev {
+  width: auto;
+}
+
+.sliderButtonNext {
+  width: auto;
+}
+
+.slidertext {
+  word-wrap: break-word;
+  width: auto;
+}
+
+.slide {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.buttons {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+}

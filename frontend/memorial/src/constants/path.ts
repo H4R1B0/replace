@@ -20,6 +20,7 @@ const PATH: { [key: string]: string } = {
   NOT_FOUND: "*",
   REDIRECT_KAKAO: "/oauth/redirect",
   NICKNAME: "/nickname",
+  INTRODUCTION: "/introduction",
 };
 
 export default PATH;

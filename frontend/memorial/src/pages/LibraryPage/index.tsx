@@ -66,6 +66,7 @@ export default function LibraryPage() {
     setLetter({
       ...letter,
       [e.target.name]: e.target.value,
+      writeTime: getCurrentDateTime(),
     });
   };
 
@@ -101,7 +102,7 @@ export default function LibraryPage() {
     console.error("Book Detail Fetch Error:", bookDetailError);
   }
 
-  console.log(sessionStorage.getItem("accessToken"));
+  // console.log(sessionStorage.getItem("accessToken"));
   const deleteMutation = useMutation(deleteBook, {
     onSuccess: () => {
       alert("삭제되었습니다.");
@@ -147,6 +148,8 @@ export default function LibraryPage() {
     setBookModalOpen(false);
     setSelectedBook(null);
   };
+
+  console.log(letter);
   return (
     <div className={styles.wrapper}>
       <Canvas
