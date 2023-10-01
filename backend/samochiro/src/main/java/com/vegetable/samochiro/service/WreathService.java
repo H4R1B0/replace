@@ -16,10 +16,6 @@ import com.vegetable.samochiro.repository.WreathCountRepository;
 import com.vegetable.samochiro.repository.WreathRepository;
 import com.vegetable.samochiro.repository.WreathUserRepository;
 import com.vegetable.samochiro.util.CrawlingUtils;
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -263,7 +259,7 @@ public class WreathService {
 	//신고 등록 - 헌화 6번
 
 	public List<WreathListResponse> findWreathListByUserId(String userId) {
-		List<Wreath> wreathList = wreathRepository.selectByUserId(userId).get();
+		List<Wreath> wreathList = wreathRepository.selectByUserId(userId);
 		List<WreathListResponse> responseList = new ArrayList<>();
 
 		for(Wreath w: wreathList) {
@@ -329,7 +325,7 @@ public class WreathService {
 
 	@Transactional
     public void deleteWreathByUserId(String userId) {
-		List<Wreath> wreaths = wreathRepository.selectByUserId(userId).get();
+		List<Wreath> wreaths = wreathRepository.selectByUserId(userId);
 		for(Wreath wreath : wreaths){
 			wreathUserRepository.deleteByWreathId(wreath.getWreathId());
 			wreathCountRepository.deleteByWreathId(wreath.getWreathId());

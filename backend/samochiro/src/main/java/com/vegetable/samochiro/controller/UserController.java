@@ -1,5 +1,6 @@
 package com.vegetable.samochiro.controller;
 
+import com.vegetable.samochiro.dto.common.MessageResponse;
 import com.vegetable.samochiro.dto.user.HouseSearchResponse;
 import com.vegetable.samochiro.dto.user.IsChangeNicknameRequest;
 import com.vegetable.samochiro.dto.user.IsChangeNicknameResponse;
@@ -120,13 +121,6 @@ public class UserController {
 	}
 	//남 집 조회 - 집 2번
 
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<SecessionResponse> secession(@PathVariable String userId) {
-        SecessionResponse response = userService.secession(userId);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
-	//회원 탈퇴 - 유저 8번
-
 	@GetMapping("/isChange")
 	public ResponseEntity<IsChangeNicknameResponse> isChangeNickname(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
 		String userId = headerUtils.getUserId(authorizationHeader);
@@ -144,10 +138,10 @@ public class UserController {
 	//로그아웃 - 유저 4
 
 	@DeleteMapping("/me")
-    public ResponseEntity<String> withdrawal(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
-        String userId = headerUtils.getUserId(authorizationHeader);
-        userService.withdrawal(userId);
-        return ResponseEntity.status(HttpStatus.OK).body("회원 탈퇴에 성공하였습니다.");
+	public ResponseEntity<MessageResponse> withdrawal(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+		String userId = headerUtils.getUserId(authorizationHeader);
+		userService.withdrawal(userId);
+		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse("회원 탈퇴에 성공하였습니다."));
     }
     //회원 탈퇴 - 유저 8
 

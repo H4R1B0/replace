@@ -62,7 +62,7 @@ public class Wreath {
 	private User user;
 
 //	@MapsId
-	@OneToOne(mappedBy = "wreath", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(mappedBy = "wreath", fetch = FetchType.LAZY)
 	private WreathCount wreathCount;
 
     @OneToMany(mappedBy = "wreath")
