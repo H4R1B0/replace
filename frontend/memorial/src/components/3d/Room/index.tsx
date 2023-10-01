@@ -111,12 +111,14 @@ type RoomProps = {
   onTelephoneClick?: () => void;
   onTrashcanClick?: () => void;
   onFrameClick?: () => void;
+  onRadioClick?: () => void;
 } & JSX.IntrinsicElements["group"];
 
 export default function Room({
   onTelephoneClick,
   onTrashcanClick,
   onFrameClick,
+  onRadioClick,
   ...other
 }: RoomProps) {
   const { nodes, materials } = useGLTF(roomPath) as GLTFResult;
@@ -164,6 +166,7 @@ export default function Room({
             material={materials.OBJECTmain}
             onPointerOver={toggleRadioHovered}
             onPointerOut={toggleRadioHovered}
+            onClick={onRadioClick}
           />
         </Select>
         <mesh

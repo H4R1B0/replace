@@ -41,7 +41,7 @@ export default function HousePage() {
   const registerRoomMutation = useMutation({
     mutationFn: registerRoomTarget,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["roomList"] });
+      queryClient.invalidateQueries({ queryKey: ["roomList", nickname] });
       navigate(`/room/${selectedSequence}`);
     },
   });
@@ -60,7 +60,7 @@ export default function HousePage() {
     if (!room) return;
     if (room.targetName) {
       // navigate to room
-      navigate(`/room/${room.sequence}`);
+      navigate(`/room/${nickname}/${room.sequence}`);
       return;
     }
     // show modal

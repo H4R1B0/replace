@@ -218,9 +218,23 @@ export default function PayphonePage() {
         "request",
         new Blob([JSON.stringify(requestData)], { type: "application/json" })
       );
+      formData.append("file", audioData.blob as File);
+      console.log("audioData", audioData);
+      const requestData = {
+        toUserNickname: houseUserNickname,
+      };
+      formData.append(
+        "request",
+        new Blob([JSON.stringify(requestData)], { type: "application/json" })
+      );
 
       const response = await fetch(`${BASE_URL}/voicemail`, {
+      const response = await fetch(`${BASE_URL}/voicemail`, {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: formData, // 수정된 부분
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -233,6 +247,12 @@ export default function PayphonePage() {
       alert("등록 완료이 완료");
       setAudioData(null);
       setModalOpen(false);
+      // 음성 메시지 목록에 데이터 추가
+      // const data = await response.json();
+      // setVoicemailList((prevVoicemailList) => [
+      //   ...prevVoicemailList,
+      //   data.Response,
+      // ]);
       // 음성 메시지 목록에 데이터 추가
       // const data = await response.json();
       // setVoicemailList((prevVoicemailList) => [
@@ -293,6 +313,7 @@ export default function PayphonePage() {
                   key={voicemail.voicemailId}
                 >
                   {voicemail.fromUserNickname}
+                  {voicemail.fromUserNickname}
                   {voicemail.sendDate}
                 </p>
               ))}
@@ -309,6 +330,7 @@ export default function PayphonePage() {
             title="다른 사용자가 남긴 목소리를 들어보세요"
             buttonLabel="닫기"
           >
+            {detailVoicemail && detailVoicemail.voicemailUrl && (
             {detailVoicemail && detailVoicemail.voicemailUrl && (
               <AudioPlayer url={detailVoicemail.voicemailUrl} />
             )}
