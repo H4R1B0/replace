@@ -17,11 +17,12 @@ export default function PhotoUploadModal({ ...other }: PhotoUploadModalProps) {
   const [imageSrc, setImageSrc] = useState<string>("");
   const queryClient = useQueryClient();
   // TODO: roomSequence를 어떻게 받을지 고민해보기
-
+  // !hotfix : photo upload가 뒤로가기를 누를때 한 번 더 전송되는 이슈
   const uploadImageMutation = useMutation({
     mutationFn: uploadSinglePhoto,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["photoList", roomSequence] });
+      console.log("upload success");
     },
   });
 

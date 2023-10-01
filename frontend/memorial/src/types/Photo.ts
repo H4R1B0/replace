@@ -1,10 +1,9 @@
 export type Photo = {
-  photoId: number;
-  photoUrl: string;
+  id: number;
+  url: string;
   registDate: string;
 };
 
 export type PhotoList = {
-  photos: Photo[];
-  total: number;
+  data: Photo[];
 };

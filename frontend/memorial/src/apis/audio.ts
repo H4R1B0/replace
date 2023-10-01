@@ -1,4 +1,5 @@
 import { api, Header } from "./index";
+import { AIAudioBySituation, AudioList } from "types/Audio";
 
 type UploadSingleAudioRequest = {
   sequence: number;
@@ -15,7 +16,7 @@ export const uploadSingleAudio = async ({
 
 // 녹음한 음성 파일 리스트 조회 (수정완)
 export const fetchAudioFileList = async (sequence: number) => {
-  return await api.get(`/radio/${sequence}`, Header());
+  return await api.get<AudioList>(`/radio/${sequence}`, Header());
 };
 
 // 녹음 음성 파일 상세 조회
@@ -24,11 +25,17 @@ export const fetchSingleAudioFile = async (voiceId: number) => {
 };
 
 // 녹음 음성 파일 삭제
-export const deleteSingleAudioFile = async (voiceId: string) => {
+export const deleteSingleAudioFile = async (voiceId: number) => {
   return await api.delete(`/radio/${voiceId}`, Header());
 };
 
 // 생성된 AI 음성 조회
-// export const fetchAIAudio = async () => {
-//   return await api.get(`/tel/made`);
-// };
+export const fetchAIAudio = async (sequence: number, situation: string) => {
+  const queryString = new URLSearchParams({ situation }).toString();
+  const pathWithQuery = `/tel/${sequence}?${queryString}`;
+  return await api.get<AIAudioBySituation>(pathWithQuery, Header());
+};
+
+// AI 음성 학습하기
+// export const trainAIAudio = async (sequence: number, situation: string) => {
+//   return await api.post(`/ai`, Header())

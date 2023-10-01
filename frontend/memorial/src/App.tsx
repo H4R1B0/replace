@@ -8,6 +8,7 @@ import NotFoundPage from "@pages/NotFoundPage";
 import "./App.css";
 import { Toaster } from "react-hot-toast";
 // import "@assets/fonts/font.css";
+import { playBGM } from "@utils/useSound";
 
 const MainPage = lazy(() => import("@pages/MainPage"));
 const RoomPage = lazy(() => import("@pages/RoomPage"));
@@ -44,8 +45,17 @@ const AudioRecordModal = lazy(
 const AudioUploadModal = lazy(
   () => import("@components/ui/Modal/AudioUploadModal")
 );
+const AudioListModal = lazy(
+  () => import("@components/ui/Modal/AudioListModal")
+);
+const RadioOptionModal = lazy(
+  () => import("@components/ui/Modal/RadioOptionModal")
+);
+const AIOptionModal = lazy(() => import("@components/ui/Modal/AIOptionModal"));
 
 export default function App() {
+  playBGM();
+
   function handleResize() {
     const vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty("--vh", `${vh}px`);
@@ -100,8 +110,12 @@ export default function App() {
                 <Route path="photos/upload" element={<PhotoUploadModal />} />
                 <Route path="delete" element={<DeleteRoomConfirmModal />} />
                 <Route path="audio" element={<AudioOptionModal />} />
+                {/* TODO: audio 경로를 phone으로 수정하기 */}
                 <Route path="audio/record" element={<AudioRecordModal />} />
                 <Route path="audio/upload" element={<AudioUploadModal />} />
+                <Route path="radio" element={<RadioOptionModal />} />
+                <Route path="radio/list" element={<AudioListModal />} />
+                <Route path="radio/ai" element={<AIOptionModal />} />
               </Route>
               <Route path={PATH.TRIBUTE} element={<TributePage />} />
               <Route

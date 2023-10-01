@@ -8,8 +8,8 @@ type RegisterRoomRequest = {
 
 // TODO : roomUuid 를 어떻게 전달받아야 하는지 알 것
 // 내 집 조회 => 방(집) 리스트 조회
-export const fetchRoomList = async () => {
-  return await api.get<RoomList>("/user/home", Header());
+export const fetchRoomList = async (nickname: string) => {
+  return await api.get<RoomList>(`/user/home/${nickname}`, Header());
 };
 
 // 기억의 방(집) 대상 등록

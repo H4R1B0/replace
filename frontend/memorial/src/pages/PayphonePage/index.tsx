@@ -17,12 +17,16 @@ import { AudioData } from "audio-react-recorder";
 
 export default function PayphonePage() {
   const BASE_URL = import.meta.env.VITE_APP_API_URL;
+  const accessToken: string | null = sessionStorage.getItem("accessToken");
+  // 방문한 페이지의 주인을 찾기 위함.
+  const nowUrl = window.location.href;
+  const urlSplit = decodeURIComponent(nowUrl.split("/").pop() ?? "").split("?");
+  const houseUserNickname = urlSplit[urlSplit.length - 1];
+  // 나와 방문자를 구분할 코드
+  const isMe = houseUserNickname === sessionStorage.getItem("nickname");
 
   // 등록 props를 위한 값
   const [audioData, setAudioData] = useState<AudioData | null>(null);
-
-  // 나와 방문자를 구분할 코드
-  const isMe = false;
 
   // 모달 열고 닫기 위한 State
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -42,11 +46,11 @@ export default function PayphonePage() {
   // 리스트 불러오기 위한 State
   interface Voicemail {
     voicemailId: number;
-    sendDate: string;
-    voicemailUrl: string;
-    fromUser: string;
-    toUser: string;
+    sendDate?: string;
+    fromUserNickname?: string;
+    voicemailUrl?: string;
   }
+
   const [voicemailList, setVoicemailList] = useState<Voicemail[]>([]);
   // 리스트 가져오기
   useEffect(() => {
@@ -54,35 +58,45 @@ export default function PayphonePage() {
   }, []);
 
   const getVoicemailList = async () => {
-    fetch(`${BASE_URL}/api/voicemail`)
+    fetch(`${BASE_URL}/voicemail`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    })
       .then((response) => {
         // 에러 코드에 따른 상태 관리를 위해 추가
         if (!response.ok) {
           throw new Error(`${response.status} 에러 발생`);
         }
-        console.log("res", response);
         return response.json();
       })
       .then((data) => {
-        console.log("data", data.Response.voicemailList);
-        setVoicemailList(data.Response.voicemailList);
+        console.log("data", data);
+        console.log("response", data.voicemails);
+        setVoicemailList(data.voicemails);
       })
       .catch((error) => console.log(error));
   };
 
   const getVoicemailDetail = async (voicemailId: number) => {
-    fetch(`${BASE_URL}/api/voicemail/${voicemailId}`)
+    fetch(`${BASE_URL}/voicemail/${voicemailId}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
       .then((response) => {
         // 에러 코드에 따른 상태 관리를 위해 추가
         if (!response.ok) {
           throw new Error(`${response.status} 에러 발생`);
         }
-        console.log("res", response);
         return response.json();
       })
       .then((data) => {
         console.log("data", data.Response);
-        setDetailVoicemail(data.Response);
+        setDetailVoicemail(data);
       })
       .catch((error) => console.log(error));
   };
@@ -98,6 +112,9 @@ export default function PayphonePage() {
     try {
       const response = await fetch(`${BASE_URL}/api/voicemail/${voicemailId}`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
       });
 
       if (!response.ok) {
@@ -119,28 +136,38 @@ export default function PayphonePage() {
       console.error("오디오 데이터가 없습니다.");
       return;
     }
-
     try {
       const formData = new FormData();
-      formData.append("audio", audioData.blob as File);
+      formData.append("file", audioData.blob as File);
+      console.log("audioData", audioData);
+      const requestData = {
+        toUserNickname: houseUserNickname,
+      };
+      formData.append(
+        "request",
+        new Blob([JSON.stringify(requestData)], { type: "application/json" })
+      );
 
-      const response = await fetch(`${BASE_URL}/api/voicemail`, {
+      const response = await fetch(`${BASE_URL}/voicemail`, {
         method: "POST",
-        body: formData,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: formData, // 수정된 부분
       });
 
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`);
       }
-      // 음성메세지 목록에 데이터 추가
-      const data = await response.json();
-      setVoicemailList((prevVoicemailList) => [
-        ...prevVoicemailList,
-        data.Response,
-      ]);
       alert("등록 완료이 완료");
       setAudioData(null);
       setModalOpen(false);
+      // 음성 메시지 목록에 데이터 추가
+      // const data = await response.json();
+      // setVoicemailList((prevVoicemailList) => [
+      //   ...prevVoicemailList,
+      //   data.Response,
+      // ]);
     } catch (error) {
       console.error("에러", error);
     }
@@ -208,7 +235,7 @@ export default function PayphonePage() {
                   onClick={() => detailModal(voicemail.voicemailId)}
                   key={voicemail.voicemailId}
                 >
-                  {voicemail.fromUser}
+                  {voicemail.fromUserNickname}
                   {voicemail.sendDate}
                 </p>
               ))}
@@ -222,7 +249,7 @@ export default function PayphonePage() {
             title="다른 사용자가 남긴 목소리를 들어보세요"
             buttonLabel="닫기"
           >
-            {detailVoicemail && (
+            {detailVoicemail && detailVoicemail.voicemailUrl && (
               <AudioPlayer url={detailVoicemail.voicemailUrl} />
             )}
             <Button onClick={() => setdetailModalOpen(false)}>뒤로가기</Button>
