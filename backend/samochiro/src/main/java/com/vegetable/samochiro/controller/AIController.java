@@ -42,11 +42,13 @@ public class AIController {
 		@RequestPart List<MultipartFile> encourageList,
 		@RequestPart List<MultipartFile> safetyList,
 		@RequestPart List<MultipartFile> thanksList,
-		@RequestPart List<MultipartFile> welcomeList) {
+		@RequestPart List<MultipartFile> welcomeList,
+		@RequestPart String message) {
 		log.info(roomUuid);
 		log.info("roomUuid = " + roomUuid + ", congratulationList = " + congratulationList + ", consolationList = " + consolationList + ", encourageList = " + encourageList + ", safetyList = " + safetyList + ", thanksList = " + thanksList + ", welcomeList = " + welcomeList);
+		log.info("message = " + message);
 
-		aiService.saveAIVoiceFile(roomUuid, congratulationList, consolationList, encourageList, safetyList, thanksList, welcomeList);
+		aiService.saveAIVoiceFile(roomUuid, congratulationList, consolationList, encourageList, safetyList, thanksList, welcomeList, message);
 	}
 	//학습된 음성 데이터 받아서 저장 - from ai
 

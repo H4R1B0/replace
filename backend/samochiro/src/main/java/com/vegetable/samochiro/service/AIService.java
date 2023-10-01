@@ -2,6 +2,7 @@ package com.vegetable.samochiro.service;
 
 import com.google.cloud.storage.Blob;
 import com.vegetable.samochiro.domain.AIVoice;
+import com.vegetable.samochiro.domain.Alarm;
 import com.vegetable.samochiro.domain.Room;
 import com.vegetable.samochiro.domain.Voice;
 import com.vegetable.samochiro.dto.ai.AITrainingRequest;
@@ -10,6 +11,7 @@ import com.vegetable.samochiro.enums.SituationType;
 import com.vegetable.samochiro.exception.RoomNotFoundException;
 import com.vegetable.samochiro.exception.VoiceCountZeroException;
 import com.vegetable.samochiro.repository.AIVoiceRepository;
+import com.vegetable.samochiro.repository.AlarmRepository;
 import com.vegetable.samochiro.repository.RoomRepository;
 import com.vegetable.samochiro.repository.VoiceRepository;
 
@@ -50,6 +52,7 @@ public class AIService {
     private final VoiceRepository voiceRepository;
     private final GCSService gcsService;
     private final AIVoiceRepository aiVoiceRepository;
+    private final AlarmRepository alarmRepository;
     @Value("${url.gpu}")
     private String serverUrl;
     private static final String BOUNDARY = "*****";
@@ -137,112 +140,125 @@ public class AIService {
     }
 
     public void saveAIVoiceFile(String roomUuid, List<MultipartFile> congratulationList, List<MultipartFile> consolationList,
-        List<MultipartFile> encourageList, List<MultipartFile> safetyList, List<MultipartFile> thanksList, List<MultipartFile> welcomeList) {
+        List<MultipartFile> encourageList, List<MultipartFile> safetyList,
+        List<MultipartFile> thanksList, List<MultipartFile> welcomeList, String message) {
 
-        String currentTime = LocalDateTime.now().toString();
-        Room room = roomRepository.findById(roomUuid).get();
-        LocalDateTime current = LocalDateTime.now();
+        if(message.equals(null)) { //에러가 나지 않을 경우
 
-        if(congratulationList.size()>0) {
-            for(MultipartFile file : congratulationList) {
-                String fileName = currentTime + "ai" + file.getOriginalFilename();
-                String url = gcsService.uploadFile(fileName, file);
+            String currentTime = LocalDateTime.now().toString();
+            Room room = roomRepository.findById(roomUuid).get();
+            LocalDateTime current = LocalDateTime.now();
 
-                AIVoice aiVoice = AIVoice.builder()
-                    .url(url)
-                    .name(fileName)
-                    .registDate(current)
-                    .situationType(SituationType.CONGRATULATION)
-                    .room(room)
-                    .build();
+            if(congratulationList.size()>0) {
+                for(MultipartFile file : congratulationList) {
+                    String fileName = currentTime + "ai" + file.getOriginalFilename();
+                    String url = gcsService.uploadFile(fileName, file);
 
-                aiVoiceRepository.save(aiVoice);
+                    AIVoice aiVoice = AIVoice.builder()
+                        .url(url)
+                        .name(fileName)
+                        .registDate(current)
+                        .situationType(SituationType.CONGRATULATION)
+                        .room(room)
+                        .build();
+
+                    aiVoiceRepository.save(aiVoice);
+                }
+            }
+
+            if(consolationList.size()>0) {
+                for(MultipartFile file : consolationList) {
+                    String fileName = currentTime + "ai" + file.getOriginalFilename();
+                    String url = gcsService.uploadFile(fileName, file);
+
+                    AIVoice aiVoice = AIVoice.builder()
+                        .url(url)
+                        .name(fileName)
+                        .registDate(current)
+                        .situationType(SituationType.CONSOLATION)
+                        .room(room)
+                        .build();
+
+                    aiVoiceRepository.save(aiVoice);
+                }
+            }
+
+            if(encourageList.size()>0) {
+                for(MultipartFile file : encourageList) {
+                    String fileName = currentTime + "ai" + file.getOriginalFilename();
+                    String url = gcsService.uploadFile(fileName, file);
+
+                    AIVoice aiVoice = AIVoice.builder()
+                        .url(url)
+                        .name(fileName)
+                        .registDate(current)
+                        .situationType(SituationType.ENCOURAGE)
+                        .room(room)
+                        .build();
+
+                    aiVoiceRepository.save(aiVoice);
+                }
+            }
+
+            if(safetyList.size()>0) {
+                for(MultipartFile file : safetyList) {
+                    String fileName = currentTime + "ai" + file.getOriginalFilename();
+                    String url = gcsService.uploadFile(fileName, file);
+
+                    AIVoice aiVoice = AIVoice.builder()
+                        .url(url)
+                        .name(fileName)
+                        .registDate(current)
+                        .situationType(SituationType.SAFETY)
+                        .room(room)
+                        .build();
+
+                    aiVoiceRepository.save(aiVoice);
+                }
+            }
+
+            if(thanksList.size()>0) {
+                for(MultipartFile file : thanksList) {
+                    String fileName = currentTime + "ai" + file.getOriginalFilename();
+                    String url = gcsService.uploadFile(fileName, file);
+
+                    AIVoice aiVoice = AIVoice.builder()
+                        .url(url)
+                        .name(fileName)
+                        .registDate(current)
+                        .situationType(SituationType.THANKS)
+                        .room(room)
+                        .build();
+
+                    aiVoiceRepository.save(aiVoice);
+                }
+            }
+
+            if(welcomeList.size()>0) {
+                for(MultipartFile file : welcomeList) {
+                    String fileName = currentTime + "ai" + file.getOriginalFilename();
+                    String url = gcsService.uploadFile(fileName, file);
+
+                    AIVoice aiVoice = AIVoice.builder()
+                        .url(url)
+                        .name(fileName)
+                        .registDate(current)
+                        .situationType(SituationType.WELCOME)
+                        .room(room)
+                        .build();
+
+                    aiVoiceRepository.save(aiVoice);
+                }
             }
         }
 
-        if(consolationList.size()>0) {
-            for(MultipartFile file : consolationList) {
-                String fileName = currentTime + "ai" + file.getOriginalFilename();
-                String url = gcsService.uploadFile(fileName, file);
-
-                AIVoice aiVoice = AIVoice.builder()
-                    .url(url)
-                    .name(fileName)
-                    .registDate(current)
-                    .situationType(SituationType.CONSOLATION)
-                    .room(room)
-                    .build();
-
-                aiVoiceRepository.save(aiVoice);
-            }
-        }
-
-        if(encourageList.size()>0) {
-            for(MultipartFile file : encourageList) {
-                String fileName = currentTime + "ai" + file.getOriginalFilename();
-				String url = gcsService.uploadFile(fileName, file);
-
-                AIVoice aiVoice = AIVoice.builder()
-					.url(url)
-					.name(fileName)
-					.registDate(current)
-					.situationType(SituationType.ENCOURAGE)
-					.room(room)
-					.build();
-
-				aiVoiceRepository.save(aiVoice);
-            }
-        }
-
-        if(safetyList.size()>0) {
-            for(MultipartFile file : safetyList) {
-                String fileName = currentTime + "ai" + file.getOriginalFilename();
-                String url = gcsService.uploadFile(fileName, file);
-
-                AIVoice aiVoice = AIVoice.builder()
-                    .url(url)
-                    .name(fileName)
-                    .registDate(current)
-                    .situationType(SituationType.SAFETY)
-                    .room(room)
-                    .build();
-
-                aiVoiceRepository.save(aiVoice);
-            }
-        }
-
-        if(thanksList.size()>0) {
-            for(MultipartFile file : thanksList) {
-				String fileName = currentTime + "ai" + file.getOriginalFilename();
-				String url = gcsService.uploadFile(fileName, file);
-
-                AIVoice aiVoice = AIVoice.builder()
-					.url(url)
-					.name(fileName)
-					.registDate(current)
-					.situationType(SituationType.THANKS)
-					.room(room)
-					.build();
-
-				aiVoiceRepository.save(aiVoice);
-			}
-        }
-
-        if(welcomeList.size()>0) {
-            for(MultipartFile file : welcomeList) {
-                String fileName = currentTime + "ai" + file.getOriginalFilename();
-                String url = gcsService.uploadFile(fileName, file);
-
-                AIVoice aiVoice = AIVoice.builder()
-                    .url(url)
-                    .name(fileName)
-                    .registDate(current)
-                    .situationType(SituationType.WELCOME)
-                    .room(room)
-                    .build();
-
-                aiVoiceRepository.save(aiVoice);
-            }
+        else if(!message.equals(null)) { //에러가 났을 경우
+            Room room = roomRepository.findById(roomUuid).get();
+            Alarm alarm = Alarm.builder()
+                .user(room.getUser())
+                .message(message)
+                .build();
+            alarmRepository.save(alarm);
         }
 
     }
