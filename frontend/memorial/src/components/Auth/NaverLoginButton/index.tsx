@@ -1,3 +1,5 @@
+import NaverBtn from "@assets/btn/NaverLoginBtn.png";
+
 export default function NaverLoginButton() {
   const REDIRECT_URI = import.meta.env.VITE_APP_REDIRECT_URI;
 
@@ -9,7 +11,8 @@ export default function NaverLoginButton() {
 
   return (
     <div>
-      <button onClick={handleNaverLogin}>네이버 로그인</button>
+      <img src={NaverBtn} alt="네이버 로그인" onClick={handleNaverLogin} />
+      {/* <button onClick={handleNaverLogin}>네이버 로그인</button> */}
     </div>
   );
 }
