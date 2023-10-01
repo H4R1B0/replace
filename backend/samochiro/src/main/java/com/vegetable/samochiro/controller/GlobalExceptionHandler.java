@@ -1,6 +1,7 @@
 package com.vegetable.samochiro.controller;
 
 import com.vegetable.samochiro.dto.error.CustomErrorResponse;
+import com.vegetable.samochiro.dto.user.NicknameUpdateResponse;
 import com.vegetable.samochiro.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,11 @@ public class GlobalExceptionHandler {
     })
     public ResponseEntity<CustomErrorResponse> badRequestException(Exception e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new CustomErrorResponse(e.getMessage()));
+    }
+
+    @ExceptionHandler({NicknameUpdateException.class})
+    public ResponseEntity<NicknameUpdateResponse> nicknameUpdateException(Exception e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new NicknameUpdateResponse(null, e.getMessage()));
     }
 
     @ExceptionHandler(RoomNotFoundException.class)

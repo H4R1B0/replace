@@ -9,6 +9,7 @@ import com.vegetable.samochiro.dto.user.IsChangeNicknameResponse;
 import com.vegetable.samochiro.dto.user.NicknameSearchResponse;
 import com.vegetable.samochiro.dto.user.SecessionResponse;
 import com.vegetable.samochiro.dto.user.NicknameUpdateRequest;
+import com.vegetable.samochiro.exception.NicknameUpdateException;
 import com.vegetable.samochiro.exception.UserNotFoundException;
 import com.vegetable.samochiro.oauth2.token.JwtToken;
 import com.vegetable.samochiro.oauth2.token.JwtTokenProvider;
@@ -47,11 +48,16 @@ public class UserService {
 	@Transactional
 	public String updateNickname(NicknameUpdateRequest updateRequest, String userId) {
 		Optional<User> findUser = userRepository.findById(userId);
+		if (findUser.isEmpty()) {
+			throw new UserNotFoundException(CustomErrorType.USER_NOT_FOUND.getMessage());
+		}
+		if (findUser.get().isChange()) {
+			throw new NicknameUpdateException(CustomErrorType.USER_NICKNAME_UPDATED.getMessage());
+		}
 		findUser.get().setNickname(updateRequest.getNickname());
 		findUser.get().setGender(updateRequest.getGender());
 		findUser.get().setChange(true);
 		findUser.get().getRooms().get(0).setTargetName(findUser.get().getNickname());
-		userRepository.save(findUser.get());
 		//update
 
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
