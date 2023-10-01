@@ -8,6 +8,7 @@ import NotFoundPage from "@pages/NotFoundPage";
 import "./App.css";
 import { Toaster } from "react-hot-toast";
 // import "@assets/fonts/font.css";
+import { playBGM } from "@utils/useSound";
 
 const MainPage = lazy(() => import("@pages/MainPage"));
 const RoomPage = lazy(() => import("@pages/RoomPage"));
@@ -52,6 +53,8 @@ const RadioOptionModal = lazy(
 const AIOptionModal = lazy(() => import("@components/ui/Modal/AIOptionModal"));
 
 export default function App() {
+  playBGM();
+
   function handleResize() {
     const vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty("--vh", `${vh}px`);
