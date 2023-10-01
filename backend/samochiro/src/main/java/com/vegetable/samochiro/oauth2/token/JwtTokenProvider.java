@@ -1,5 +1,7 @@
 package com.vegetable.samochiro.oauth2.token;
 
+import com.vegetable.samochiro.enums.CustomErrorType;
+import com.vegetable.samochiro.exception.UserNotFoundException;
 import com.vegetable.samochiro.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -24,6 +26,7 @@ import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -57,11 +60,14 @@ public class JwtTokenProvider {
 
         DefaultOAuth2User defaultOAuth2User = (DefaultOAuth2User) authentication.getPrincipal();
         String userId = defaultOAuth2User.getName();
-        String nickname = userRepository.findNicknameByUserId(userId).get();
+        Optional<String> nickname = userRepository.findNicknameByUserId(userId);
+        if (nickname.isEmpty()) {
+            throw new UserNotFoundException(CustomErrorType.USER_NOT_FOUND.getMessage());
+        }
 
         //accessToken 생성
         String accessToken = Jwts.builder()
-                .setSubject(nickname)
+                .setSubject(nickname.get())
                 .claim("auth", authorities)
                 .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRATION_TIME))
                 .signWith(key, SignatureAlgorithm.HS256)
@@ -82,11 +88,14 @@ public class JwtTokenProvider {
 
         User userDetails = (User) authentication.getPrincipal();
         String userId = userDetails.getUsername();
-        String nickname = userRepository.findNicknameByUserId(userId).get();
+        Optional<String> nickname = userRepository.findNicknameByUserId(userId);
+        if (nickname.isEmpty()) {
+            throw new UserNotFoundException(CustomErrorType.USER_NOT_FOUND.getMessage());
+        }
 
         //accessToken 생성
         String accessToken = Jwts.builder()
-                .setSubject(nickname)
+                .setSubject(nickname.get())
                 .claim("auth", authorities)
                 .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRATION_TIME))
                 .signWith(key, SignatureAlgorithm.HS256)
