@@ -12,7 +12,7 @@ const PATH: { [key: string]: string } = {
   // View single photo: "/room/:sequence/photos/:photoid",
   // Upload photo: "/room/:sequence/photos/upload",
   LIBRARY: "/library/:sequence",
-  PAYPHONE: "/payphone",
+  PAYPHONE: "/payphone/:nickname",
   HOUSE: "/house/:nickname",
   SEARCH: "/search",
   SEARCH_RESULT: "/search/result",
