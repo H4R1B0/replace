@@ -2,12 +2,10 @@ package com.vegetable.samochiro.controller;
 
 import com.vegetable.samochiro.dto.common.MessageResponse;
 import com.vegetable.samochiro.dto.user.HouseSearchResponse;
-import com.vegetable.samochiro.dto.user.IsChangeNicknameRequest;
 import com.vegetable.samochiro.dto.user.IsChangeNicknameResponse;
 import com.vegetable.samochiro.dto.user.NicknameSearchResponse;
 import com.vegetable.samochiro.dto.user.NicknameUpdateRequest;
 import com.vegetable.samochiro.dto.user.NicknameUpdateResponse;
-import com.vegetable.samochiro.dto.user.SecessionResponse;
 import com.vegetable.samochiro.oauth2.token.JwtTokenService;
 import com.vegetable.samochiro.service.UserService;
 import com.vegetable.samochiro.util.HeaderUtils;
@@ -39,23 +37,16 @@ public class UserController {
 
 	@PutMapping
 	public ResponseEntity<NicknameUpdateResponse> setNewNickname(@RequestBody NicknameUpdateRequest updateRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
-		try {
-			String accessToken = authorizationHeader.substring(7);
-			String userId = jwtTokenService.findUserId(accessToken);
+		String userId = headerUtils.getUserId(authorizationHeader);
 
-			String token = userService.updateNickname(updateRequest, userId);
-			jwtTokenService.deleteJwtToken(accessToken);
-			jwtTokenService.saveJwtToken(token, userId);
+		String accessToken = authorizationHeader.substring(7);
+		String token = userService.updateNickname(updateRequest, userId);
+		jwtTokenService.deleteJwtToken(accessToken);
+		jwtTokenService.saveJwtToken(token, userId);
 
-			String message = "닉네임 설정이 완료되었습니다.";
+		String message = "닉네임 설정이 완료되었습니다.";
 
-			return ResponseEntity.ok(new NicknameUpdateResponse(token, message));
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			String message = "잘못된 요청입니다.";
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new NicknameUpdateResponse(null, message));
-		}
+		return ResponseEntity.ok(new NicknameUpdateResponse(token, message));
 	}
 	//닉네임 설정 - 유저 5번
 

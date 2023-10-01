@@ -19,6 +19,7 @@ public enum CustomErrorType {
     LETTER_NOT_FOUND("해당 편지를 찾을 수 없습니다."),
     SITUATION_ENUM("조회 가능한 상황은 CONSOLATION, SAFETY, ENCOURAGE, CONGRATULATION, THANKS, WELCOME 입니다."),
     AIVOICE_NOT_FOUND("학습된 AI 음성이 없습니다."),
-    VOICE_NOT_FOUND("음성 파일을 찾을 수 없습니다.");
+    VOICE_NOT_FOUND("음성 파일을 찾을 수 없습니다."),
+    USER_NICKNAME_UPDATED("이미 닉네임이 변경되었습니다.");
     private final String message;
 }
