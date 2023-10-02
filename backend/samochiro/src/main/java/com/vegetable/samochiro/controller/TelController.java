@@ -46,6 +46,7 @@ public class TelController {
         }
 
         String userId = headerUtils.getUserId(authorizationHeader);
+        System.out.println("userId = " + userId);
         //사용자 아이디, 방 번호, 파일
         telService.registerAudioFile(userId, sequence, audioFile);
         return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse("음성 파일이 등록되었습니다."));
