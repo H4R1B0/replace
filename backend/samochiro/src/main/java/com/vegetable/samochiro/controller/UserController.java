@@ -53,19 +53,7 @@ public class UserController {
 	@PostMapping("/duplicate")
 	public ResponseEntity<Boolean> checkDuplicateNickname(@RequestBody String nickname) {
 		boolean isDuplicate = userService.findDuplicateNickname(nickname);
-
-		try {
-			if(isDuplicate) {
-				return ResponseEntity.ok(true);
-			}
-			else {
-				return ResponseEntity.ok(false);
-			}
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-		}
+		return ResponseEntity.status(HttpStatus.OK).body(isDuplicate);
 	}
 	//닉네임 중복 검사 - 유저 6번
 

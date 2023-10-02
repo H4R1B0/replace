@@ -74,12 +74,7 @@ public class UserService {
 
 	public boolean findDuplicateNickname(String nickname) {
 		Optional<User> findUser = userRepository.findByNickname(nickname);
-		if(findUser.isPresent()) {
-			return true; //중복
-		}
-		else {
-			return false; //중복 x
-		}
+		return findUser.isPresent();
 	}
 	//닉네임 중복 검사 - 유저 6번
 
