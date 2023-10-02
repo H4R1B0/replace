@@ -75,14 +75,8 @@ public class UserController {
 
 	@GetMapping("/home/{nickname}")
 	public ResponseEntity<HouseSearchResponse> searchHouseByNickname(@PathVariable String nickname) {
-		try {
-			HouseSearchResponse house = userService.findHouseByNickname(nickname);
-			return ResponseEntity.ok(house);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.badRequest().build();
-		}
+		HouseSearchResponse house = userService.findHouseByNickname(nickname);
+		return ResponseEntity.status(HttpStatus.OK).body(house);
 	}
 	//남 집 조회 - 집 2번
 

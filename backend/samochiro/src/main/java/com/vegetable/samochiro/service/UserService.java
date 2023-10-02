@@ -112,19 +112,21 @@ public class UserService {
 	//집 조회 - 집 1번
 
 	public HouseSearchResponse findHouseByNickname(String nickname) {
-		User user = userRepository.findByNickname(nickname).get();
-		List<Room> rooms = user.getRooms();
+		Optional<User> findUser = userRepository.findByNickname(nickname);
+		if (findUser.isEmpty()) {
+			throw new UserNotFoundException(CustomErrorType.USER_NOT_FOUND.getMessage());
+		}
+		List<Room> rooms = findUser.get().getRooms();
 		List<HouseSearchRoomResponse> roomDtoList = new ArrayList<>();
-		
-		for(Room r : rooms) {
+
+		for (Room r : rooms) {
 			HouseSearchRoomResponse roomResponse = new HouseSearchRoomResponse();
 			roomResponse.setTargetName(r.getTargetName());
 			roomResponse.setSequence(r.getSequence());
 			roomDtoList.add(roomResponse);
 		}
 
-		HouseSearchResponse response = new HouseSearchResponse(roomDtoList);
-		return response;
+		return new HouseSearchResponse(roomDtoList);
 	}
 	//남 집 조회 - 집 2번
 	
