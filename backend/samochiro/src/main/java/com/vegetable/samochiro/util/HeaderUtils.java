@@ -21,6 +21,7 @@ public class HeaderUtils {
     }
 
     public Boolean isAudio(String contentType) {
+        System.out.println("contentType = " + contentType);
         Set<String> audioDic = new HashSet<>(List.of("audio/mp4", "audio/mpeg", "audio/wave"));
         return audioDic.contains(contentType);
     }
