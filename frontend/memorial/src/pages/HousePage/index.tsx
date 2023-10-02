@@ -42,7 +42,7 @@ export default function HousePage() {
     mutationFn: registerRoomTarget,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["roomList", nickname] });
-      navigate(`/room/${selectedSequence}`);
+      navigate(`/room/${nickname}/${selectedSequence}`);
     },
   });
 
@@ -50,6 +50,12 @@ export default function HousePage() {
   if (isError) return `Error`;
 
   const { rooms } = roomList;
+
+  const isWindowLit = (sequence: number) => {
+    const room = rooms.find((room) => room.sequence === sequence);
+    if (!room) return false;
+    return room.targetName !== null;
+  };
 
   const handleRoomRegister = (targetName: string) => {
     registerRoomMutation.mutate({ sequence: selectedSequence, targetName });
@@ -95,7 +101,10 @@ export default function HousePage() {
                 />
               </EffectComposer>
 
-              <House onWindowClick={handleWindowClick} />
+              <House
+                onWindowClick={handleWindowClick}
+                isWindowLit={isWindowLit}
+              />
             </Selection>
           </PresentationControls>
         </Stage>

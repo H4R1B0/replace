@@ -67,7 +67,9 @@ export default function PhotoUploadModal({ ...other }: PhotoUploadModalProps) {
           onChange={handleFileChange}
         />
         <Button disabled={imageSrc === ""}>Upload</Button>
-        <Button onClick={() => navigate(-1)}>뒤로가기</Button>
+        <Button type="button" onClick={() => navigate(-1)}>
+          뒤로가기
+        </Button>
       </form>
     </Modal>
   );
