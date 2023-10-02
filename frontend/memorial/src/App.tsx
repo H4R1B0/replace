@@ -88,13 +88,12 @@ export default function App() {
         <Router>
           <Suspense
             fallback={
-              <div>
+              <div className="loading-wrapper">
                 <img
-                  src="https://i.imgur.com/bRLMKPY.gif"
+                  src="https://i.imgur.com/DVqUtaE.gif"
                   alt="loading"
-                  style={{ width: "100%", height: "100%" }}
+                  style={{ width: "80%" }}
                 />
-                loading...
               </div>
             }
           >
