@@ -1,3 +1,5 @@
+import KakaoBtn from "@assets/btn/KaKaoLoginBtn.png";
+
 export default function KakaoLoginButton() {
   // const REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API_KEY;
   const REDIRECT_URI = import.meta.env.VITE_APP_REDIRECT_URI;
@@ -11,7 +13,8 @@ export default function KakaoLoginButton() {
 
   return (
     <div>
-      <button onClick={handleKakaoLogin}>카카오 로그인</button>
+      <img src={KakaoBtn} alt="카카오 로그인" onClick={handleKakaoLogin} />
+      {/* <button onClick={handleKakaoLogin}>카카오 로그인</button> */}
     </div>
   );
 }
