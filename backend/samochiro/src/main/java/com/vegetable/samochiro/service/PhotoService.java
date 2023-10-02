@@ -4,6 +4,8 @@ import com.vegetable.samochiro.domain.Photo;
 import com.vegetable.samochiro.domain.Room;
 import com.vegetable.samochiro.dto.photo.PhotoDetailResponse;
 import com.vegetable.samochiro.dto.photo.PhotoListResponse;
+import com.vegetable.samochiro.enums.CustomErrorType;
+import com.vegetable.samochiro.exception.RoomNotFoundException;
 import com.vegetable.samochiro.repository.PhotoRepository;
 import com.vegetable.samochiro.repository.RoomRepository;
 
@@ -11,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,14 +34,17 @@ public class PhotoService {
 		String currentTime = LocalDateTime.now().toString();
 		String fileName = currentTime + "ph" + image.getOriginalFilename();
 		String url = gcssService.uploadFile(fileName, image);
-		Room findRoom = roomRepository.findBySequenceAndUserId(sequence, userId).get();
+		Optional<Room> findRoom = roomRepository.findBySequenceAndUserId(sequence, userId);
+		if (findRoom.isEmpty()) {
+			throw new RoomNotFoundException(CustomErrorType.ROOM_NOT_FOUND.getMessage());
+		}
 
 		Photo photo = Photo.builder()
-			.url(url)
-			.name(fileName)
-			.registDate(LocalDate.now())
-			.room(findRoom)
-			.build();
+				.url(url)
+				.name(fileName)
+				.registDate(LocalDate.now())
+				.room(findRoom.get())
+				.build();
 
 		photoRepository.save(photo);
 	}

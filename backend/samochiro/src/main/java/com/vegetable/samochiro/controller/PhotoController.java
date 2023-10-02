@@ -35,16 +35,10 @@ public class PhotoController {
 		@RequestPart(value = "file") MultipartFile imageFile,
 		@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
 
-		try {
-			String userId = headerUtils.getUserId(authorizationHeader);
-			photoService.registerImageFile(userId, sequence, imageFile);
+		String userId = headerUtils.getUserId(authorizationHeader);
+		photoService.registerImageFile(userId, sequence, imageFile);
 
-			return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse("사진 등록이 완료되었습니다."));
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse("잘못된 요청입니다."));
-		}
+		return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse("사진 등록이 완료되었습니다."));
 	}
 	//사진 등록 - 액자 1번
 
