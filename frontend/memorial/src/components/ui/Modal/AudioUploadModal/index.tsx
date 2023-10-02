@@ -23,6 +23,9 @@ export default function AudioUploadModal({ ...other }: AudioUploadModalProps) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["audioList", roomSequence] });
     },
+    onError: (error) => {
+      console.log(error);
+    },
   });
 
   const handlePreviewClick = () => {

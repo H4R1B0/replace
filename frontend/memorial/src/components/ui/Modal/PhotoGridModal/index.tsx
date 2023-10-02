@@ -23,7 +23,11 @@ export default function PhotoGridModal({ ...other }: PhotoGridModalProps) {
   if (isError) return `Error`;
 
   const photos = photoList?.data?.map((photo) => (
-    <img key={photo.id} src={photo.url} onClick={() => navigate(":sequence")} />
+    <img
+      key={photo.id}
+      src={photo.url}
+      onClick={() => navigate(`${photo.id}`)}
+    />
   ));
 
   return (

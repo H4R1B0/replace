@@ -48,10 +48,20 @@ type GLTFResult = GLTF & {
 };
 type HouseProps = {
   onWindowClick?: (sequence: number) => void;
+  isWindowLit: (sequence: number) => boolean;
 } & JSX.IntrinsicElements["group"];
 
-export default function House({ onWindowClick, ...other }: HouseProps) {
+export default function House({
+  onWindowClick,
+  isWindowLit,
+  ...other
+}: HouseProps) {
   const { nodes, materials } = useGLTF(housePath) as GLTFResult;
+  const litWindowMaterial = new THREE.MeshPhysicalMaterial({
+    emissive: 0xffffff,
+    emissiveIntensity: 1,
+    color: 0x000000,
+  });
   return (
     <group {...other} dispose={null}>
       <group position={[1.872, 0.307, 6.328]} rotation={[Math.PI / 2, 0, 0]}>
@@ -149,7 +159,9 @@ export default function House({ onWindowClick, ...other }: HouseProps) {
       >
         <mesh
           geometry={nodes.rightWindow_1.geometry}
-          material={materials.PaletteMaterial001}
+          material={
+            isWindowLit(3) ? litWindowMaterial : materials.PaletteMaterial001
+          }
         />
         <mesh
           geometry={nodes.rightWindow_2.geometry}
@@ -167,7 +179,9 @@ export default function House({ onWindowClick, ...other }: HouseProps) {
       >
         <mesh
           geometry={nodes.mainWindow_1.geometry}
-          material={materials.PaletteMaterial001}
+          material={
+            isWindowLit(2) ? litWindowMaterial : materials.PaletteMaterial001
+          }
         />
         <mesh
           geometry={nodes.mainWindow_2.geometry}
@@ -185,7 +199,9 @@ export default function House({ onWindowClick, ...other }: HouseProps) {
       >
         <mesh
           geometry={nodes.leftWindow_1.geometry}
-          material={materials.PaletteMaterial001}
+          material={
+            isWindowLit(1) ? litWindowMaterial : materials.PaletteMaterial001
+          }
         />
         <mesh
           geometry={nodes.leftWindow_2.geometry}
