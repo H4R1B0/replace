@@ -22,6 +22,7 @@ const HousePage = lazy(() => import("@pages/HousePage"));
 const SearchResultPage = lazy(() => import("@pages/SearchResultPage"));
 const RedirectKakaoPage = lazy(() => import("@pages/RedirectKakaoPage"));
 const NicknamePage = lazy(() => import("@pages/NicknamePage"));
+const IntroductionPage = lazy(() => import("@pages/IntroductionPage"));
 
 const PhotoViewModal = lazy(
   () => import("@components/ui/Modal/PhotoViewModal")
@@ -85,7 +86,17 @@ export default function App() {
           </button>
         </nav>
         <Router>
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense
+            fallback={
+              <div className="loading-wrapper">
+                <img
+                  src="https://i.imgur.com/DVqUtaE.gif"
+                  alt="loading"
+                  style={{ width: "80%" }}
+                />
+              </div>
+            }
+          >
             <Routes>
               <Route path={PATH.ROOT} element={<MainPage />} />
               <Route path={PATH.MAIN} element={<MainPage />} />
@@ -125,6 +136,7 @@ export default function App() {
                 element={<RedirectKakaoPage />}
               />
               <Route path={PATH.NICKNAME} element={<NicknamePage />} />
+              <Route path={PATH.INTRODUCTION} element={<IntroductionPage />} />
               <Route path={PATH.NOT_FOUND} element={<NotFoundPage />} />
             </Routes>
           </Suspense>

@@ -16,8 +16,8 @@ export default function Button({
     case "tributeList":
       variantClass = styles.tributeList;
       break;
-    case "close":
-      variantClass = styles.close;
+    case "tutotial":
+      variantClass = styles.tutotial;
       break;
   }
   return (
@@ -29,5 +29,5 @@ export default function Button({
 
 type ButtonProps = {
   children?: string;
-  variant?: "regular" | "prominent" | "tributeList" | "close";
+  variant?: "regular" | "prominent" | "tributeList" | "tutotial";
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;

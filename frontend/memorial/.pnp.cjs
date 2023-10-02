@@ -28,6 +28,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {\
           "packageLocation": "./",\
           "packageDependencies": [\
+            ["@heroicons/react", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:2.0.18"],\
             ["@radix-ui/react-accordion", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:1.1.2"],\
             ["@react-three/drei", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:9.83.9"],\
             ["@react-three/fiber", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:8.14.1"],\
@@ -3489,6 +3490,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@gar-promisify-npm-1.1.3-ac1a325862-4059f790e2.zip/node_modules/@gar/promisify/",\
           "packageDependencies": [\
             ["@gar/promisify", "npm:1.1.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@heroicons/react", [\
+        ["npm:2.0.18", {\
+          "packageLocation": "./.yarn/cache/@heroicons-react-npm-2.0.18-3febb62534-597e866881.zip/node_modules/@heroicons/react/",\
+          "packageDependencies": [\
+            ["@heroicons/react", "npm:2.0.18"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:2.0.18", {\
+          "packageLocation": "./.yarn/__virtual__/@heroicons-react-virtual-daa8180685/0/cache/@heroicons-react-npm-2.0.18-3febb62534-597e866881.zip/node_modules/@heroicons/react/",\
+          "packageDependencies": [\
+            ["@heroicons/react", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:2.0.18"],\
+            ["@types/react", "npm:18.2.8"],\
+            ["react", "npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react",\
+            "react"\
           ],\
           "linkType": "HARD"\
         }]\
@@ -14672,6 +14695,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",\
           "packageDependencies": [\
             ["react-vite-berry-boilarplate", "workspace:."],\
+            ["@heroicons/react", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:2.0.18"],\
             ["@radix-ui/react-accordion", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:1.1.2"],\
             ["@react-three/drei", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:9.83.9"],\
             ["@react-three/fiber", "virtual:7ffb6d67ea0ef49b6a0e763b96dd5455ab0b5f1d6e12bb3a8dafdc0c4a13a59e71466e7cf96b068dfb7e5270bc9ae15643426d90648c87d361ce0646726d3442#npm:8.14.1"],\
