@@ -64,12 +64,14 @@ export default function Slider({ slides }: SliderProps) {
           <div className={styles.buttons}>
             <Button
               onClick={goPrev}
+              variant="tutotial"
               className={`${styles.sliderButton} ${styles.sliderButtonPrev}`}
             >
               Prev
             </Button>
             <Button
               onClick={goNext}
+              variant="tutotial"
               className={`${styles.sliderButton} ${styles.sliderButtonNext}`}
             >
               {currentIndex === slides.length - 1 ? "시작하기" : "Next"}

@@ -23,6 +23,9 @@ import Button from "@components/ui/Button";
 import Input from "@components/ui/Input";
 import Textarea from "@components/ui/Textarea";
 import TrributeEventCard from "@components/ui/TrributeEventCard";
+import toast from "react-hot-toast";
+import { playBookBGM } from "@utils/effectSound";
+import { useQueryClient } from "@tanstack/react-query";
 
 type Book = {
   letterId: number;
@@ -61,6 +64,8 @@ export default function LibraryPage() {
     sequence: roomSequence,
   });
 
+  const useplayBookBGM = playBookBGM();
+  const queryClient = useQueryClient();
   // 편지 작성 시, 입력된 내용에 따라 letter의 state 변경시키기
   const onChangeLetter = (e: any) => {
     setLetter({
@@ -103,10 +108,19 @@ export default function LibraryPage() {
   }
 
   // console.log(sessionStorage.getItem("accessToken"));
+
+  const successDelete = async () => {
+    toast.success("삭제되었습니다."), { id: "successDelete" };
+  };
+  const successSubmit = async () => {
+    toast.success("편지 작성이 완료되었습니다."), { id: "successSubmit" };
+  };
+
   const deleteMutation = useMutation(deleteBook, {
     onSuccess: () => {
-      alert("삭제되었습니다.");
+      successDelete();
       setSelectedBook(null); // 선택한 책을 삭제한 후 null로 설정
+      queryClient.invalidateQueries(["books", roomSequence]);
     },
     onError: (error) => {
       console.error("Error deleting the book:", error); // 에러가 발생했을 때 콘솔에 로그 출력
@@ -122,16 +136,18 @@ export default function LibraryPage() {
   const createMutation = useMutation(createLetter, {
     onSuccess: () => {
       setLetterModalOpen(false);
-      alert("작성 완료");
+      successSubmit();
       setLetter({
         title: "",
         content: "",
         writeTime: "",
         sequence: roomSequence,
       });
+      queryClient.invalidateQueries(["books", roomSequence]);
     },
     onError: (error) => {
       console.error("작성 실패", error);
+      toast.error("편지 작성에 실패했습니다."), { id: "failSubmit" };
     },
   });
 
@@ -158,6 +174,11 @@ export default function LibraryPage() {
         camera={{ fov: 50, position: [0, 0, 8] }}
         style={{ touchAction: "none" }}
       >
+        {/* <directionalLight
+          position={[0, 5, 10]}
+          intensity={2}
+          color={"#ffffff"}
+        /> */}
         <Stage environment="city" intensity={0.5} adjustCamera shadows={false}>
           <PresentationControls
             snap // 삭제 시 확대한 채로 멈춤
@@ -178,8 +199,14 @@ export default function LibraryPage() {
               </EffectComposer>
 
               <Library
-                onLetterClick={() => setLetterModalOpen(true)}
-                onBookShelfClick={() => setBookModalOpen(true)}
+                onLetterClick={() => {
+                  useplayBookBGM();
+                  setLetterModalOpen(true);
+                }}
+                onBookShelfClick={() => {
+                  useplayBookBGM();
+                  setBookModalOpen(true);
+                }}
               />
             </Selection>
           </PresentationControls>

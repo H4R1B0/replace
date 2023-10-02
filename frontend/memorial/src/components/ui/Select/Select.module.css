@@ -14,7 +14,9 @@
   cursor: pointer;
   background-color: white;
 }
-
+.tribute {
+  width: 100%;
+}
 .long {
   width: 20rem;
   min-width: 100%;

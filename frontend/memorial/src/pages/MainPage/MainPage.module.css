@@ -35,10 +35,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: relative;
-  top: 40%;
-  left: auto;
-  right: auto;
+  position: absolute;
+  top: 75%;
+  left: 50%;
+  right: 50%;
 }
 
 .logo,

@@ -46,3 +46,13 @@ button {
 .prominent {
   background-color: skyblue;
 }
+.tutotial {
+  min-width: 40%;
+
+  height: 2.7rem;
+  line-height: 2.7rem;
+  text-align: center;
+  font-family: "SUITE-Bold";
+  font-size: 1rem;
+  padding: 0 10%;
+}

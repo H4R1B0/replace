@@ -15,6 +15,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@heroicons/react": "^2.0.18",
     "@react-three/drei": "^9.83.9",
     "@react-three/fiber": "^8.14.1",
     "@react-three/postprocessing": "^2.15.1",

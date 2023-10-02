@@ -62,14 +62,7 @@
   border: none;
   cursor: pointer;
   width: 100%;
-}
-
-.sliderButtonPrev {
-  width: auto;
-}
-
-.sliderButtonNext {
-  width: auto;
+  min-width: 20rem;
 }
 
 .slidertext {
@@ -84,7 +77,20 @@
 }
 
 .buttons {
-  width: 80%;
+  width: 100%;
+
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+}
+
+.slideTitle {
+  padding: 0 2rem;
+  word-break: keep-all;
+  padding-bottom: 1rem;
+}
+
+.slideDescription {
+  padding: 0 2rem;
+  word-break: keep-all;
+  padding-bottom: 1rem;
 }

@@ -26,6 +26,9 @@ export default function Select({
     case "long":
       variantClass = styles.long;
       break;
+    case "tribute":
+      variantClass = styles.tribute;
+      break;
     case "short":
       variantClass = styles.short;
       heightVariantClass = styles.shortHeight;
