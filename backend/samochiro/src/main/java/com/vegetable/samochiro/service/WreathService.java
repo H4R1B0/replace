@@ -328,7 +328,7 @@ public class WreathService {
 		List<Wreath> wreaths = wreathRepository.selectByUserId(userId);
 		for(Wreath wreath : wreaths){
 			wreathUserRepository.deleteByWreathId(wreath.getWreathId());
-			wreathCountRepository.deleteByWreathId(wreath.getWreathId());
+//			wreathCountRepository.deleteByWreathId(wreath.getWreathId());
 			wreathRepository.delete(wreath);
 		}
     }
