@@ -251,26 +251,12 @@ export default function TributeDetailPage() {
             azimuth={[-Math.PI / 8, Math.PI / 8]}
           >
             <pointLight position={[90, 10, 10]} />
-            <Selection>
-              <EffectComposer multisampling={8} autoClear={false}>
-                <Outline
-                  blur
-                  visibleEdgeColor={0xffffff}
-                  edgeStrength={100}
-                  width={1000}
-                />
-              </EffectComposer>
 
-              <Tribute
-                onTributeClick={() => setTributeDetailModalOpen(true)}
-                flowerVisibility={
-                  wreathDetail ? wreathDetail.flower > 0 : false
-                }
-                ribbonVisibility={
-                  wreathDetail ? wreathDetail.ribbon > 0 : false
-                }
-              />
-            </Selection>
+            <Tribute
+              onTributeClick={() => setTributeDetailModalOpen(true)}
+              flowerVisibility={wreathDetail ? wreathDetail.flower > 0 : false}
+              ribbonVisibility={wreathDetail ? wreathDetail.ribbon > 0 : false}
+            />
           </PresentationControls>
         </Stage>
       </Canvas>
