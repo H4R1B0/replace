@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import RegisterRoomModal from "@components/ui/Modal/RegisterRoomModal";
 import { registerRoomTarget } from "@apis/room";
 import { useParams } from "react-router-dom";
+import { Environment } from "@react-three/drei";
 
 export default function HousePage() {
   const [isModalOpen, toggleModal] = useToggle(false);
@@ -25,9 +26,6 @@ export default function HousePage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { nickname } = useParams();
-  //1. 등록되었는지 안되었는지 확인하기
-  //2. 만약 등록되었다 -> navigate room
-  //3. 등록 안되었다 -> 모달 보여주기
 
   if (typeof nickname === "undefined") return;
 
@@ -80,8 +78,10 @@ export default function HousePage() {
       <Canvas
         flat
         dpr={[1, 2]}
-        camera={{ fov: 50, position: [0, 0, 8] }}
+        camera={{ fov: 50, position: [0, 0, 8], zoom: 1.2 }}
         style={{ touchAction: "none" }}
+        linear
+        shadows
       >
         <Bloom
           luminanceThreshold={0}
@@ -116,6 +116,8 @@ export default function HousePage() {
           scale={[20, 20, 20]}
           speed={1}
         />
+        <ambientLight intensity={0.5} />
+        <Environment preset="sunset" />
       </Canvas>
       <RegisterRoomModal
         modalOpen={isModalOpen}

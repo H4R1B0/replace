@@ -27,13 +27,15 @@ export default function Modal({
       justifyContent: "center",
       alignItems: "center",
       background: "none",
-      backgroundColor: " rgba(0, 0, 0, 0.4)",
+
+      backdropFilter: "blur(10px)",
+      WebkitBackdropFilter: "blur(10px)",
     },
     content: {
       margin: "10%",
       maxWidth: "calc(800px - 10%)", // TODO: use CSS variable
       maxHeight: "80vh",
-      backgroundColor: "rgba(255,255,255,0.5)",
+      backgroundColor: "rgba(255, 248, 219, 1)",
       backdropFilter: "blur(15px)",
       WebkitBackdropFilter: "blur(15px)",
       border: "none",
@@ -53,6 +55,11 @@ export default function Modal({
     >
       <div
         style={{
+          display: "flex",
+          flexDirection: "column",
+          alignContent: "center",
+          justifyContent: "center",
+          margin: "auto",
           textAlign: "center", // 모달 내 컨텐츠 중앙정렬
         }}
       >
@@ -60,7 +67,7 @@ export default function Modal({
         {subtitle && <p>{subtitle}</p>}
         {children}
         {!noButton && (
-          <Button variant="regular" onClick={onClose}>
+          <Button variant="prominent" onClick={onClose}>
             {buttonLabel}
           </Button>
         )}

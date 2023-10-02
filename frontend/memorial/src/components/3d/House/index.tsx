@@ -97,10 +97,7 @@ export default function House({
           geometry={nodes.House_8.geometry}
           material={materials.PaletteMaterial001}
         />
-        <mesh
-          geometry={nodes.House_9.geometry}
-          material={materials.PaletteMaterial002}
-        />
+        <mesh geometry={nodes.House_9.geometry} material={litWindowMaterial} />
         <mesh
           geometry={nodes.House_10.geometry}
           material={materials.PaletteMaterial001}
