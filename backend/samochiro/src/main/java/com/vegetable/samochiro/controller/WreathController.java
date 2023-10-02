@@ -82,7 +82,6 @@ public class WreathController {
 	@GetMapping("/search")
 	public ResponseEntity<Response> searchWreathByTitle(@RequestParam String title) {
 		try {
-			System.out.println("title " + title);
 			List<WreathListResponse> wreathList = wreathService.findTitleWreathList(title);
 			return ResponseEntity.ok().body(new Response(wreathList));
 		}
