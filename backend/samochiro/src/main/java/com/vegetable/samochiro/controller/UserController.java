@@ -53,62 +53,30 @@ public class UserController {
 	@PostMapping("/duplicate")
 	public ResponseEntity<Boolean> checkDuplicateNickname(@RequestBody String nickname) {
 		boolean isDuplicate = userService.findDuplicateNickname(nickname);
-
-		try {
-			if(isDuplicate) {
-				return ResponseEntity.ok(true);
-			}
-			else {
-				return ResponseEntity.ok(false);
-			}
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-		}
+		return ResponseEntity.status(HttpStatus.OK).body(isDuplicate);
 	}
 	//닉네임 중복 검사 - 유저 6번
 
 	@GetMapping
 	public ResponseEntity<NicknameSearchResponse> searchUserByNickname(@RequestParam String nickname) {
-		try {
-			NicknameSearchResponse findUser = userService.findUserByNickname(nickname);
-			//결과가 없는 경우 NicknameSearchResponse가 null인지 테스트해보기
-			return ResponseEntity.ok(findUser);
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.badRequest().build();
-		}
+		NicknameSearchResponse findUser = userService.findUserByNickname(nickname);
+		return ResponseEntity.status(HttpStatus.OK).body(findUser);
 	}
 	//닉네임 검색 - 유저 7번
 
 	@GetMapping("/home")
 	public ResponseEntity<HouseSearchResponse> searchHouseByUserId(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
-		try {
-			String accessToken = authorizationHeader.substring(7);
-			String userId = jwtTokenService.findUserId(accessToken);
+		String userId = headerUtils.getUserId(authorizationHeader);
 
-			HouseSearchResponse house = userService.findHouseByUserId(userId);
-			return ResponseEntity.ok(house);
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.badRequest().build();
-		}
+		HouseSearchResponse house = userService.findHouseByUserId(userId);
+		return ResponseEntity.ok(house);
 	}
 	//집 조회 - 집 1번
 
 	@GetMapping("/home/{nickname}")
 	public ResponseEntity<HouseSearchResponse> searchHouseByNickname(@PathVariable String nickname) {
-		try {
-			HouseSearchResponse house = userService.findHouseByNickname(nickname);
-			return ResponseEntity.ok(house);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.badRequest().build();
-		}
+		HouseSearchResponse house = userService.findHouseByNickname(nickname);
+		return ResponseEntity.status(HttpStatus.OK).body(house);
 	}
 	//남 집 조회 - 집 2번
 
