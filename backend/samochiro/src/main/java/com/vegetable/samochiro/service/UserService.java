@@ -171,16 +171,16 @@ public class UserService {
 			aiVoiceService.deleteAIVoicesByRoomUuid(roomUuid);
 			//음성
 			telService.deleteVoicesByRoomUuid(roomUuid);
-			//보이스 메일
-			voicemailService.deleteVoicemailsByUserId(userId);
-			//알림
-			alarmService.deleteAlarmByUserId(userId);
-			//신고
-			declarationService.deleteDeclarationByUserId(userId);
-			//헌화
-			wreathService.deleteWreathByUserId(userId);
 			roomRepository.delete(room);
 		}
+		//보이스 메일
+		voicemailService.deleteVoicemailsByUserId(userId);
+		//알림
+		alarmService.deleteAlarmByUserId(userId);
+		//신고
+		declarationService.deleteDeclarationByUserId(userId);
+		//헌화
+		wreathService.deleteWreathByUserId(userId);
 		userRepository.delete(findUser.get());
     }
     //회원 탈퇴 - 유저 8
