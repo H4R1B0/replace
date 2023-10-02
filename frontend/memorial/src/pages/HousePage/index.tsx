@@ -2,7 +2,12 @@ import { fetchRoomList } from "@apis/room";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import House from "@components/3d/House";
 import { Canvas } from "@react-three/fiber";
-import { Stage, PresentationControls } from "@react-three/drei";
+import {
+  Stage,
+  PresentationControls,
+  Sparkles,
+  Cloud,
+} from "@react-three/drei";
 import styles from "./HousePage.module.css";
 import {
   Selection,
@@ -90,7 +95,6 @@ export default function HousePage() {
             polar={[0, Math.PI / 4]}
             azimuth={[-Math.PI / 4, Math.PI / 4]}
           >
-            {/* <pointLight position={[90, 10, 10]} /> */}
             <Selection>
               <EffectComposer multisampling={8} autoClear={false}>
                 <Outline
@@ -108,6 +112,19 @@ export default function HousePage() {
             </Selection>
           </PresentationControls>
         </Stage>
+        <Cloud
+          scale={6}
+          opacity={0.3}
+          depth={10} // Z-dir depth
+          segments={10} // Number of particles
+        />
+        <Sparkles
+          count={40}
+          size={10}
+          position={[0.9, 0.9, 0.9]}
+          scale={[20, 20, 20]}
+          speed={1}
+        />
       </Canvas>
       <RegisterRoomModal
         modalOpen={isModalOpen}

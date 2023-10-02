@@ -4,11 +4,9 @@ Command: npx gltfjsx@6.2.13 room.glb -t -i -T --shadows -j
 Files: room.glb [6.57MB] > room-transformed.glb [1.71MB] (74%)
 */
 import * as THREE from "three";
-import { useGLTF } from "@react-three/drei";
+import { useGLTF, Bounds, useBounds } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import roomPath from "./room.glb?url";
-import { Select } from "@react-three/postprocessing";
-import { useToggle } from "react-use";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -70,6 +68,7 @@ type RoomProps = {
   onFrameClick?: () => void;
   onTelephoneClick?: () => void;
   onRadioClick?: () => void;
+  children?: React.ReactNode;
 } & JSX.IntrinsicElements["group"];
 
 export default function Room({
@@ -77,13 +76,10 @@ export default function Room({
   onTrashcanClick,
   onFrameClick,
   onRadioClick,
+  children,
   ...other
 }: RoomProps) {
   const { nodes, materials } = useGLTF(roomPath) as GLTFResult;
-  const [isTrashcanHovered, toggleTrashcanHovered] = useToggle(false);
-  const [isRadioHovered, toggleRadioHovered] = useToggle(false);
-  const [isFrameHovered, toggleFrameHovered] = useToggle(false);
-  const [isPhoneHovered, togglePhoneHovered] = useToggle(false);
 
   return (
     <group {...other} dispose={null}>
@@ -169,112 +165,6 @@ export default function Room({
           material={materials.PaletteMaterial002}
         />
       </group>
-      <Select enabled={isPhoneHovered}>
-        <group
-          position={[2.875, 2.024, 1.107]}
-          rotation={[Math.PI, -1.309, Math.PI]}
-          scale={0.14}
-          onPointerOver={togglePhoneHovered}
-          onPointerOut={togglePhoneHovered}
-          onClick={onTelephoneClick}
-        >
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.phone_1.geometry}
-            material={materials.PaletteMaterial003}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.phone_2.geometry}
-            material={materials.PaletteMaterial001}
-          />
-        </group>
-      </Select>
-      <Select enabled={isFrameHovered}>
-        <group
-          position={[1.512, 2.895, 0.995]}
-          rotation={[Math.PI, 0, Math.PI]}
-          scale={[0.448, 0.537, 0.432]}
-          onPointerOver={toggleFrameHovered}
-          onPointerOut={toggleFrameHovered}
-          onClick={onFrameClick}
-        >
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.picture.geometry}
-            material={materials.PaletteMaterial002}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.picture_1.geometry}
-            material={materials["Picture 2"]}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.picture_2.geometry}
-            material={materials.PaletteMaterial003}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.picture_3.geometry}
-            material={materials.PaletteMaterial002}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.picture_4.geometry}
-            material={materials["Picture 2"]}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.picture_5.geometry}
-            material={materials.PaletteMaterial003}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.picture_6.geometry}
-            material={materials.PaletteMaterial002}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.picture_7.geometry}
-            material={materials["Picture 2"]}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.picture_8.geometry}
-            material={materials.PaletteMaterial003}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.picture_9.geometry}
-            material={materials.PaletteMaterial002}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.picture_10.geometry}
-            material={materials["Picture 2"]}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.picture_11.geometry}
-            material={materials.PaletteMaterial003}
-          />
-        </group>
-      </Select>
       <group
         position={[1.986, 3.938, 0.954]}
         rotation={[Math.PI / 2, 0, 0]}
@@ -293,88 +183,198 @@ export default function Room({
           material={materials.PaletteMaterial004}
         />
       </group>
-      <Select enabled={isRadioHovered}>
-        <group
-          position={[0.42, 2.217, 2.639]}
-          rotation={[Math.PI, -1.332, Math.PI]}
-          scale={[0.269, 0.129, 0.087]}
-          onPointerOver={toggleRadioHovered}
-          onPointerOut={toggleRadioHovered}
-          onClick={onRadioClick}
-        >
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.radio_1.geometry}
-            material={materials.PaletteMaterial003}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.radio_2.geometry}
-            material={materials.PaletteMaterial001}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.radio_3.geometry}
-            material={materials.PaletteMaterial001}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.radio_4.geometry}
-            material={materials.PaletteMaterial001}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.radio_5.geometry}
-            material={materials.PaletteMaterial001}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.radio_6.geometry}
-            material={materials.PaletteMaterial001}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.radio_7.geometry}
-            material={materials.PaletteMaterial001}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.radio_8.geometry}
-            material={materials.PaletteMaterial001}
-          />
-        </group>
-      </Select>
-      <Select enabled={isTrashcanHovered}>
-        <group
-          position={[0.471, 1.752, 3.777]}
-          rotation={[Math.PI / 2, 0, 0]}
-          scale={1.47}
-          onPointerOver={toggleTrashcanHovered}
-          onPointerOut={toggleTrashcanHovered}
-        >
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.trashcan_1.geometry}
-            material={materials.PaletteMaterial003}
-            onClick={onTrashcanClick}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.trashcan_2.geometry}
-            material={materials.PaletteMaterial001}
-          />
-        </group>
-      </Select>
+      <Bounds fit clip observe margin={1.2}>
+        <SelectToZoom>
+          <group
+            position={[2.875, 2.024, 1.107]}
+            rotation={[Math.PI, -1.309, Math.PI]}
+            scale={0.14}
+            onClick={onTelephoneClick}
+          >
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.phone_1.geometry}
+              material={materials.PaletteMaterial003}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.phone_2.geometry}
+              material={materials.PaletteMaterial001}
+            />
+          </group>
+
+          <group
+            position={[1.512, 2.895, 0.995]}
+            rotation={[Math.PI, 0, Math.PI]}
+            scale={[0.448, 0.537, 0.432]}
+            onClick={onFrameClick}
+          >
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.picture.geometry}
+              material={materials.PaletteMaterial002}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.picture_1.geometry}
+              material={materials["Picture 2"]}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.picture_2.geometry}
+              material={materials.PaletteMaterial003}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.picture_3.geometry}
+              material={materials.PaletteMaterial002}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.picture_4.geometry}
+              material={materials["Picture 2"]}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.picture_5.geometry}
+              material={materials.PaletteMaterial003}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.picture_6.geometry}
+              material={materials.PaletteMaterial002}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.picture_7.geometry}
+              material={materials["Picture 2"]}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.picture_8.geometry}
+              material={materials.PaletteMaterial003}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.picture_9.geometry}
+              material={materials.PaletteMaterial002}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.picture_10.geometry}
+              material={materials["Picture 2"]}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.picture_11.geometry}
+              material={materials.PaletteMaterial003}
+            />
+          </group>
+
+          <group
+            position={[0.42, 2.217, 2.639]}
+            rotation={[Math.PI, -1.332, Math.PI]}
+            scale={[0.269, 0.129, 0.087]}
+            onClick={onRadioClick}
+          >
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.radio_1.geometry}
+              material={materials.PaletteMaterial003}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.radio_2.geometry}
+              material={materials.PaletteMaterial001}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.radio_3.geometry}
+              material={materials.PaletteMaterial001}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.radio_4.geometry}
+              material={materials.PaletteMaterial001}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.radio_5.geometry}
+              material={materials.PaletteMaterial001}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.radio_6.geometry}
+              material={materials.PaletteMaterial001}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.radio_7.geometry}
+              material={materials.PaletteMaterial001}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.radio_8.geometry}
+              material={materials.PaletteMaterial001}
+            />
+          </group>
+
+          <group
+            position={[0.471, 1.752, 3.777]}
+            rotation={[Math.PI / 2, 0, 0]}
+            scale={1.47}
+          >
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.trashcan_1.geometry}
+              material={materials.PaletteMaterial003}
+              onClick={onTrashcanClick}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.trashcan_2.geometry}
+              material={materials.PaletteMaterial001}
+            />
+          </group>
+        </SelectToZoom>
+      </Bounds>
+    </group>
+  );
+}
+function SelectToZoom({ children }: { children: React.ReactNode }) {
+  const api = useBounds();
+  return (
+    <group
+      onClick={(e) => (
+        e.stopPropagation(), e.delta <= 2 && api.refresh(e.object).fit()
+      )}
+      onPointerMissed={(e) => e.button === 0 && api.refresh().fit()}
+    >
+      {children}
     </group>
   );
 }

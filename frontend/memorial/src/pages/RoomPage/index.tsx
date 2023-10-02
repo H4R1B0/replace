@@ -1,6 +1,11 @@
 import Room from "@components/3d/Room";
 import { Canvas } from "@react-three/fiber";
-import { Stage, PresentationControls } from "@react-three/drei";
+import {
+  Stage,
+  PresentationControls,
+  Sparkles,
+  Cloud,
+} from "@react-three/drei";
 import styles from "./RoomPage.module.css";
 import {
   Selection,
@@ -51,6 +56,19 @@ export default function RoomPage() {
             </Selection>
           </PresentationControls>
         </Stage>
+        <Cloud
+          scale={6}
+          opacity={0.3}
+          depth={10} // Z-dir depth
+          segments={10} // Number of particles
+        />
+        <Sparkles
+          count={80}
+          size={3}
+          position={[0, 0.9, 0]}
+          scale={[10, 10, 10]}
+          speed={0.5}
+        />
       </Canvas>
       <Outlet />
     </div>

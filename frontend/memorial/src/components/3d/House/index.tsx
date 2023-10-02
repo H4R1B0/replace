@@ -152,6 +152,7 @@ export default function House({
           material={materials.PaletteMaterial001}
         />
       </group>
+
       <group
         position={[1.872, 0.307, 6.328]}
         rotation={[Math.PI / 2, 0, 0]}
