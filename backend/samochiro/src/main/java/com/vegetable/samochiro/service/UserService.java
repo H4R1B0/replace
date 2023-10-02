@@ -92,20 +92,22 @@ public class UserService {
 
 	public HouseSearchResponse findHouseByUserId(String userId) {
 		Optional<User> findUser = userRepository.findById(userId);
-		//userId로 유저를 꺼내와서 해당 유저의 닉네임, 방들 조회
+		if (findUser.isEmpty()) {
+			throw new UserNotFoundException(CustomErrorType.USER_NOT_FOUND.getMessage());
+		}
 
+		//userId로 유저를 꺼내와서 해당 유저의 닉네임, 방들 조회
 		List<Room> rooms = findUser.get().getRooms();
 		List<HouseSearchRoomResponse> roomDtoList = new ArrayList<>();
 
-		for(Room r : rooms) {
+		for (Room r : rooms) {
 			HouseSearchRoomResponse roomResponse = new HouseSearchRoomResponse();
 			roomResponse.setTargetName(r.getTargetName());
 			roomResponse.setSequence(r.getSequence());
 			roomDtoList.add(roomResponse);
 		}
 
-		HouseSearchResponse response = new HouseSearchResponse(roomDtoList);
-		return response;
+		return new HouseSearchResponse(roomDtoList);
 	}
 	//집 조회 - 집 1번
 

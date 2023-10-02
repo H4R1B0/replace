@@ -66,17 +66,10 @@ public class UserController {
 
 	@GetMapping("/home")
 	public ResponseEntity<HouseSearchResponse> searchHouseByUserId(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
-		try {
-			String accessToken = authorizationHeader.substring(7);
-			String userId = jwtTokenService.findUserId(accessToken);
+		String userId = headerUtils.getUserId(authorizationHeader);
 
-			HouseSearchResponse house = userService.findHouseByUserId(userId);
-			return ResponseEntity.ok(house);
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.badRequest().build();
-		}
+		HouseSearchResponse house = userService.findHouseByUserId(userId);
+		return ResponseEntity.ok(house);
 	}
 	//집 조회 - 집 1번
 
