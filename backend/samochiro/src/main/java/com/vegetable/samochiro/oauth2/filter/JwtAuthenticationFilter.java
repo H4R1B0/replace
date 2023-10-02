@@ -46,7 +46,6 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
             return; // 필터 체인을 종료합니다.
         }
 
-        System.out.println("토큰 통과");
         chain.doFilter(request, response);
     }
 
