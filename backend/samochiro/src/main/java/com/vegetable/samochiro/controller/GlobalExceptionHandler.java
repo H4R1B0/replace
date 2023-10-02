@@ -30,8 +30,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new CustomErrorResponse(e.getMessage()));
     }
 
-    @ExceptionHandler({Exception.class})
-    public ResponseEntity<CustomErrorResponse> commonBadRequestException(Exception e) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new CustomErrorResponse(CustomErrorType.BAD_REQUEST.getMessage()));
-    }
+//    @ExceptionHandler({Exception.class})
+//    public ResponseEntity<CustomErrorResponse> commonBadRequestException(Exception e) {
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new CustomErrorResponse(CustomErrorType.BAD_REQUEST.getMessage()));
+//    }
 }
