@@ -4,11 +4,6 @@ import Modal from "@components/ui/Modal";
 import Tribute from "@components/3d/Tribute";
 import { Canvas } from "@react-three/fiber";
 import { Stage, PresentationControls } from "@react-three/drei";
-import {
-  Selection,
-  EffectComposer,
-  Outline,
-} from "@react-three/postprocessing";
 import styles from "./TributeDetailPage.module.css";
 import Button from "@components/ui/Button";
 import { useQuery, useMutation } from "@tanstack/react-query";

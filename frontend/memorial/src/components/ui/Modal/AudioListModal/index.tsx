@@ -3,7 +3,6 @@ import Modal, { ModalProps } from "..";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Button from "@components/ui/Button";
-import { v4 as uuidv4 } from "uuid";
 
 export default function AudioListModal({ ...other }: AudioListModalProps) {
   const navigate = useNavigate();
@@ -47,7 +46,7 @@ export default function AudioListModal({ ...other }: AudioListModalProps) {
     /*TODO: 토글로 누르면 audio가 보이게끔 수정하기 */
   }
   const audios = audioList?.voiceItems?.map((audio) => (
-    <div key={uuidv4()}>
+    <div key={audio.voiceId}>
       <div>{audio.registDate}</div>
       <Button onClick={() => handleDelete(audio.voiceId)}>삭제하기</Button>
       <audio controls>

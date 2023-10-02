@@ -44,7 +44,7 @@ html {
   background: linear-gradient(
     0deg,
     rgba(255, 185, 147, 1) 0%,
-    rgba(129, 125, 171, 1) 100%
+    rgb(149, 141, 244) 100%
   );
 
   display: flex;
