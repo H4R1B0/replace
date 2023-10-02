@@ -4,11 +4,6 @@ import Modal from "@components/ui/Modal";
 import Tribute from "@components/3d/Tribute";
 import { Canvas } from "@react-three/fiber";
 import { Stage, PresentationControls } from "@react-three/drei";
-import {
-  Selection,
-  EffectComposer,
-  Outline,
-} from "@react-three/postprocessing";
 import styles from "./TributeDetailPage.module.css";
 import Button from "@components/ui/Button";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -178,18 +173,7 @@ export default function TributeDetailPage() {
             azimuth={[-Math.PI / 8, Math.PI / 8]}
           >
             <pointLight position={[90, 10, 10]} />
-            <Selection>
-              <EffectComposer multisampling={8} autoClear={false}>
-                <Outline
-                  blur
-                  visibleEdgeColor={0xffffff}
-                  edgeStrength={100}
-                  width={1000}
-                />
-              </EffectComposer>
-
-              <Tribute />
-            </Selection>
+            <Tribute />
           </PresentationControls>
         </Stage>
       </Canvas>

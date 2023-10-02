@@ -7,12 +7,6 @@ import {
   Cloud,
 } from "@react-three/drei";
 import styles from "./RoomPage.module.css";
-import {
-  Selection,
-  EffectComposer,
-  Outline,
-} from "@react-three/postprocessing";
-
 import { Outlet, useNavigate } from "react-router-dom";
 
 export default function RoomPage() {
@@ -36,24 +30,15 @@ export default function RoomPage() {
             azimuth={[-Math.PI / 4, Math.PI / 4]}
           >
             {/* <pointLight position={[90, 10, 10]} /> */}
-            <Selection>
-              <EffectComposer multisampling={8} autoClear={false}>
-                <Outline
-                  blur
-                  visibleEdgeColor={0xffffff}
-                  edgeStrength={100}
-                  width={1000}
-                />
-              </EffectComposer>
-              {/*TODO: onTrashcanClick에 전달하는 함수 상단에 정의하기 */}
-              {/* TODO: callback 함수 대신에 route transition 쓰기 */}
-              <Room
-                onTrashcanClick={() => navigate("delete")}
-                onFrameClick={() => navigate("photos")}
-                onTelephoneClick={() => navigate("audio")}
-                onRadioClick={() => navigate("radio")}
-              />
-            </Selection>
+
+            {/*TODO: onTrashcanClick에 전달하는 함수 상단에 정의하기 */}
+            {/* TODO: callback 함수 대신에 route transition 쓰기 */}
+            <Room
+              onTrashcanClick={() => navigate("delete")}
+              onFrameClick={() => navigate("photos")}
+              onTelephoneClick={() => navigate("audio")}
+              onRadioClick={() => navigate("radio")}
+            />
           </PresentationControls>
         </Stage>
         <Cloud

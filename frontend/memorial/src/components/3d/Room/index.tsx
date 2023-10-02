@@ -4,9 +4,15 @@ Command: npx gltfjsx@6.2.13 room.glb -t -i -T --shadows -j
 Files: room.glb [6.57MB] > room-transformed.glb [1.71MB] (74%)
 */
 import * as THREE from "three";
-import { useGLTF, Bounds, useBounds } from "@react-three/drei";
+import { useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import roomPath from "./room.glb?url";
+import {
+  Selection,
+  EffectComposer,
+  Outline,
+  Select,
+} from "@react-three/postprocessing";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -82,109 +88,117 @@ export default function Room({
   const { nodes, materials } = useGLTF(roomPath) as GLTFResult;
 
   return (
-    <group {...other} dispose={null}>
-      <group position={[1.641, 1.342, 2.624]} scale={0.411}>
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.floor_1.geometry}
-          material={materials.PaletteMaterial001}
+    <Selection>
+      <EffectComposer multisampling={8} autoClear={false}>
+        <Outline
+          blur
+          visibleEdgeColor={0xff2a55}
+          hiddenEdgeColor={0xff2a55}
+          edgeStrength={500}
         />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.floor_2.geometry}
-          material={materials.PaletteMaterial001}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.floor_3.geometry}
-          material={materials.PaletteMaterial002}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.floor_4.geometry}
-          material={materials.PaletteMaterial001}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.floor_5.geometry}
-          material={materials["Blanket pattern"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.floor_6.geometry}
-          material={materials.PaletteMaterial001}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.floor_7.geometry}
-          material={materials.Floor}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.floor_8.geometry}
-          material={materials.PaletteMaterial001}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.floor_9.geometry}
-          material={materials.Emission}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.floor_10.geometry}
-          material={materials.PaletteMaterial001}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.floor_11.geometry}
-          material={materials.PaletteMaterial001}
-        />
-      </group>
-      <group position={[0.361, 2.065, 3.159]} scale={0.411}>
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.tableLamp_1.geometry}
-          material={materials.PaletteMaterial001}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.tableLamp_2.geometry}
-          material={materials.PaletteMaterial002}
-        />
-      </group>
-      <group
-        position={[1.986, 3.938, 0.954]}
-        rotation={[Math.PI / 2, 0, 0]}
-        scale={2.193}
-      >
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.wallLight_1.geometry}
-          material={materials["Material.021"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.wallLight_2.geometry}
-          material={materials.PaletteMaterial004}
-        />
-      </group>
-      <Bounds fit clip observe margin={1.2}>
-        <SelectToZoom>
+      </EffectComposer>
+      <group {...other} dispose={null}>
+        <group position={[1.641, 1.342, 2.624]} scale={0.411}>
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.floor_1.geometry}
+            material={materials.PaletteMaterial001}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.floor_2.geometry}
+            material={materials.PaletteMaterial001}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.floor_3.geometry}
+            material={materials.PaletteMaterial002}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.floor_4.geometry}
+            material={materials.PaletteMaterial001}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.floor_5.geometry}
+            material={materials["Blanket pattern"]}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.floor_6.geometry}
+            material={materials.PaletteMaterial001}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.floor_7.geometry}
+            material={materials.Floor}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.floor_8.geometry}
+            material={materials.PaletteMaterial001}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.floor_9.geometry}
+            material={materials.Emission}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.floor_10.geometry}
+            material={materials.PaletteMaterial001}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.floor_11.geometry}
+            material={materials.PaletteMaterial001}
+          />
+        </group>
+        <group position={[0.361, 2.065, 3.159]} scale={0.411}>
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.tableLamp_1.geometry}
+            material={materials.PaletteMaterial001}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.tableLamp_2.geometry}
+            material={materials.PaletteMaterial002}
+          />
+        </group>
+        <group
+          position={[1.986, 3.938, 0.954]}
+          rotation={[Math.PI / 2, 0, 0]}
+          scale={2.193}
+        >
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.wallLight_1.geometry}
+            material={materials["Material.021"]}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.wallLight_2.geometry}
+            material={materials.PaletteMaterial004}
+          />
+        </group>
+        <Select enabled={true}>
           <group
             position={[2.875, 2.024, 1.107]}
             rotation={[Math.PI, -1.309, Math.PI]}
@@ -204,7 +218,8 @@ export default function Room({
               material={materials.PaletteMaterial001}
             />
           </group>
-
+        </Select>
+        <Select enabled={true}>
           <group
             position={[1.512, 2.895, 0.995]}
             rotation={[Math.PI, 0, Math.PI]}
@@ -284,7 +299,8 @@ export default function Room({
               material={materials.PaletteMaterial003}
             />
           </group>
-
+        </Select>
+        <Select enabled={true}>
           <group
             position={[0.42, 2.217, 2.639]}
             rotation={[Math.PI, -1.332, Math.PI]}
@@ -340,7 +356,8 @@ export default function Room({
               material={materials.PaletteMaterial001}
             />
           </group>
-
+        </Select>
+        <Select enabled={true}>
           <group
             position={[0.471, 1.752, 3.777]}
             rotation={[Math.PI / 2, 0, 0]}
@@ -360,21 +377,8 @@ export default function Room({
               material={materials.PaletteMaterial001}
             />
           </group>
-        </SelectToZoom>
-      </Bounds>
-    </group>
-  );
-}
-function SelectToZoom({ children }: { children: React.ReactNode }) {
-  const api = useBounds();
-  return (
-    <group
-      onClick={(e) => (
-        e.stopPropagation(), e.delta <= 2 && api.refresh(e.object).fit()
-      )}
-      onPointerMissed={(e) => e.button === 0 && api.refresh().fit()}
-    >
-      {children}
-    </group>
+        </Select>
+      </group>
+    </Selection>
   );
 }

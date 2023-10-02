@@ -9,11 +9,7 @@ import {
   Cloud,
 } from "@react-three/drei";
 import styles from "./HousePage.module.css";
-import {
-  Selection,
-  EffectComposer,
-  Outline,
-} from "@react-three/postprocessing";
+import { Bloom } from "@react-three/postprocessing";
 
 import { useToggle } from "react-use";
 import { useState } from "react";
@@ -87,6 +83,12 @@ export default function HousePage() {
         camera={{ fov: 50, position: [0, 0, 8] }}
         style={{ touchAction: "none" }}
       >
+        <Bloom
+          luminanceThreshold={0}
+          mipmapBlur
+          luminanceSmoothing={0.0}
+          intensity={6}
+        />
         <Stage environment="city" intensity={0.5} adjustCamera shadows={false}>
           <PresentationControls
             global
@@ -95,21 +97,10 @@ export default function HousePage() {
             polar={[0, Math.PI / 4]}
             azimuth={[-Math.PI / 4, Math.PI / 4]}
           >
-            <Selection>
-              <EffectComposer multisampling={8} autoClear={false}>
-                <Outline
-                  blur
-                  visibleEdgeColor={0xffffff}
-                  edgeStrength={100}
-                  width={1000}
-                />
-              </EffectComposer>
-
-              <House
-                onWindowClick={handleWindowClick}
-                isWindowLit={isWindowLit}
-              />
-            </Selection>
+            <House
+              onWindowClick={handleWindowClick}
+              isWindowLit={isWindowLit}
+            />
           </PresentationControls>
         </Stage>
         <Cloud
