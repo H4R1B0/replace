@@ -42,7 +42,9 @@ public class TelService {
 
         String currentTime = LocalDateTime.now().toString();
         String fileName = currentTime + AUDIO_KEYWORD + audioFile.getOriginalFilename();
+        System.out.println("fileName = " + fileName);
         String audioUrl = gcsService.uploadFile(fileName, audioFile);
+        System.out.println("audioUrl = " + audioUrl);
         Voice voice = Voice.builder()
                 .url(audioUrl)
                 .name(fileName)
