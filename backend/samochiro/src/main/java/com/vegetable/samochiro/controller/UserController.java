@@ -59,15 +59,8 @@ public class UserController {
 
 	@GetMapping
 	public ResponseEntity<NicknameSearchResponse> searchUserByNickname(@RequestParam String nickname) {
-		try {
-			NicknameSearchResponse findUser = userService.findUserByNickname(nickname);
-			//결과가 없는 경우 NicknameSearchResponse가 null인지 테스트해보기
-			return ResponseEntity.ok(findUser);
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.badRequest().build();
-		}
+		NicknameSearchResponse findUser = userService.findUserByNickname(nickname);
+		return ResponseEntity.status(HttpStatus.OK).body(findUser);
 	}
 	//닉네임 검색 - 유저 7번
 

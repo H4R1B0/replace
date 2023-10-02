@@ -82,12 +82,10 @@ public class UserService {
 		Optional<User> findUser = userRepository.findByNickname(nickname);
 
 		if(findUser.isPresent()) {
-			NicknameSearchResponse response = new NicknameSearchResponse(findUser.get().getNickname());
-			return response;
+			return new NicknameSearchResponse(findUser.get().getNickname());
 		}
 		else {
-			NicknameSearchResponse response = new NicknameSearchResponse();
-			return response;
+			return new NicknameSearchResponse();
 		}
 	}
 	//닉네임 검색 - 유저 7번
