@@ -6,7 +6,6 @@ import {
   Sparkles,
   Cloud,
   Environment,
-  Stars,
 } from "@react-three/drei";
 import styles from "./RoomPage.module.css";
 import { Outlet, useNavigate } from "react-router-dom";
