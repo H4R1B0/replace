@@ -116,7 +116,6 @@ public class AIService {
             }
             // 응답 확인
             int responseCode = connection.getResponseCode();
-            System.out.println("Response Code : " + responseCode);
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 System.out.println("Files uploaded successfully!");
             } else {
