@@ -24,22 +24,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/alarm")
 public class AlarmController {
 
-	private AlarmService alarmService;
+	private final AlarmService alarmService;
 	private final HeaderUtils headerUtils;
 	
 	@GetMapping
 	public ResponseEntity<Response> getAlarmList(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
-		try {
-			String userId = headerUtils.getUserId(authorizationHeader);
-			List<AlarmListResponse> alarmList = alarmService.getAlarmList(userId);
-			int total = alarmList.size();
-			return ResponseEntity.ok(new AlarmController.Response(alarmList, total));
-
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.badRequest().body(new AlarmController.Response("잘못된 요청입니다."));
-		}
+		String userId = headerUtils.getUserId(authorizationHeader);
+		List<AlarmListResponse> alarmList = alarmService.getAlarmList(userId);
+		int total = alarmList.size();
+		return ResponseEntity.ok(new Response(alarmList, total));
 	}
 	//알람 리스트 조회 - 알람 2번
 

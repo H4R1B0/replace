@@ -17,7 +17,7 @@ public class AlarmService {
 	private final AlarmRepository alarmRepository;
 
 	public List<AlarmListResponse> getAlarmList(String userId) {
-		List<Alarm> alarmList = alarmRepository.findAllByUserId(userId).get();
+		List<Alarm> alarmList = alarmRepository.findAllByUserId(userId);
 		List<AlarmListResponse> responseList = new ArrayList<>();
 
 		for (Alarm alarm : alarmList) {

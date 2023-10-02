@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 public interface AlarmRepository extends JpaRepository<Alarm, Long> {
 
 	@Query("select a from Alarm a where a.user.id = :userId")
-	Optional<List<Alarm>> findAllByUserId(@Param("userId") String userId);
+	List<Alarm> findAllByUserId(@Param("userId") String userId);
 	//사용자 별 알람 리스트 조회
 
 	@Modifying

@@ -74,12 +74,7 @@ public class UserService {
 
 	public boolean findDuplicateNickname(String nickname) {
 		Optional<User> findUser = userRepository.findByNickname(nickname);
-		if(findUser.isPresent()) {
-			return true; //중복
-		}
-		else {
-			return false; //중복 x
-		}
+		return findUser.isPresent();
 	}
 	//닉네임 중복 검사 - 유저 6번
 
@@ -87,49 +82,51 @@ public class UserService {
 		Optional<User> findUser = userRepository.findByNickname(nickname);
 
 		if(findUser.isPresent()) {
-			NicknameSearchResponse response = new NicknameSearchResponse(findUser.get().getNickname());
-			return response;
+			return new NicknameSearchResponse(findUser.get().getNickname());
 		}
 		else {
-			NicknameSearchResponse response = new NicknameSearchResponse();
-			return response;
+			return new NicknameSearchResponse();
 		}
 	}
 	//닉네임 검색 - 유저 7번
 
 	public HouseSearchResponse findHouseByUserId(String userId) {
 		Optional<User> findUser = userRepository.findById(userId);
-		//userId로 유저를 꺼내와서 해당 유저의 닉네임, 방들 조회
+		if (findUser.isEmpty()) {
+			throw new UserNotFoundException(CustomErrorType.USER_NOT_FOUND.getMessage());
+		}
 
+		//userId로 유저를 꺼내와서 해당 유저의 닉네임, 방들 조회
 		List<Room> rooms = findUser.get().getRooms();
 		List<HouseSearchRoomResponse> roomDtoList = new ArrayList<>();
 
-		for(Room r : rooms) {
+		for (Room r : rooms) {
 			HouseSearchRoomResponse roomResponse = new HouseSearchRoomResponse();
 			roomResponse.setTargetName(r.getTargetName());
 			roomResponse.setSequence(r.getSequence());
 			roomDtoList.add(roomResponse);
 		}
 
-		HouseSearchResponse response = new HouseSearchResponse(roomDtoList);
-		return response;
+		return new HouseSearchResponse(roomDtoList);
 	}
 	//집 조회 - 집 1번
 
 	public HouseSearchResponse findHouseByNickname(String nickname) {
-		User user = userRepository.findByNickname(nickname).get();
-		List<Room> rooms = user.getRooms();
+		Optional<User> findUser = userRepository.findByNickname(nickname);
+		if (findUser.isEmpty()) {
+			throw new UserNotFoundException(CustomErrorType.USER_NOT_FOUND.getMessage());
+		}
+		List<Room> rooms = findUser.get().getRooms();
 		List<HouseSearchRoomResponse> roomDtoList = new ArrayList<>();
-		
-		for(Room r : rooms) {
+
+		for (Room r : rooms) {
 			HouseSearchRoomResponse roomResponse = new HouseSearchRoomResponse();
 			roomResponse.setTargetName(r.getTargetName());
 			roomResponse.setSequence(r.getSequence());
 			roomDtoList.add(roomResponse);
 		}
 
-		HouseSearchResponse response = new HouseSearchResponse(roomDtoList);
-		return response;
+		return new HouseSearchResponse(roomDtoList);
 	}
 	//남 집 조회 - 집 2번
 	
