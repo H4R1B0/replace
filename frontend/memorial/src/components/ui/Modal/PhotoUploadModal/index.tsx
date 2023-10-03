@@ -13,7 +13,6 @@ export default function PhotoUploadModal({ ...other }: PhotoUploadModalProps) {
   const navigate = useNavigate();
   const { sequence } = useParams();
   const roomSequence = parseInt(sequence ?? "");
-
   const inputEl = useRef<HTMLInputElement | null>(null);
   const [imageSrc, setImageSrc] = useState<string>("");
   const queryClient = useQueryClient();

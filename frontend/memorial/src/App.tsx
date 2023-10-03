@@ -52,6 +52,7 @@ const RadioOptionModal = lazy(
   () => import("@components/ui/Modal/RadioOptionModal")
 );
 const AIOptionModal = lazy(() => import("@components/ui/Modal/AIOptionModal"));
+const AITrainModal = lazy(() => import("@components/ui/Modal/AITrainModal"));
 
 export default function App() {
   playBGM();
@@ -115,6 +116,7 @@ export default function App() {
                 <Route path="radio" element={<RadioOptionModal />} />
                 <Route path="radio/list" element={<AudioListModal />} />
                 <Route path="radio/ai" element={<AIOptionModal />} />
+                <Route path="radio/list/ai/train" element={<AITrainModal />} />
               </Route>
               <Route path={PATH.TRIBUTE} element={<TributePage />} />
               <Route

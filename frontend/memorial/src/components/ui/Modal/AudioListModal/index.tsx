@@ -58,6 +58,7 @@ export default function AudioListModal({ ...other }: AudioListModalProps) {
   return (
     <Modal {...other} buttonLabel="close" onClose={() => navigate("..")}>
       {audios}
+      <Button onClick={() => navigate("ai/train")}>AI 학습하기</Button>
     </Modal>
   );
 }
