@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 // import { setUser } from "store/slices/authSlice";
 // import { useDispatch } from "react-redux";
 
+import Toast from "react-hot-toast";
+
 export default function NicknamePage() {
   const BASE_URL = import.meta.env.VITE_APP_API_URL;
   //   const accessToken = sessionStorage.getItem("accessToken");
@@ -28,7 +30,7 @@ export default function NicknamePage() {
       method: "POST",
       headers: {
         Authorization: `Bearer ${accessToken}`,
-        // "Content-Type": "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         nickname: nickname,
@@ -36,7 +38,7 @@ export default function NicknamePage() {
     })
       .then((response) => response.json())
       .then((result) => {
-        console.log("닉네임 중복 확인 결과:", result);
+        // console.log("닉네임 중복 확인 결과:", result);
         if (result) {
           // 중복일 경우 메시지 설정
           setDuplicateMessage("이미 사용중인 닉네임입니다.");
@@ -45,8 +47,8 @@ export default function NicknamePage() {
           setDuplicateMessage("사용 가능한 닉네임입니다.");
         }
       })
-      .catch((error) => {
-        console.error("닉네임 중복 확인 실패:", error);
+      .catch(() => {
+        // console.error("닉네임 중복 확인 실패:", error);
       });
   };
 
@@ -68,6 +70,7 @@ export default function NicknamePage() {
           navigate(`/house/${nickname}`);
           // 닉네임 저장
           sessionStorage.setItem("nickname", nickname);
+          Toast.success("리플레이스에 오신 것을 환영합니다.");
 
           // 기존 사용자 정보를 리덕스에 저장
           // dispatch(
@@ -78,7 +81,7 @@ export default function NicknamePage() {
           //   })
           // );
         } else {
-          alert("닉네임 저장 실패");
+          Toast.error("닉네임 저장에 실패했습니다.");
         }
       })
       .catch((error) => {
