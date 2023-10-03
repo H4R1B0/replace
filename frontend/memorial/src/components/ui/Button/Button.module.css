@@ -74,3 +74,15 @@ button {
   font-size: 1rem;
   padding: 0 10%;
 }
+
+.nickname {
+  border-radius: 0.6rem;
+  min-width: 30%;
+  width: auto;
+  height: 2rem;
+  line-height: 2rem;
+  text-align: center;
+  font-family: "SUITE-Bold";
+  font-size: 0.7rem;
+  /* padding: 0 10%; */
+}
