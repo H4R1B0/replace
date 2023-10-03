@@ -83,6 +83,18 @@ export default function HousePage() {
 
   return (
     <div className={styles.wrapper}>
+      <div
+        className={styles.neonText}
+        onClick={() => navigate(`/payphone/${nickname}`)}
+      >
+        공중전화로 가기 ⟫
+      </div>
+      <div
+        className={styles.neonText}
+        onClick={() => navigate(`/tribute/main`)}
+      >
+        헌화하러 가기 ⟫
+      </div>
       <Canvas
         flat
         dpr={[1, 2]}
