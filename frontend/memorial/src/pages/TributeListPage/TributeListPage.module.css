@@ -20,6 +20,14 @@
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
 }
+.listWrapper::-webkit-scrollbar {
+  width: 6px;
+}
+
+.listWrapper::-webkit-scrollbar-thumb {
+  background: #fbc6c6;
+  border-radius: 45px;
+}
 
 .trributeStatus {
   display: flex;

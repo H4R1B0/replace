@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchAIAudio } from "@apis/audio";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function AIOptionModal({ ...other }: AIOptionModalProps) {
   const navigate = useNavigate();
@@ -12,14 +13,14 @@ export default function AIOptionModal({ ...other }: AIOptionModalProps) {
   const roomSequence = parseInt(sequence);
   const [situation, setSituation] = useState("");
 
-  const {
-    isLoading,
-    isError,
-    data: AIResponse,
-  } = useQuery({
+  const { data: AIResponse } = useQuery({
     queryKey: ["AIResponse", roomSequence, situation],
     queryFn: () => fetchAIAudio(roomSequence, situation),
     enabled: !!situation,
+    retry: 0,
+    onError: () => {
+      toast.error("아직 학습된 목소리가 없습니다");
+    },
   });
 
   const AIVoice = (
@@ -27,9 +28,6 @@ export default function AIOptionModal({ ...other }: AIOptionModalProps) {
       <source src={AIResponse?.voiceFileUrl} type="audio/wav" />
     </audio>
   );
-
-  if (isLoading) console.log("loading");
-  if (isError) console.log("error");
 
   // TODO: 만약에 AIResponse가 없다면, 없다는 상황 하나 만들기, 버튼 눌렀을때 AIVoice가 나오도록 처리하기
   return (

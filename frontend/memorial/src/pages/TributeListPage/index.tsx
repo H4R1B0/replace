@@ -46,7 +46,7 @@ export default function TributeListPage() {
 
   // 선택한 옵션에 따라 보여줄 헌화 리스트
   const [wreathList, setWreathList] = useState<WreathData>({ data: [] });
-  console.log("gg", myWreathList);
+  console.log("gg", allWreathList);
   // fetch 관련, 추후 옮길 것.
   const { isError: isTributeListError, error: tributeListError } = useQuery(
     ["tributeList"],

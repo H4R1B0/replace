@@ -7,6 +7,7 @@ import { useRef, useState } from "react";
 import { HiPhoto } from "react-icons/hi2";
 import Modal, { ModalProps } from "..";
 import { useParams, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function PhotoUploadModal({ ...other }: PhotoUploadModalProps) {
   const navigate = useNavigate();
@@ -22,7 +23,13 @@ export default function PhotoUploadModal({ ...other }: PhotoUploadModalProps) {
     mutationFn: uploadSinglePhoto,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["photoList", roomSequence] });
-      console.log("upload success");
+      toast.success("사진이 성공적으로 업로드 되었습니다");
+      navigate("..");
+    },
+    onError: (error: Error) => {
+      if (error.message === "400") {
+        toast.error("사진 업로드에 실패하였습니다");
+      }
     },
   });
 
@@ -67,7 +74,9 @@ export default function PhotoUploadModal({ ...other }: PhotoUploadModalProps) {
           onChange={handleFileChange}
         />
         <Button disabled={imageSrc === ""}>Upload</Button>
-        <Button onClick={() => navigate(-1)}>뒤로가기</Button>
+        <Button type="button" onClick={() => navigate(-1)}>
+          뒤로가기
+        </Button>
       </form>
     </Modal>
   );

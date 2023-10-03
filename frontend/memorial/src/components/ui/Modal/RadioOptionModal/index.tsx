@@ -6,7 +6,6 @@ export default function RadioOptionModal({ ...other }: RadioOptionModalProps) {
   const navigate = useNavigate();
   return (
     <Modal {...other} buttonLabel="close" onClose={() => navigate("..")}>
-      <p>RadioOptionModal</p>
       <Button onClick={() => navigate("list")}>음성 파일 리스트 보기 </Button>
       <Button onClick={() => navigate("ai")}>AI 학습 듣기 </Button>
     </Modal>
