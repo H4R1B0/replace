@@ -71,7 +71,7 @@ public class AIService {
 
         List<Blob> blobs = new ArrayList<>();
         try {
-            URL url = new URL(serverUrl);
+            URL url = new URL(serverUrl+"/ai");
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -91,12 +91,14 @@ public class AIService {
                 dos.writeBytes("Content-Disposition: form-data; name=\"roomUuid\"\r\n");
                 dos.writeBytes("\r\n");
                 dos.writeBytes(roomUuid + "\r\n");
+                System.out.println("roomUuid = " + roomUuid);
 
                 // 문자열 파트 2 전송
                 dos.writeBytes("--" + BOUNDARY + "\r\n");
                 dos.writeBytes("Content-Disposition: form-data; name=\"gender\"\r\n");
                 dos.writeBytes("\r\n");
                 dos.writeBytes(gender + "\r\n");
+                System.out.println("gender = " + gender);
 
                 for (Blob blob : blobs) {
                     // 파일 파트 헤더 작성
