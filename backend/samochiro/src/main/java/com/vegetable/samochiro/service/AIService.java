@@ -78,6 +78,9 @@ public class AIService {
             connection.setRequestMethod("POST");
             connection.setDoOutput(true);
             connection.setDoInput(true);
+            //20231004 추가
+            connection.setRequestProperty("Connection", "Keep-Alive");
+            connection.setRequestProperty("Cache-Control", "no-cache");
             connection.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + BOUNDARY);
 
             for (Voice voice : voices) {
