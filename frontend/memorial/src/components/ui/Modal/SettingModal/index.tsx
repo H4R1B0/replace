@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
+// import { useMutation } from "@tanstack/react-query";
 
 import Modal from "@components/ui/Modal";
 import Toast from "react-hot-toast";
 
-import { logout, signout } from "@apis/user";
+// import { logout, signout } from "@apis/user";
 import { BgmControler } from "@components/ui/BgmControler";
 
 type SettingModalProps = {
@@ -17,30 +17,30 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
   const BASE_URL = import.meta.env.VITE_APP_API_URL;
   const { toggleBGM, isPlaying } = BgmControler();
 
-  const handleLogoutMutation = useMutation({
-    mutationFn: logout,
-    onSuccess: () => {
-      sessionStorage.removeItem("accessToken");
-      sessionStorage.removeItem("nickname");
-    },
-    onError: (error) => {
-      console.log(error);
-      Toast.error("로그아웃에 실패했습니다.");
-    },
-  });
+  // const handleLogoutMutation = useMutation({
+  //   mutationFn: logout,
+  //   onSuccess: () => {
+  //     sessionStorage.removeItem("accessToken");
+  //     sessionStorage.removeItem("nickname");
+  //   },
+  //   onError: (error) => {
+  //     console.log(error);
+  //     Toast.error("로그아웃에 실패했습니다.");
+  //   },
+  // });
 
-  const handleLogout = () => {
-    handleLogoutMutation.mutate();
-    onClose();
-    navigate("/");
-    Toast.success("로그아웃 되었습니다.");
-  };
-  if (handleLogoutMutation.isLoading) {
-    Toast.loading("로그아웃 중...");
-  }
-  if (handleLogoutMutation.isError) {
-    Toast.error("로그아웃에 실패했습니다.");
-  }
+  // const handleLogout = () => {
+  //   handleLogoutMutation.mutate();
+  //   onClose();
+  //   navigate("/");
+  //   Toast.success("로그아웃 되었습니다.");
+  // };
+  // if (handleLogoutMutation.isLoading) {
+  //   Toast.loading("로그아웃 중...");
+  // }
+  // if (handleLogoutMutation.isError) {
+  //   Toast.error("로그아웃에 실패했습니다.");
+  // }
 
   const handleLog = () => {
     fetch(`${BASE_URL}/user`, {
@@ -65,31 +65,31 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
       });
   };
 
-  const handleSignoutMutation = useMutation({
-    mutationFn: signout,
-    onSuccess: () => {
-      sessionStorage.removeItem("accessToken");
-      sessionStorage.removeItem("nickname");
+  // const handleSignoutMutation = useMutation({
+  //   mutationFn: signout,
+  //   onSuccess: () => {
+  //     sessionStorage.removeItem("accessToken");
+  //     sessionStorage.removeItem("nickname");
 
-      Toast.success("회원탈퇴 되었습니다.");
-    },
-    onError: (error) => {
-      console.log(error);
-      Toast.error("회원탈퇴에 실패했습니다.");
-    },
-  });
+  //     Toast.success("회원탈퇴 되었습니다.");
+  //   },
+  //   onError: (error) => {
+  //     console.log(error);
+  //     Toast.error("회원탈퇴에 실패했습니다.");
+  //   },
+  // });
 
-  const handleSignout = () => {
-    handleSignoutMutation.mutate();
-    onClose();
-    navigate("/");
-  };
-  if (handleSignoutMutation.isLoading) {
-    Toast.loading("회원탈퇴 중...");
-  }
-  if (handleSignoutMutation.isError) {
-    Toast.error("회원탈퇴에 실패했습니다.");
-  }
+  // const handleSignout = () => {
+  //   handleSignoutMutation.mutate();
+  //   onClose();
+  //   navigate("/");
+  // };
+  // if (handleSignoutMutation.isLoading) {
+  //   Toast.loading("회원탈퇴 중...");
+  // }
+  // if (handleSignoutMutation.isError) {
+  //   Toast.error("회원탈퇴에 실패했습니다.");
+  // }
 
   const handleSign = () => {
     fetch(`${BASE_URL}/user/me`, {
