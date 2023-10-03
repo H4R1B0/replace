@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 // import { useDispatch } from "react-redux";
 
 import PATH from "@constants/path";
+import Spinner from "@components/ui/Spinner";
 
 export default function RedirectKakaoPage() {
   const navigate = useNavigate();
@@ -62,8 +63,7 @@ export default function RedirectKakaoPage() {
 
   return (
     <div>
-      <h1>Redirect 페이지</h1>
-      <p>카카오 로그인 중.../ 차후 로딩 페이지와 연결하기</p>
+      <Spinner />
     </div>
   );
 }

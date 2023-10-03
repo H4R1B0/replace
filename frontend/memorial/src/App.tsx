@@ -1,7 +1,5 @@
 import { lazy, Suspense, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { PiBellDuotone, PiGearDuotone } from "react-icons/pi";
-import { LiaSearchSolid } from "react-icons/lia";
 
 import PATH from "@constants/path";
 import NotFoundPage from "@pages/NotFoundPage";
@@ -9,6 +7,7 @@ import "./App.css";
 import { Toaster } from "react-hot-toast";
 // import "@assets/fonts/font.css";
 import { playBGM } from "@utils/useSound";
+import Header from "@components/ui/Header";
 
 const MainPage = lazy(() => import("@pages/MainPage"));
 const RoomPage = lazy(() => import("@pages/RoomPage"));
@@ -53,10 +52,10 @@ const RadioOptionModal = lazy(
 );
 const AIOptionModal = lazy(() => import("@components/ui/Modal/AIOptionModal"));
 const AITrainModal = lazy(() => import("@components/ui/Modal/AITrainModal"));
+// const SettingModal = lazy(() => import("@components/ui/Modal/SettingModal"));
 
 export default function App() {
   playBGM();
-
   function handleResize() {
     const vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty("--vh", `${vh}px`);
@@ -74,7 +73,7 @@ export default function App() {
     <>
       <Toaster />
       <div className="viewport">
-        <nav>
+        {/* <nav>
           <button title="Notifications">
             <PiBellDuotone />
           </button>
@@ -85,8 +84,9 @@ export default function App() {
           <button title="Settings">
             <PiGearDuotone />
           </button>
-        </nav>
+        </nav> */}
         <Router>
+          <Header />
           <Suspense
             fallback={
               <div className="loading-wrapper">
@@ -101,6 +101,7 @@ export default function App() {
             <Routes>
               <Route path={PATH.ROOT} element={<MainPage />} />
               <Route path={PATH.MAIN} element={<MainPage />} />
+              {/* <Route path="settings" element={<SettingModal />} /> */}
               <Route path={PATH.ROOM} element={<RoomPage />}>
                 <Route path="photos" element={<PhotoGridModal />} />
                 <Route
