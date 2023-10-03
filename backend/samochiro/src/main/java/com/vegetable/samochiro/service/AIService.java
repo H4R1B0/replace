@@ -76,6 +76,7 @@ public class AIService {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
             connection.setRequestMethod("POST");
+            connection.setUseCaches(false);
             connection.setDoOutput(true);
             connection.setDoInput(true);
             //20231004 추가
