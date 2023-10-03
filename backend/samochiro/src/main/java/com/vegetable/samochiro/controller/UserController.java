@@ -3,6 +3,7 @@ package com.vegetable.samochiro.controller;
 import com.vegetable.samochiro.dto.common.MessageResponse;
 import com.vegetable.samochiro.dto.user.HouseSearchResponse;
 import com.vegetable.samochiro.dto.user.IsChangeNicknameResponse;
+import com.vegetable.samochiro.dto.user.NicknameDuplicateRequest;
 import com.vegetable.samochiro.dto.user.NicknameSearchResponse;
 import com.vegetable.samochiro.dto.user.NicknameUpdateRequest;
 import com.vegetable.samochiro.dto.user.NicknameUpdateResponse;
@@ -51,8 +52,8 @@ public class UserController {
 	//닉네임 설정 - 유저 5번
 
 	@PostMapping("/duplicate")
-	public ResponseEntity<Boolean> checkDuplicateNickname(@RequestBody String nickname) {
-		boolean isDuplicate = userService.findDuplicateNickname(nickname);
+	public ResponseEntity<Boolean> checkDuplicateNickname(@RequestBody NicknameDuplicateRequest request) {
+		boolean isDuplicate = userService.findDuplicateNickname(request.getNickname());
 		return ResponseEntity.status(HttpStatus.OK).body(isDuplicate);
 	}
 	//닉네임 중복 검사 - 유저 6번
