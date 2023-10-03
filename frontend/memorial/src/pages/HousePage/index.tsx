@@ -83,6 +83,7 @@ export default function HousePage() {
         linear
         shadows
       >
+        <ambientLight color={0xffc845} intensity={0.5} position={[0, 40, 0]} />
         <Bloom
           luminanceThreshold={0}
           mipmapBlur
@@ -106,8 +107,8 @@ export default function HousePage() {
         <Cloud
           scale={6}
           opacity={0.3}
-          depth={10} // Z-dir depth
-          segments={10} // Number of particles
+          depth={-12} // Z-dir depth
+          segments={20} // Number of particles
         />
         <Sparkles
           count={40}
