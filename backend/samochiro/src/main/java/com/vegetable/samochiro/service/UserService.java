@@ -57,7 +57,9 @@ public class UserService {
 		findUser.get().setNickname(updateRequest.getNickname());
 		findUser.get().setGender(updateRequest.getGender());
 		findUser.get().setChange(true);
-		findUser.get().getRooms().get(0).setTargetName(findUser.get().getNickname());
+		Optional<Room> findRoom = roomRepository.findBySequenceAndUserId(1, userId);
+		findRoom.get().setTargetName(updateRequest.getNickname());
+//		findUser.get().getRooms().get(0).setTargetName(findUser.get().getNickname());
 		//update
 
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
