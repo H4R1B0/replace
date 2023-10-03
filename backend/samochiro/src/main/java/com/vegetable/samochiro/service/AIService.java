@@ -59,12 +59,15 @@ public class AIService {
         if (findRoom.isEmpty())
             throw new RoomNotFoundException(CustomErrorType.ROOM_NOT_FOUND.getMessage());
         String roomUuid = findRoom.get().getUuid();
+        System.out.println("roomUuid = " + roomUuid);
         String gender = request.getGender();
 
         //파일 목록 조회
         List<Voice> voices = voiceRepository.findByRoomUuid(roomUuid);
         if (voices.size() == 0)
             throw new VoiceCountZeroException(CustomErrorType.REGISTERED_VOICE_NOT_FOUND.getMessage());
+
+        System.out.println("voices.size() = " + voices.size());
 
         List<Blob> blobs = new ArrayList<>();
         try {
@@ -116,13 +119,14 @@ public class AIService {
             }
             // 응답 확인
             int responseCode = connection.getResponseCode();
+            System.out.println("responseCode = " + responseCode);
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 System.out.println("Files uploaded successfully!");
             } else {
                 System.out.println("File upload failed with response code: " + responseCode);
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
     //학습하기 - ai 1번
