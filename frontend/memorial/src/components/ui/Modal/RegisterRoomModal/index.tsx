@@ -1,5 +1,6 @@
 import Modal from "..";
 import type { ModalProps } from "..";
+import toast from "react-hot-toast";
 
 type RegisterRoomModalProps = {
   onRegister: (targetName: string) => void;
@@ -14,7 +15,8 @@ export default function RegisterRoomModal({
     //TODO: currentTarget을 console.log 했을 경우 null이었는데 왜 이후에는 currentTarget을 이용할 수 있는지 궁금하다.
     const formData = new FormData(event.currentTarget);
     const targetName = formData.get("targetName");
-    if (typeof targetName !== "string" || targetName === "") return;
+    if (typeof targetName !== "string" || targetName === "")
+      return toast.error("방의 이름을 입력해주세요");
     onRegister(targetName);
   };
   return (

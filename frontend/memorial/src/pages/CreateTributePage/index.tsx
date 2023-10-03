@@ -9,6 +9,7 @@ import styles from "./CreateTributePage.module.css";
 import Textarea from "@components/ui/Textarea";
 import { useMutation } from "@tanstack/react-query";
 import { createTribute } from "@apis/tribute";
+import toast from "react-hot-toast";
 
 type Tribute = {
   title: string;
@@ -72,7 +73,8 @@ export default function CreateTributePage() {
 
   const tributeMutation = useMutation(createTribute, {
     onSuccess: () => {
-      alert("작성 완료");
+      toast.success("헌화 공간 생성이 완료되었습니다."),
+        { id: "successSubmit" };
       setTribute({
         title: "",
         subTitle: "",
@@ -84,7 +86,7 @@ export default function CreateTributePage() {
     },
     onError: (error: Error) => {
       if (error.message === "400") {
-        alert("부정적인 단어가 포함되어 있어 등록할 수 없습니다. ");
+        toast.error("부정적인 단어가 포함되어 있습니다."), { id: "failsubmit" };
       } else {
         console.error("에러 발생", error);
       }
@@ -117,7 +119,7 @@ export default function CreateTributePage() {
             name="subTitle"
             onChange={onChangeTribute}
             children={subTitleOptions}
-            variant="long"
+            variant="tribute"
           />
         </div>
         <div className={styles.inputWrapper}>
@@ -126,7 +128,7 @@ export default function CreateTributePage() {
             name="day"
             onChange={onChangeTribute}
             children={dayOptions}
-            variant="long"
+            variant="tribute"
           />
         </div>
         <div className={styles.inputWrapper}>
@@ -141,13 +143,13 @@ export default function CreateTributePage() {
         </div>
         <div className={styles.buttonWrapper}>
           <Button variant="regular" onClick={tributeSubmit}>
-            헌화 시작하기
+            헌화 하기
           </Button>
           <Button
             variant="regular"
             onClick={() => navigate(`${PATH.TRIBUTELIST}`)}
           >
-            헌화 목록 보기
+            목록 보기
           </Button>
         </div>
       </div>

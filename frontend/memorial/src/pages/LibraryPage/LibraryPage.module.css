@@ -61,11 +61,16 @@
 .cardTitle {
   width: 100%;
   display: flex;
-  text-align: flex-start;
+  text-align: left;
   font-family: "SUITE-Bold";
   font-size: 1.2rem;
   text-indent: 0.5rem;
   padding-top: 0.2rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-break: break-all;
+  display: block;
 }
 
 .cardDate {
