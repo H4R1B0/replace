@@ -44,9 +44,10 @@ public class WreathService {
 		boolean isNegative = false;
 		List<String> badWordList = crawlingUtils.getBadWordList();
 		for(String w: badWordList) {
+			String title = saveRequest.getTitle();
+			String subTitle = saveRequest.getSubTitle();
 			String content = saveRequest.getDescription();
-			if(kmpSearch(content, w)) { //부정적인 내용이 있으면
-				isNegative = true;
+			if(kmpSearch(title, w) || kmpSearch(subTitle, w) || kmpSearch(content, w)) { //부정적인 내용이 있으면
 				return false;
 			}
 		}
