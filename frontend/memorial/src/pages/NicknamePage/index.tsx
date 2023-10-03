@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 // import { setUser } from "store/slices/authSlice";
 // import { useDispatch } from "react-redux";
+import PATH from "@constants/path";
 
 import Toast from "react-hot-toast";
 
@@ -75,7 +76,7 @@ export default function NicknamePage() {
             sessionStorage.removeItem("accessToken");
             sessionStorage.setItem("nickname", nickname);
             sessionStorage.setItem("accessToken", result.token);
-            navigate(`/house/${nickname}`);
+            navigate(PATH.INTRODUCTION);
             Toast.success("리플레이스에 오신 것을 환영합니다.");
 
             // 기존 사용자 정보를 리덕스에 저장
