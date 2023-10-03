@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-// import { useMutation } from "@tanstack/react-query";
+// import { useQueryClient, useMutation } from "@tanstack/react-query";
 
 import Modal from "@components/ui/Modal";
 import Toast from "react-hot-toast";
@@ -20,6 +20,7 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
   // const handleLogoutMutation = useMutation({
   //   mutationFn: logout,
   //   onSuccess: () => {
+  //     queryClient.invalidateQueries();
   //     sessionStorage.removeItem("accessToken");
   //     sessionStorage.removeItem("nickname");
   //   },
