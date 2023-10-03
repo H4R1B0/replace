@@ -53,40 +53,50 @@ export default function NicknamePage() {
   };
 
   // 사용할 닉네임 DB
-  const saveNickname = () => {
-    fetch(`${BASE_URL}/user`, {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        nickname: nickname,
-        gender: gender,
-      }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          navigate(`/house/${nickname}`);
-          // 닉네임 저장
-          sessionStorage.setItem("nickname", nickname);
-          Toast.success("리플레이스에 오신 것을 환영합니다.");
-
-          // 기존 사용자 정보를 리덕스에 저장
-          // dispatch(
-          //   setUser({
-          //     nickname,
-          //     isAuthenticated: true,
-          //     accessToken: accessToken || "",
-          //   })
-          // );
-        } else {
-          Toast.error("닉네임 저장에 실패했습니다.");
-        }
-      })
-      .catch((error) => {
-        console.error("닉네임 저장 실패:", error);
+  const saveNickname = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/user`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nickname: nickname,
+          gender: gender,
+        }),
       });
+
+      if (response.ok) {
+        response.json().then((result) => {
+          // console.log("닉네임 저장 결과:", result);
+          if (result) {
+            // 닉네임 저장
+            sessionStorage.removeItem("accessToken");
+            sessionStorage.setItem("nickname", nickname);
+            sessionStorage.setItem("accessToken", result.token);
+            navigate(`/house/${nickname}`);
+            Toast.success("리플레이스에 오신 것을 환영합니다.");
+
+            // 기존 사용자 정보를 리덕스에 저장
+            // dispatch(
+            //   setUser({
+            //     nickname,
+            //     isAuthenticated: true,
+            //     accessToken: accessToken || "",
+            //   })
+            // );
+          } else {
+            Toast.error("닉네임 저장에 실패했습니다.");
+          }
+        });
+      } else {
+        // ... (저장 실패 시의 코드)
+        Toast.error("닉네임 저장에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("닉네임 저장 실패:", error);
+    }
   };
 
   return (
