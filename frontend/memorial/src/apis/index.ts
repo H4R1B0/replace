@@ -91,9 +91,8 @@ export const api = {
       "request",
       new Blob([JSON.stringify(data.request)], { type: "application/json" })
     );
+
     formData.append("file", data.file);
-    console.log(formData.get("request"));
-    console.log(formData.get("file"));
     return request(
       path,
       {
