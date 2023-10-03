@@ -59,7 +59,7 @@ public class UserService {
 		findUser.get().setChange(true);
 		Optional<Room> findRoom = roomRepository.findBySequenceAndUserId(1, userId);
 		findRoom.get().setTargetName(updateRequest.getNickname());
-		findRoom.get().setTargetGender(updateRequest.getNickname());
+		findRoom.get().setTargetGender(updateRequest.getGender());
 //		findUser.get().getRooms().get(0).setTargetName(findUser.get().getNickname());
 		//update
 
