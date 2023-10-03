@@ -29,6 +29,8 @@ public class AIController {
 	@PostMapping("/training")
 	public void doTraining(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader,
 		@RequestBody AITrainingRequest request) {
+		System.out.println("request.getSequence() = " + request.getSequence());
+		System.out.println("request.getGender() = " + request.getGender());
 		String userId = headerUtils.getUserId(authorizationHeader);
 		aiService.doTraining(request, userId);
 	}
