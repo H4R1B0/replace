@@ -7,6 +7,7 @@ import { uploadSingleAudio } from "@apis/audio";
 import { useParams } from "react-router-dom";
 import { AudioData } from "audio-react-recorder";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function AudioRecordModal({ ...other }: AudioRecordModalProps) {
   const navigate = useNavigate();
@@ -19,6 +20,8 @@ export default function AudioRecordModal({ ...other }: AudioRecordModalProps) {
     mutationFn: uploadSingleAudio,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["audioList", roomSequence] });
+      toast.success("녹음 파일이 성공적으로 업로드 되었습니다");
+      navigate("..");
     },
   });
 

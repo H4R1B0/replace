@@ -6,6 +6,7 @@ import Button from "@components/ui/Button";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteSinglePhoto } from "@apis/photo";
 import styles from "./PhotoViewModal.module.css";
+import toast from "react-hot-toast";
 
 export default function PhotoViewModal({ ...other }: PhotoViewModalProps) {
   const navigate = useNavigate();
@@ -23,7 +24,8 @@ export default function PhotoViewModal({ ...other }: PhotoViewModalProps) {
     mutationFn: deleteSinglePhoto,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["photo"] });
-      navigate(-2);
+      toast.success("사진이 성공적으로 삭제되었습니다");
+      navigate("..");
     },
   });
 

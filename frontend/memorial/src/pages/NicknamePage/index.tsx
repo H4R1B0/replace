@@ -28,7 +28,7 @@ export default function NicknamePage() {
       method: "POST",
       headers: {
         Authorization: `Bearer ${accessToken}`,
-        // "Content-Type": "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         nickname: nickname,

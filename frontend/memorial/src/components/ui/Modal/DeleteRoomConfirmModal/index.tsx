@@ -14,7 +14,7 @@ export default function DeleteRoomConfirmModal() {
   const nickname = sessionStorage.getItem("nickname");
 
   const deleteSuccessToast = async () => {
-    toast.success("room deleted"), { id: "roomDeleted" };
+    toast.success("방이 성공적으로 삭제되었습니다"), { id: "roomDeleted" };
     navigate(`/house/${nickname}`);
   };
 
