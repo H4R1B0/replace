@@ -1,3 +1,5 @@
+import Toast from "react-hot-toast";
+
 const BASE_URL = import.meta.env.VITE_APP_API_URL;
 
 const request = async (path: string, init?: RequestInit, json = true) => {
@@ -20,6 +22,11 @@ const request = async (path: string, init?: RequestInit, json = true) => {
       if (!location.pathname.endsWith("/login")) {
         location.href = `${redirectUrl}/login`;
       }
+    }
+    if (response.status === 403) {
+      sessionStorage.clear();
+      Toast.error("로그인 시간이 만료되어 재로그인이 필요합니다.");
+      location.href = "/";
     }
 
     throw new Error(response.status.toString());
