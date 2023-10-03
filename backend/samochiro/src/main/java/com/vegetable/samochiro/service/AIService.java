@@ -92,6 +92,8 @@ public class AIService {
                 // 문자열 파트 1 전송
                 dos.writeBytes("--" + BOUNDARY + "\r\n");
                 dos.writeBytes("Content-Disposition: form-data; name=\"roomUuid\"\r\n");
+                //20231004 추가
+                dos.writeBytes("Content-Type: text/plain; charset=UTF-8\r\n");
                 dos.writeBytes("\r\n");
                 dos.writeBytes(roomUuid + "\r\n");
                 System.out.println("roomUuid = " + roomUuid);
@@ -99,6 +101,8 @@ public class AIService {
                 // 문자열 파트 2 전송
                 dos.writeBytes("--" + BOUNDARY + "\r\n");
                 dos.writeBytes("Content-Disposition: form-data; name=\"gender\"\r\n");
+                //20231004 추가
+                dos.writeBytes("Content-Type: text/plain; charset=UTF-8\r\n");
                 dos.writeBytes("\r\n");
                 dos.writeBytes(gender + "\r\n");
                 System.out.println("gender = " + gender);
