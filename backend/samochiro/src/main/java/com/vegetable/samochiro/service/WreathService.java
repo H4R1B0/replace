@@ -107,7 +107,7 @@ public class WreathService {
 			.endDate(wreath.get().getEndDate())
 			.flower(wreath.get().getWreathCount().getFlower())
 			.candle(wreath.get().getWreathCount().getCandle())
-			.candle(wreath.get().getWreathCount().getRibbon())
+			.ribbon(wreath.get().getWreathCount().getRibbon())
 			.build();
 
 		return wreathDetail;
