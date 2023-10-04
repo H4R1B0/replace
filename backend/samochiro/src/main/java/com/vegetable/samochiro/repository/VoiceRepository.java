@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface VoiceRepository extends JpaRepository<Voice, Long> {
-    @Query("select v from Voice v where v.room.uuid=:roomUuid")
+    @Query("select v from Voice v where v.room.uuid=:roomUuid order by v.registDate desc")
     List<Voice> findByRoomUuid(String roomUuid);
 }
