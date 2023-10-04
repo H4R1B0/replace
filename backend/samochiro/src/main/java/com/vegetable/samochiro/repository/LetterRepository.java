@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface LetterRepository extends JpaRepository<Letter, Long> {
 
-	@Query("select l from Letter l where l.room.uuid = :roomUUid")
+	@Query("select l from Letter l where l.room.uuid = :roomUUid order by l.writeTime desc")
 	List<Letter> selectListByRoomUuid(@Param("roomUUid") String roomUUid);
 	//방별 편지리스트 검색
 
