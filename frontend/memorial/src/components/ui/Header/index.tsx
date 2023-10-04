@@ -3,7 +3,7 @@ import { useState } from "react";
 import PATH from "@constants/path";
 import styles from "./Header.module.css";
 
-import { PiBellDuotone } from "react-icons/pi";
+import { HiHome } from "react-icons/hi2";
 import { LiaSearchSolid } from "react-icons/lia";
 import { HiBars4 } from "react-icons/hi2";
 
@@ -18,23 +18,24 @@ export default function Header() {
   return (
     <div className={styles.wrapper}>
       <button title="Notifications">
-        <PiBellDuotone />
+        <HiHome
+          onClick={() =>
+            navigate(`/house/${sessionStorage.getItem("nickname")}`)
+          }
+        />
       </button>
-      <div className={styles.spacer}></div>
-      <button title="Search" onClick={() => navigate(PATH.SEARCH_RESULT)}>
-        <LiaSearchSolid />
-      </button>
-      <button
-        className={styles.setting}
-        title="Settings"
-        onClick={() => setIsSettingsModalOpen(true)}
-      >
-        <HiBars4 />
-      </button>
-      <SettingModal
-        isOpen={isSettingsModalOpen}
-        onClose={() => setIsSettingsModalOpen(false)}
-      />
+      <div className={styles.spacer}>
+        <button title="Search" onClick={() => navigate(PATH.SEARCH_RESULT)}>
+          <LiaSearchSolid />
+        </button>
+        <button title="Settings" onClick={() => setIsSettingsModalOpen(true)}>
+          <HiBars4 className={styles.setting} />
+        </button>
+        <SettingModal
+          isOpen={isSettingsModalOpen}
+          onClose={() => setIsSettingsModalOpen(false)}
+        />
+      </div>
     </div>
   );
 }
