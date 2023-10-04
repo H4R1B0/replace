@@ -1,4 +1,7 @@
+import Toast from "react-hot-toast";
+
 const BASE_URL = import.meta.env.VITE_APP_API_URL;
+import { RegisterVoicemailRequest } from "@apis/payphone";
 
 const request = async (path: string, init?: RequestInit, json = true) => {
   const response = await fetch(`${BASE_URL}${path}`, {
@@ -20,6 +23,11 @@ const request = async (path: string, init?: RequestInit, json = true) => {
       if (!location.pathname.endsWith("/login")) {
         location.href = `${redirectUrl}/login`;
       }
+    }
+    if (response.status === 403) {
+      sessionStorage.clear();
+      Toast.error("로그인 시간이 만료되어 재로그인이 필요합니다.");
+      location.href = "/";
     }
 
     throw new Error(response.status.toString());
@@ -48,6 +56,7 @@ export const api = {
   postPhoto: (path: string, photo: File, init?: RequestInit) => {
     const formData = new FormData();
     formData.append("file", photo);
+
     return request(
       path,
       {
@@ -62,6 +71,31 @@ export const api = {
   postAudio: (path: string, audio: File, init?: RequestInit) => {
     const formData = new FormData();
     formData.append("audioFile", audio);
+    console.log(formData.get("audioFile"));
+    return request(
+      path,
+      {
+        headers: init?.headers,
+        method: "POST",
+        body: formData,
+      },
+      false
+    );
+  },
+
+  postVoicemail: (
+    path: string,
+    data: RegisterVoicemailRequest,
+    init?: RequestInit
+  ) => {
+    const formData = new FormData();
+    formData.append(
+      "request",
+      new Blob([JSON.stringify(data.request)], { type: "application/json" })
+    );
+    formData.append("file", data.file);
+    console.log(formData.get("request"));
+    console.log(formData.get("file"));
     return request(
       path,
       {

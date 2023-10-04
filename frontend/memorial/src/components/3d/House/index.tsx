@@ -174,12 +174,12 @@ export default function House({
       <group
         position={[1.872, 0.307, 6.328]}
         rotation={[Math.PI / 2, 0, 0]}
-        onClick={() => onWindowClick?.(2)}
+        onClick={() => onWindowClick?.(1)}
       >
         <mesh
           geometry={nodes.mainWindow_1.geometry}
           material={
-            isWindowLit(2) ? litWindowMaterial : materials.PaletteMaterial001
+            isWindowLit(1) ? litWindowMaterial : materials.PaletteMaterial001
           }
         />
         <mesh
@@ -194,12 +194,12 @@ export default function House({
       <group
         position={[1.872, 0.307, 6.328]}
         rotation={[Math.PI / 2, 0, 0]}
-        onClick={() => onWindowClick?.(1)}
+        onClick={() => onWindowClick?.(2)}
       >
         <mesh
           geometry={nodes.leftWindow_1.geometry}
           material={
-            isWindowLit(1) ? litWindowMaterial : materials.PaletteMaterial001
+            isWindowLit(2) ? litWindowMaterial : materials.PaletteMaterial001
           }
         />
         <mesh

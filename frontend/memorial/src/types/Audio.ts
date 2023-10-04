@@ -13,3 +13,8 @@ export type AIAudioBySituation = {
   message: string;
   voiceFileUrl: string;
 };
+
+export type AI = {
+  sequence: number;
+  gender: string;
+};

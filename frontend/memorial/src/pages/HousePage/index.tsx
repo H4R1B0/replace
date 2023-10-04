@@ -19,6 +19,7 @@ import RegisterRoomModal from "@components/ui/Modal/RegisterRoomModal";
 import { registerRoomTarget } from "@apis/room";
 import { useParams } from "react-router-dom";
 import { Environment } from "@react-three/drei";
+import toast from "react-hot-toast";
 
 export default function HousePage() {
   const [isModalOpen, toggleModal] = useToggle(false);
@@ -37,11 +38,18 @@ export default function HousePage() {
     queryKey: ["roomList", nickname],
     queryFn: () => fetchRoomList(nickname),
   });
+
   const registerRoomMutation = useMutation({
     mutationFn: registerRoomTarget,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["roomList", nickname] });
+      toast.success("방이 성공적으로 생성되었습니다");
       navigate(`/room/${nickname}/${selectedSequence}`);
+    },
+    onError: (error: Error) => {
+      if (error.message === "400") {
+        toast.error("방 생성에 실패하였습니다");
+      }
     },
   });
 

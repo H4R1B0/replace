@@ -8,6 +8,7 @@ import { HiFolder } from "react-icons/hi2";
 import Modal, { ModalProps } from "..";
 import { useParams, useNavigate } from "react-router-dom";
 import ReactAudioPlayer from "react-audio-player";
+import toast from "react-hot-toast";
 
 export default function AudioUploadModal({ ...other }: AudioUploadModalProps) {
   const navigate = useNavigate();
@@ -22,9 +23,11 @@ export default function AudioUploadModal({ ...other }: AudioUploadModalProps) {
     mutationFn: uploadSingleAudio,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["audioList", roomSequence] });
+      toast.success("녹음 파일이 성공적으로 업로드 되었습니다");
+      navigate("..");
     },
-    onError: (error) => {
-      console.log(error);
+    onError: () => {
+      toast.error("녹음 파일 업로드에 실패하였습니다");
     },
   });
 

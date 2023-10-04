@@ -14,25 +14,28 @@ export default function DeleteRoomConfirmModal() {
   const nickname = sessionStorage.getItem("nickname");
 
   const deleteSuccessToast = async () => {
-    toast.success("room deleted"), { id: "roomDeleted" };
+    toast.success("방이 성공적으로 삭제되었습니다"), { id: "roomDeleted" };
     navigate(`/house/${nickname}`);
   };
 
-  //TODO: deleteSuccessToast의 duration time이 끝난 뒤에 navigate("/house")로 이동하기
   const deleteRoomMutation = useMutation({
     mutationFn: deleteSingleRoom,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["roomList", nickname] });
       deleteSuccessToast();
     },
+    onError: (error: Error) => {
+      if (error.message === "400") toast.error("방 삭제에 실패하였습니다");
+    },
   });
 
   const handleDelete = () => {
     deleteRoomMutation.mutate(roomSequence);
   };
+  // TODO: 방 주인이면 안뜨도록 예외처리
   return (
     <Modal buttonLabel="close" onClose={() => navigate("..")}>
-      <p>Are you sure you want to delete this room?</p>
+      <p>정말 방을 지우시겠습니까?</p>
 
       <Button onClick={handleDelete}>Yes</Button>
       <Button
