@@ -9,6 +9,12 @@ import { useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import libraryPath from "./library.glb?url";
 import { useEffect, useState } from "react";
+import {
+  Selection,
+  EffectComposer,
+  Outline,
+  Select,
+} from "@react-three/postprocessing";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -83,137 +89,151 @@ export default function Library({
     return () => cancelAnimationFrame(animationFrameId); // 컴포넌트가 unmount될 때 애니메이션을 취소합니다.
   }, [increasing, lightIntensity]);
   return (
-    <group {...other} dispose={null}>
-      <primitive
-        object={new THREE.DirectionalLight("#FFA500", 1)}
-        position={[5, 5, 5]}
-        castShadow
-      />
-      <mesh
-        geometry={nodes.Window001.geometry}
-        material={materials.PaletteMaterial001}
-        position={[-0.494, 2.036, 1.372]}
-        rotation={[0, 1.571, 0]}
-        scale={[0.411, 0.559, 0.411]}
-        castShadow
-        receiveShadow
-      />
-      <mesh
-        geometry={nodes.Letter.geometry}
-        material={materials["low_poly_interior.020"]}
-        position={[0.085, 0.985, -1.379]}
-        scale={2.167}
-        onClick={onLetterClick}
-        castShadow
-        receiveShadow
-      >
-        {" "}
-        <pointLight
-          position={[0, 0, 0]}
-          color={"#ffff44"}
-          intensity={lightIntensity}
-          distance={1}
+    <Selection>
+      <EffectComposer multisampling={8} autoClear={false}>
+        <Outline
+          blur
+          visibleEdgeColor={0xff2a55}
+          hiddenEdgeColor={0xff2a55}
+          edgeStrength={500}
         />
-      </mesh>
-      <group
-        position={[-1.625, 0.861, -1.594]}
-        scale={1.079}
-        onClick={onBookShelfClick}
-      >
-        <mesh
-          geometry={nodes.bookShelf134.geometry}
-          material={materials["Material.001"]}
+      </EffectComposer>
+      <group {...other} dispose={null}>
+        <primitive
+          object={new THREE.DirectionalLight("#FFA500", 1)}
+          position={[5, 5, 5]}
           castShadow
-          receiveShadow
         />
         <mesh
-          geometry={nodes.bookShelf134_1.geometry}
-          material={materials["Material.027"]}
-          castShadow
-          receiveShadow
-        />
-        <mesh
-          geometry={nodes.bookShelf134_2.geometry}
+          geometry={nodes.Window001.geometry}
           material={materials.PaletteMaterial001}
+          position={[-0.494, 2.036, 1.372]}
+          rotation={[0, 1.571, 0]}
+          scale={[0.411, 0.559, 0.411]}
+          castShadow
+          receiveShadow
+        />
+        <Select enabled={true}>
+          <mesh
+            geometry={nodes.Letter.geometry}
+            material={materials["low_poly_interior.020"]}
+            position={[0.085, 0.985, -1.379]}
+            scale={2.167}
+            onClick={onLetterClick}
+            castShadow
+            receiveShadow
+          >
+            {" "}
+            <pointLight
+              position={[0, 0, 0]}
+              color={"#ffff44"}
+              intensity={lightIntensity}
+              distance={1}
+            />
+          </mesh>
+        </Select>
+        <Select enabled={true}>
+          <group
+            position={[-1.625, 0.861, -1.594]}
+            scale={1.079}
+            onClick={onBookShelfClick}
+          >
+            <mesh
+              geometry={nodes.bookShelf134.geometry}
+              material={materials["Material.001"]}
+              castShadow
+              receiveShadow
+            />
+            <mesh
+              geometry={nodes.bookShelf134_1.geometry}
+              material={materials["Material.027"]}
+              castShadow
+              receiveShadow
+            />
+            <mesh
+              geometry={nodes.bookShelf134_2.geometry}
+              material={materials.PaletteMaterial001}
+              castShadow
+              receiveShadow
+            />
+            <mesh
+              geometry={nodes.bookShelf134_3.geometry}
+              material={materials.paper}
+              castShadow
+              receiveShadow
+            />
+          </group>
+        </Select>
+        <mesh
+          geometry={nodes.Procedural_Tree_2106.geometry}
+          material={materials["Tree Bark 08"]}
+          position={[0.524, 0.312, -0.364]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          scale={1.416}
           castShadow
           receiveShadow
         />
         <mesh
-          geometry={nodes.bookShelf134_3.geometry}
-          material={materials.paper}
+          geometry={nodes.low_poly_interior037.geometry}
+          material={materials.furniture}
+          position={[-0.033, 0.424, -1.489]}
+          rotation={[0, -Math.PI / 2, 0]}
+          scale={0.859}
+          castShadow
+          receiveShadow
+        />
+        <mesh
+          geometry={nodes.Cube008.geometry}
+          material={materials["book-cover"]}
+          position={[0.211, 2.132, -1.922]}
+          scale={1.176}
+          castShadow
+          receiveShadow
+        />
+        <group position={[-1.738, 1.357, 0.558]}>
+          <mesh
+            geometry={nodes.Cylinder013.geometry}
+            material={materials["Material.004"]}
+            castShadow
+            receiveShadow
+          />
+          <mesh
+            geometry={nodes.Cylinder013_1.geometry}
+            material={materials.PaletteMaterial003}
+            castShadow
+            receiveShadow
+          />
+          <mesh
+            geometry={nodes.Cylinder013_2.geometry}
+            material={materials.PaletteMaterial004}
+            castShadow
+            receiveShadow
+          />
+          <mesh
+            geometry={nodes.Cylinder013_3.geometry}
+            material={materials.PaletteMaterial002}
+            castShadow
+            receiveShadow
+          />
+        </group>
+        <mesh
+          geometry={nodes.Frame_sunset_January.geometry}
+          material={materials.pintura}
+          position={[-2.037, 2.151, 0]}
+          rotation={[0, -Math.PI / 2, 0]}
+          castShadow
+          receiveShadow
+        />
+        <mesh
+          geometry={nodes.Plane006.geometry}
+          material={materials["C_Die-cast aluminum.001"]}
+          position={[-1.77, 0.26, 0.289]}
+          scale={[0.985, 1.839, 2.656]}
           castShadow
           receiveShadow
         />
       </group>
-      <mesh
-        geometry={nodes.Procedural_Tree_2106.geometry}
-        material={materials["Tree Bark 08"]}
-        position={[0.524, 0.312, -0.364]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        scale={1.416}
-        castShadow
-        receiveShadow
-      />
-      <mesh
-        geometry={nodes.low_poly_interior037.geometry}
-        material={materials.furniture}
-        position={[-0.033, 0.424, -1.489]}
-        rotation={[0, -Math.PI / 2, 0]}
-        scale={0.859}
-        castShadow
-        receiveShadow
-      />
-      <mesh
-        geometry={nodes.Cube008.geometry}
-        material={materials["book-cover"]}
-        position={[0.211, 2.132, -1.922]}
-        scale={1.176}
-        castShadow
-        receiveShadow
-      />
-      <group position={[-1.738, 1.357, 0.558]}>
-        <mesh
-          geometry={nodes.Cylinder013.geometry}
-          material={materials["Material.004"]}
-          castShadow
-          receiveShadow
-        />
-        <mesh
-          geometry={nodes.Cylinder013_1.geometry}
-          material={materials.PaletteMaterial003}
-          castShadow
-          receiveShadow
-        />
-        <mesh
-          geometry={nodes.Cylinder013_2.geometry}
-          material={materials.PaletteMaterial004}
-          castShadow
-          receiveShadow
-        />
-        <mesh
-          geometry={nodes.Cylinder013_3.geometry}
-          material={materials.PaletteMaterial002}
-          castShadow
-          receiveShadow
-        />
-      </group>
-      <mesh
-        geometry={nodes.Frame_sunset_January.geometry}
-        material={materials.pintura}
-        position={[-2.037, 2.151, 0]}
-        rotation={[0, -Math.PI / 2, 0]}
-        castShadow
-        receiveShadow
-      />
-      <mesh
-        geometry={nodes.Plane006.geometry}
-        material={materials["C_Die-cast aluminum.001"]}
-        position={[-1.77, 0.26, 0.289]}
-        scale={[0.985, 1.839, 2.656]}
-        castShadow
-        receiveShadow
-      />
-    </group>
+    </Selection>
   );
 }
 

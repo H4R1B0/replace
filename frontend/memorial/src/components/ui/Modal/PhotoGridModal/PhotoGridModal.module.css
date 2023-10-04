@@ -10,3 +10,15 @@
   aspect-ratio: 1;
   cursor: pointer;
 }
+
+.buttonSection {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.photoMent {
+  padding: 1em;
+  color: rgb(58, 45, 45);
+  font-family: "SUITE-Medium";
+}

@@ -27,6 +27,8 @@ import toast from "react-hot-toast";
 import { playBookBGM } from "@utils/effectSound";
 import { useQueryClient } from "@tanstack/react-query";
 import Pagination from "@components/ui/Pagination";
+import { Bloom } from "@react-three/postprocessing";
+import { Cloud, Sparkles, Environment } from "@react-three/drei";
 
 type Book = {
   letterId: number;
@@ -174,17 +176,18 @@ export default function LibraryPage() {
       <Canvas
         flat
         dpr={[1, 2]}
-        camera={{ fov: 50, position: [0, 0, 8] }}
+        camera={{ fov: 50, position: [0, 30, 50] }}
         style={{ touchAction: "none" }}
+        className={styles.canvas}
       >
-        {/* <directionalLight
-          position={[0, 5, 10]}
-          intensity={2}
-          color={"#ffffff"}
-        /> */}
+        <Bloom
+          luminanceThreshold={0}
+          mipmapBlur
+          luminanceSmoothing={0.0}
+          intensity={6}
+        />
         <Stage environment="city" intensity={0.5} adjustCamera shadows={false}>
           <PresentationControls
-            snap // 삭제 시 확대한 채로 멈춤
             global
             zoom={1.5}
             rotation={[0, -Math.PI / 4, 0]}
@@ -214,6 +217,20 @@ export default function LibraryPage() {
             </Selection>
           </PresentationControls>
         </Stage>
+        <Cloud
+          scale={6}
+          opacity={0.3}
+          depth={-12} // Z-dir depth
+          segments={20} // Number of particles
+        />
+        <Sparkles
+          count={80}
+          size={3}
+          position={[0, 0.9, 0]}
+          scale={[10, 10, 10]}
+          speed={0.5}
+        />
+        <Environment preset="sunset" />
       </Canvas>
 
       <Modal

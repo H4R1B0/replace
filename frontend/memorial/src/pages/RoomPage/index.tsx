@@ -24,6 +24,8 @@ export default function RoomPage() {
         style={{ touchAction: "none" }}
         shadows
       >
+        <ambientLight color={0xffc845} intensity={1} position={[0, 40, 10]} />
+
         <Bloom
           luminanceThreshold={0}
           mipmapBlur
@@ -49,8 +51,8 @@ export default function RoomPage() {
         <Cloud
           scale={6}
           opacity={0.3}
-          depth={10} // Z-dir depth
-          segments={10} // Number of particles
+          depth={-12} // Z-dir depth
+          segments={20} // Number of particles
         />
         <Sparkles
           count={80}
