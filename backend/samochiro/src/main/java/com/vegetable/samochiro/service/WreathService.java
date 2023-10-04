@@ -10,6 +10,8 @@ import com.vegetable.samochiro.dto.wreath.WreathDetailResponse;
 import com.vegetable.samochiro.dto.wreath.WreathListResponse;
 import com.vegetable.samochiro.dto.wreath.WreathSaveRequest;
 import com.vegetable.samochiro.dto.wreath.WreathUpdateRequest;
+import com.vegetable.samochiro.enums.CustomErrorType;
+import com.vegetable.samochiro.exception.BlankException;
 import com.vegetable.samochiro.repository.DeclarationRepository;
 import com.vegetable.samochiro.repository.UserRepository;
 import com.vegetable.samochiro.repository.WreathCountRepository;
@@ -43,13 +45,17 @@ public class WreathService {
 		//헌화 내용 확인
 		boolean isNegative = false;
 		List<String> badWordList = crawlingUtils.getBadWordList();
+		String title = saveRequest.getTitle();
+		String subTitle = saveRequest.getSubTitle();
+		String content = saveRequest.getDescription();
 		for(String w: badWordList) {
-			String title = saveRequest.getTitle();
-			String subTitle = saveRequest.getSubTitle();
-			String content = saveRequest.getDescription();
 			if(kmpSearch(title, w) || kmpSearch(subTitle, w) || kmpSearch(content, w)) { //부정적인 내용이 있으면
 				return false;
 			}
+		}
+
+		if(title.isEmpty() || subTitle.isEmpty() || content.isEmpty()){
+			throw new BlankException(CustomErrorType.CONTENT_BLANK.getMessage());
 		}
 
 		if(!isNegative) { //부정적인 내용이 없으면
