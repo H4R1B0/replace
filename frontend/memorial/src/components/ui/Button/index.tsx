@@ -7,6 +7,9 @@ export default function Button({
 }: ButtonProps) {
   let variantClass;
   switch (variant) {
+    case "modal":
+      variantClass = styles.modal;
+      break;
     case "regular":
       variantClass = styles.regular;
       break;
@@ -32,5 +35,11 @@ export default function Button({
 
 type ButtonProps = {
   children?: string;
-  variant?: "regular" | "prominent" | "tributeList" | "tutotial" | "nickname";
+  variant?:
+    | "modal"
+    | "regular"
+    | "prominent"
+    | "tributeList"
+    | "tutotial"
+    | "nickname";
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
