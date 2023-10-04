@@ -63,6 +63,7 @@ export default function Modal({
           justifyContent: "center",
           margin: "auto",
           textAlign: "center", // 모달 내 컨텐츠 중앙정렬
+          wordBreak: "keep-all",
         }}
       >
         <div style={{ marginBottom: "0.5rem" }}>
