@@ -1,7 +1,7 @@
 // Slider.tsx
 import { useState } from "react";
 import styles from "./Slider.module.css";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "../Button";
 
 interface Slide {
@@ -15,9 +15,10 @@ interface SliderProps {
 }
 
 export default function Slider({ slides }: SliderProps) {
-  const { nickname } = useParams();
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const nickname = sessionStorage.getItem("nickname");
 
   const goNext = () => {
     if (currentIndex === slides.length - 1) {
