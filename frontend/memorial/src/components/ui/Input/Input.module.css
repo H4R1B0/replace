@@ -41,3 +41,16 @@
   display: flex;
   justify-content: center;
 }
+
+.userSearch {
+  width: 100%;
+  height: 2.3rem;
+  margin: 1rem 1rem 0 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.regular:focus {
+  border: solid rgb(255, 199, 199) 0.15rem;
+}
