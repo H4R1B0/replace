@@ -1,6 +1,12 @@
 import Payphone from "@components/3d/Payphone";
 import { Canvas } from "@react-three/fiber";
-import { Stage, PresentationControls } from "@react-three/drei";
+import {
+  Stage,
+  PresentationControls,
+  Environment,
+  Sparkles,
+  Cloud,
+} from "@react-three/drei";
 import {
   Selection,
   EffectComposer,
@@ -60,7 +66,7 @@ export default function PayphonePage() {
           <PresentationControls
             snap
             global
-            zoom={2.0}
+            zoom={1.5}
             rotation={[0, -Math.PI / 2.5, 0]}
             polar={[0, Math.PI / 4]}
             azimuth={[-Math.PI / 4, Math.PI / 4]}
@@ -78,6 +84,22 @@ export default function PayphonePage() {
             </Selection>
           </PresentationControls>
         </Stage>
+
+        <Environment preset="sunset" />
+        <Cloud
+          scale={6}
+          opacity={0.3}
+          depth={-12} // Z-dir depth
+          segments={20} // Number of particles
+        />
+        <Sparkles
+          count={40}
+          size={10}
+          position={[0.9, 0.9, 0.9]}
+          scale={[20, 20, 20]}
+          speed={1}
+        />
+        <ambientLight intensity={0.5} />
       </Canvas>
       {choiceModal()}
     </div>

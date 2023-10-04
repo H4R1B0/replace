@@ -47,12 +47,14 @@ export default function Payphone({ onPayphoneClick, ...other }: PayphoneProps) {
           material={nodes.PayPhone_1.material}
           // onClick={onPayphoneClick}
         />
+
         <mesh
           geometry={nodes.PayPhone_2.geometry}
           material={materials.PaletteMaterial001}
           onClick={onPayphoneClick}
         />
       </group>
+
       <mesh
         geometry={nodes.Plane.geometry}
         material={materials.PaletteMaterial001}
