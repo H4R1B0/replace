@@ -30,7 +30,8 @@ public class AlarmService {
 		return responseList;
 	}
 	//알림 리스트 조회 - 알림 2번
-	
+
+	@Transactional
 	public void deleteAlarm(Long alarmId) {
 		alarmRepository.deleteById(alarmId);
 	}
