@@ -21,6 +21,7 @@ public enum CustomErrorType {
     AIVOICE_NOT_FOUND("학습된 AI 음성이 없습니다."),
     VOICE_NOT_FOUND("음성 파일을 찾을 수 없습니다."),
     USER_NICKNAME_UPDATED("이미 닉네임이 변경되었습니다."),
-    BAD_REQUEST("잘못된 요청입니다.");
+    BAD_REQUEST("잘못된 요청입니다."),
+    CONTENT_BLANK("빈칸이 존재합니다.");
     private final String message;
 }
