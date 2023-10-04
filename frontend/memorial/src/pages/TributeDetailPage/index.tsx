@@ -252,11 +252,7 @@ export default function TributeDetailPage() {
           >
             <pointLight position={[90, 10, 10]} />
 
-            <Tribute
-              onTributeClick={() => setTributeDetailModalOpen(true)}
-              flowerVisibility={wreathDetail ? wreathDetail.flower > 0 : false}
-              ribbonVisibility={wreathDetail ? wreathDetail.ribbon > 0 : false}
-            />
+            <Tribute onTributeClick={() => setTributeDetailModalOpen(true)} />
           </PresentationControls>
         </Stage>
       </Canvas>
