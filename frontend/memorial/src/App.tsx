@@ -54,6 +54,9 @@ const RadioOptionModal = lazy(
 const AIOptionModal = lazy(() => import("@components/ui/Modal/AIOptionModal"));
 const AITrainModal = lazy(() => import("@components/ui/Modal/AITrainModal"));
 // const SettingModal = lazy(() => import("@components/ui/Modal/SettingModal"));
+const NotificationModal = lazy(
+  () => import("@components/ui/Modal/NotificationModal")
+);
 
 export default function App() {
   playBGM();
@@ -107,8 +110,8 @@ export default function App() {
                 <Route path="audio/upload" element={<AudioUploadModal />} />
                 <Route path="radio" element={<RadioOptionModal />} />
                 <Route path="radio/list" element={<AudioListModal />} />
-                <Route path="radio/ai" element={<AIOptionModal />} />
                 <Route path="radio/list/ai/train" element={<AITrainModal />} />
+                <Route path="radio/ai" element={<AIOptionModal />} />
               </Route>
               <Route path={PATH.TRIBUTE} element={<TributePage />} />
               <Route
@@ -132,6 +135,7 @@ export default function App() {
               <Route path={PATH.NICKNAME} element={<NicknamePage />} />
               <Route path={PATH.INTRODUCTION} element={<IntroductionPage />} />
               <Route path={PATH.NOT_FOUND} element={<NotFoundPage />} />
+              <Route path={PATH.NOTIFICATION} element={<NotificationModal />} />
             </Routes>
           </Suspense>
         </Router>
