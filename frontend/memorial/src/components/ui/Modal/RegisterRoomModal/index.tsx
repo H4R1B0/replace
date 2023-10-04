@@ -2,6 +2,9 @@ import Modal from "..";
 import type { ModalProps } from "..";
 import toast from "react-hot-toast";
 
+import Button from "@components/ui/Button";
+import styles from "./RegisterRoomModal.module.css";
+
 type RegisterRoomModalProps = {
   onRegister: (targetName: string) => void;
 } & ModalProps;
@@ -20,12 +23,22 @@ export default function RegisterRoomModal({
     onRegister(targetName);
   };
   return (
-    <Modal {...other} buttonLabel="close">
-      <p>등록하려는 이름 입력하시오</p>
+    <Modal
+      {...other}
+      title="추억을 남길 대상은 누구인가요?"
+      subtitle="등록하려는 이름을 입력해주세요."
+      buttonLabel="닫기"
+    >
       <form onSubmit={handleSubmit}>
         {/* TOODO: pattern을 이용해서 regex 검사하기 */}
-        <input type="text" name="targetName" required />
-        <button>Register</button>
+        <input
+          className={styles.roomInput}
+          type="text"
+          name="targetName"
+          placeholder="이름을 입력해주세요."
+          required
+        />
+        <Button variant="nickname">등록하기</Button>
       </form>
     </Modal>
   );

@@ -31,12 +31,27 @@ export default function PhotoGridModal({ ...other }: PhotoGridModalProps) {
   ));
 
   return (
-    <Modal {...other} buttonLabel="close" onClose={() => navigate("..")}>
-      <p>Photo grid</p>
+    <Modal
+      {...other}
+      title="남긴 추억을 함께 볼까요."
+      buttonLabel="닫기"
+      onClose={() => navigate("..")}
+    >
       {/* TODO: route link */}
-      <Button onClick={() => navigate("upload")}>+</Button>
+
+      <div className={styles.buttonSection}>
+        {/* <Button onClick={() => navigate(-1)}>뒤로가기</Button> */}
+        <Button variant="nickname" onClick={() => navigate("upload")}>
+          사진 남기기
+        </Button>
+      </div>
+      {photoList?.data?.length === 0 && (
+        <div className={styles.photoMent}>
+          <p>아직 사진이 없어요.</p>
+          <p>사진을 남겨주세요.</p>
+        </div>
+      )}
       <div className={styles.photoGrid}>{photos}</div>
-      <Button onClick={() => navigate(-1)}>뒤로가기</Button>
     </Modal>
   );
 }

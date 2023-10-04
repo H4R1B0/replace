@@ -66,17 +66,17 @@ export default function Recorder({ onAudioDataReceived }: RecorderProps) {
             className={styles.recordbtn}
             onClick={stopRecording}
           >
-            <HiStopCircle />
+            <HiStopCircle size={23} />
           </button>
         ) : (
           <button className={styles.recordbtn} onClick={startRecording}>
-            <HiMicrophone />
+            <HiMicrophone size={23} />
           </button>
         )}
 
         {recordState === RecordState.START && (
           <button className={styles.recordbtn} onClick={pauseRecording}>
-            <HiPauseCircle />
+            <HiPauseCircle size={23} />
           </button>
         )}
         {/* {recordState === RecordState.PAUSE && (

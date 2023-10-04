@@ -1,0 +1,25 @@
+.wrapper {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2% 0;
+}
+
+.audioCard {
+  width: 100%;
+  background-color: rgba(250, 245, 237, 0.8);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin: 0.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+
+.audioMent {
+  color: rgb(58, 45, 45);
+  font-family: "SUITE-Medium";
+}
