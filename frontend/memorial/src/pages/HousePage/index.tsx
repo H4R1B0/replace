@@ -2,13 +2,7 @@ import { fetchRoomList } from "@apis/room";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import House from "@components/3d/House";
 import { Canvas } from "@react-three/fiber";
-import {
-  Stage,
-  PresentationControls,
-  Html,
-  Cloud,
-  Stars,
-} from "@react-three/drei";
+import { Stage, PresentationControls, Cloud, Stars } from "@react-three/drei";
 import styles from "./HousePage.module.css";
 import { Bloom } from "@react-three/postprocessing";
 
@@ -19,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import RegisterRoomModal from "@components/ui/Modal/RegisterRoomModal";
 import { registerRoomTarget } from "@apis/room";
 import { useParams } from "react-router-dom";
-import { Environment, Text } from "@react-three/drei";
+import { Environment } from "@react-three/drei";
 import toast from "react-hot-toast";
 import Pagination from "@components/ui/Pagination";
 
