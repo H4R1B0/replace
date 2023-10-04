@@ -45,7 +45,7 @@ export default function NotificationModal({
   ));
 
   return (
-    <Modal {...other} buttonLabel="close" onClose={() => navigate("..")}>
+    <Modal {...other} buttonLabel="close" onClose={() => navigate(-1)}>
       <p>notificationList</p>
       <div>{notifications}</div>
     </Modal>
