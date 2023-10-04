@@ -25,6 +25,9 @@ export default function Button({
     case "nickname":
       variantClass = styles.nickname;
       break;
+    case "delete":
+      variantClass = styles.delete;
+      break;
   }
   return (
     <button {...other} className={`${styles.base} ${variantClass}`}>
@@ -41,5 +44,6 @@ type ButtonProps = {
     | "prominent"
     | "tributeList"
     | "tutotial"
-    | "nickname";
+    | "nickname"
+    | "delete";
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;

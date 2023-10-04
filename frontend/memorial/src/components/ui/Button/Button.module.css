@@ -15,29 +15,6 @@ button {
   color: rgb(255, 255, 218);
 }
 
-.modal {
-  border: 1px solid rgb(120, 120, 120, 0.5);
-
-  /* background-color: white; */
-  background-color: rgb(185, 182, 182, 0.3);
-  box-shadow: inset;
-  padding: 1rem;
-  border-radius: 4rem;
-  width: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: "SUITE-Bold";
-  font-size: 1rem;
-  color: rgb(58, 45, 45);
-}
-
-.modal:hover {
-  background-color: rgb(171 180 218);
-  color: white;
-  transition-duration: 0.5s;
-}
-
 /* TODO: adjust styles according to design requirements */
 .regular {
   border: none;
@@ -108,4 +85,44 @@ button {
   font-family: "SUITE-Bold";
   font-size: 0.7rem;
   /* padding: 0 10%; */
+}
+
+.modal {
+  border: 1px solid rgb(120, 120, 120, 0.5);
+  /* background-color: white; */
+  background-color: rgb(185, 182, 182, 0.3);
+  box-shadow: inset;
+  padding: 1rem;
+  border-radius: 4rem;
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "SUITE-Bold";
+  font-size: 1rem;
+  color: rgb(58, 45, 45);
+}
+
+.modal:hover {
+  background-color: rgb(171 180 218);
+  color: white;
+  transition-duration: 0.5s;
+}
+
+.delete {
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "SUITE-Medium";
+  font-size: 1rem;
+  border-radius: 2rem;
+  margin: 0.5rem auto;
+  padding: 1rem;
+  align-self: last baseline;
+  cursor: pointer;
+  border: none;
+  background-color: rgba(255, 195, 161, 1);
+  /* color: rgb(255, 255, 218); */
+  color: rgb(58, 45, 45);
 }
