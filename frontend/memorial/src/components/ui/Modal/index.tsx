@@ -69,7 +69,11 @@ export default function Modal({
         <div style={{ marginBottom: "0.5rem" }}>
           <h2>{title}</h2>
         </div>
-        {subtitle && <p style={{ color: "rgb(58, 45, 45)" }}>{subtitle}</p>}
+        {subtitle && (
+          <p style={{ fontFamily: "SUITE-SemiBold", color: "rgb(58, 45, 45)" }}>
+            {subtitle}
+          </p>
+        )}
         <br />
         {children}
         <div
