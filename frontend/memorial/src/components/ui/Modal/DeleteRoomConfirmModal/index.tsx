@@ -5,6 +5,8 @@ import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { deleteSingleRoom } from "@apis/room";
 import toast from "react-hot-toast";
 
+import styles from "./DeleteRoomConfirmModal.module.css";
+
 export default function DeleteRoomConfirmModal() {
   const { sequence } = useParams();
   if (typeof sequence === "undefined") return;
@@ -34,17 +36,25 @@ export default function DeleteRoomConfirmModal() {
   };
   // TODO: 방 주인이면 안뜨도록 예외처리
   return (
-    <Modal buttonLabel="close" onClose={() => navigate("..")}>
-      <p>정말 방을 지우시겠습니까?</p>
-
-      <Button onClick={handleDelete}>Yes</Button>
-      <Button
-        onClick={() => {
-          navigate("..");
-        }}
-      >
-        No
-      </Button>
+    <Modal
+      title="정말 방을 지우시겠습니까?"
+      buttonLabel="닫기"
+      // noButton={true}
+      onClose={() => navigate("..")}
+    >
+      <div className={styles.buttonSection}>
+        {/* <Button
+          variant="modal"
+          onClick={() => {
+            navigate("..");
+          }}
+        >
+          닫기
+        </Button> */}
+        <Button variant="delete" onClick={handleDelete}>
+          네, 정말 삭제할게요.
+        </Button>
+      </div>
     </Modal>
   );
 }

@@ -32,7 +32,6 @@ button {
   min-width: 45%;
   width: auto;
   height: 2.3rem;
-
   text-align: center;
   font-family: "SUITE-Regular";
   font-size: 0.8rem;
@@ -119,10 +118,25 @@ button {
   border-radius: 2rem;
   margin: 0.5rem auto;
   padding: 1rem;
-  align-self: last baseline;
-  cursor: pointer;
   border: none;
   background-color: rgba(255, 195, 161, 1);
+  /* color: rgb(255, 255, 218); */
+  color: rgb(58, 45, 45);
+}
+
+.dubble {
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "SUITE-Medium";
+  font-size: 1rem;
+  border-radius: 2rem;
+  margin: 0.5rem auto;
+  padding: 1rem;
+  align-self: last baseline;
+  border: none;
+  background-color: rgb(255, 230, 189);
   /* color: rgb(255, 255, 218); */
   color: rgb(58, 45, 45);
 }
