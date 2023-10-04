@@ -104,20 +104,22 @@ export default function Library({
           position={[5, 5, 5]}
           castShadow
         />
+
         <mesh
           geometry={nodes.Window001.geometry}
           material={materials.PaletteMaterial001}
-          position={[-0.494, 2.036, 1.372]}
+          position={[1.799, 2.105, 3.689]}
           rotation={[0, 1.571, 0]}
           scale={[0.411, 0.559, 0.411]}
           castShadow
           receiveShadow
         />
+
         <Select enabled={true}>
           <mesh
             geometry={nodes.Letter.geometry}
             material={materials["low_poly_interior.020"]}
-            position={[0.085, 0.985, -1.379]}
+            position={[2.378, 1.053, 0.938]}
             scale={2.167}
             onClick={onLetterClick}
             castShadow
@@ -134,7 +136,7 @@ export default function Library({
         </Select>
         <Select enabled={true}>
           <group
-            position={[-1.625, 0.861, -1.594]}
+            position={[0.667, 0.929, 0.723]}
             scale={1.079}
             onClick={onBookShelfClick}
           >
@@ -167,7 +169,7 @@ export default function Library({
         <mesh
           geometry={nodes.Procedural_Tree_2106.geometry}
           material={materials["Tree Bark 08"]}
-          position={[0.524, 0.312, -0.364]}
+          position={[2.817, 0.38, 1.953]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={1.416}
           castShadow
@@ -176,7 +178,7 @@ export default function Library({
         <mesh
           geometry={nodes.low_poly_interior037.geometry}
           material={materials.furniture}
-          position={[-0.033, 0.424, -1.489]}
+          position={[2.26, 0.492, 0.828]}
           rotation={[0, -Math.PI / 2, 0]}
           scale={0.859}
           castShadow
@@ -185,12 +187,12 @@ export default function Library({
         <mesh
           geometry={nodes.Cube008.geometry}
           material={materials["book-cover"]}
-          position={[0.211, 2.132, -1.922]}
+          position={[2.503, 2.2, 0.395]}
           scale={1.176}
           castShadow
           receiveShadow
         />
-        <group position={[-1.738, 1.357, 0.558]}>
+        <group position={[0.555, 1.426, 2.875]}>
           <mesh
             geometry={nodes.Cylinder013.geometry}
             material={materials["Material.004"]}
@@ -219,7 +221,7 @@ export default function Library({
         <mesh
           geometry={nodes.Frame_sunset_January.geometry}
           material={materials.pintura}
-          position={[-2.037, 2.151, 0]}
+          position={[0.255, 2.219, 2.317]}
           rotation={[0, -Math.PI / 2, 0]}
           castShadow
           receiveShadow
@@ -227,7 +229,7 @@ export default function Library({
         <mesh
           geometry={nodes.Plane006.geometry}
           material={materials["C_Die-cast aluminum.001"]}
-          position={[-1.77, 0.26, 0.289]}
+          position={[0.523, 0.328, 2.606]}
           scale={[0.985, 1.839, 2.656]}
           castShadow
           receiveShadow
