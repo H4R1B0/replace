@@ -1,3 +1,5 @@
+import styles from "./AudioPlayer.module.css";
+
 interface AudioProps {
   url: string | null;
 }
@@ -8,7 +10,7 @@ export default function AudioPlayer({ url }: AudioProps) {
   }
 
   return (
-    <div>
+    <div className={styles.wrapper}>
       <audio controls>
         <source src={url} />
       </audio>

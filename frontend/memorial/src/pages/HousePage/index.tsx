@@ -20,6 +20,7 @@ import { registerRoomTarget } from "@apis/room";
 import { useParams } from "react-router-dom";
 import { Environment } from "@react-three/drei";
 import toast from "react-hot-toast";
+import Pagination from "@components/ui/Pagination";
 
 import Spinner from "@components/ui/Spinner";
 
@@ -85,6 +86,11 @@ export default function HousePage() {
 
   return (
     <div className={styles.wrapper}>
+      <Pagination
+        next="공중전화"
+        nextPath={`/payphone/${nickname}`}
+        variant="onlyNext"
+      />
       <Canvas
         className={styles.canvas}
         flat
@@ -130,20 +136,7 @@ export default function HousePage() {
         <ambientLight intensity={0.5} />
         <Environment preset="sunset" />
       </Canvas>
-      <div className={styles.neonTextContainer}>
-        <div
-          className={styles.neonText}
-          onClick={() => navigate(`/tribute/main`)}
-        >
-          &lt; Previous
-        </div>
-        <div
-          className={styles.neonText}
-          onClick={() => navigate(`/payphone/${nickname}`)}
-        >
-          Next &gt;
-        </div>
-      </div>
+
       <RegisterRoomModal
         modalOpen={isModalOpen}
         onClose={toggleModal}

@@ -1,13 +1,16 @@
 import Button from "@components/ui/Button";
 import Modal from "@components/ui/Modal";
 import INPUT from "@components/ui/Input";
+import Select from "@components/ui/Select";
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 // import { setUser } from "store/slices/authSlice";
 // import { useDispatch } from "react-redux";
 import PATH from "@constants/path";
-
 import Toast from "react-hot-toast";
+
+import styles from "./NicknamePage.module.css";
 
 export default function NicknamePage() {
   const BASE_URL = import.meta.env.VITE_APP_API_URL;
@@ -100,8 +103,18 @@ export default function NicknamePage() {
     }
   };
 
+  const selectSort = [
+    { value: "M", innertext: "남자" },
+    { value: "F", innertext: "여자" },
+  ];
+
+  const selectSortoption = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedValue = event.target.value;
+    setGender(selectedValue);
+  };
+
   return (
-    <div>
+    <div className={styles.wrapper}>
       <Modal
         modalOpen={true}
         onClose={() => {}}
@@ -110,27 +123,36 @@ export default function NicknamePage() {
         noButton={true}
       >
         <div>
-          <INPUT
-            onChange={handleNicknameChange}
-            placeholder="닉네임을 입력해주세요."
-            variant="regular"
-            value={nickname}
-          />
-
-          <Button onClick={checkNickname}>중복 확인</Button>
-          <p>{duplicateMessage}</p>
-          <p> 성별을 선택하세요.</p>
-          <select
-            onChange={(e) => {
-              setGender(e.target.value);
-            }}
-            value={gender}
-          >
-            <option value="M">남자</option>
-            <option value="F">여자</option>
-          </select>
+          <div className={styles.duplicate}>
+            <INPUT
+              onChange={handleNicknameChange}
+              placeholder="닉네임을 입력해주세요."
+              variant="short"
+              value={nickname}
+            />
+            <Button variant="nickname" onClick={checkNickname}>
+              중복 확인
+            </Button>
+          </div>
+          <p className={styles.duplicateMent}>{duplicateMessage}</p>
+          <div className={styles.genderCheck}>
+            <p className={styles.optionMent}> 성별을 선택하세요.</p>
+            <Select
+              variant="short"
+              name="selectSort"
+              onChange={(_, value) =>
+                selectSortoption({ target: { value } } as any)
+              }
+              children={selectSort.map((option) => ({
+                value: option.value,
+                innertext: option.innertext,
+              }))}
+            />
+          </div>
         </div>
-        <Button onClick={saveNickname}>시작하기</Button>
+        <div>
+          <Button onClick={saveNickname}>시작하기</Button>
+        </div>
       </Modal>
     </div>
   );
