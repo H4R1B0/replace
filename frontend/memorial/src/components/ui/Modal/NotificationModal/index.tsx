@@ -59,7 +59,7 @@ export default function NotificationModal({
     <Modal
       {...other}
       title="알림을 확인해보세요."
-      buttonLabel="close"
+      buttonLabel="닫기"
       onClose={() => navigate(-1)}
     >
       <div>{notifications}</div>
