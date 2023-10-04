@@ -7,7 +7,7 @@ export default function RadioOptionModal({ ...other }: RadioOptionModalProps) {
   return (
     <Modal
       {...other}
-      title="원하는 기능을 눌러주세요."
+      title="원하는 기능을 선택해주세요."
       buttonLabel="닫기"
       onClose={() => navigate("..")}
     >
