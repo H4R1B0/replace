@@ -84,7 +84,6 @@ export default function HousePage() {
 
   return (
     <div className={styles.wrapper}>
-      <p className={styles.neonTitle}>지영이의 집</p>
       <Pagination
         next="공중전화"
         nextPath={`/payphone/${nickname}`}
