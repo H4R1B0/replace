@@ -20,6 +20,7 @@ import { registerRoomTarget } from "@apis/room";
 import { useParams } from "react-router-dom";
 import { Environment } from "@react-three/drei";
 import toast from "react-hot-toast";
+import Pagination from "@components/ui/Pagination";
 
 export default function HousePage() {
   const [isModalOpen, toggleModal] = useToggle(false);
@@ -128,7 +129,7 @@ export default function HousePage() {
         <ambientLight intensity={0.5} />
         <Environment preset="sunset" />
       </Canvas>
-      <div className={styles.neonTextContainer}>
+      {/* <div className={styles.neonTextContainer}>
         <div
           className={styles.neonText}
           onClick={() => navigate(`/tribute/main`)}
@@ -141,7 +142,12 @@ export default function HousePage() {
         >
           Next &gt;
         </div>
-      </div>
+      </div> */}
+      <Pagination
+        next="공중전화"
+        nextPath={`/payphone/${nickname}`}
+        variant="onlyNext"
+      />
       <RegisterRoomModal
         modalOpen={isModalOpen}
         onClose={toggleModal}

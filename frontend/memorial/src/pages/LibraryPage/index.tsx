@@ -26,6 +26,7 @@ import TrributeEventCard from "@components/ui/TrributeEventCard";
 import toast from "react-hot-toast";
 import { playBookBGM } from "@utils/effectSound";
 import { useQueryClient } from "@tanstack/react-query";
+import Pagination from "@components/ui/Pagination";
 
 type Book = {
   letterId: number;
@@ -75,6 +76,7 @@ export default function LibraryPage() {
     });
   };
 
+  const nickname = sessionStorage.getItem("nickname");
   const { isError: isBookListError, error: bookListError } = useQuery<
     BookList,
     Error
@@ -168,6 +170,7 @@ export default function LibraryPage() {
   console.log(letter);
   return (
     <div className={styles.wrapper}>
+      <Pagination prev="홈으로가기" prevPath={`/house/${nickname}`} />
       <Canvas
         flat
         dpr={[1, 2]}

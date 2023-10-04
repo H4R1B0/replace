@@ -12,6 +12,7 @@ import styles from "./PayphonePage.module.css";
 
 import RegisterVoicemailModal from "@components/ui/Modal/RegisterVoicemailModal";
 import VoiceMailListModal from "@components/ui/Modal/VoiceMailListModal";
+import Pagination from "@components/ui/Pagination";
 
 export default function PayphonePage() {
   const nowUrl = window.location.href;
@@ -19,6 +20,7 @@ export default function PayphonePage() {
   const houseUserNickname = urlSplit[urlSplit.length - 1];
   // 나와 방문자를 구분할 코드
   const isMe = houseUserNickname === sessionStorage.getItem("nickname");
+  const nickname = sessionStorage.getItem("nickname");
 
   const [modalOpen, setModalOpen] = useState(false); // 모달 열고 닫는 상태를 관리하기 위한 State
 
@@ -40,11 +42,18 @@ export default function PayphonePage() {
 
   return (
     <div className={styles.wrapper}>
+      <Pagination
+        prev="집"
+        next="헌화"
+        prevPath={`/house/${nickname}`}
+        nextPath={`/tribute/main`}
+      />
       <Canvas
         flat
         dpr={[1, 2]}
         camera={{ fov: 25, position: [0, 0, 8] }}
         style={{ touchAction: "none" }}
+        className={styles.canvas}
       >
         {/* <OrbitControls /> */}
         <Stage environment="city" intensity={0.5} adjustCamera shadows={false}>
