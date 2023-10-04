@@ -1,12 +1,14 @@
 package com.vegetable.samochiro.service;
 
 import com.google.cloud.storage.Blob;
+import com.google.gson.Gson;
 import com.vegetable.samochiro.domain.AIVoice;
 import com.vegetable.samochiro.domain.Alarm;
 import com.vegetable.samochiro.domain.Room;
 import com.vegetable.samochiro.domain.User;
 import com.vegetable.samochiro.domain.Voice;
 import com.vegetable.samochiro.dto.ai.AITrainingRequest;
+import com.vegetable.samochiro.dto.ai.DataPayload;
 import com.vegetable.samochiro.enums.CustomErrorType;
 import com.vegetable.samochiro.enums.SituationType;
 import com.vegetable.samochiro.exception.RoomNotFoundException;
@@ -18,6 +20,7 @@ import com.vegetable.samochiro.repository.VoiceRepository;
 
 import java.io.DataOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.channels.Channels;
@@ -73,75 +76,38 @@ public class AIService {
 
         System.out.println("voices.size() = " + voices.size());
 
-        List<Blob> blobs = new ArrayList<>();
+        List<String> fileUrls = new ArrayList<>();
+
+        for (Voice voice : voices) {
+            fileUrls.add(voice.getUrl());
+        }
+        //url 테스트
+
+        // 객체 생성 및 데이터 설정
+        DataPayload payload = new DataPayload(roomUuid, gender, fileUrls);
+
+        // Gson 객체 생성 및 JSON 변환
+        Gson gson = new Gson();
+        String jsonPayload = gson.toJson(payload);
+
         try {
-            URL url = new URL(serverUrl+"/ai");
-
+            // HttpURLConnection 객체 생성 및 설정
+            URL url = new URL(serverUrl + "/ai");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
             connection.setRequestMethod("POST");
-            connection.setUseCaches(false);
+            connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
             connection.setDoOutput(true);
-            connection.setDoInput(true);
-            //20231004 추가
-            connection.setConnectTimeout(3600000);
-            connection.setReadTimeout(3600000);
-            //20231004 추가
-            connection.setRequestProperty("Connection", "Keep-Alive");
-            connection.setRequestProperty("Cache-Control", "no-cache");
-            connection.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + BOUNDARY);
 
-            for (Voice voice : voices) {
-                blobs.add(gcsService.getBlob(voice.getName()));
+            // 데이터 전송
+            try (OutputStream os = connection.getOutputStream()) {
+                byte[] input = jsonPayload.getBytes("UTF-8");
+                os.write(input, 0, input.length);
             }
 
-            try (DataOutputStream dos = new DataOutputStream(connection.getOutputStream())) {
-
-                // 문자열 파트 1 전송
-                dos.writeBytes("--" + BOUNDARY + "\r\n");
-                dos.writeBytes("Content-Disposition: form-data; name=\"roomUuid\"\r\n");
-                //20231004 추가
-                dos.writeBytes("Content-Type: text/plain; charset=UTF-8\r\n");
-                dos.writeBytes("\r\n");
-                dos.writeBytes(roomUuid + "\r\n");
-                System.out.println("roomUuid = " + roomUuid);
-
-                // 문자열 파트 2 전송
-                dos.writeBytes("--" + BOUNDARY + "\r\n");
-                dos.writeBytes("Content-Disposition: form-data; name=\"gender\"\r\n");
-                //20231004 추가
-                dos.writeBytes("Content-Type: text/plain; charset=UTF-8\r\n");
-                dos.writeBytes("\r\n");
-                dos.writeBytes(gender + "\r\n");
-                System.out.println("gender = " + gender);
-
-                for (Blob blob : blobs) {
-                    // 파일 파트 헤더 작성
-                    dos.writeBytes("--" + BOUNDARY + "\r\n");
-                    dos.writeBytes("Content-Disposition: form-data; name=\"files\";filename=\"" +
-                        blob.getName() + "\"\r\n");
-                    dos.writeBytes("\r\n");
-
-                    // Blob에서 데이터를 읽어서 전송
-                    try (InputStream is = Channels.newInputStream(blob.reader())) {
-                        byte[] buffer = new byte[4096];
-                        int bytesRead;
-                        while ((bytesRead = is.read(buffer)) != -1) {
-                            dos.write(buffer, 0, bytesRead);
-                        }
-                    }
-                    dos.writeBytes("\r\n");
-                }
-                dos.writeBytes("--" + BOUNDARY + "--\r\n");
-            }
-            // 응답 확인
+            // 서버 응답 확인
             int responseCode = connection.getResponseCode();
-            System.out.println("responseCode = " + responseCode);
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                System.out.println("Files uploaded successfully!");
-            } else {
-                System.out.println("File upload failed with response code: " + responseCode);
-            }
+            System.out.println("HTTP Response Code: " + responseCode);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -157,14 +123,14 @@ public class AIService {
     }
 
     public void saveAIVoiceFile(String roomUuid, List<MultipartFile> congratulationList, List<MultipartFile> consolationList,
-        List<MultipartFile> encourageList, List<MultipartFile> safetyList, List<MultipartFile> thanksList, List<MultipartFile> welcomeList) {
+                                List<MultipartFile> encourageList, List<MultipartFile> safetyList, List<MultipartFile> thanksList, List<MultipartFile> welcomeList) {
 
         String currentTime = LocalDateTime.now().toString();
         Room room = roomRepository.findById(roomUuid).get();
         LocalDateTime current = LocalDateTime.now();
 
-        if(congratulationList.size()>0) {
-            for(MultipartFile file : congratulationList) {
+        if (congratulationList.size() > 0) {
+            for (MultipartFile file : congratulationList) {
                 String fileName = currentTime + "ai" + file.getOriginalFilename();
                 String url = gcsService.uploadFile(fileName, file);
 
@@ -180,8 +146,8 @@ public class AIService {
             }
         }
 
-        if(consolationList.size()>0) {
-            for(MultipartFile file : consolationList) {
+        if (consolationList.size() > 0) {
+            for (MultipartFile file : consolationList) {
                 String fileName = currentTime + "ai" + file.getOriginalFilename();
                 String url = gcsService.uploadFile(fileName, file);
 
@@ -197,25 +163,25 @@ public class AIService {
             }
         }
 
-        if(encourageList.size()>0) {
-            for(MultipartFile file : encourageList) {
+        if (encourageList.size() > 0) {
+            for (MultipartFile file : encourageList) {
                 String fileName = currentTime + "ai" + file.getOriginalFilename();
-				String url = gcsService.uploadFile(fileName, file);
+                String url = gcsService.uploadFile(fileName, file);
 
                 AIVoice aiVoice = AIVoice.builder()
-					.url(url)
-					.name(fileName)
-					.registDate(current)
-					.situationType(SituationType.ENCOURAGE)
-					.room(room)
-					.build();
+                    .url(url)
+                    .name(fileName)
+                    .registDate(current)
+                    .situationType(SituationType.ENCOURAGE)
+                    .room(room)
+                    .build();
 
-				aiVoiceRepository.save(aiVoice);
+                aiVoiceRepository.save(aiVoice);
             }
         }
 
-        if(safetyList.size()>0) {
-            for(MultipartFile file : safetyList) {
+        if (safetyList.size() > 0) {
+            for (MultipartFile file : safetyList) {
                 String fileName = currentTime + "ai" + file.getOriginalFilename();
                 String url = gcsService.uploadFile(fileName, file);
 
@@ -231,25 +197,25 @@ public class AIService {
             }
         }
 
-        if(thanksList.size()>0) {
-            for(MultipartFile file : thanksList) {
-				String fileName = currentTime + "ai" + file.getOriginalFilename();
-				String url = gcsService.uploadFile(fileName, file);
+        if (thanksList.size() > 0) {
+            for (MultipartFile file : thanksList) {
+                String fileName = currentTime + "ai" + file.getOriginalFilename();
+                String url = gcsService.uploadFile(fileName, file);
 
                 AIVoice aiVoice = AIVoice.builder()
-					.url(url)
-					.name(fileName)
-					.registDate(current)
-					.situationType(SituationType.THANKS)
-					.room(room)
-					.build();
+                    .url(url)
+                    .name(fileName)
+                    .registDate(current)
+                    .situationType(SituationType.THANKS)
+                    .room(room)
+                    .build();
 
-				aiVoiceRepository.save(aiVoice);
-			}
+                aiVoiceRepository.save(aiVoice);
+            }
         }
 
-        if(welcomeList.size()>0) {
-            for(MultipartFile file : welcomeList) {
+        if (welcomeList.size() > 0) {
+            for (MultipartFile file : welcomeList) {
                 String fileName = currentTime + "ai" + file.getOriginalFilename();
                 String url = gcsService.uploadFile(fileName, file);
 
