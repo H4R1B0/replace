@@ -9,6 +9,7 @@ import Modal, { ModalProps } from "..";
 import { useParams, useNavigate } from "react-router-dom";
 import ReactAudioPlayer from "react-audio-player";
 import toast from "react-hot-toast";
+import { registVoicemail } from "@apis/payphone";
 
 export default function AudioUploadModal({ ...other }: AudioUploadModalProps) {
   const navigate = useNavigate();
@@ -59,8 +60,14 @@ export default function AudioUploadModal({ ...other }: AudioUploadModalProps) {
   };
 
   return (
-    <Modal {...other} buttonLabel="close" onClose={() => navigate("..")}>
-      <p>AudioUploadModal</p>
+    <Modal
+      {...other}
+      title="남기고 싶은 음성이 있나요?"
+      subtitle="원하는 음성을 업로드해주세요."
+      buttonLabel="닫기"
+      onClose={() => navigate("..")}
+    >
+      {/* <p>AudioUploadModal</p> */}
       <form onSubmit={handleFormSubmit}>
         <div className={styles.uploadPreview} onClick={handlePreviewClick}>
           <HiFolder />
@@ -73,8 +80,10 @@ export default function AudioUploadModal({ ...other }: AudioUploadModalProps) {
           ref={inputEl}
           onChange={handleFileChange}
         />
-        <Button disabled={audioSrc === ""}>Upload</Button>
-        <Button onClick={() => navigate(-1)}>뒤로가기</Button>
+        {/* <Button className={styles.prevBtn} onClick={() => navigate(-1)}>뒤로가기</Button> */}
+        <Button variant="delete" disabled={audioSrc === ""}>
+          등록하기
+        </Button>
       </form>
       {audioSrc && <ReactAudioPlayer src={audioSrc} controls />}
     </Modal>
