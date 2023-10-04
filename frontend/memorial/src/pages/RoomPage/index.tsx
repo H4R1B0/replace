@@ -9,15 +9,16 @@ import {
 } from "@react-three/drei";
 import styles from "./RoomPage.module.css";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
-import { Bloom } from "@react-three/postprocessing";
 import Pagination from "@components/ui/Pagination";
 
 export default function RoomPage() {
   const navigate = useNavigate();
   const nickname = sessionStorage.getItem("nickname");
   const { sequence } = useParams();
-  const roomSequence = Number(sequence);
+  const roomSequence = parseInt(sequence ?? "");
+
   //TODO: 급! use-guester로 손가락으로 확대하기 넣기
+  //TODO: 누구의 방 이거 어케 할지...고정할지 말지 정하기
   return (
     <div className={styles.wrapper}>
       <Pagination
@@ -26,6 +27,9 @@ export default function RoomPage() {
         next="서재"
         nextPath={`/library/${roomSequence}`}
       />
+      <div className={styles.titleContainer}>
+        <h1>"{nickname}의 방"</h1>
+      </div>
       <Canvas
         flat
         dpr={[1, 2]}
@@ -36,12 +40,6 @@ export default function RoomPage() {
       >
         <ambientLight color={0xffc845} intensity={1} position={[0, 40, 10]} />
 
-        <Bloom
-          luminanceThreshold={0}
-          mipmapBlur
-          luminanceSmoothing={0.0}
-          intensity={6}
-        />
         {/* TODO: x축 y축 안맞는 것 맞추기 */}
         <Stage environment="city" intensity={0.5} adjustCamera shadows={false}>
           <PresentationControls
@@ -58,18 +56,13 @@ export default function RoomPage() {
             />
           </PresentationControls>
         </Stage>
-        <Cloud
-          scale={6}
-          opacity={0.3}
-          depth={-12} // Z-dir depth
-          segments={20} // Number of particles
-        />
+        <Cloud scale={6} opacity={0.3} depth={-20} segments={20} />
         <Sparkles
-          count={80}
+          count={60}
           size={3}
           position={[0, 0.9, 0]}
           scale={[10, 10, 10]}
-          speed={0.5}
+          speed={1}
         />
         <Environment preset="sunset" />
       </Canvas>

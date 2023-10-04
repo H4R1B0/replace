@@ -40,11 +40,12 @@ html {
 }
 
 .viewport {
-  background: rgb(255, 185, 147);
+  background: rgb(9, 6, 50);
   background: linear-gradient(
-    0deg,
-    rgba(255, 185, 147, 1) 0%,
-    rgb(149, 141, 244) 100%
+    180deg,
+    rgba(9, 6, 50, 1) 0%,
+    rgba(149, 141, 244, 1) 44%,
+    rgba(255, 185, 147, 1) 70%
   );
 
   display: flex;
