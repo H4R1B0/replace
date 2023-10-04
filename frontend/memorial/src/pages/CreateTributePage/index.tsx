@@ -94,9 +94,13 @@ export default function CreateTributePage() {
   });
 
   const tributeSubmit = () => {
-    tributeMutation.mutate({
-      ...tribute,
-    });
+    if (tribute.description === "" || tribute.title === "" || tribute.subTitle === "" || tribute.startDate === "") {
+      toast.error("모든 항목을 입력해주세요."), { id: "failsubmit" };
+    } else {
+      tributeMutation.mutate({
+        ...tribute,
+      });
+    }
   };
 
   console.log(tribute);
