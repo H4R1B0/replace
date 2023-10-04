@@ -22,6 +22,8 @@ import { Environment } from "@react-three/drei";
 import toast from "react-hot-toast";
 import Pagination from "@components/ui/Pagination";
 
+import Spinner from "@components/ui/Spinner";
+
 export default function HousePage() {
   const [isModalOpen, toggleModal] = useToggle(false);
   const [selectedSequence, setSelectedSequence] = useState(1);
@@ -54,7 +56,7 @@ export default function HousePage() {
     },
   });
 
-  if (isLoading) return "loading";
+  if (isLoading) return <Spinner />;
   if (isError) return `Error`;
 
   const { rooms } = roomList;
