@@ -80,6 +80,9 @@ public class AIService {
             connection.setDoOutput(true);
             connection.setDoInput(true);
             //20231004 추가
+            connection.setConnectTimeout(3600000);
+            connection.setReadTimeout(3600000);
+            //20231004 추가
             connection.setRequestProperty("Connection", "Keep-Alive");
             connection.setRequestProperty("Cache-Control", "no-cache");
             connection.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + BOUNDARY);
