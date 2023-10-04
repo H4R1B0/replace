@@ -17,7 +17,7 @@ export default function Header() {
 
   return (
     <div className={styles.wrapper}>
-      <button title="Notifications">
+      <button title="Notifications" onClick={() => navigate(PATH.NOTIFICATION)}>
         <PiBellDuotone />
       </button>
       <div className={styles.spacer}></div>
