@@ -50,4 +50,12 @@ public class RoomService {
     }
     //방 대상 지우기
 
+    public String getTargetName(int sequence, String userId) {
+        Optional<Room> findRoom = roomRepository.findBySequenceAndUserId(sequence, userId);
+        if (findRoom.isEmpty())
+            throw new RoomNotFoundException(CustomErrorType.ROOM_NOT_FOUND.getMessage());
+        return findRoom.get().getTargetName();
+    }
+    //방 대상 찾기
+
 }

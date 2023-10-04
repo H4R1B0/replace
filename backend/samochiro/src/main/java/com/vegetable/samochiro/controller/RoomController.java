@@ -2,6 +2,7 @@ package com.vegetable.samochiro.controller;
 
 import com.vegetable.samochiro.dto.common.MessageResponse;
 import com.vegetable.samochiro.dto.room.RegisterTargetNameRequest;
+import com.vegetable.samochiro.dto.room.WhoTargetNameResponse;
 import com.vegetable.samochiro.enums.CustomErrorType;
 import com.vegetable.samochiro.exception.FirstRoomDeleteException;
 import com.vegetable.samochiro.exception.RoomRangeException;
@@ -48,6 +49,21 @@ public class RoomController {
         return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse("방의 대상이 등록되었습니다."));
     }
     //기억의 방 대상 등록 - 방 1
+
+    @GetMapping("/{sequence}")
+    public ResponseEntity<WhoTargetNameResponse> registerTargetName(@PathVariable int sequence, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+        if (sequence == 1) {
+            throw new FirstRoomRegisterException(CustomErrorType.USER_ROOM_CANT_REGISTER.getMessage());
+        }
+        if (sequence < 2 || sequence > 3) {
+            throw new RoomRangeException(CustomErrorType.OUT_OF_ROOM_RANGE.getMessage());
+        }
+        String userId = headerUtils.getUserId(authorizationHeader);
+
+        String targetName = roomService.getTargetName(sequence, userId);
+        return ResponseEntity.status(HttpStatus.OK).body(WhoTargetNameResponse.builder().targetName(targetName).build());
+    }
+    //기억의 방 대상 찾기
 
     @DeleteMapping("/{sequence}")
     public ResponseEntity<MessageResponse> deleteRoom(@PathVariable int sequence, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
