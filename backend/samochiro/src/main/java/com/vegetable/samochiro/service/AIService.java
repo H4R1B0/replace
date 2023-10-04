@@ -235,7 +235,7 @@ public class AIService {
         String targetName = roomRepository.findByRoomUuid(roomUuid).get().getTargetName();
         User user = roomRepository.findByRoomUuid(roomUuid).get().getUser();
         Alarm alarm = Alarm.builder()
-            .message(targetName + "방의 음성 생성 완료되었습니다! 한 번 들어볼까요?")
+            .message(targetName + "님 방의 음성 생성이 완료되었습니다! 한 번 들어볼까요?")
             .user(user)
             .build();
         alarmRepository.save(alarm);
