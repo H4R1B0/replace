@@ -27,6 +27,31 @@ export default function IntroductionPage() {
       title: "Title 2dsdfghsdhghfhsdh",
       description: "Description 2",
     },
+    {
+      image: "https://i.imgur.com/inVKyu2.png",
+      title: "Title 2dsdfghsdhghfhsdh",
+      description: "Description 2",
+    },
+    {
+      image: "https://i.imgur.com/eSACUak.png",
+      title: "Title 2dsdfghsdhghfhsdh",
+      description: "Description 2",
+    },
+    {
+      image: "https://i.imgur.com/Ca64aLD.png",
+      title: "Title 2dsdfghsdhghfhsdh",
+      description: "Description 2",
+    },
+    {
+      image: "https://i.imgur.com/HFc4Nao.png",
+      title: "Title 2dsdfghsdhghfhsdh",
+      description: "Description 2",
+    },
+    {
+      image: "https://i.imgur.com/UITKbH2.png",
+      title: "Title 2dsdfghsdhghfhsdh",
+      description: "Description 2",
+    },
   ];
   return (
     <div>

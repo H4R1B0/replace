@@ -28,7 +28,10 @@
   padding-right: 50px;
   max-width: 400px;
   object-fit: cover;
+  min-height: 13rem;
+  max-height: 15rem;
   animation: bounce 1s infinite alternate;
+  object-fit: contain;
 }
 
 @keyframes bounce {
@@ -49,7 +52,7 @@
   height: 30%;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 10%;
+  margin-top: 20%;
   border-radius: 0.5rem;
   display: flex;
   flex-direction: column;
