@@ -15,6 +15,9 @@ export default function AudioListModal({ ...other }: AudioListModalProps) {
   if (typeof sequence === "undefined") return;
   const roomSequence = parseInt(sequence);
   const queryClient = useQueryClient();
+  const [voiceToggleStates, setVoiceToggleStates] = useState<
+    Record<number, boolean>
+  >({});
 
   const {
     isLoading,
@@ -51,9 +54,6 @@ export default function AudioListModal({ ...other }: AudioListModalProps) {
     /*TODO: 토글로 누르면 audio가 보이게끔 수정하기 */
   }
 
-  const [voiceToggleStates, setVoiceToggleStates] = useState<
-    Record<number, boolean>
-  >({});
   const handleToggleClick = (voiceId: number) => {
     setVoiceToggleStates((prevToggleStates) => ({
       ...prevToggleStates,
