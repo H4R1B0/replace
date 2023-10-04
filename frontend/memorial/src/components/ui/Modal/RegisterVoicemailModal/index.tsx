@@ -10,6 +10,8 @@ import Button from "@components/ui/Button";
 import { AudioData } from "audio-react-recorder";
 import Toast from "react-hot-toast";
 
+import styles from "./RegisterVoicemailModal.module.css";
+
 type RegisterVoicemailModalProps = {
   isOpen: boolean;
   onClose: () => void;
@@ -103,17 +105,19 @@ export default function RegisterVoicemailModal({
       onClose={onClose}
       title="이 순간을 음성으로 남기시겠습니까?"
       subtitle="가장 아름다운 목소리를 들려주세요. 등록한 음성은 삭제하실 수 없습니다."
+      // noButton={true}
       buttonLabel="닫기"
+      // buttonLabelDubble="저장하기"
     >
       <Recorder onAudioDataReceived={(data) => setAudioData(data)} />
-      <Button onClick={handleUpload}>
-        {/* <Button
-        onClick={() => {
-          RegistVoicemail(audioData);
-        }}
-      > */}
-        저장하기
-      </Button>
+      <div className={styles.buttonSection}>
+        {/* <Button variant="modal" onClick={onClose}>
+          닫기
+        </Button> */}
+        <Button variant="delete" onClick={handleUpload}>
+          저장하기
+        </Button>
+      </div>
     </Modal>
   );
 }

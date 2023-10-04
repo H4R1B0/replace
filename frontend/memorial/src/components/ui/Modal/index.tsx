@@ -93,7 +93,6 @@ export default function Modal({
             <Button
               style={{ backgroundColor: "rgb(171 180 218)" }}
               variant="modal"
-              onClick={onClose}
             >
               {buttonLabelDubble}
             </Button>
