@@ -23,6 +23,9 @@ export default function Input({
     case "short":
       variantClass = styles.short;
       break;
+    case "userSearch":
+      variantClass = styles.userSearch;
+      break;
   }
   return (
     <div className={styles.wrapper}>
