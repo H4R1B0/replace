@@ -84,6 +84,12 @@ export default function HousePage() {
 
   return (
     <div className={styles.wrapper}>
+      <p className={styles.neonTitle}>지영이의 집</p>
+      <Pagination
+        next="공중전화"
+        nextPath={`/payphone/${nickname}`}
+        variant="onlyNext"
+      />
       <Canvas
         className={styles.canvas}
         flat
@@ -129,25 +135,7 @@ export default function HousePage() {
         <ambientLight intensity={0.5} />
         <Environment preset="sunset" />
       </Canvas>
-      {/* <div className={styles.neonTextContainer}>
-        <div
-          className={styles.neonText}
-          onClick={() => navigate(`/tribute/main`)}
-        >
-          &lt; Previous
-        </div>
-        <div
-          className={styles.neonText}
-          onClick={() => navigate(`/payphone/${nickname}`)}
-        >
-          Next &gt;
-        </div>
-      </div> */}
-      <Pagination
-        next="공중전화"
-        nextPath={`/payphone/${nickname}`}
-        variant="onlyNext"
-      />
+
       <RegisterRoomModal
         modalOpen={isModalOpen}
         onClose={toggleModal}
