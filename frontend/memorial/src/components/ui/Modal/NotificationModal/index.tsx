@@ -3,6 +3,10 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchNotificationList, deleteSingleNotification } from "@apis/push";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+// import Button from "@components/ui/Button";
+import { HiOutlineXCircle } from "react-icons/hi2";
+
+import styles from "./NotificationModal.module.css";
 
 export default function NotificationModal({
   ...other
@@ -38,15 +42,26 @@ export default function NotificationModal({
   if (isError) return `Error`;
 
   const notifications = notificationList?.data?.map((notification) => (
-    <>
-      <div key={notification.id}> 😁{notification.message} </div>
-      <button onClick={() => handleDelete(notification.id)}>삭제하기</button>
-    </>
+    <div className={styles.notificationCard}>
+      <div key={notification.id}>
+        <HiOutlineXCircle
+          className={styles.notificationIcon}
+          size={30}
+          onClick={() => handleDelete(notification.id)}
+        />
+        <p className={styles.notificationMent}> 😁{notification.message}</p>
+      </div>
+      <div className={styles.notificationButton}></div>
+    </div>
   ));
 
   return (
-    <Modal {...other} buttonLabel="close" onClose={() => navigate(-1)}>
-      <p>notificationList</p>
+    <Modal
+      {...other}
+      title="알림을 확인해보세요."
+      buttonLabel="close"
+      onClose={() => navigate(-1)}
+    >
       <div>{notifications}</div>
     </Modal>
   );
