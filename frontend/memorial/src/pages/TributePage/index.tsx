@@ -8,23 +8,20 @@ export default function TributePage() {
   const nickname = sessionStorage.getItem("nickname");
   return (
     <div className={styles.wrapper}>
-      <div className={styles.listWrapper}>
-        <Pagination prev="공중전화" prevPath={`/payphone/${nickname}`} />
-        <h1>함께 기리는 추모공간</h1>
+      <Pagination prev="공중전화" prevPath={`/payphone/${nickname}`} />
 
-        <img
-          src="https://i.imgur.com/UZrA2j5.png"
-          alt="door"
-          className={styles.img}
-        />
-        <div className={styles.buttonwrapper}>
-          <Button variant="regular" onClick={() => navigate("/tribute/create")}>
-            공간 만들기
-          </Button>
-          <Button variant="regular" onClick={() => navigate("/tribute/list")}>
-            리스트 보기
-          </Button>
-        </div>
+      <img
+        src="https://i.imgur.com/UZrA2j5.png"
+        alt="door"
+        className={styles.img}
+      />
+      <div className={styles.buttonwrapper}>
+        <Button variant="regular" onClick={() => navigate("/tribute/create")}>
+          헌화 생성
+        </Button>
+        <Button variant="regular" onClick={() => navigate("/tribute/list")}>
+          헌화 리스트
+        </Button>
       </div>
     </div>
   );

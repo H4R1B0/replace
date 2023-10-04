@@ -10,4 +10,76 @@
   grid-row: 1 / -1;
 }
 
-/* TODO: animation 넣기 */
+.titleContainer {
+  z-index: 9999;
+  pointer-events: none;
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  display: flex;
+  margin: 3.5em 0;
+  font-size: 1.75em;
+  justify-content: center;
+}
+
+.titleContainer h1 {
+  color: white;
+  opacity: 0;
+  animation: animateText 10s;
+}
+
+@keyframes animateText {
+  0% {
+    opacity: 0;
+    translate: 0 10%;
+  }
+  15% {
+    opacity: 1;
+    translate: 0 0;
+  }
+  75% {
+    opacity: 1;
+    translate: 0 0;
+  }
+  100% {
+    opacity: 1;
+    translate: 0 10%;
+  }
+}
+
+/*
+  100% {
+    opacity: 1;
+    translate: 0 0; // 0,0 이거나 0, 10% 이거나
+  }
+*/
+
+.neonText {
+  pointer-events: all;
+  color: #fff;
+  text-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #faff9f,
+    0 0 82px #faff9f, 0 0 92px #faff9f, 0 0 102px #faff9f, 0 0 151px #faff9f;
+  font-size: 20px;
+  cursor: pointer;
+  transition: translate 300ms;
+  animation: animate 2s linear forwards;
+}
+
+@keyframes animate {
+  0% {
+    width: 0px;
+    height: 0px;
+  }
+  30% {
+    width: 50px;
+    height: 0px;
+  }
+  60% {
+    width: 50px;
+    height: 80px;
+  }
+}
+
+.neonWrapper {
+  display: flex;
+  width: 80vw;
+}

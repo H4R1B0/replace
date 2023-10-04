@@ -9,3 +9,39 @@
   grid-row: 1 / -1;
   grid-column: 1 / -1;
 }
+
+.titleContainer {
+  z-index: 10;
+  pointer-events: none;
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  display: flex;
+  margin: 3.5em 0;
+  font-size: 1em;
+  justify-content: center;
+}
+
+.titleContainer h1 {
+  color: white;
+  opacity: 0;
+  animation: animateText 3s;
+}
+
+@keyframes animateText {
+  0% {
+    opacity: 0;
+    translate: 0 10%;
+  }
+  15% {
+    opacity: 1;
+    translate: 0 0;
+  }
+  75% {
+    opacity: 1;
+    translate: 0 0;
+  }
+  100% {
+    opacity: 0;
+    translate: 0 10%;
+  }
+}

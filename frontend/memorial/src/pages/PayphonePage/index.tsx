@@ -4,7 +4,7 @@ import {
   Stage,
   PresentationControls,
   Environment,
-  Sparkles,
+  Stars,
   Cloud,
 } from "@react-three/drei";
 import {
@@ -87,17 +87,18 @@ export default function PayphonePage() {
 
         <Environment preset="sunset" />
         <Cloud
-          scale={6}
+          scale={3}
           opacity={0.3}
           depth={-12} // Z-dir depth
           segments={20} // Number of particles
         />
-        <Sparkles
-          count={40}
-          size={10}
-          position={[0.9, 0.9, 0.9]}
-          scale={[20, 20, 20]}
-          speed={1}
+        <Stars
+          radius={100}
+          depth={1}
+          count={5000}
+          factor={4}
+          saturation={5}
+          fade
         />
         <ambientLight intensity={0.5} />
       </Canvas>

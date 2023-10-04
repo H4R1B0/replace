@@ -2,12 +2,7 @@ import { fetchRoomList } from "@apis/room";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import House from "@components/3d/House";
 import { Canvas } from "@react-three/fiber";
-import {
-  Stage,
-  PresentationControls,
-  Sparkles,
-  Cloud,
-} from "@react-three/drei";
+import { Stage, PresentationControls, Cloud, Stars } from "@react-three/drei";
 import styles from "./HousePage.module.css";
 import { Bloom } from "@react-three/postprocessing";
 
@@ -91,6 +86,9 @@ export default function HousePage() {
         nextPath={`/payphone/${nickname}`}
         variant="onlyNext"
       />
+      <div className={styles.titleContainer}>
+        <h1>"{nickname}의 집"</h1>
+      </div>
       <Canvas
         className={styles.canvas}
         flat
@@ -102,10 +100,10 @@ export default function HousePage() {
       >
         <ambientLight color={0xffc845} intensity={0.5} position={[0, 40, 0]} />
         <Bloom
-          luminanceThreshold={0}
+          luminanceThreshold={1}
           mipmapBlur
-          luminanceSmoothing={0.0}
-          intensity={6}
+          luminanceSmoothing={1}
+          intensity={10}
         />
         <Stage environment="city" intensity={0.5} adjustCamera shadows={false}>
           <PresentationControls
@@ -121,18 +119,14 @@ export default function HousePage() {
             />
           </PresentationControls>
         </Stage>
-        <Cloud
-          scale={6}
-          opacity={0.3}
-          depth={-12} // Z-dir depth
-          segments={20} // Number of particles
-        />
-        <Sparkles
-          count={40}
-          size={10}
-          position={[0.9, 0.9, 0.9]}
-          scale={[20, 20, 20]}
-          speed={1}
+        <Cloud scale={4} opacity={1} depth={-10} segments={30} speed={2} />
+        <Stars
+          radius={100}
+          depth={1}
+          count={5000}
+          factor={4}
+          saturation={5}
+          fade
         />
         <ambientLight intensity={0.5} />
         <Environment preset="sunset" />
