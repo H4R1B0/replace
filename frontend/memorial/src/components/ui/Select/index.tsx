@@ -4,7 +4,7 @@ import styles from "./Select.module.css";
 interface OptionProps {
   value: any;
   innertext: any;
-  id: number;
+  id?: number;
 }
 
 interface SelectProps {

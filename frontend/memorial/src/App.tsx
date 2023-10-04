@@ -8,6 +8,7 @@ import { Toaster } from "react-hot-toast";
 // import "@assets/fonts/font.css";
 import { playBGM } from "@utils/useSound";
 import Header from "@components/ui/Header";
+import Spinner from "@components/ui/Spinner";
 
 const MainPage = lazy(() => import("@pages/MainPage"));
 const RoomPage = lazy(() => import("@pages/RoomPage"));
@@ -90,17 +91,7 @@ export default function App() {
         </nav> */}
         <Router>
           <Header />
-          <Suspense
-            fallback={
-              <div className="loading-wrapper">
-                <img
-                  src="https://i.imgur.com/DVqUtaE.gif"
-                  alt="loading"
-                  style={{ width: "80%" }}
-                />
-              </div>
-            }
-          >
+          <Suspense fallback={<Spinner />}>
             <Routes>
               <Route path={PATH.ROOT} element={<MainPage />} />
               <Route path={PATH.MAIN} element={<MainPage />} />
