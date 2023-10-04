@@ -61,7 +61,7 @@ export default function PhotoUploadModal({ ...other }: PhotoUploadModalProps) {
       <form onSubmit={handleFormSubmit}>
         <div className={styles.uploadPreview} onClick={handlePreviewClick}>
           <HiPhoto />
-          <img src={imageSrc} />
+          {imageSrc && <img src={imageSrc} />}
         </div>
         {/* TODO: 만약 image 모든 형식을 받기 원한다면 image/* 로 accept를 바꿀 것 */}
         <input
