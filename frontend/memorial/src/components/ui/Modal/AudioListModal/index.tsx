@@ -3,6 +3,7 @@ import Modal, { ModalProps } from "..";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Button from "@components/ui/Button";
+import { toast } from "react-hot-toast";
 
 export default function AudioListModal({ ...other }: AudioListModalProps) {
   const navigate = useNavigate();
@@ -24,16 +25,16 @@ export default function AudioListModal({ ...other }: AudioListModalProps) {
     mutationFn: deleteSingleAudioFile,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["audioList", roomSequence] });
-      console.log("delete success");
+      toast.success("성공적으로 삭제 되었습니다");
+      navigate("..");
     },
-    onError: (error) => {
-      console.log(error);
+    onError: (error: Error) => {
+      if (error.message === "400") toast.error("삭제에 실패하였습니다.");
     },
   });
 
   const handleDelete = (voiceId: number) => {
     if (!voiceId) return;
-    console.log(voiceId);
     deleteAudioFileMutation.mutate(voiceId);
   };
 
@@ -57,6 +58,7 @@ export default function AudioListModal({ ...other }: AudioListModalProps) {
   return (
     <Modal {...other} buttonLabel="close" onClose={() => navigate("..")}>
       {audios}
+      <Button onClick={() => navigate("ai/train")}>AI 학습하기</Button>
     </Modal>
   );
 }

@@ -14,12 +14,13 @@ import { Bloom } from "@react-three/postprocessing";
 export default function RoomPage() {
   const navigate = useNavigate();
 
+  //TODO: 급! use-guester로 손가락으로 확대하기 넣기
   return (
     <div className={styles.wrapper}>
       <Canvas
         flat
         dpr={[1, 2]}
-        camera={{ fov: 50, position: [0, 0, 8] }}
+        camera={{ fov: 50, position: [0, 30, 50] }}
         style={{ touchAction: "none" }}
         shadows
       >
@@ -31,10 +32,10 @@ export default function RoomPage() {
           luminanceSmoothing={0.0}
           intensity={6}
         />
-
+        {/* TODO: x축 y축 안맞는 것 맞추기 */}
         <Stage environment="city" intensity={0.5} adjustCamera shadows={false}>
           <PresentationControls
-            zoom={1.5}
+            zoom={2}
             rotation={[0, -Math.PI / 4, 0]}
             polar={[0, Math.PI / 4]}
             azimuth={[-Math.PI / 4, Math.PI / 4]}

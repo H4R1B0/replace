@@ -53,16 +53,27 @@ export default function Recorder({ onAudioDataReceived }: RecorderProps) {
           state={recordState}
           type={"audio/wav"}
           onStop={handleAudioData}
-          backgroundColor="rgb(255,255,255)"
+          backgroundColor="rgb(225,225,225, 0.8)"
           canvasWidth={200}
           canvasHeight={80}
         />
         {recordingMessage}
       </div>
       <div className={styles.audioRecorder}>
-        <button className={styles.recordbtn} onClick={startRecording}>
-          <HiMicrophone />
-        </button>
+        {recordState === RecordState.START ? (
+          <button
+            type="button"
+            className={styles.recordbtn}
+            onClick={stopRecording}
+          >
+            <HiStopCircle />
+          </button>
+        ) : (
+          <button className={styles.recordbtn} onClick={startRecording}>
+            <HiMicrophone />
+          </button>
+        )}
+
         {recordState === RecordState.START && (
           <button className={styles.recordbtn} onClick={pauseRecording}>
             <HiPauseCircle />
@@ -73,13 +84,7 @@ export default function Recorder({ onAudioDataReceived }: RecorderProps) {
             <HiPlayCircle />
           </button>
         )} */}
-        <button
-          type="button"
-          className={styles.recordbtn}
-          onClick={stopRecording}
-        >
-          <HiStopCircle />
-        </button>
+
         {audioData && (
           <div>
             <AudioPlayer url={audioData.url} />

@@ -7,6 +7,9 @@ export default function Button({
 }: ButtonProps) {
   let variantClass;
   switch (variant) {
+    case "modal":
+      variantClass = styles.modal;
+      break;
     case "regular":
       variantClass = styles.regular;
       break;
@@ -19,6 +22,12 @@ export default function Button({
     case "tutotial":
       variantClass = styles.tutotial;
       break;
+    case "nickname":
+      variantClass = styles.nickname;
+      break;
+    case "delete":
+      variantClass = styles.delete;
+      break;
   }
   return (
     <button {...other} className={`${styles.base} ${variantClass}`}>
@@ -29,5 +38,12 @@ export default function Button({
 
 type ButtonProps = {
   children?: string;
-  variant?: "regular" | "prominent" | "tributeList" | "tutotial";
+  variant?:
+    | "modal"
+    | "regular"
+    | "prominent"
+    | "tributeList"
+    | "tutotial"
+    | "nickname"
+    | "delete";
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;

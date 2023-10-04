@@ -31,18 +31,10 @@ type GLTFResult = GLTF & {
 };
 type TributeProps = {
   onTributeClick?: () => void;
-  flowerVisibility: boolean;
-  ribbonVisibility: boolean;
 } & JSX.IntrinsicElements["group"];
 
-export default function Tribute({
-  onTributeClick,
-  flowerVisibility,
-  ribbonVisibility,
-  ...other
-}: TributeProps) {
+export default function Tribute({ onTributeClick, ...other }: TributeProps) {
   const { nodes, materials } = useGLTF(tributePath) as GLTFResult;
-  console.log("Is Ribbon Visible?", ribbonVisibility);
   return (
     <group {...other} dispose={null}>
       <group
@@ -71,13 +63,11 @@ export default function Tribute({
         rotation={[1.179, 0, 0]}
         castShadow
         receiveShadow
-        visible={ribbonVisibility}
       />
       <group //꽃
         position={[-1.186, -0.028, 1.042]}
         rotation={[0, -0.002, 0]}
         scale={8.398}
-        visible={flowerVisibility}
       >
         <mesh
           geometry={nodes.Circle001.geometry}

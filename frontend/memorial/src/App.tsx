@@ -1,7 +1,5 @@
 import { lazy, Suspense, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { PiBellDuotone, PiGearDuotone } from "react-icons/pi";
-import { LiaSearchSolid } from "react-icons/lia";
 
 import PATH from "@constants/path";
 import NotFoundPage from "@pages/NotFoundPage";
@@ -9,6 +7,8 @@ import "./App.css";
 import { Toaster } from "react-hot-toast";
 // import "@assets/fonts/font.css";
 import { playBGM } from "@utils/useSound";
+import Header from "@components/ui/Header";
+import Spinner from "@components/ui/Spinner";
 
 const MainPage = lazy(() => import("@pages/MainPage"));
 const RoomPage = lazy(() => import("@pages/RoomPage"));
@@ -52,10 +52,14 @@ const RadioOptionModal = lazy(
   () => import("@components/ui/Modal/RadioOptionModal")
 );
 const AIOptionModal = lazy(() => import("@components/ui/Modal/AIOptionModal"));
+const AITrainModal = lazy(() => import("@components/ui/Modal/AITrainModal"));
+// const SettingModal = lazy(() => import("@components/ui/Modal/SettingModal"));
+const NotificationModal = lazy(
+  () => import("@components/ui/Modal/NotificationModal")
+);
 
 export default function App() {
   playBGM();
-
   function handleResize() {
     const vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty("--vh", `${vh}px`);
@@ -73,7 +77,7 @@ export default function App() {
     <>
       <Toaster />
       <div className="viewport">
-        <nav>
+        {/* <nav>
           <button title="Notifications">
             <PiBellDuotone />
           </button>
@@ -84,22 +88,14 @@ export default function App() {
           <button title="Settings">
             <PiGearDuotone />
           </button>
-        </nav>
+        </nav> */}
         <Router>
-          <Suspense
-            fallback={
-              <div className="loading-wrapper">
-                <img
-                  src="https://i.imgur.com/DVqUtaE.gif"
-                  alt="loading"
-                  style={{ width: "80%" }}
-                />
-              </div>
-            }
-          >
+          <Header />
+          <Suspense fallback={<Spinner />}>
             <Routes>
               <Route path={PATH.ROOT} element={<MainPage />} />
               <Route path={PATH.MAIN} element={<MainPage />} />
+              {/* <Route path="settings" element={<SettingModal />} /> */}
               <Route path={PATH.ROOM} element={<RoomPage />}>
                 <Route path="photos" element={<PhotoGridModal />} />
                 <Route
@@ -114,6 +110,7 @@ export default function App() {
                 <Route path="audio/upload" element={<AudioUploadModal />} />
                 <Route path="radio" element={<RadioOptionModal />} />
                 <Route path="radio/list" element={<AudioListModal />} />
+                <Route path="radio/list/ai/train" element={<AITrainModal />} />
                 <Route path="radio/ai" element={<AIOptionModal />} />
               </Route>
               <Route path={PATH.TRIBUTE} element={<TributePage />} />
@@ -138,6 +135,7 @@ export default function App() {
               <Route path={PATH.NICKNAME} element={<NicknamePage />} />
               <Route path={PATH.INTRODUCTION} element={<IntroductionPage />} />
               <Route path={PATH.NOT_FOUND} element={<NotFoundPage />} />
+              <Route path={PATH.NOTIFICATION} element={<NotificationModal />} />
             </Routes>
           </Suspense>
         </Router>

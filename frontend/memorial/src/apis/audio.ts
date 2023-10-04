@@ -1,5 +1,5 @@
 import { api, Header } from "./index";
-import { AIAudioBySituation, AudioList } from "types/Audio";
+import { AIAudioBySituation, AudioList, AI } from "types/Audio";
 
 type UploadSingleAudioRequest = {
   sequence: number;
@@ -37,5 +37,6 @@ export const fetchAIAudio = async (sequence: number, situation: string) => {
 };
 
 // AI 음성 학습하기
-// export const trainAIAudio = async (sequence: number, situation: string) => {
-//   return await api.post(`/ai`, Header())
+export const trainAIAudio = async (ai: AI) => {
+  return await api.post(`/ai/training`, ai, Header());
+};

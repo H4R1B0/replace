@@ -19,6 +19,8 @@ import RegisterRoomModal from "@components/ui/Modal/RegisterRoomModal";
 import { registerRoomTarget } from "@apis/room";
 import { useParams } from "react-router-dom";
 import { Environment } from "@react-three/drei";
+import toast from "react-hot-toast";
+import Pagination from "@components/ui/Pagination";
 
 export default function HousePage() {
   const [isModalOpen, toggleModal] = useToggle(false);
@@ -37,11 +39,18 @@ export default function HousePage() {
     queryKey: ["roomList", nickname],
     queryFn: () => fetchRoomList(nickname),
   });
+
   const registerRoomMutation = useMutation({
     mutationFn: registerRoomTarget,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["roomList", nickname] });
+      toast.success("방이 성공적으로 생성되었습니다");
       navigate(`/room/${nickname}/${selectedSequence}`);
+    },
+    onError: (error: Error) => {
+      if (error.message === "400") {
+        toast.error("방 생성에 실패하였습니다");
+      }
     },
   });
 
@@ -75,7 +84,13 @@ export default function HousePage() {
 
   return (
     <div className={styles.wrapper}>
+      <Pagination
+        next="공중전화"
+        nextPath={`/payphone/${nickname}`}
+        variant="onlyNext"
+      />
       <Canvas
+        className={styles.canvas}
         flat
         dpr={[1, 2]}
         camera={{ fov: 50, position: [0, 0, 8], zoom: 1.2 }}
@@ -120,6 +135,7 @@ export default function HousePage() {
         <ambientLight intensity={0.5} />
         <Environment preset="sunset" />
       </Canvas>
+
       <RegisterRoomModal
         modalOpen={isModalOpen}
         onClose={toggleModal}

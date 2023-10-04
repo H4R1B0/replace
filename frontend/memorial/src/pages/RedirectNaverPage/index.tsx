@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import PATH from "@constants/path";
+import Spinner from "@components/ui/Spinner";
 
 export default function RedirectNaverPage() {
   const navigate = useNavigate();
@@ -40,8 +41,7 @@ export default function RedirectNaverPage() {
 
   return (
     <div>
-      <h1>네이버 로그인</h1>
-      <p>로그인 중입니다...</p>
+      <Spinner />
     </div>
   );
 }

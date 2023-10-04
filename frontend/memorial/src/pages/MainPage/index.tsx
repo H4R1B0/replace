@@ -32,7 +32,10 @@ export default function MainPage() {
         {isNewBackground ? (
           " "
         ) : (
-          <div className={styles.titlewrapper}>"화면을 클릭해보세요"</div>
+          <div className={styles.titlewrapper}>
+            <img src="https://i.imgur.com/OkG9hB2.png" alt="switch" />
+            "화면을 클릭해보세요"
+          </div>
         )}
         <img
           src="https://i.imgur.com/3AZe7Rj.png"
