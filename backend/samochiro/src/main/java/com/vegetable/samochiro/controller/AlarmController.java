@@ -36,7 +36,7 @@ public class AlarmController {
 	}
 	//알람 리스트 조회 - 알람 2번
 
-	@DeleteMapping
+	@DeleteMapping("/{alarmId}")
 	public ResponseEntity<MessageResponse> deleteAlarm(@PathVariable Long alarmId) {
 		try {
 			alarmService.deleteAlarm(alarmId);
