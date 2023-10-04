@@ -154,7 +154,7 @@ export default function TributeListPage() {
                   <TrributeEventCard>
                     <p className={styles.Title}>{wreath.title}</p>
                     <div className={styles.date}>
-                      헌화 종료 까지 {getRemainingDays(wreath.endDate)} days
+                      {getEventTimeInfo(wreath.startDate, wreath.endDate)}
                     </div>
                     {/* <p>{wreath.subTitle}</p> */}
                     <div className={styles.trributeStatus}>
@@ -187,21 +187,47 @@ export default function TributeListPage() {
     </div>
   );
 }
-function getRemainingDays(endDate: string) {
+function getEventTimeInfo(startDate: string, endDate: string): string {
+  const end = new Date(endDate);
+  // const start = new Date(startDate);
+  const now = new Date();
+
+  if (now > end) {
+    // If the event is over, return the date range
+    return `${startDate} - ${endDate}`;
+  } else {
+    // Otherwise, return the remaining days
+    const differenceInTime = end.getTime() - now.getTime();
+    const remainingDays = Math.ceil(differenceInTime / (1000 * 3600 * 24));
+    return `헌화 종료 까지 ${remainingDays} days`;
+  }
+}
+
+function getSortingValue(startDate: string, endDate: string): number {
+  const start = new Date(startDate);
   const end = new Date(endDate);
   const now = new Date();
-  const differenceInTime = end.getTime() - now.getTime();
-  const differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24));
-  return differenceInDays;
+
+  if (now > end) {
+    // 이벤트가 끝났을 경우, 진행 기간을 반환합니다.
+    const durationInTime = end.getTime() - start.getTime();
+    return -durationInTime; // 음수를 반환하여 끝난 이벤트를 배열의 끝으로 보냅니다.
+  } else {
+    // 그렇지 않을 경우, 남은 날짜를 반환합니다.
+    const remainingInTime = end.getTime() - now.getTime();
+    return remainingInTime;
+  }
 }
 
 function sortWreathList(data: Wreath[], option: number): Wreath[] {
   let sortedData = [...data]; // 데이터 복사
 
   switch (option) {
-    case 1: // getRemainingDays가 작은 순
+    case 1:
       sortedData.sort(
-        (a, b) => getRemainingDays(a.endDate) - getRemainingDays(b.endDate)
+        (a, b) =>
+          getSortingValue(a.startDate, a.endDate) -
+          getSortingValue(b.startDate, b.endDate)
       );
       break;
     case 2: // 초 개수 순
