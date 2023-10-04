@@ -1,5 +1,7 @@
 .Wrapper {
   display: flex;
+
+  flex-direction: column;
   height: 100vh;
   justify-content: center;
   align-items: center;
@@ -18,7 +20,7 @@
 
 .sliderWrapper {
   display: flex;
-
+  margin-top: 10%;
   transition: transform 0.5s ease-in-out;
 }
 
@@ -44,12 +46,12 @@
 }
 
 .btnwrapper {
-  max-width: 400px;
+  max-width: 500px;
   background-color: white;
   border: none;
-  width: 90vw;
+  width: 90%;
   min-height: 5rem;
-  height: 30%;
+  height: 35%;
   margin-left: auto;
   margin-right: auto;
   margin-top: 20%;
@@ -65,12 +67,16 @@
   border: none;
   cursor: pointer;
   width: 100%;
-  min-width: 20rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .slidertext {
   word-wrap: break-word;
   width: auto;
+  text-align: center;
 }
 
 .slide {
@@ -81,19 +87,27 @@
 
 .buttons {
   width: 100%;
-
   display: flex;
   justify-content: center;
+  padding-top: 1rem;
 }
 
 .slideTitle {
   padding: 0 2rem;
   word-break: keep-all;
   padding-bottom: 1rem;
+  font-size: 1.2rem;
 }
 
 .slideDescription {
   padding: 0 2rem;
   word-break: keep-all;
-  padding-bottom: 1rem;
+  min-height: 2.5rem;
+  width: 100%;
+}
+
+.skipButton {
+  width: 90%;
+  display: flex;
+  justify-content: flex-end;
 }

@@ -37,6 +37,14 @@ export default function Slider({ slides }: SliderProps) {
 
   return (
     <div className={styles.Wrapper}>
+      <div className={styles.skipButton}>
+        <Button
+          onClick={() => navigate(`/house/${nickname}`)}
+          variant="regular"
+        >
+          Skip
+        </Button>
+      </div>
       <div className={styles.sliderContainer}>
         <div
           className={styles.sliderWrapper}
@@ -57,7 +65,7 @@ export default function Slider({ slides }: SliderProps) {
         </div>
         <div className={styles.btnwrapper}>
           <div className={`${styles.sliderButton} ${styles.slidertext}`}>
-            <h2 className={styles.slideTitle}>{slides[currentIndex].title}</h2>
+            <h3 className={styles.slideTitle}>{slides[currentIndex].title}</h3>
             <p className={styles.slideDescription}>
               {slides[currentIndex].description}
             </p>
