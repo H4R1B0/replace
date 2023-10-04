@@ -9,7 +9,6 @@ import Modal, { ModalProps } from "..";
 import { useParams, useNavigate } from "react-router-dom";
 import ReactAudioPlayer from "react-audio-player";
 import toast from "react-hot-toast";
-import { registVoicemail } from "@apis/payphone";
 
 export default function AudioUploadModal({ ...other }: AudioUploadModalProps) {
   const navigate = useNavigate();
