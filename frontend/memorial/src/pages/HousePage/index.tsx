@@ -83,19 +83,8 @@ export default function HousePage() {
 
   return (
     <div className={styles.wrapper}>
-      <div
-        className={styles.neonText}
-        onClick={() => navigate(`/payphone/${nickname}`)}
-      >
-        공중전화로 가기 ⟫
-      </div>
-      <div
-        className={styles.neonText}
-        onClick={() => navigate(`/tribute/main`)}
-      >
-        헌화하러 가기 ⟫
-      </div>
       <Canvas
+        className={styles.canvas}
         flat
         dpr={[1, 2]}
         camera={{ fov: 50, position: [0, 0, 8], zoom: 1.2 }}
@@ -139,6 +128,20 @@ export default function HousePage() {
         <ambientLight intensity={0.5} />
         <Environment preset="sunset" />
       </Canvas>
+      <div className={styles.neonTextContainer}>
+        <div
+          className={styles.neonText}
+          onClick={() => navigate(`/tribute/main`)}
+        >
+          &lt; Previous
+        </div>
+        <div
+          className={styles.neonText}
+          onClick={() => navigate(`/payphone/${nickname}`)}
+        >
+          Next &gt;
+        </div>
+      </div>
       <RegisterRoomModal
         modalOpen={isModalOpen}
         onClose={toggleModal}
