@@ -28,6 +28,11 @@ export default function IntroductionPage() {
       description: "Description 2",
     },
     {
+      image: "https://i.imgur.com/1gYpzcf.png",
+      title: "Title 2dsdfghsdhghfhsdh",
+      description: "Description 2",
+    },
+    {
       image: "https://i.imgur.com/inVKyu2.png",
       title: "Title 2dsdfghsdhghfhsdh",
       description: "Description 2",
