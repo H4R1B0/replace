@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import PATH from "@constants/path";
 import styles from "./Header.module.css";
@@ -14,6 +14,9 @@ export default function Header() {
 
   const [isSettingsModalOpen, setIsSettingsModalOpen] =
     useState<boolean>(false);
+
+  const location = useLocation();
+  if (location.pathname === "/") return null;
 
   return (
     <div className={styles.wrapper}>
