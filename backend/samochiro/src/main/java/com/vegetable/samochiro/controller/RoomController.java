@@ -52,9 +52,6 @@ public class RoomController {
 
     @GetMapping("/{sequence}")
     public ResponseEntity<WhoTargetNameResponse> registerTargetName(@PathVariable int sequence, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
-        if (sequence == 1) {
-            throw new FirstRoomRegisterException(CustomErrorType.USER_ROOM_CANT_REGISTER.getMessage());
-        }
         if (sequence < 2 || sequence > 3) {
             throw new RoomRangeException(CustomErrorType.OUT_OF_ROOM_RANGE.getMessage());
         }
