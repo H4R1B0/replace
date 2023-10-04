@@ -7,6 +7,7 @@ import Input from "@components/ui/Input";
 import Select from "@components/ui/Select";
 import { useQuery } from "@tanstack/react-query";
 import { fetchTributeList, fetchMyTributeList } from "@apis/tribute";
+import Pagination from "@components/ui/Pagination";
 
 type Wreath = {
   wreathId: number;
@@ -105,6 +106,7 @@ export default function TributeListPage() {
 
   return (
     <div className={styles.Wrapper}>
+      <Pagination prev="헌화" prevPath={`/tribute/main`} />
       <div className={styles.listWrapper}>
         <div className={styles.searchWraper}>
           <Input

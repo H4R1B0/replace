@@ -51,6 +51,7 @@ type BookList = {
 export default function LibraryPage() {
   const { sequence } = useParams();
   const roomSequence = parseInt(sequence ?? "");
+
   // 모달을 열기 위한 State
   const [letterModalOpen, setLetterModalOpen] = useState(false);
   const [bookModalOpen, setBookModalOpen] = useState(false);
@@ -172,7 +173,7 @@ export default function LibraryPage() {
   console.log(letter);
   return (
     <div className={styles.wrapper}>
-      <Pagination prev="홈으로가기" prevPath={`/house/${nickname}`} />
+      <Pagination prev="방" prevPath={`/room/${nickname}/${roomSequence}`} />
       <Canvas
         flat
         dpr={[1, 2]}

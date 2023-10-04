@@ -8,21 +8,31 @@ import {
   Environment,
 } from "@react-three/drei";
 import styles from "./RoomPage.module.css";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { Bloom } from "@react-three/postprocessing";
+import Pagination from "@components/ui/Pagination";
 
 export default function RoomPage() {
   const navigate = useNavigate();
-
+  const nickname = sessionStorage.getItem("nickname");
+  const { sequence } = useParams();
+  const roomSequence = Number(sequence);
   //TODO: 급! use-guester로 손가락으로 확대하기 넣기
   return (
     <div className={styles.wrapper}>
+      <Pagination
+        prev="집"
+        prevPath={`/house/${nickname}`}
+        next="서재"
+        nextPath={`/library/${roomSequence}`}
+      />
       <Canvas
         flat
         dpr={[1, 2]}
         camera={{ fov: 50, position: [0, 30, 50] }}
         style={{ touchAction: "none" }}
         shadows
+        className={styles.canvas}
       >
         <ambientLight color={0xffc845} intensity={1} position={[0, 40, 10]} />
 
