@@ -10,12 +10,26 @@ import {
 import styles from "./RoomPage.module.css";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import Pagination from "@components/ui/Pagination";
+import { useQuery } from "@tanstack/react-query";
+import { fetchSingleRoomTarget } from "@apis/room";
 
 export default function RoomPage() {
   const navigate = useNavigate();
   const nickname = sessionStorage.getItem("nickname");
   const { sequence } = useParams();
   const roomSequence = parseInt(sequence ?? "");
+
+  const {
+    isLoading,
+    isError,
+    data: roomTarget,
+  } = useQuery({
+    queryKey: ["roomTarget", roomSequence],
+    queryFn: () => fetchSingleRoomTarget(roomSequence),
+  });
+
+  if (isLoading) return "loading";
+  if (isError) return `Error`;
 
   //TODO: 급! use-guester로 손가락으로 확대하기 넣기
   //TODO: 누구의 방 이거 어케 할지...고정할지 말지 정하기
@@ -28,7 +42,7 @@ export default function RoomPage() {
         nextPath={`/library/${roomSequence}`}
       />
       <div className={styles.titleContainer}>
-        <h1>"{nickname}의 방"</h1>
+        <h1>"{roomTarget.targetName}의 방"</h1>
       </div>
       <Canvas
         flat

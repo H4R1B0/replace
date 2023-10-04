@@ -6,3 +6,7 @@ export type Room = {
 export type RoomList = {
   rooms: Room[];
 };
+
+export type RoomTarget = {
+  targetName: string;
+};

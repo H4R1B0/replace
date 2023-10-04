@@ -1,5 +1,5 @@
 import { api, Header } from "./index";
-import { RoomList } from "types/Room";
+import { RoomList, RoomTarget } from "types/Room";
 
 type RegisterRoomRequest = {
   sequence: number;
@@ -23,4 +23,9 @@ export const registerRoomTarget = async ({
 // 기억의 방(집) 삭제
 export const deleteSingleRoom = async (sequence: number) => {
   return await api.delete(`/room/${sequence}`, {}, Header());
+};
+
+// 방 대상 조회
+export const fetchSingleRoomTarget = async (sequence: number) => {
+  return await api.get<RoomTarget>(`/room/${sequence}`, Header());
 };
