@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { Outlet, useParams, useNavigate } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import Modal from "@components/ui/Modal";
 import Tribute from "@components/3d/Tribute";
 import { Canvas } from "@react-three/fiber";
-import { Stage, PresentationControls, Text } from "@react-three/drei";
+import { Stage, PresentationControls } from "@react-three/drei";
 import styles from "./TributeDetailPage.module.css";
 import Button from "@components/ui/Button";
 import { useQuery, useMutation } from "@tanstack/react-query";
