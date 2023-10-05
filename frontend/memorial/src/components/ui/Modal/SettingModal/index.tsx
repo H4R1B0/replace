@@ -6,6 +6,10 @@ import Toast from "react-hot-toast";
 
 import { logout, signout } from "@apis/user";
 import { BgmControler } from "@components/ui/BgmControler";
+import styles from "./SettingModal.module.css";
+import bgmOnsrc from "@assets/Image/bgmon.png";
+import bgmOffsrc from "@assets/Image/bgmoff.png";
+
 
 type SettingModalProps = {
   isOpen: boolean;
@@ -46,28 +50,6 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
     });
   }
 
-  // const handleLog = () => {
-  //   fetch(`${BASE_URL}/user`, {
-  //     method: "DELETE",
-  //     headers: {
-  //       Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-  //     },
-  //   })
-  //     .then((res) => {
-  //       if (res.status === 200) {
-  //         sessionStorage.removeItem("accessToken");
-  //         sessionStorage.removeItem("nickname");
-  //         onClose();
-  //         Toast.success("로그아웃 되었습니다.");
-  //         navigate("/");
-  //       } else {
-  //         Toast.error("로그아웃에 실패했습니다.");
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
 
   const handleSignoutMutation = useMutation({
     mutationFn: signout,
@@ -97,39 +79,26 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
     Toast.error("회원탈퇴에 실패했습니다.");
   }
 
-  // const handleSign = () => {
-  //   fetch(`${BASE_URL}/user/me`, {
-  //     method: "DELETE",
-  //     headers: {
-  //       Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-  //     },
-  //   })
-  //     .then((res) => {
-  //       if (res.status === 200) {
-  //         sessionStorage.removeItem("accessToken");
-  //         sessionStorage.removeItem("nickname");
-  //         onClose();
-  //         Toast.success("함께해서 즐거웠습니다. 다시 만날 수 있기를...");
-  //         navigate("/");
-  //       } else {
-  //         onClose();
-  //         Toast.error("회원탈퇴에 실패했습니다.");
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
+  const bgmOn = <div className={styles.bgmSelector} onClick={toggleBGM}>
+    <img className={styles.bgmImage} src={bgmOnsrc} alt="BGM On" />
+    <p>BGM ON</p>
+  </div>
+
+  const bgmOff = <div className={styles.bgmSelector} onClick={toggleBGM}>
+    <img className={styles.bgmImage} src={bgmOffsrc} alt="BGM Off" />
+    <p>BGM OFF</p>
+  </div>
+
 
   return (
-    <div>
-      <Modal modalOpen={isOpen} onClose={onClose} buttonLabel="닫기">
-        <button onClick={toggleBGM}>
-          {isPlaying ? "BGM 끄기" : "BGM 켜기"}
-        </button>
-        <p onClick={handleLogout}>로그아웃</p>
-        <p onClick={handleSignout}>회원탈퇴</p>
-      </Modal>
-    </div>
+    <Modal modalOpen={isOpen} onClose={onClose} buttonLabel="닫기">
+      {isPlaying ? bgmOn : bgmOff }
+      <div className={styles.aboutAccountSelector} onClick={handleLogout}>
+        <p>로그아웃</p>
+      </div>
+      <div className={styles.aboutAccountSelector} onClick={handleSignout}>
+        <p>회원탈퇴</p>
+      </div>
+    </Modal>
   );
 }
