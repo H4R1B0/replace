@@ -3,6 +3,8 @@
   grid-template-rows: 1fr;
   grid-template-columns: 1fr;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .canvas {
@@ -73,6 +75,7 @@
   font-size: 1.8rem;
   padding-bottom: 0.8rem;
   text-align: center;
+  color: white;
 }
 
 .buttonwrapper {
@@ -175,7 +178,19 @@
 }
 .navBtn {
   display: flex;
-  width: fit-content;
-  justify-content: center;
+
+  max-width: 18rem;
+  justify-content: flex-start;
   align-items: center;
+  margin-right: 10%;
+}
+
+.subtitle {
+  color: white;
+}
+
+.navwrap {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
