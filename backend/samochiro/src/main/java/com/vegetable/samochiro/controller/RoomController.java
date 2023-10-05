@@ -50,14 +50,14 @@ public class RoomController {
     }
     //기억의 방 대상 등록 - 방 1
 
-    @GetMapping("/{sequence}")
-    public ResponseEntity<WhoTargetNameResponse> registerTargetName(@PathVariable int sequence, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+    @GetMapping("/{nickname}/{sequence}")
+    public ResponseEntity<WhoTargetNameResponse> registerTargetName(@PathVariable String nickname, @PathVariable int sequence) {
         if (sequence < 1 || sequence > 3) {
             throw new RoomRangeException(CustomErrorType.OUT_OF_ROOM_RANGE.getMessage());
         }
-        String userId = headerUtils.getUserId(authorizationHeader);
+//        String userId = headerUtils.getUserId(authorizationHeader);
 
-        String targetName = roomService.getTargetName(sequence, userId);
+        String targetName = roomService.getTargetName(nickname, sequence);
         return ResponseEntity.status(HttpStatus.OK).body(WhoTargetNameResponse.builder().targetName(targetName).build());
     }
     //기억의 방 대상 찾기

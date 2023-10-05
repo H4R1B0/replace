@@ -2,10 +2,12 @@ package com.vegetable.samochiro.service;
 
 import com.vegetable.samochiro.domain.Photo;
 import com.vegetable.samochiro.domain.Room;
+import com.vegetable.samochiro.domain.User;
 import com.vegetable.samochiro.dto.photo.PhotoDetailResponse;
 import com.vegetable.samochiro.dto.photo.PhotoListResponse;
 import com.vegetable.samochiro.enums.CustomErrorType;
 import com.vegetable.samochiro.exception.RoomNotFoundException;
+import com.vegetable.samochiro.exception.UserNotFoundException;
 import com.vegetable.samochiro.repository.PhotoRepository;
 import com.vegetable.samochiro.repository.RoomRepository;
 
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.vegetable.samochiro.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +31,7 @@ public class PhotoService {
 	private final PhotoRepository photoRepository;
 	private final GCSService gcssService;
 	private final RoomRepository roomRepository;
+	private final UserRepository userRepository;
 
 	@Transactional
 	public void registerImageFile(String userId, int sequence, MultipartFile image) {
@@ -50,8 +54,13 @@ public class PhotoService {
 	}
 	//사진 등록 - 액자 1번
 
-	public List<PhotoListResponse> findPhotoList(String userId, int sequence) {
-		String roomUuid = roomRepository.findBySequenceAndUserId(sequence, userId).get().getUuid();
+	public List<PhotoListResponse> findPhotoList(String nickname, int sequence) {
+		Optional<User> findUser = userRepository.findByNickname(nickname);
+		if (findUser.isEmpty()) {
+			throw new UserNotFoundException(CustomErrorType.USER_NOT_FOUND.getMessage());
+		}
+
+		String roomUuid = roomRepository.findBySequenceAndUserId(sequence, findUser.get().getId()).get().getUuid();
 		List<Photo> photoList = photoRepository.findAllByRoomUuid(roomUuid);
 
 		List<PhotoListResponse> responseList = new ArrayList<>();

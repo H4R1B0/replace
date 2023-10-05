@@ -26,14 +26,15 @@ public class RadioController {
     private final RadioService radioService;
     private final HeaderUtils headerUtils;
 
-    @GetMapping("/{sequence}")
-    public ResponseEntity<RadioVoicesResponse> getVoices(@PathVariable int sequence, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+    @GetMapping("/{nickname}/{sequence}")
+    public ResponseEntity<RadioVoicesResponse> getVoices(@PathVariable String nickname, @PathVariable int sequence) {
         if (sequence < 1 || sequence > 3) {
             throw new RoomRangeException(CustomErrorType.OUT_OF_ROOM_RANGE.getMessage());
         }
 
-        String userId = headerUtils.getUserId(authorizationHeader);
-        RadioVoicesResponse response = radioService.getVoices(userId, sequence);
+//        String userId = headerUtils.getUserId(authorizationHeader);
+
+        RadioVoicesResponse response = radioService.getVoices(nickname, sequence);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
     //음성 파일 리스트 조회 - 라디오 1

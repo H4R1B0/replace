@@ -52,13 +52,14 @@ public class TelController {
     }
     //음성 파일 등록 - 전화기 1
 
-    @GetMapping("/{sequence}")
-    public ResponseEntity<GetAiVoiceResponse> getAiVoice(@PathVariable int sequence, @RequestParam String situation, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
-        String userId = headerUtils.getUserId(authorizationHeader);
+    @GetMapping("/{nickname}/{sequence}")
+    public ResponseEntity<GetAiVoiceResponse> getAiVoice(@PathVariable String nickname, @PathVariable int sequence, @RequestParam String situation) {
+
+//        String userId = headerUtils.getUserId(authorizationHeader);
         try {
             SituationType situationType = SituationType.valueOf(situation);
             //사용자 아이디, 방 번호, 상황
-            GetAiVoiceResponse response = telService.getAiVoice(userId, sequence, situationType);
+            GetAiVoiceResponse response = telService.getAiVoice(nickname, sequence, situationType);
             return ResponseEntity.status(HttpStatus.OK).body(response);
         } catch (IllegalArgumentException e) {
             throw new SituationEnumException(CustomErrorType.SITUATION_ENUM.getMessage());
