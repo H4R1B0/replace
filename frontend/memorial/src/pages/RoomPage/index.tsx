@@ -14,7 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchSingleRoomTarget } from "@apis/room";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
-import { click3, trash } from "@utils/effectSound";
+import { click3 } from "@utils/effectSound";
 
 export default function RoomPage() {
   const navigate = useNavigate();
@@ -25,7 +25,6 @@ export default function RoomPage() {
   const [isVisitor, setIsVisitor] = useState(false);
 
   const useClick3 = click3();
-  const useTrash = trash();
 
   useEffect(() => {
     if (username !== sessionStorage.getItem("nickname")) {
@@ -83,7 +82,7 @@ export default function RoomPage() {
                   : roomSequence === 1
                   ? () => toast.error("자신의 방은 삭제할 수 없습니다.")
                   : () => {
-                      useTrash();
+                      useClick3();
                       navigate("delete");
                     }
               }
