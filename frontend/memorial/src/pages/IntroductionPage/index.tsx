@@ -27,7 +27,7 @@ export default function IntroductionPage() {
       image: "https://i.imgur.com/xxbcXca.png",
       title: "쓰레기통을 이용해보세요.",
       description:
-        "방의 개수는 3개까지 입니다. 방을 원래대로 돌리고 싶다면 눌러보세요.",
+        "집의 개수는 3개까지 입니다. 집을 원래대로 돌리고 싶다면 눌러보세요.",
     },
     {
       image: "https://i.imgur.com/1gYpzcf.png",

@@ -6,8 +6,10 @@
 }
 
 .img {
-  width: 100%;
+  width: fit-content;
   height: auto;
+  max-height: 30rem;
+  animation: bounce 1s infinite alternate;
 }
 
 .buttonwrapper {
@@ -18,4 +20,13 @@
 
 .title {
   color: aliceblue;
+}
+
+@keyframes bounce {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-15px);
+  }
 }

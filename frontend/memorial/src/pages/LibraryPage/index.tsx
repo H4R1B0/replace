@@ -161,6 +161,11 @@ export default function LibraryPage() {
       ...letter,
       writeTime: getCurrentDateTime(),
     };
+    if (newLetter.title === "" || newLetter.content === "") {
+      toast.error("모든 항목을 입력해주세요."), { id: "failsubmit" };
+      return;
+    }
+
     console.log(newLetter);
     createMutation.mutate(newLetter); // 변형된 편지를 사용하여 뮤테이션을 실행합니다.
   };

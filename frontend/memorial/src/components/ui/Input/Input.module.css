@@ -6,6 +6,7 @@
   outline: none;
   border: solid rgb(2, 2, 2) 0.1rem;
   text-indent: 0.5rem;
+  font-family: "SUITE-Medium";
 }
 
 .base::placeholder {
