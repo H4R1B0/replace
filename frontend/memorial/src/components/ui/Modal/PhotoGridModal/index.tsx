@@ -1,5 +1,4 @@
 import styles from "./PhotoGridModal.module.css";
-import Button from "@components/ui/Button";
 import Modal, { ModalProps } from "..";
 import { useQuery } from "@tanstack/react-query";
 import { fetchPhotoList } from "@apis/photo";
