@@ -57,11 +57,13 @@ public class TelController {
 
 //        String userId = headerUtils.getUserId(authorizationHeader);
         try {
+            System.out.println("situation = " + situation);
             SituationType situationType = SituationType.valueOf(situation);
             //사용자 아이디, 방 번호, 상황
             GetAiVoiceResponse response = telService.getAiVoice(nickname, sequence, situationType);
             return ResponseEntity.status(HttpStatus.OK).body(response);
         } catch (IllegalArgumentException e) {
+            e.printStackTrace();
             throw new SituationEnumException(CustomErrorType.SITUATION_ENUM.getMessage());
         }
     }
