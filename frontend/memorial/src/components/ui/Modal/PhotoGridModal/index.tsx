@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchPhotoList } from "@apis/photo";
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { HiPlus } from "react-icons/hi";
 
 export default function PhotoGridModal({ ...other }: PhotoGridModalProps) {
   const { sequence } = useParams();
@@ -44,15 +45,16 @@ export default function PhotoGridModal({ ...other }: PhotoGridModalProps) {
   return (
     <Modal
       {...other}
-      title="남긴 추억을 함께 볼까요."
+      title="사진첩"
+      subtitle="자주 찾는 사진을 남겨보세요"
       buttonLabel="닫기"
       onClose={() => navigate("..")}
     >
       {isVisitor || (
         <div className={styles.buttonSection}>
-          <Button variant="nickname" onClick={() => navigate("upload")}>
-            사진 남기기
-          </Button>
+          <button onClick={() => navigate("upload")} className={styles.button}>
+            <HiPlus />
+          </button>
         </div>
       )}
       {photoList?.data?.length === 0 && (

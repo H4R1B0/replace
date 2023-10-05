@@ -61,8 +61,8 @@ export default function AudioUploadModal({ ...other }: AudioUploadModalProps) {
   return (
     <Modal
       {...other}
-      title="남기고 싶은 음성이 있나요?"
-      subtitle="원하는 음성을 업로드해주세요."
+      title="녹음 남기기"
+      subtitle="잠자고 있던 목소리를 올려주세요"
       buttonLabel="닫기"
       onClose={() => navigate("..")}
     >

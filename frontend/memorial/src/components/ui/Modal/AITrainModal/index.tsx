@@ -38,14 +38,19 @@ export default function AITrainModal({ ...other }: AITrainModalProps) {
   };
 
   return (
-    <Modal {...other} buttonLabel="close" onClose={() => navigate("..")}>
-      <p>AI학습하기</p>
+    <Modal
+      {...other}
+      buttonLabel="닫기"
+      title="사연 요청"
+      onClose={() => navigate("..")}
+      subtitle="성별을 알려주시면 좋은 사연을 보내드릴게요"
+    >
       <SegmentSelector
-        options={["F", "M"]}
+        options={["여성", "남성"]}
         onSelect={(option) => setGender(option)}
       />
       <form onSubmit={handleFormSubmit}>
-        <Button>서버에 제출</Button>
+        <Button variant="delete">요청하기</Button>
       </form>
     </Modal>
   );
