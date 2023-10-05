@@ -12,10 +12,12 @@ export default function AIOptionModal({ ...other }: AIOptionModalProps) {
   if (typeof sequence === "undefined") return;
   const roomSequence = parseInt(sequence);
   const [situation, setSituation] = useState("");
+  const { nickname } = useParams();
+  const username = nickname ?? "";
 
   const { data: AIResponse } = useQuery({
     queryKey: ["AIResponse", roomSequence, situation],
-    queryFn: () => fetchAIAudio(roomSequence, situation),
+    queryFn: () => fetchAIAudio(username, roomSequence, situation),
     enabled: !!situation,
     retry: 0,
     onError: () => {

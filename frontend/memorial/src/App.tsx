@@ -77,18 +77,6 @@ export default function App() {
     <>
       <Toaster />
       <div className="viewport">
-        {/* <nav>
-          <button title="Notifications">
-            <PiBellDuotone />
-          </button>
-          <div className="spacer"></div>
-          <button title="Search">
-            <LiaSearchSolid />
-          </button>
-          <button title="Settings">
-            <PiGearDuotone />
-          </button>
-        </nav> */}
         <Router>
           <Header />
           <Suspense fallback={<Spinner />}>
