@@ -125,7 +125,6 @@ export default function Library({
             castShadow
             receiveShadow
           >
-            {" "}
             <pointLight
               position={[0, 0, 0]}
               color={"#ffff44"}

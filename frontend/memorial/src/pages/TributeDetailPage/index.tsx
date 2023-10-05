@@ -62,13 +62,11 @@ export default function TributeDetailPage() {
     wreathId: wreathIdNumber,
   });
 
-  console.log(reportDetail);
   const [myTribute, setMyTribute] = useState<myTribute>({
     wreathId: wreathIdNumber,
     wreathItem: "flower",
   });
 
-  console.log(myTribute);
   const { isError: isWreathDetailError, error: wreathDetailError } = useQuery<
     WreathDetail,
     Error
@@ -124,8 +122,6 @@ export default function TributeDetailPage() {
     toast.success("신고가 완료되었습니다."), { id: "reportSuccess" };
   };
 
-  console.log("myTribute", wreathDetail);
-  console.log("myTribute", myTribute);
   const reportMutation = useMutation(fetchReportDetail, {
     onSuccess: () => {
       setReportModalOpen(false);

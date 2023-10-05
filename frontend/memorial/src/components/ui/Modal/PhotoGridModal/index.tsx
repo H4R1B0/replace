@@ -20,7 +20,6 @@ export default function PhotoGridModal({ ...other }: PhotoGridModalProps) {
     }
   }, []);
 
-  console.log(isVisitor);
   const {
     isLoading,
     isError,

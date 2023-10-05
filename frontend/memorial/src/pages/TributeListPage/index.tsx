@@ -80,7 +80,6 @@ export default function TributeListPage() {
 
   // 정렬 옵션
   const [sortOption, setSortOption] = useState(1);
-  console.log(sortOption);
 
   const selectSortoption = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = parseInt(event.target.value, 10);
