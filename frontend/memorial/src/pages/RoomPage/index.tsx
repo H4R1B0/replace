@@ -14,7 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchSingleRoomTarget } from "@apis/room";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
-import { playLetterList, click3, trash } from "@utils/effectSound";
+import { click3, trash } from "@utils/effectSound";
 
 export default function RoomPage() {
   const navigate = useNavigate();
