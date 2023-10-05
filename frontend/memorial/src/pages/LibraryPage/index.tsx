@@ -166,7 +166,6 @@ export default function LibraryPage() {
       return;
     }
 
-    console.log(newLetter);
     createMutation.mutate(newLetter); // 변형된 편지를 사용하여 뮤테이션을 실행합니다.
   };
 
@@ -175,7 +174,6 @@ export default function LibraryPage() {
     setSelectedBook(null);
   };
 
-  console.log(letter);
   return (
     <div className={styles.wrapper}>
       <Pagination prev="방" prevPath={`/room/${nickname}/${roomSequence}`} />

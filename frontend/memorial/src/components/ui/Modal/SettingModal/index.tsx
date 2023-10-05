@@ -5,10 +5,9 @@ import Modal from "@components/ui/Modal";
 import Toast from "react-hot-toast";
 
 import { logout, signout } from "@apis/user";
-import { BgmControler } from "@components/ui/BgmControler";
 import styles from "./SettingModal.module.css";
-import bgmOnsrc from "@assets/Image/bgmon.png";
-import bgmOffsrc from "@assets/Image/bgmoff.png";
+// import bgmOnsrc from "@assets/Image/bgmon.png";
+// import bgmOffsrc from "@assets/Image/bgmoff.png";
 
 
 type SettingModalProps = {
@@ -20,7 +19,6 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   // const BASE_URL = import.meta.env.VITE_APP_API_URL;
-  const { toggleBGM, isPlaying } = BgmControler();
 
   const handleLogoutMutation = useMutation({
     mutationFn: logout,
@@ -79,20 +77,19 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
     Toast.error("회원탈퇴에 실패했습니다.");
   }
 
-  const bgmOn = <div className={styles.bgmSelector} onClick={toggleBGM}>
-    <img className={styles.bgmImage} src={bgmOnsrc} alt="BGM On" />
-    <p>BGM ON</p>
-  </div>
+  // const bgmOn = <div className={styles.bgmSelector} onClick={toggleBGM}>
+  //   <img className={styles.bgmImage} src={bgmOnsrc} alt="BGM On" />
+  //   <p>BGM ON</p>
+  // </div>
 
-  const bgmOff = <div className={styles.bgmSelector} onClick={toggleBGM}>
-    <img className={styles.bgmImage} src={bgmOffsrc} alt="BGM Off" />
-    <p>BGM OFF</p>
-  </div>
+  // const bgmOff = <div className={styles.bgmSelector} onClick={toggleBGM}>
+  //   <img className={styles.bgmImage} src={bgmOffsrc} alt="BGM Off" />
+  //   <p>BGM OFF</p>
+  // </div>
 
 
   return (
     <Modal modalOpen={isOpen} onClose={onClose} buttonLabel="닫기">
-      {isPlaying ? bgmOn : bgmOff }
       <div className={styles.aboutAccountSelector} onClick={handleLogout}>
         <p>로그아웃</p>
       </div>

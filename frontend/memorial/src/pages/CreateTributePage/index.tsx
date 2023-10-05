@@ -103,8 +103,6 @@ export default function CreateTributePage() {
     }
   };
 
-  console.log(tribute);
-
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
