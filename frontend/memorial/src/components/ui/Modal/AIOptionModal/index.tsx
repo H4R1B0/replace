@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { fetchAIAudio } from "@apis/audio";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import styles from "./AIOptionModal.module.css";
 
 export default function AIOptionModal({ ...other }: AIOptionModalProps) {
   const navigate = useNavigate();
@@ -26,24 +27,35 @@ export default function AIOptionModal({ ...other }: AIOptionModalProps) {
   });
 
   const AIVoice = (
-    <audio controls>
+    <audio controls className={styles.audioBox}>
       <source src={AIResponse?.voiceFileUrl} type="audio/wav" />
     </audio>
   );
 
   // TODO: 만약에 AIResponse가 없다면, 없다는 상황 하나 만들기, 버튼 눌렀을때 AIVoice가 나오도록 처리하기
   return (
-    <Modal {...other} buttonLabel="close" onClose={() => navigate("..")}>
-      <p>AIOptionModal</p>
-      <Button onClick={() => setSituation("CONSOLATION")}> CONSOLATION </Button>
-      <Button onClick={() => setSituation("SAFETY")}> SAFETY </Button>
-      <Button onClick={() => setSituation("ENCOURAGE")}> ENCOURAGE </Button>
-      {AIVoice}
-      <Button onClick={() => setSituation("THANKS")}> THANKS </Button>
-      <Button onClick={() => setSituation("WELCOME")}> WELCOME </Button>
-      <Button onClick={() => setSituation("CONGRATULATION")}>
-        CONGRATULATION
-      </Button>
+    <Modal
+      {...other}
+      buttonLabel="닫기"
+      onClose={() => navigate("..")}
+      title="AI 라디오"
+      subtitle="도착한 사연을 들어보세요"
+    >
+      <div className={styles.wrapper}>
+        <div>
+          <Button onClick={() => setSituation("CONSOLATION")}>위로</Button>
+          <Button onClick={() => setSituation("SAFETY")}> 안부 </Button>
+        </div>
+        <div>
+          <Button onClick={() => setSituation("ENCOURAGE")}> 격려 </Button>
+          <Button onClick={() => setSituation("THANKS")}> 감사 </Button>
+        </div>
+        <div>
+          <Button onClick={() => setSituation("WELCOME")}> 인사 </Button>
+          <Button onClick={() => setSituation("CONGRATULATION")}>축하</Button>
+        </div>
+        <div className={styles.audioBox}>{AIResponse && AIVoice}</div>
+      </div>
     </Modal>
   );
 }

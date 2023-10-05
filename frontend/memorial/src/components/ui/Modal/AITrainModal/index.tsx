@@ -20,12 +20,11 @@ export default function AITrainModal({ ...other }: AITrainModalProps) {
     mutationFn: trainAIAudio,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["ai"] });
-      toast.success("성공적으로 AI 학습 요청이 어쩌구");
+      toast.success("AI 학습 요청에 성공했습니다");
       navigate("..");
     },
     onError: (error: Error) => {
-      if (error.message === "400")
-        toast.error("AI 학습 요청에 실패했습니다 어쩌구");
+      if (error.message === "400") toast.error("AI 학습 요청에 실패했습니다");
     },
   });
 
@@ -38,14 +37,19 @@ export default function AITrainModal({ ...other }: AITrainModalProps) {
   };
 
   return (
-    <Modal {...other} buttonLabel="close" onClose={() => navigate("..")}>
-      <p>AI학습하기</p>
+    <Modal
+      {...other}
+      buttonLabel="닫기"
+      title="사연 요청"
+      onClose={() => navigate("..")}
+      subtitle="성별을 알려주시면 좋은 사연을 보내드릴게요"
+    >
       <SegmentSelector
-        options={["F", "M"]}
+        options={["여성", "남성"]}
         onSelect={(option) => setGender(option)}
       />
       <form onSubmit={handleFormSubmit}>
-        <Button>서버에 제출</Button>
+        <Button variant="delete">요청하기</Button>
       </form>
     </Modal>
   );

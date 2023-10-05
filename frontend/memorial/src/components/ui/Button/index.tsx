@@ -31,6 +31,9 @@ export default function Button({
     case "dubble":
       variantClass = styles.dubble;
       break;
+    case "plus":
+      variantClass = styles.plus;
+      break;
   }
   return (
     <button {...other} className={`${styles.base} ${variantClass}`}>
@@ -49,5 +52,6 @@ type ButtonProps = {
     | "tutotial"
     | "nickname"
     | "delete"
+    | "plus"
     | "dubble";
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;

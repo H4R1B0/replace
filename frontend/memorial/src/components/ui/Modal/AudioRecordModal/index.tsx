@@ -37,8 +37,8 @@ export default function AudioRecordModal({ ...other }: AudioRecordModalProps) {
   return (
     <Modal
       {...other}
-      title="추억을 남겨보세요."
-      subtitle="버튼을 눌러 녹음을 진행해주세요."
+      title="통화 하기"
+      subtitle="마이크를 누르면 녹음을 시작합니다"
       buttonLabel="닫기"
       onClose={() => navigate("..")}
     >

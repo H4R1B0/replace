@@ -6,6 +6,7 @@ import Letter from "@assets/Sounds/Letter.mp3";
 import LetterList from "@assets/Sounds/LetterList.mp3";
 import LightOn from "@assets/Sounds/LightOn.mp3";
 import BookClick from "@assets/Sounds/BookClick.wav";
+import Click3 from "@assets/Sounds/Click3.mp3";
 
 export function playClick() {
   const [play] = useSound(Click, { volume: 0.5 });
@@ -34,5 +35,10 @@ export function playLightBGM() {
 
 export function playBookBGM() {
   const [play] = useSound(BookClick, { volume: 0.5 });
+  return play;
+}
+
+export function click3() {
+  const [play] = useSound(Click3, { volume: 0.5 });
   return play;
 }

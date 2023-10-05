@@ -2,3 +2,7 @@
   width: 100%;
   aspect-ratio: 1;
 }
+
+.buttonWrapper {
+  margin: 2em;
+}

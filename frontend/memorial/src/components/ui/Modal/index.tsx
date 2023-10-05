@@ -70,7 +70,12 @@ export default function Modal({
           <h2>{title}</h2>
         </div>
         {subtitle && (
-          <p style={{ fontFamily: "SUITE-SemiBold", color: "rgb(58, 45, 45)" }}>
+          <p
+            style={{
+              fontFamily: "SUITE-SemiBold",
+              color: "rgb(109, 111, 172)",
+            }}
+          >
             {subtitle}
           </p>
         )}

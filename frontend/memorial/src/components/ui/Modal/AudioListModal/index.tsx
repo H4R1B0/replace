@@ -85,7 +85,7 @@ export default function AudioListModal({ ...other }: AudioListModalProps) {
     <div className={styles.audioCard} key={audio.voiceId}>
       <div onClick={() => handleToggleClick(audio.voiceId)}>
         <p className={styles.audioDate}>
-          {formattedDateTime(audio.registDate)} 에 남긴 음성
+          {formattedDateTime(audio.registDate)}
         </p>
       </div>
       <div>
@@ -108,10 +108,10 @@ export default function AudioListModal({ ...other }: AudioListModalProps) {
     <div className={styles.wrapper}>
       <Modal
         {...other}
-        title="남긴 추억을 확인해보세요."
-        subtitle="기록을 확인하려면 클릭해보세요."
+        title="통화기록"
         buttonLabel="닫기"
         onClose={() => navigate("..")}
+        subtitle="사연을 보내 더 많은 이야기를 들어보세요"
       >
         <div>
           {audioList?.voiceItems?.length === 0 && (
@@ -120,8 +120,8 @@ export default function AudioListModal({ ...other }: AudioListModalProps) {
         </div>
         {audios}
         <div>
-          <Button variant="nickname" onClick={() => navigate("ai/train")}>
-            AI 학습 시키기
+          <Button variant="delete" onClick={() => navigate("ai/train")}>
+            사연 요청
           </Button>
         </div>
       </Modal>
