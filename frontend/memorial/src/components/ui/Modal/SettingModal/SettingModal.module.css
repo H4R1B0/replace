@@ -8,6 +8,7 @@
   cursor: pointer;
   font-size: 1.3rem;
   margin-bottom: 1rem;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .bgmSelector:active {
@@ -28,6 +29,7 @@
   margin-bottom: 0.5rem;
   text-align: center;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .aboutAccountSelector:active {
