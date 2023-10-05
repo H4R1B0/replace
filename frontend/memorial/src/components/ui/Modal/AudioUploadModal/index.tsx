@@ -84,7 +84,9 @@ export default function AudioUploadModal({ ...other }: AudioUploadModalProps) {
           등록하기
         </Button>
       </form>
-      {audioSrc && <ReactAudioPlayer src={audioSrc} controls />}
+      {audioSrc && (
+        <ReactAudioPlayer src={audioSrc} controls className={styles.player} />
+      )}
     </Modal>
   );
 }

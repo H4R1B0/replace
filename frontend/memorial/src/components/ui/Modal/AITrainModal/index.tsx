@@ -20,12 +20,11 @@ export default function AITrainModal({ ...other }: AITrainModalProps) {
     mutationFn: trainAIAudio,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["ai"] });
-      toast.success("성공적으로 AI 학습 요청이 어쩌구");
+      toast.success("AI 학습 요청에 성공했습니다");
       navigate("..");
     },
     onError: (error: Error) => {
-      if (error.message === "400")
-        toast.error("AI 학습 요청에 실패했습니다 어쩌구");
+      if (error.message === "400") toast.error("AI 학습 요청에 실패했습니다");
     },
   });
 
