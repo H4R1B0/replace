@@ -11,12 +11,12 @@
 }
 
 .titleContainer {
-  z-index: 9999;
+  z-index: 1;
   pointer-events: none;
   grid-column: 1 /-1;
   grid-row: 1 / -1;
   display: flex;
-  margin: 7em 0;
+  margin: 3em 0;
   font-size: 1.75em;
   justify-content: center;
 }
@@ -29,8 +29,9 @@
   font-size: 30px;
   cursor: pointer;
   transition: translate 300ms;
-  animation: animate 2s linear forwards;
-  animation: animateText 5s;
+  animation: animate 3s linear forwards ease-in-out;
+  animation: animateText 3s;
+  animation-iteration-count: 1;
 }
 
 @keyframes animateText {
@@ -47,8 +48,23 @@
     translate: 0 0;
   }
   100% {
-    opacity: 1;
-    translate: 0 0%;
+    opacity: 0;
+    translate: 0 10%;
+  }
+}
+
+@keyframes animate {
+  0% {
+    width: 0px;
+    height: 0px;
+  }
+  30% {
+    width: 50px;
+    height: 0px;
+  }
+  60% {
+    width: 50px;
+    height: 80px;
   }
 }
 
