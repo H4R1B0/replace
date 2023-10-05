@@ -18,7 +18,7 @@ export default function PhotoViewModal({ ...other }: PhotoViewModalProps) {
   //TODO: hot-toast 생성하고, deletePhotoMutation 성공 시에 toast.success("photo deleted") 띄우기
   const handleDelete = () => {
     deletePhotoMutation.mutate(photoId);
-    console.log("success");
+    // console.log("success");
   };
   const deletePhotoMutation = useMutation({
     mutationFn: deleteSinglePhoto,

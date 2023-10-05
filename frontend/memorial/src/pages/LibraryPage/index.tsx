@@ -59,7 +59,7 @@ export default function LibraryPage() {
   // 저장된 편지들을 저장하는 곳.
   const [selectedBook, setSelectedBook] = useState<Book | null>();
   const [books, setBooks] = useState<Book[]>([]);
-  console.log(books);
+  // console.log(books);
   // 편지 작성을 위한 데이터를 저장하는 곳.
   const [letter, setLetter] = useState<Letter>({
     title: "",

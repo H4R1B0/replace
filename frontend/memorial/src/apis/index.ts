@@ -71,7 +71,7 @@ export const api = {
   postAudio: (path: string, audio: File, init?: RequestInit) => {
     const formData = new FormData();
     formData.append("audioFile", audio);
-    console.log(formData.get("audioFile"));
+    // console.log(formData.get("audioFile"));
     return request(
       path,
       {

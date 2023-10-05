@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import KakaoLoginButton from "@components/Auth/KakaoLoginButton";
-import NaverLoginButton from "@components/Auth/NaverLoginButton";
+// import NaverLoginButton from "@components/Auth/NaverLoginButton";
 import styles from "./MainPage.module.css";
 import { playLightBGM } from "@utils/effectSound";
 
@@ -59,7 +59,7 @@ export default function MainPage() {
         />
         <div className={styles.btnwrapper}>
           <KakaoLoginButton />
-          <NaverLoginButton />
+          {/* <NaverLoginButton /> */}
         </div>
       </div>
     </div>

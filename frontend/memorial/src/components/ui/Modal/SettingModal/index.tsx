@@ -9,7 +9,6 @@ import styles from "./SettingModal.module.css";
 // import bgmOnsrc from "@assets/Image/bgmon.png";
 // import bgmOffsrc from "@assets/Image/bgmoff.png";
 
-
 type SettingModalProps = {
   isOpen: boolean;
   onClose: () => void;
@@ -48,15 +47,14 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
     });
   }
 
-
   const handleSignoutMutation = useMutation({
     mutationFn: signout,
     onSuccess: () => {
       sessionStorage.removeItem("accessToken");
       sessionStorage.removeItem("nickname");
     },
-    onError: (error) => {
-      console.log(error);
+    onError: () => {
+      // console.log(error);
       Toast.error("회원탈퇴에 실패했습니다.");
     },
   });
@@ -86,7 +84,6 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
   //   <img className={styles.bgmImage} src={bgmOffsrc} alt="BGM Off" />
   //   <p>BGM OFF</p>
   // </div>
-
 
   return (
     <Modal modalOpen={isOpen} onClose={onClose} buttonLabel="닫기">

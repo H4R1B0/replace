@@ -57,8 +57,8 @@ export default function VoiceMailListModal({
         duration: 3000,
       });
     },
-    onError: (error) => {
-      console.log(error);
+    onError: () => {
+      Toast.error("음성 삭제에 실패했습니다");
     },
   });
 
