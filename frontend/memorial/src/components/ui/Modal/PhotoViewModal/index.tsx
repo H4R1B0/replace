@@ -43,10 +43,11 @@ export default function PhotoViewModal({ ...other }: PhotoViewModalProps) {
 
   return (
     <Modal {...other} buttonLabel="close" onClose={() => navigate("..")}>
-      <p>Photo view</p>
       <img className={styles.image} src={photo.url} />
-      <Button onClick={() => navigate(-1)}>Back</Button>
-      <Button onClick={handleDelete}>Delete</Button>
+      <div className={styles.buttonWrapper}>
+        <Button onClick={() => navigate(-1)}>Back</Button>
+        <Button onClick={handleDelete}>Delete</Button>
+      </div>
     </Modal>
   );
 }

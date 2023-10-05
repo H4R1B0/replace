@@ -14,6 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchSingleRoomTarget } from "@apis/room";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
+import { playLetterList, click3, trash } from "@utils/effectSound";
 
 export default function RoomPage() {
   const navigate = useNavigate();
@@ -22,6 +23,9 @@ export default function RoomPage() {
   const { nickname } = useParams();
   const username = nickname ?? "";
   const [isVisitor, setIsVisitor] = useState(false);
+
+  const useClick3 = click3();
+  const useTrash = trash();
 
   useEffect(() => {
     if (username !== sessionStorage.getItem("nickname")) {
@@ -73,11 +77,32 @@ export default function RoomPage() {
             azimuth={[-Math.PI / 4, Math.PI / 4]}
           >
             <Room
-              onTrashcanClick={isVisitor ? () => toast.error("친구의 방에서는 이용할 수 없습니다.") : 
-              (roomSequence === 1? () => toast.error("자신의 방은 삭제할 수 없습니다.")  : () => navigate("delete"))}
-              onFrameClick={() => navigate("photos")}
-              onTelephoneClick={isVisitor ? () => toast.error("친구의 방에서는 이용할 수 없습니다.") : () => navigate("audio")}
-              onRadioClick={() => navigate("radio")}
+              onTrashcanClick={
+                isVisitor
+                  ? () => toast.error("친구의 방에서는 이용할 수 없습니다.")
+                  : roomSequence === 1
+                  ? () => toast.error("자신의 방은 삭제할 수 없습니다.")
+                  : () => {
+                      useTrash();
+                      navigate("delete");
+                    }
+              }
+              onFrameClick={() => {
+                useClick3();
+                navigate("photos");
+              }}
+              onTelephoneClick={
+                isVisitor
+                  ? () => toast.error("친구의 방에서는 이용할 수 없습니다.")
+                  : () => {
+                      useClick3();
+                      navigate("audio");
+                    }
+              }
+              onRadioClick={() => {
+                useClick3();
+                navigate("radio");
+              }}
             />
           </PresentationControls>
         </Stage>
