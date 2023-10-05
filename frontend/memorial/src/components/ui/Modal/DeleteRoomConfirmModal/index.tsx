@@ -5,6 +5,7 @@ import Modal from "..";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { deleteSingleRoom } from "@apis/room";
 import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
 
 import styles from "./DeleteRoomConfirmModal.module.css";
 
@@ -14,7 +15,17 @@ export default function DeleteRoomConfirmModal() {
   const roomSequence = parseInt(sequence);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const nickname = sessionStorage.getItem("nickname");
+
+  const { nickname } = useParams();
+  const username = nickname ?? "";
+
+  const [isVisitor, setIsVisitor] = useState(false);
+
+  useEffect(() => {
+    if (username !== sessionStorage.getItem("nickname")) {
+      setIsVisitor(true);
+    }
+  }, []);
 
   const deleteSuccessToast = async () => {
     toast.success("방이 성공적으로 삭제되었습니다"), { id: "roomDeleted" };
@@ -36,14 +47,11 @@ export default function DeleteRoomConfirmModal() {
     deleteRoomMutation.mutate(roomSequence);
   };
 
-  const MyRoom = <Modal
-    title="자신의 방은 지울 수 없습니다."
-    buttonLabel="닫기"
-    onClose={() => navigate("..")}
-  >
-  </Modal>
+  const MyRoom = toast.error("자신의 방은 삭제할 수 없습니다.")
+  
+  const FriendRoom = toast.error("친구의 방은 삭제할 수 없습니다.")
 
-  const NotMyRoom = <Modal
+  const BuildInMyHouse = <Modal
     title="정말 방을 지우시겠습니까?"
     buttonLabel="닫기"
     onClose={() => navigate("..")}
@@ -57,7 +65,7 @@ export default function DeleteRoomConfirmModal() {
 
   return (
     <Fragment>
-      {roomSequence === 1? MyRoom : NotMyRoom}
+      {isVisitor ? FriendRoom : (roomSequence === 1? MyRoom : BuildInMyHouse)}
     </Fragment>
   );
 }
