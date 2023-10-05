@@ -1,5 +1,4 @@
 import Modal, { ModalProps } from "..";
-import Button from "@components/ui/Button";
 import { useNavigate } from "react-router-dom";
 import registersrc from "@assets/Image/listen_my_register.png"
 import learnedsrc from "@assets/Image/listen_learned.png"
