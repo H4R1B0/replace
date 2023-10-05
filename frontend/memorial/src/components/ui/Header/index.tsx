@@ -21,14 +21,6 @@ export default function Header() {
   return (
     <div className={styles.wrapper}>
       <div className={styles.spacer}>
-        <button title="Notifications">
-          <HiHome
-            size={27}
-            onClick={() =>
-              navigate(`/house/${sessionStorage.getItem("nickname")}`)
-            }
-          />
-        </button>
         <button
           title="Notifications"
           onClick={() => navigate(PATH.NOTIFICATION)}
@@ -36,9 +28,18 @@ export default function Header() {
           <PiBellDuotone size={27} className={styles.setting} />
         </button>
       </div>
+      <button title="Notifications">
+        <HiHome
+          size={27}
+          onClick={() =>
+            navigate(`/house/${sessionStorage.getItem("nickname")}`)
+          }
+          className={styles.setting}
+        />
+      </button>
       <div className={styles.spacer}>
         <button title="Search" onClick={() => navigate(PATH.SEARCH_RESULT)}>
-          <LiaSearchSolid size={27} />
+          <LiaSearchSolid size={27} className={styles.setting} />
         </button>
         <button title="Settings" onClick={() => setIsSettingsModalOpen(true)}>
           <HiBars4 size={27} className={styles.setting} />

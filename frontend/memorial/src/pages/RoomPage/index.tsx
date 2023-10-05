@@ -42,7 +42,7 @@ export default function RoomPage() {
         nextPath={`/library/${roomSequence}`}
       />
       <div className={styles.titleContainer}>
-        <h1>"{roomTarget.targetName}의 방"</h1>
+        <h1>{roomTarget.targetName}의 방</h1>
       </div>
       <Canvas
         flat

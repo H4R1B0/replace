@@ -12,4 +12,10 @@
 
 .setting {
   margin-left: 0.5rem;
+  color: aliceblue;
+}
+
+.canvas {
+  grid-row: 1 / -1;
+  grid-column: 1 / -1;
 }

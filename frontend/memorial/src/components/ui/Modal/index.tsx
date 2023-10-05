@@ -35,7 +35,7 @@ export default function Modal({
     content: {
       margin: "10%",
       maxWidth: "calc(800px - 10%)", // TODO: use CSS variable
-      maxHeight: "70vh",
+      maxHeight: "60vh",
       backgroundColor: "rgba( 255, 255, 255, 0.8 )",
       border: "none",
       borderRadius: "0.7rem",
