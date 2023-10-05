@@ -13,6 +13,7 @@ import Pagination from "@components/ui/Pagination";
 import { useQuery } from "@tanstack/react-query";
 import { fetchSingleRoomTarget } from "@apis/room";
 import { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 
 export default function RoomPage() {
   const navigate = useNavigate();
@@ -72,9 +73,10 @@ export default function RoomPage() {
             azimuth={[-Math.PI / 4, Math.PI / 4]}
           >
             <Room
-              onTrashcanClick={() => navigate("delete")}
+              onTrashcanClick={isVisitor ? () => toast.error("친구의 방에서는 이용할 수 없습니다.") : 
+              (roomSequence === 1? () => toast.error("자신의 방은 삭제할 수 없습니다.")  : () => navigate("delete"))}
               onFrameClick={() => navigate("photos")}
-              onTelephoneClick={isVisitor ? undefined : () => navigate("audio")}
+              onTelephoneClick={isVisitor ? () => toast.error("친구의 방에서는 이용할 수 없습니다.") : () => navigate("audio")}
               onRadioClick={() => navigate("radio")}
             />
           </PresentationControls>
