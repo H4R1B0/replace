@@ -4,19 +4,30 @@ import Modal, { ModalProps } from "..";
 import { useQuery } from "@tanstack/react-query";
 import { fetchPhotoList } from "@apis/photo";
 import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export default function PhotoGridModal({ ...other }: PhotoGridModalProps) {
   const { sequence } = useParams();
   const navigate = useNavigate();
   const roomSequence = parseInt(sequence ?? "");
+  const { nickname } = useParams();
+  const username = nickname ?? "";
+  const [isVisitor, setIsVisitor] = useState(false);
 
+  useEffect(() => {
+    if (username !== sessionStorage.getItem("nickname")) {
+      setIsVisitor(true);
+    }
+  }, []);
+
+  console.log(isVisitor);
   const {
     isLoading,
     isError,
     data: photoList,
   } = useQuery({
     queryKey: ["photoList", roomSequence],
-    queryFn: () => fetchPhotoList(roomSequence),
+    queryFn: () => fetchPhotoList(username, roomSequence),
   });
 
   if (isLoading) return "loading";
@@ -37,14 +48,13 @@ export default function PhotoGridModal({ ...other }: PhotoGridModalProps) {
       buttonLabel="닫기"
       onClose={() => navigate("..")}
     >
-      {/* TODO: route link */}
-
-      <div className={styles.buttonSection}>
-        {/* <Button onClick={() => navigate(-1)}>뒤로가기</Button> */}
-        <Button variant="nickname" onClick={() => navigate("upload")}>
-          사진 남기기
-        </Button>
-      </div>
+      {isVisitor || (
+        <div className={styles.buttonSection}>
+          <Button variant="nickname" onClick={() => navigate("upload")}>
+            사진 남기기
+          </Button>
+        </div>
+      )}
       {photoList?.data?.length === 0 && (
         <div className={styles.photoMent}>
           <p>아직 사진이 없어요.</p>

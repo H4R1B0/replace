@@ -12,12 +12,21 @@ import { Outlet, useNavigate, useParams } from "react-router-dom";
 import Pagination from "@components/ui/Pagination";
 import { useQuery } from "@tanstack/react-query";
 import { fetchSingleRoomTarget } from "@apis/room";
+import { useState, useEffect } from "react";
 
 export default function RoomPage() {
   const navigate = useNavigate();
-  const nickname = sessionStorage.getItem("nickname");
   const { sequence } = useParams();
   const roomSequence = parseInt(sequence ?? "");
+  const { nickname } = useParams();
+  const username = nickname ?? "";
+  const [isVisitor, setIsVisitor] = useState(false);
+
+  useEffect(() => {
+    if (username !== sessionStorage.getItem("nickname")) {
+      setIsVisitor(true);
+    }
+  }, []);
 
   const {
     isLoading,
@@ -25,7 +34,7 @@ export default function RoomPage() {
     data: roomTarget,
   } = useQuery({
     queryKey: ["roomTarget", roomSequence],
-    queryFn: () => fetchSingleRoomTarget(roomSequence),
+    queryFn: () => fetchSingleRoomTarget(username, roomSequence),
   });
 
   if (isLoading) return "loading";
@@ -37,12 +46,12 @@ export default function RoomPage() {
     <div className={styles.wrapper}>
       <Pagination
         prev="집"
-        prevPath={`/house/${nickname}`}
+        prevPath={`/house/${username}`}
         next="서재"
         nextPath={`/library/${roomSequence}`}
       />
       <div className={styles.titleContainer}>
-        <h1>"{roomTarget.targetName}의 방"</h1>
+        <h1>{roomTarget.targetName}의 방</h1>
       </div>
       <Canvas
         flat
@@ -65,7 +74,7 @@ export default function RoomPage() {
             <Room
               onTrashcanClick={() => navigate("delete")}
               onFrameClick={() => navigate("photos")}
-              onTelephoneClick={() => navigate("audio")}
+              onTelephoneClick={isVisitor ? undefined : () => navigate("audio")}
               onRadioClick={() => navigate("radio")}
             />
           </PresentationControls>

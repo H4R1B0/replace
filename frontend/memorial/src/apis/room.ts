@@ -26,6 +26,9 @@ export const deleteSingleRoom = async (sequence: number) => {
 };
 
 // 방 대상 조회
-export const fetchSingleRoomTarget = async (sequence: number) => {
-  return await api.get<RoomTarget>(`/room/${sequence}`, Header());
+export const fetchSingleRoomTarget = async (
+  nickname: string,
+  sequence: number
+) => {
+  return await api.get<RoomTarget>(`/room/${nickname}/${sequence}`, Header());
 };

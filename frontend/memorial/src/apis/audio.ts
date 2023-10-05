@@ -15,8 +15,11 @@ export const uploadSingleAudio = async ({
 };
 
 // 녹음한 음성 파일 리스트 조회 (수정완)
-export const fetchAudioFileList = async (sequence: number) => {
-  return await api.get<AudioList>(`/radio/${sequence}`, Header());
+export const fetchAudioFileList = async (
+  nickname: string,
+  sequence: number
+) => {
+  return await api.get<AudioList>(`/radio/${nickname}/${sequence}`, Header());
 };
 
 // 녹음 음성 파일 상세 조회
@@ -30,9 +33,13 @@ export const deleteSingleAudioFile = async (voiceId: number) => {
 };
 
 // 생성된 AI 음성 조회
-export const fetchAIAudio = async (sequence: number, situation: string) => {
+export const fetchAIAudio = async (
+  nickname: string,
+  sequence: number,
+  situation: string
+) => {
   const queryString = new URLSearchParams({ situation }).toString();
-  const pathWithQuery = `/tel/${sequence}?${queryString}`;
+  const pathWithQuery = `/tel/${nickname}/${sequence}?${queryString}`;
   return await api.get<AIAudioBySituation>(pathWithQuery, Header());
 };
 

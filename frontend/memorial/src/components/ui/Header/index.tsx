@@ -19,35 +19,35 @@ export default function Header() {
   if (location.pathname === "/") return null;
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.spacer}>
-        <button title="Notifications">
-          <HiHome
-            size={27}
-            onClick={() =>
-              navigate(`/house/${sessionStorage.getItem("nickname")}`)
-            }
-          />
-        </button>
+    <>
+      <div className={styles.wrapper}>
         <button
           title="Notifications"
           onClick={() => navigate(PATH.NOTIFICATION)}
         >
           <PiBellDuotone size={27} className={styles.setting} />
         </button>
-      </div>
-      <div className={styles.spacer}>
+        <button title="Notifications">
+          <HiHome
+            size={27}
+            onClick={() =>
+              navigate(`/house/${sessionStorage.getItem("nickname")}`)
+            }
+            className={styles.setting}
+          />
+        </button>
+
         <button title="Search" onClick={() => navigate(PATH.SEARCH_RESULT)}>
-          <LiaSearchSolid size={27} />
+          <LiaSearchSolid size={27} className={styles.setting} />
         </button>
         <button title="Settings" onClick={() => setIsSettingsModalOpen(true)}>
           <HiBars4 size={27} className={styles.setting} />
         </button>
-        <SettingModal
-          isOpen={isSettingsModalOpen}
-          onClose={() => setIsSettingsModalOpen(false)}
-        />
       </div>
-    </div>
+      <SettingModal
+        isOpen={isSettingsModalOpen}
+        onClose={() => setIsSettingsModalOpen(false)}
+      />
+    </>
   );
 }

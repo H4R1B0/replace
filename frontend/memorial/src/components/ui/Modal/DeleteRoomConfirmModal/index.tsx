@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import Button from "@components/ui/Button";
 import { useParams, useNavigate } from "react-router-dom";
 import Modal from "..";
@@ -34,27 +35,29 @@ export default function DeleteRoomConfirmModal() {
   const handleDelete = () => {
     deleteRoomMutation.mutate(roomSequence);
   };
-  // TODO: 방 주인이면 안뜨도록 예외처리
+
+  const MyRoom = <Modal
+    title="자신의 방은 지울 수 없습니다."
+    buttonLabel="닫기"
+    onClose={() => navigate("..")}
+  >
+  </Modal>
+
+  const NotMyRoom = <Modal
+    title="정말 방을 지우시겠습니까?"
+    buttonLabel="닫기"
+    onClose={() => navigate("..")}
+  >
+    <div className={styles.buttonSection}>
+      <Button variant="delete" onClick={handleDelete}>
+        네, 정말 삭제할게요.
+      </Button>
+    </div>
+  </Modal>
+
   return (
-    <Modal
-      title="정말 방을 지우시겠습니까?"
-      buttonLabel="닫기"
-      // noButton={true}
-      onClose={() => navigate("..")}
-    >
-      <div className={styles.buttonSection}>
-        {/* <Button
-          variant="modal"
-          onClick={() => {
-            navigate("..");
-          }}
-        >
-          닫기
-        </Button> */}
-        <Button variant="delete" onClick={handleDelete}>
-          네, 정말 삭제할게요.
-        </Button>
-      </div>
-    </Modal>
+    <Fragment>
+      {roomSequence === 1? MyRoom : NotMyRoom}
+    </Fragment>
   );
 }

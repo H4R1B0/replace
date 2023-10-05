@@ -18,6 +18,8 @@ export default function AudioListModal({ ...other }: AudioListModalProps) {
   const [voiceToggleStates, setVoiceToggleStates] = useState<
     Record<number, boolean>
   >({});
+  const { nickname } = useParams();
+  const username = nickname ?? "";
 
   const {
     isLoading,
@@ -25,7 +27,7 @@ export default function AudioListModal({ ...other }: AudioListModalProps) {
     data: audioList,
   } = useQuery({
     queryKey: ["audioList", roomSequence],
-    queryFn: () => fetchAudioFileList(roomSequence),
+    queryFn: () => fetchAudioFileList(username, roomSequence),
   });
 
   const deleteAudioFileMutation = useMutation({

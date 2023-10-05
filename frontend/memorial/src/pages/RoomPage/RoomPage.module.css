@@ -11,20 +11,27 @@
 }
 
 .titleContainer {
-  z-index: 10;
+  z-index: 9999;
   pointer-events: none;
-  grid-column: 1 / -1;
+  grid-column: 1 /-1;
   grid-row: 1 / -1;
   display: flex;
-  margin: 3.5em 0;
-  font-size: 1em;
+  margin: 1.5em 0;
+  font-size: 1.75em;
   justify-content: center;
 }
 
 .titleContainer h1 {
-  color: white;
-  opacity: 0;
-  animation: animateText 3s;
+  pointer-events: none;
+  color: #fff;
+  text-shadow: 0 0 7px #ffdf11, 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #faff9f,
+    0 0 82px #faff9f, 0 0 92px #faff9f, 0 0 102px #faff9f, 0 0 151px #faff9f;
+  font-size: 30px;
+  cursor: pointer;
+  transition: translate 300ms;
+  animation: animate 2s linear forwards ease-in-out;
+  animation: animateText 5s;
+  animation-iteration-count: 1;
 }
 
 @keyframes animateText {
@@ -41,7 +48,7 @@
     translate: 0 0;
   }
   100% {
-    opacity: 0;
-    translate: 0 10%;
+    opacity: 1;
+    translate: 0 0%;
   }
 }

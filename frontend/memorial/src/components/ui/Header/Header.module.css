@@ -1,6 +1,6 @@
 .wrapper {
   display: flex;
-  gap: 0.5em;
+  gap: 1;
   padding: 0.75em;
   justify-content: space-between;
   backdrop-filter: blur(100px);
@@ -12,4 +12,10 @@
 
 .setting {
   margin-left: 0.5rem;
+  color: aliceblue;
+}
+
+.canvas {
+  grid-row: 1 / -1;
+  grid-column: 1 / -1;
 }

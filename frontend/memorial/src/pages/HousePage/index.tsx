@@ -25,7 +25,6 @@ export default function HousePage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { nickname } = useParams();
-
   if (typeof nickname === "undefined") return;
 
   const {
@@ -71,10 +70,12 @@ export default function HousePage() {
     if (!room) return;
     if (room.targetName) {
       // navigate to room
+
       navigate(`/room/${nickname}/${room.sequence}`);
       return;
     }
     // show modal
+    if (nickname !== sessionStorage.getItem("nickname")) return;
     toggleModal();
     setSelectedSequence(sequence);
   };
@@ -86,8 +87,9 @@ export default function HousePage() {
         nextPath={`/payphone/${nickname}`}
         variant="onlyNext"
       />
+
       <div className={styles.titleContainer}>
-        <h1>"{nickname}의 집"</h1>
+        <h1>{nickname}의 기억의 집</h1>
       </div>
       <Canvas
         className={styles.canvas}
@@ -119,7 +121,7 @@ export default function HousePage() {
             />
           </PresentationControls>
         </Stage>
-        <Cloud scale={4} opacity={1} depth={-10} segments={30} speed={2} />
+        <Cloud scale={4} opacity={1} depth={-10} segments={30} speed={1} />
         <Stars
           radius={100}
           depth={1}
