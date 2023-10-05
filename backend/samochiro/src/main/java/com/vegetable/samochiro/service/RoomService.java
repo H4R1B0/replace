@@ -2,14 +2,18 @@ package com.vegetable.samochiro.service;
 
 
 import com.vegetable.samochiro.domain.Room;
+import com.vegetable.samochiro.domain.User;
 import com.vegetable.samochiro.dto.room.RegisterTargetNameRequest;
 import com.vegetable.samochiro.enums.CustomErrorType;
 import com.vegetable.samochiro.exception.RegisteredRoomException;
 import com.vegetable.samochiro.exception.RoomNotFoundException;
+import com.vegetable.samochiro.exception.UserNotFoundException;
 import com.vegetable.samochiro.repository.RoomRepository;
+import com.vegetable.samochiro.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Optional;
 
@@ -19,6 +23,7 @@ import java.util.Optional;
 public class RoomService {
 
     private final RoomRepository roomRepository;
+    private final UserRepository userRepository;
 
     @Transactional
     public void registerTargetName(int roomSequence, String userId, RegisterTargetNameRequest request) {
@@ -50,8 +55,13 @@ public class RoomService {
     }
     //방 대상 지우기
 
-    public String getTargetName(int sequence, String userId) {
-        Optional<Room> findRoom = roomRepository.findBySequenceAndUserId(sequence, userId);
+    public String getTargetName(String nickname, int sequence) {
+        Optional<User> findUser = userRepository.findByNickname(nickname);
+        if (findUser.isEmpty()) {
+            throw new UserNotFoundException(CustomErrorType.USER_NOT_FOUND.getMessage());
+        }
+
+        Optional<Room> findRoom = roomRepository.findBySequenceAndUserId(sequence, findUser.get().getId());
         if (findRoom.isEmpty())
             throw new RoomNotFoundException(CustomErrorType.ROOM_NOT_FOUND.getMessage());
         return findRoom.get().getTargetName();

@@ -42,13 +42,12 @@ public class PhotoController {
 	}
 	//사진 등록 - 액자 1번
 
-	@GetMapping("/{sequence}")
-	public ResponseEntity<Response> getPhotoList(@PathVariable int sequence,
-		@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+	@GetMapping("/{nickname}/{sequence}")
+	public ResponseEntity<Response> getPhotoList(@PathVariable String nickname, @PathVariable int sequence) {
 
 		try {
-			String userId = headerUtils.getUserId(authorizationHeader);
-			List<PhotoListResponse> photoList = photoService.findPhotoList(userId, sequence);
+//			String userId = headerUtils.getUserId(authorizationHeader);
+			List<PhotoListResponse> photoList = photoService.findPhotoList(nickname, sequence);
 			return ResponseEntity.ok(new PhotoController.Response(photoList));
 		}
 		catch (Exception e) {

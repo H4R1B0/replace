@@ -32,10 +32,10 @@ public class LetterController {
 	}
 	//편지 등록 - 서재 1번
 
-	@GetMapping("/{sequence}")
-	public ResponseEntity<Response> getLetterList(@PathVariable int sequence, @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
-		String userId = headerUtils.getUserId(authorizationHeader);
-		List<LetterListResponse> letterList = letterService.findLetterList(userId, sequence);
+	@GetMapping("/{nickname}/{sequence}")
+	public ResponseEntity<Response> getLetterList(@PathVariable String nickname, @PathVariable int sequence) {
+//		String userId = headerUtils.getUserId(authorizationHeader);
+		List<LetterListResponse> letterList = letterService.findLetterList(nickname, sequence);
 		return ResponseEntity.ok(new Response(letterList));
 	}
 	//방 별 편지 리스트 조회 - 서재 2번

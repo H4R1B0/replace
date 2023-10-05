@@ -3,14 +3,17 @@ package com.vegetable.samochiro.service;
 
 import com.vegetable.samochiro.domain.AIVoice;
 import com.vegetable.samochiro.domain.Room;
+import com.vegetable.samochiro.domain.User;
 import com.vegetable.samochiro.domain.Voice;
 import com.vegetable.samochiro.dto.tel.GetAiVoiceResponse;
 import com.vegetable.samochiro.enums.CustomErrorType;
 import com.vegetable.samochiro.enums.SituationType;
 import com.vegetable.samochiro.exception.AIVoiceNotFoundException;
 import com.vegetable.samochiro.exception.RoomNotFoundException;
+import com.vegetable.samochiro.exception.UserNotFoundException;
 import com.vegetable.samochiro.repository.AIVoiceRepository;
 import com.vegetable.samochiro.repository.RoomRepository;
+import com.vegetable.samochiro.repository.UserRepository;
 import com.vegetable.samochiro.repository.VoiceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,6 +34,7 @@ public class TelService {
     private final GCSService gcsService;
     private final VoiceRepository voiceRepository;
     private final AIVoiceRepository aiVoiceRepository;
+    private final UserRepository userRepository;
     private final String AUDIO_KEYWORD = "au";
 
     @Transactional
@@ -53,8 +57,13 @@ public class TelService {
     }
     //음성 파일 등록 - 전화기 1
 
-    public GetAiVoiceResponse getAiVoice(String userId, int sequence, SituationType situationType) {
-        Optional<Room> findRoom = roomRepository.findBySequenceAndUserId(sequence, userId);
+    public GetAiVoiceResponse getAiVoice(String nickname, int sequence, SituationType situationType) {
+        Optional<User> findUser = userRepository.findByNickname(nickname);
+        if (findUser.isEmpty()) {
+            throw new UserNotFoundException(CustomErrorType.USER_NOT_FOUND.getMessage());
+        }
+
+        Optional<Room> findRoom = roomRepository.findBySequenceAndUserId(sequence, findUser.get().getId());
         if (findRoom.isEmpty()) {
             throw new RoomNotFoundException(CustomErrorType.ROOM_NOT_FOUND.getMessage());
         }
@@ -67,9 +76,9 @@ public class TelService {
         Random random = new Random();
         int idx = random.nextInt(aiVoicesSize);
         return GetAiVoiceResponse.builder()
-                .message("AI 음성 조회에 성공하였습니다.")
-                .voiceFileUrl(AIVoices.get(idx).getUrl())
-                .build();
+            .message("AI 음성 조회에 성공하였습니다.")
+            .voiceFileUrl(AIVoices.get(idx).getUrl())
+            .build();
     }
     //생성된 AI 음성 조회 - 전화기 3
 

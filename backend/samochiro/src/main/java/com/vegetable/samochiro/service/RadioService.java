@@ -1,14 +1,17 @@
 package com.vegetable.samochiro.service;
 
 import com.vegetable.samochiro.domain.Room;
+import com.vegetable.samochiro.domain.User;
 import com.vegetable.samochiro.domain.Voice;
 import com.vegetable.samochiro.dto.radio.RadioVoiceResponse;
 import com.vegetable.samochiro.dto.radio.RadioVoicesResponse;
 import com.vegetable.samochiro.dto.radio.VoiceItem;
 import com.vegetable.samochiro.enums.CustomErrorType;
 import com.vegetable.samochiro.exception.RoomNotFoundException;
+import com.vegetable.samochiro.exception.UserNotFoundException;
 import com.vegetable.samochiro.exception.VoiceNotFoundException;
 import com.vegetable.samochiro.repository.RoomRepository;
+import com.vegetable.samochiro.repository.UserRepository;
 import com.vegetable.samochiro.repository.VoiceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,12 +28,19 @@ public class RadioService {
 
     private final RoomRepository roomRepository;
     private final VoiceRepository voiceRepository;
+    private final UserRepository userRepository;
 
-    public RadioVoicesResponse getVoices(String userId, int sequence) {
-        Optional<Room> findRoom = roomRepository.findBySequenceAndUserId(sequence, userId);
+    public RadioVoicesResponse getVoices(String nickname, int sequence) {
+        Optional<User> findUser = userRepository.findByNickname(nickname);
+        if (findUser.isEmpty()) {
+            throw new UserNotFoundException(CustomErrorType.USER_NOT_FOUND.getMessage());
+        }
+
+        Optional<Room> findRoom = roomRepository.findBySequenceAndUserId(sequence, findUser.get().getId());
         if (findRoom.isEmpty()) {
             throw new RoomNotFoundException(CustomErrorType.ROOM_NOT_FOUND.getMessage());
         }
+
         String roomUuid = findRoom.get().getUuid();
         List<Voice> voices = voiceRepository.findByRoomUuid(roomUuid);
         List<VoiceItem> voiceItems = new ArrayList<>();
