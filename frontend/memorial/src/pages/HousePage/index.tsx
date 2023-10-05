@@ -25,7 +25,6 @@ export default function HousePage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { nickname } = useParams();
-
   if (typeof nickname === "undefined") return;
 
   const {
@@ -71,10 +70,12 @@ export default function HousePage() {
     if (!room) return;
     if (room.targetName) {
       // navigate to room
+
       navigate(`/room/${nickname}/${room.sequence}`);
       return;
     }
     // show modal
+    if (nickname !== sessionStorage.getItem("nickname")) return;
     toggleModal();
     setSelectedSequence(sequence);
   };

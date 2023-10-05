@@ -15,8 +15,8 @@ export const uploadSinglePhoto = async ({
 };
 
 // 기억의 방 사진 리스트 조회
-export const fetchPhotoList = async (sequence: number) => {
-  return await api.get<PhotoList>(`/frame/${sequence}`, Header());
+export const fetchPhotoList = async (nickname: string, sequence: number) => {
+  return await api.get<PhotoList>(`/frame/${nickname}/${sequence}`, Header());
 };
 // 기억의 방 사진 상세 조회
 export const fetchSinglePhoto = async (photoId: number) => {
