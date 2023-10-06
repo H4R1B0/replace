@@ -1,0 +1,35 @@
+.photoGrid {
+  width: 100%;
+  display: grid;
+  grid-gap: 0.5em;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.photoGrid img {
+  width: 100%;
+  aspect-ratio: 1;
+  cursor: pointer;
+}
+
+.buttonSection {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.photoMent {
+  padding: 1em;
+  color: rgb(58, 45, 45);
+  font-family: "SUITE-Medium";
+}
+
+.button {
+  all: unset;
+  cursor: pointer;
+  margin: 0 0 1em 0;
+  font-size: larger;
+}
+
+.button:active {
+  background-color: grey;
+}

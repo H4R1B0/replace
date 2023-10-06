@@ -1,0 +1,31 @@
+.outer {
+  width: 100%;
+  background-color: rgb(193, 193, 193);
+  display: flex;
+  padding: 0.25em;
+  gap: 0.25em;
+  border-radius: 22px;
+}
+
+.option {
+  all: unset;
+  flex: 1;
+  padding: 0.15em;
+  color: white;
+  background-color: rgb(186, 183, 187);
+  transition: background-color 300ms;
+}
+
+.selected {
+  background-color: rgb(205, 140, 248);
+}
+
+.option:first-child {
+  border-top-left-radius: 22px;
+  border-bottom-left-radius: 22px;
+}
+
+.option:last-child {
+  border-top-right-radius: 22px;
+  border-bottom-right-radius: 22px;
+}

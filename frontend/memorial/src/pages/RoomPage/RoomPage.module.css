@@ -1,0 +1,54 @@
+.wrapper {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr;
+  height: 100vh;
+}
+
+.canvas {
+  grid-row: 1 / -1;
+  grid-column: 1 / -1;
+}
+
+.titleContainer {
+  z-index: 9999;
+  pointer-events: none;
+  grid-column: 1 /-1;
+  grid-row: 1 / -1;
+  display: flex;
+  margin: 1.5em 0;
+  font-size: 1.75em;
+  justify-content: center;
+}
+
+.titleContainer h1 {
+  pointer-events: none;
+  color: #fff;
+  text-shadow: 0 0 7px #ffdf11, 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #faff9f,
+    0 0 82px #faff9f, 0 0 92px #faff9f, 0 0 102px #faff9f, 0 0 151px #faff9f;
+  font-size: 30px;
+  cursor: pointer;
+  transition: translate 300ms;
+  animation: animate 2s linear forwards ease-in-out;
+  animation: animateText 5s;
+  animation-iteration-count: 1;
+}
+
+@keyframes animateText {
+  0% {
+    opacity: 0;
+    translate: 0 10%;
+  }
+  15% {
+    opacity: 1;
+    translate: 0 0;
+  }
+  75% {
+    opacity: 1;
+    translate: 0 0;
+  }
+  100% {
+    opacity: 1;
+    translate: 0 0%;
+  }
+}

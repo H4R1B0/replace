@@ -1,0 +1,21 @@
+.wrapper {
+  display: flex;
+  gap: 1;
+  padding: 0.75em;
+  justify-content: space-between;
+  backdrop-filter: blur(100px);
+}
+
+.wrapper button {
+  all: unset;
+}
+
+.setting {
+  margin-left: 0.5rem;
+  color: aliceblue;
+}
+
+.canvas {
+  grid-row: 1 / -1;
+  grid-column: 1 / -1;
+}

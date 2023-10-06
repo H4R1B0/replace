@@ -1,0 +1,52 @@
+.neonText {
+  pointer-events: all;
+  color: #fff;
+  text-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff,
+    0 0 42px rgb(199, 159, 255), 0 0 82px rgb(199, 159, 255),
+    0 0 92px rgb(199, 159, 255), 0 0 102px rgb(199, 159, 255),
+    0 0 151px rgb(199, 159, 255);
+  font-size: 20px;
+  cursor: pointer;
+  transition: translate 300ms;
+}
+
+.neonText:first-child:hover {
+  translate: -10px 0;
+}
+
+.neonText:last-child:hover {
+  translate: 10px 0;
+}
+
+.neonTextContainer {
+  z-index: 10;
+  pointer-events: none;
+  grid-row: 1 / -1;
+  grid-column: 1 / -1;
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 2em;
+  animation-name: floating;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes floating {
+  0% {
+    transform: translate(0, 0px);
+  }
+  50% {
+    transform: translate(0, 4px);
+  }
+  100% {
+    transform: translate(0, -0px);
+  }
+}
+
+.next {
+  justify-content: end;
+}

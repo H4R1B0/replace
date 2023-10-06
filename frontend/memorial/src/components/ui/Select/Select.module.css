@@ -1,0 +1,125 @@
+/* Select.module.css */
+
+.selectBox2 * {
+  box-sizing: border-box;
+}
+.selectBox2 {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 2.7rem;
+  border-radius: 0.5rem;
+  border: solid rgb(5, 5, 5) 0.1rem;
+  background-size: 20px;
+  cursor: pointer;
+  background-color: white;
+}
+.tribute {
+  width: 100%;
+}
+.long {
+  width: 20rem;
+  min-width: 100%;
+}
+.short {
+  width: 45% !important;
+}
+
+.shortHeight {
+  height: 2.2rem !important;
+}
+
+.selectBox2:before {
+  content: "▾";
+  font-family: "SUITE-ExtraBold";
+  font-size: larger;
+  color: gray;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 5px;
+  z-index: -1;
+}
+
+/* .selectBox2:after {
+  content: "";
+  display: block;
+  width: 0.2rem;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 35px;
+  background: rgb(255, 255, 255);
+} */
+
+.selectBox2 .label {
+  display: flex;
+  align-items: center;
+  width: inherit;
+  height: inherit;
+  border: 0 none;
+  outline: 0 none;
+  text-indent: 0.5rem;
+  background: transparent;
+  cursor: pointer;
+  font-family: "SUITE-Medium";
+  font-size: 0.8rem;
+}
+
+.selectBox2 .optionList {
+  position: relative;
+  z-index: 1;
+  left: 0;
+  width: 100%;
+  background: rgb(255, 255, 255);
+  color: black;
+  list-style-type: none;
+  padding: 0;
+  margin-top: 3%;
+  border-radius: 6px;
+  overflow: auto;
+  max-height: 0;
+  height: auto;
+  transition: 0.3s ease-in;
+}
+
+.selectBox2 .optionList::-webkit-scrollbar {
+  width: 6px;
+}
+.selectBox2 .optionList::-webkit-scrollbar-track {
+  background: transparent;
+}
+.selectBox2 .optionList::-webkit-scrollbar-thumb {
+  background: #fbc6c6;
+  border-radius: 45px;
+}
+.selectBox2 .optionList::-webkit-scrollbar-thumb:hover {
+  background: #303030;
+}
+
+.selectBox2.active .optionList {
+  max-height: 10rem;
+}
+
+.selectBox2.active {
+  z-index: 2;
+}
+
+.selectBox2 .optionItem {
+  border-bottom: 1px solid rgb(161, 161, 161);
+  padding: 5px 15px 5px;
+  transition: 0.1s;
+  font-size: 0.8rem;
+  height: 2.3rem;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+}
+
+.selectBox2 .optionItem:hover {
+  background: rgb(129, 129, 129);
+}
+
+.selectBox2 .optionItem:last-child {
+  border-bottom: 0 none;
+}

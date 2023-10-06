@@ -1,0 +1,197 @@
+.wrapper {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.canvas {
+  grid-row: 1 / -1;
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes fadeout {
+  /* 효과를 동작시간 동안 0 ~ 1까지 */
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.aftertributewrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.8);
+  position: absolute;
+  z-index: 12;
+  animation-name: fadeout;
+  animation-delay: 2s;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+}
+
+.titlewrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+
+  margin-top: 10%;
+}
+.objectBox {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  font-family: "SUITE-Bold";
+  font-size: 1.8rem;
+  padding-bottom: 0.8rem;
+  text-align: center;
+  color: white;
+  word-break: break-all;
+}
+
+.buttonwrapper {
+  width: 80%;
+  max-width: 25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  top: 10%;
+}
+
+.button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.img {
+  width: 100%;
+  border-radius: 3px;
+}
+
+.imgBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.imgWrapper {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  align-items: center;
+  padding-top: 5%;
+}
+
+.tribute {
+  width: 15rem;
+  min-width: 30vw;
+  height: 30%;
+  min-height: 18rem;
+  padding: 5% 0;
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.btn {
+  width: 100%;
+  padding-top: 10%;
+}
+.text {
+  width: 100%;
+  word-break: keep-all;
+  text-align: center;
+  max-width: 5rem;
+  padding-top: 5%;
+  font-size: 1rem;
+}
+
+.label {
+  font-family: "SUITE-Bold";
+  font-size: larger;
+}
+
+.submittributeImg {
+  height: 30%;
+  animation: float 2s ease-in-out infinite;
+}
+
+.reportSub {
+  padding: 5% 0;
+  text-align: left;
+}
+.reportWrapper {
+  padding: 10% 0;
+}
+
+.framebody {
+  width: 100%;
+  min-width: 15rem;
+  height: 15rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0.03rem solid black;
+  border-radius: 0.5rem;
+  margin: 6% 0;
+  overflow-y: auto;
+  background-color: white;
+}
+
+.icon {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+.navBtn {
+  display: flex;
+
+  max-width: 18rem;
+  justify-content: flex-start;
+  align-items: center;
+  margin-right: 10%;
+}
+
+.subtitle {
+  color: white;
+}
+
+.navwrap {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}

@@ -1,0 +1,32 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.img {
+  width: fit-content;
+  height: auto;
+  max-height: 30rem;
+  animation: bounce 1s infinite alternate;
+}
+
+.buttonwrapper {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.title {
+  color: aliceblue;
+}
+
+@keyframes bounce {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-15px);
+  }
+}

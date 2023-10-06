@@ -1,0 +1,11 @@
+.wrapper {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr;
+  height: 100vh;
+}
+
+.canvas {
+  grid-row: 1 / -1;
+  grid-column: 1 / -1;
+}

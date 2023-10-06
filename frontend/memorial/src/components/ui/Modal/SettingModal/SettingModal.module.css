@@ -1,0 +1,38 @@
+.bgmSelector {
+  width: 100%;
+  height: 20%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.bgmSelector:active {
+  background-color: rgba(128, 128, 128, 0.3);
+  border-radius: 0.5rem;
+}
+
+.bgmImage {
+  width: 20%;
+  height: 20%;
+}
+
+.aboutAccountSelector {
+  width: 15rem;
+  height: 100%;
+  font-size: 1.3rem;
+  padding: 1rem 0rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.aboutAccountSelector:active {
+  background-color: rgba(128, 128, 128, 0.3);
+  border-radius: 0.5rem;
+}

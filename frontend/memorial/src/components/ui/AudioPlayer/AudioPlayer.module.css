@@ -1,0 +1,15 @@
+.wrapper {
+  height: auto;
+  margin: 0.5rem auto;
+}
+
+audio {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  max-width: 100%;
+  /* max-width: 250px; */
+}
