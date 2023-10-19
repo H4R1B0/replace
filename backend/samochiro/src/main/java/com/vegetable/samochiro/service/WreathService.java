@@ -1,6 +1,7 @@
 package com.vegetable.samochiro.service;
 
 import com.vegetable.samochiro.domain.Declaration;
+import com.vegetable.samochiro.domain.User;
 import com.vegetable.samochiro.domain.Wreath;
 import com.vegetable.samochiro.domain.WreathCount;
 import com.vegetable.samochiro.domain.WreathUser;
@@ -37,9 +38,6 @@ public class WreathService {
 	private final WreathUserRepository wreathUserRepository;
 	private final DeclarationRepository declarationRepository;
 	private final CrawlingUtils crawlingUtils;
-	private final GCSService gcsService;
-
-	private final int DECLARATION_COUNT = 5;
 
 	@Transactional
 	public boolean saveWreath(WreathSaveRequest saveRequest, String userId) {
@@ -179,60 +177,92 @@ public class WreathService {
 	@Transactional
 	public boolean saveDeclaration(DeclarationSaveRequest saveRequest, String userId) {
 		Optional<Wreath> wreath = wreathRepository.findById(saveRequest.getWreathId());
-		int newCount = wreath.get().getDeclarationCount() + 1; //신고 수 +1
+		int newCount = wreath.get().getDeclarationCount()+1; //신고 수 +1
 
 		Optional<Declaration> selectedByWreathUserId = declarationRepository.selectByWreathUserId(
 			saveRequest.getWreathId(), userId);
-		if (selectedByWreathUserId.isPresent()) { //이미 한 신고라면
+		if(selectedByWreathUserId.isPresent()) { //이미 한 신고라면
 			return true;
-		} else {
-			//신고 수가 특정 수 넘으면
-			if (newCount >= DECLARATION_COUNT) {
-				//구글 텍스트 감정 API
-				String content = saveRequest.getDeclarationContent();
-				boolean isNegative = gcsService.isNegative(content);
+		}
+		else {
+			if(newCount >= 10) { //신고 수가 10개가 넘으면
+				boolean flag = false;
+				//해당 헌화 내용 알고리즘 돌리기
+				List<String> badWordList = crawlingUtils.getBadWordList();
+				for(String word : badWordList) {
+					if(kmpSearch(wreath.get().getDescription(), word)) { //욕설, 비하, 모욕이 있으면
+						declarationRepository.deleteByWreathId(wreath.get().getWreathId()); //해당 헌화 신고 삭제
+//					wreathCountRepository.deleteByWreathId(wreath.get().getWreathId()); //헌화 카운트 삭제
+						wreathUserRepository.deleteByWreathId(wreath.get().getWreathId()); //헌화한 사용자 삭제
+						wreathRepository.deleteById(wreath.get().getWreathId()); //해당 헌화 삭제
+						flag = true;
+						break;
+					}
+				}
+				if(!flag) { //욕설, 비하, 모욕이 없으면
+					wreath.get().setDeclarationCount(newCount);
 
-				//부정적인 경우
-				if (isNegative) {
-					declarationRepository.deleteByWreathId(wreath.get().getWreathId()); //해당 헌화 신고 삭제
-					wreathUserRepository.deleteByUserIdAndWreathId(userId, wreath.get().getWreathId()); //헌화한 사용자 삭제
-					wreathRepository.deleteById(wreath.get().getWreathId()); //해당 헌화 삭제
+					String type = "";
+					if(saveRequest.getDeclarationType()==1) {
+						type = "스팸/도배글";
+					}
+					else if(saveRequest.getDeclarationType()==2) {
+						type = "잘못된 정보 포함";
+					}
+					else if(saveRequest.getDeclarationType()==3) {
+						type = "개인 정보 포함";
+					}
+					else if(saveRequest.getDeclarationType()==4) {
+						type = "욕설/생명경시";
+					}
+					else if(saveRequest.getDeclarationType()==5) {
+						type = "혐오/차별적";
+					}
+
+					Declaration declaration = Declaration.builder()
+						.declarationType(type)
+						.declarationContent(saveRequest.getDeclarationContent())
+						.wreath(wreath.get())
+						.user(userRepository.findById(userId).get())
+						.build();
+
+					declarationRepository.save(declaration);
+				}
+			}
+
+			else {
+				wreath.get().setDeclarationCount(newCount);
+
+				String type = "";
+				if(saveRequest.getDeclarationType()==1) {
+					type = "스팸/도배글";
+				}
+				else if(saveRequest.getDeclarationType()==2) {
+					type = "잘못된 정보 포함";
+				}
+				else if(saveRequest.getDeclarationType()==3) {
+					type = "개인 정보 포함";
+				}
+				else if(saveRequest.getDeclarationType()==4) {
+					type = "욕설/생명경시";
+				}
+				else if(saveRequest.getDeclarationType()==5) {
+					type = "혐오/차별적";
 				}
 
-				String type = getDeclarationType(saveRequest.getDeclarationType());
-
-				wreath.get().setDeclarationCount(newCount);
 				Declaration declaration = Declaration.builder()
 					.declarationType(type)
 					.declarationContent(saveRequest.getDeclarationContent())
 					.wreath(wreath.get())
 					.user(userRepository.findById(userId).get())
 					.build();
+
 				declarationRepository.save(declaration);
 			}
 		}
 		return false;
 	}
 	//신고 등록 - 헌화 6번
-
-	private String getDeclarationType(int num) {
-		if (num == 1) {
-			return "스팸/도배글";
-		}
-		if (num == 2) {
-			return "잘못된 정보 포함";
-		}
-		if (num == 3) {
-			return "개인 정보 포함";
-		}
-		if (num == 4) {
-			return "욕설/생명경시";
-		}
-		if (num == 5) {
-			return "혐오/차별적";
-		}
-		return "기타";
-	}
 
 	public List<WreathListResponse> findWreathListByUserId(String userId) {
 		List<Wreath> wreathList = wreathRepository.selectByUserId(userId);
@@ -303,7 +333,7 @@ public class WreathService {
     public void deleteWreathByUserId(String userId) {
 		List<Wreath> wreaths = wreathRepository.selectByUserId(userId);
 		for(Wreath wreath : wreaths){
-			wreathUserRepository.deleteByUserIdAndWreathId(userId, wreath.getWreathId());
+			wreathUserRepository.deleteByWreathId(wreath.getWreathId());
 //			wreathCountRepository.deleteByWreathId(wreath.getWreathId());
 			wreathRepository.delete(wreath);
 		}
