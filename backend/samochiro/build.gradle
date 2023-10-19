@@ -22,30 +22,42 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.0'
-	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
-	implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
-	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 	implementation 'org.jetbrains:annotations:24.0.0'
-	//gson
-	implementation 'com.google.code.gson:gson:2.10.1'
-	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	compileOnly 'org.projectlombok:lombok'
+
+	//jpa
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	//security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	testImplementation 'org.springframework.security:spring-security-test'
 
-	//GCS
+	//database
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+	//jwt
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+	//gson
+	implementation 'com.google.code.gson:gson:2.10.1'
+
+	//GCP storage
 	implementation 'org.springframework.cloud:spring-cloud-gcp-starters:1.2.8.RELEASE'
 	implementation 'org.springframework.cloud:spring-cloud-gcp-storage:1.2.8.RELEASE'
 
+	//GCP language
+	implementation 'com.google.cloud:google-cloud-language:2.28.0'
+	implementation 'com.google.auth:google-auth-library-oauth2-http:1.20.0'
 }
 
 tasks.named('test') {
