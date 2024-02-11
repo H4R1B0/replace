@@ -24,7 +24,7 @@
 <table>
     <tr>
         <td height="140px" align="center"> <a href="https://github.com/Juahjoah">
-            <img src="https://avatars.githubusercontent.com/Juahjoah" width="140px" /> <br><br> 👑 김주아 <br>(Back-End) </a> <br></td>
+            <img src="https://avatars.githubusercontent.com/Juahjoah" width="140px" /> <br><br> 👑 김주아 <br>(Front-End) </a> <br></td>
         <td height="140px" align="center"> <a href="https://github.com/SuhyeokRoh">
             <img src="https://avatars.githubusercontent.com/SuhyeokRoh" width="140px" /> <br><br> 🐟 노수혁 <br>(Back-End) </a> <br></td>
         <td height="140px" align="center"> <a href="https://github.com/ninnistic">
@@ -34,7 +34,7 @@
         <td height="140px" align="center"> <a href="https://github.com/JayJayleee">
             <img src="https://avatars.githubusercontent.com/JayJayleee" width="140px" /> <br><br> 🐰 신지원 <br>(Front-End) </a> <br></td>
         <td height="140px" align="center"> <a href="https://github.com/leunseongl">
-            <img src="https://avatars.githubusercontent.com/leunseongl" width="140px" /> <br><br> 🐯 이은성 <br>(Front-End) </a> <br></td>
+            <img src="https://avatars.githubusercontent.com/leunseongl" width="140px" /> <br><br> 🐯 이은성 <br>(Back-End) </a> <br></td>
     </tr>
 </table>
 
